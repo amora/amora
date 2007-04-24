@@ -32,8 +32,6 @@ void foward_test(Display *active_display, int times)
 	int i;
 	for (i = 0; i < times; ++i) {
 		send_event(KeyPress, x_key_code[RIGHT], active_display);
-		usleep(500000);
-		send_event(KeyRelease, x_key_code[RIGHT], active_display);
 		sleep(2);
 	}
 }
@@ -44,8 +42,6 @@ void backward_test(Display *active_display, int times)
 	int i;
 	for (i = 0; i < times; ++i) {
 		send_event(KeyPress, x_key_code[LEFT], active_display);
-		usleep(500000);
-		send_event(KeyRelease, x_key_code[LEFT], active_display);
 		sleep(2);
 	}
 
