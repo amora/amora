@@ -1,10 +1,48 @@
+/**
+ * @file   main.c
+ * @author Adenilson Cavalcanti
+ * @date   Fri May  4 14:25:09 2007
+ *
+ * @brief  Main server side presenter app.
+ *
+ * This app is reponsible to receive events from cellphone (in
+ * near future...) and send them to X Server.
+ * \todo
+ * - communicate with cellphone using BlueZ.
+ * - screenshot from active window.
+ * - autotools buildsystem.
+ * - logging feature.
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include "x11_event.h"
 
+/** Tests for forward key event.
+ *
+ *
+ * @param active_display Pointer to active display.
+ * @param times How many times to advance (send event right arrow).
+ */
 void foward_test(Display *active_display, int times);
+
+/** Tests for backward key event.
+ *
+ *
+ * @param active_display Pointer to active display.
+ * @param times How many times to advance (send event left arrow).
+ */
 void backward_test(Display *active_display, int times);
 
+
+/** Main app function.
+ *
+ *
+ * @param argc Number of arguments.
+ * @param argv Arguments values.
+ *
+ * @return 0 on sucess, -1 on error.
+ */
 int main(int argc, char* argv[])
 {
 	Display *own_display = NULL;

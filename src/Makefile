@@ -4,5 +4,8 @@ test_presenter: main.o
 main.o: main.c
 	gcc -c main.c -Wall
 
+docs: Doxyfile.in
+	doxygen Doxyfile.in
+
 clean:
-	rm -f *~ main.o test_presenter
+	rm -fr *~ main.o test_presenter html latex
