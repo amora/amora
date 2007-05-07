@@ -18,10 +18,10 @@ enum { UP, DOWN, LEFT, RIGHT } codes;
 /** Command event codes, what we expect to receive from
  * cell phone.
  */
-char *cell_key_code[] = { "u",
-			  "d",
-			  "l",
-			  "r"
+char *cell_key_code[] = { "UP",
+			  "DOWN",
+			  "LEFT",
+			  "RIGHT"
 };
 
 /** X server key codes, you can get them from 'xev'
