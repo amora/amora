@@ -48,9 +48,18 @@ void backward_test(Display *active_display, int times);
 int main(int argc, char* argv[])
 {
 	Display *own_display = NULL;
-	int res = 0, times = 5;
-	printf("testing... put your slide show on!\n");
-	sleep(10);
+	int bytes_read = 0, server_socket, client_socket, channel = 1, res;
+	struct sockaddr_rc rem_addr = { 0 };
+	unsigned int opt = sizeof(rem_addr);
+	const int BUF_SIZE = 300;
+	char *buf = NULL;
+
+	/* Heap memory is easier to audit */
+	buf = malloc(BUF_SIZE);
+	if (!buf) {
+		perror("Buffer memory allocation failed: ");
+		return -1;
+	}
 
 	own_display = construct_display(NULL);
 	if (!own_display) {
@@ -58,8 +67,27 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	foward_test(own_display, times);
-	backward_test(own_display, times);
+	server_socket = build_bluetooth_socket(channel);
+	if (server_socket == -1) {
+		printf("Failed creating bluetooth conn! Exiting...\n");
+		return -1;
+	}
+
+	printf("\nInitialization done, waiting cellphone connection...\n");
+	while (listen(server_socket, 1) == 0) {
+
+		client_socket = accept(server_socket, (struct sockaddr *)&rem_addr, &opt);
+		ba2str(&rem_addr.rc_bdaddr, buf );
+		fprintf(stderr, "accepted connection from %s\n", buf);
+		bytes_read = read_socket(client_socket, buf, BUF_SIZE);
+		printf("%s\t%d\n", buf, bytes_read);
+		res = ecell_convert_ewindow(buf, bytes_read);
+		if (res == NONE)
+			printf("Invalid event!\n");
+		else
+			send_event(KeyPress, x_key_code[res], own_display);
+
+	}
 
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");

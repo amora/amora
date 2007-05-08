@@ -45,7 +45,8 @@ int read_socket(int client, char *data, int length)
 		res += tmp;
 		length -= res;
 	}
-
+	/* Adding ending of string */
+	data[res] = '\0';
 	return res;
 }
 
