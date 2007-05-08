@@ -97,24 +97,3 @@ int main(int argc, char* argv[])
 	printf("Done, we are closing now.\n");
 	return 0;
 }
-
-void foward_test(Display *active_display, int times)
-{
-	printf("\t\tdoing forward test...\n");
-	int i;
-	for (i = 0; i < times; ++i) {
-		send_event(KeyPress, x_key_code[RIGHT], active_display);
-		sleep(2);
-	}
-}
-
-void backward_test(Display *active_display, int times)
-{
-	printf("\t\tdoing backward test...\n");
-	int i;
-	for (i = 0; i < times; ++i) {
-		send_event(KeyPress, x_key_code[LEFT], active_display);
-		sleep(2);
-	}
-
-}
