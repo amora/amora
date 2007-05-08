@@ -11,6 +11,7 @@
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
+ * - catch SIGTERM or provide a way to clean exit (close sockets).
  */
 
 #include <stdio.h>
@@ -56,7 +57,13 @@ int main(int argc, char* argv[])
 	}
 
 	printf("\nInitialization done, waiting cellphone connection...\n");
-	while (listen(server_socket, 1) == 0) {
+	res = listen(server_socket, 1);
+	if (res) {
+		printf("Failed listening...\n");
+		return -1;
+	}
+
+	while (1) {
 
 		client_socket = accept(server_socket, (struct sockaddr *)&rem_addr, &opt);
 		ba2str(&rem_addr.rc_bdaddr, buf );
@@ -73,9 +80,13 @@ int main(int argc, char* argv[])
 		else
 			send_event(KeyPress, x_key_code[res], own_display);
 
+		close(client_socket);
+
 	}
 
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");
+	close(server_socket);
+
 	return 0;
 }
