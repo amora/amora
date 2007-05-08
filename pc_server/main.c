@@ -81,6 +81,10 @@ int main(int argc, char* argv[])
 		fprintf(stderr, "accepted connection from %s\n", buf);
 		bytes_read = read_socket(client_socket, buf, BUF_SIZE);
 		printf("%s\t%d\n", buf, bytes_read);
+		/* Remember that there is the CMD_BREAK character at end of
+		 * command!
+		 */
+		--bytes_read;
 		res = ecell_convert_ewindow(buf, bytes_read);
 		if (res == NONE)
 			printf("Invalid event!\n");

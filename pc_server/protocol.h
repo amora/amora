@@ -45,13 +45,13 @@ const char CMD_BREAK = '\n';
 int ecell_convert_ewindow(char *event, int length)
 {
 	int res = NONE;
-	if (!strncasecmp(cell_key_code[UP], event, strlen(cell_key_code[UP])))
+	if (!strncasecmp(event, cell_key_code[UP], length))
 		res = UP;
-	else if (!strncasecmp(cell_key_code[DOWN], event, strlen(cell_key_code[DOWN])))
+	else if (!strncasecmp(event, cell_key_code[DOWN], length))
 		res = DOWN;
-	else if (!strncasecmp(cell_key_code[LEFT], event, strlen(cell_key_code[LEFT])))
+	else if (!strncasecmp(event, cell_key_code[LEFT], length))
 		res = LEFT;
-	else if (!strncasecmp(cell_key_code[RIGHT], event, strlen(cell_key_code[RIGHT])))
+	else if (!strncasecmp(event, cell_key_code[RIGHT], length))
 		res = RIGHT;
 
 	return res;
