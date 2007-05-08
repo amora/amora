@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "x11_event.h"
 #include "protocol.h"
+#include "bluecode.h"
 
 /** Tests for forward key event.
  *
