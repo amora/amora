@@ -1,8 +1,11 @@
+CC=ccache gcc
+
+
 test_presenter: main.o
-	gcc -o test_presenter main.o -lX11 -lbluetooth
+	$(CC) -o test_presenter main.o -lX11 -lbluetooth
 
 main.o: main.c
-	gcc -c main.c -Wall
+	$(CC) -c main.c -Wall
 
 docs: Doxyfile.in
 	doxygen Doxyfile.in
