@@ -8,7 +8,6 @@
  * This app is reponsible to receive events from cellphone (in
  * near future...) and send them to X Server.
  * \todo
- * - communicate with cellphone using BlueZ.
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
@@ -19,23 +18,6 @@
 #include "x11_event.h"
 #include "protocol.h"
 #include "bluecode.h"
-
-/** Tests for forward key event.
- *
- *
- * @param active_display Pointer to active display.
- * @param times How many times to advance (send event right arrow).
- */
-void foward_test(Display *active_display, int times);
-
-/** Tests for backward key event.
- *
- *
- * @param active_display Pointer to active display.
- * @param times How many times to advance (send event left arrow).
- */
-void backward_test(Display *active_display, int times);
-
 
 /** Main app function.
  *
