@@ -8,21 +8,13 @@
  * This file will hold functions that interact with X server, sending
  * events to window session.
  */
+
+#ifndef __XEVENTS_PC__
+#define __XEVENTS_PC__
+
 #include <X11/Xlib.h>
 #include <sys/timeb.h>
 
-
-/** Command event codes */
-enum { UP, DOWN, LEFT, RIGHT } codes;
-
-/** Command event codes, what we expect to receive from
- * cell phone.
- */
-char *cell_key_code[] = { "UP",
-			  "DOWN",
-			  "LEFT",
-			  "RIGHT"
-};
 
 /** X server key codes, you can get them from 'xev'
  */
@@ -108,3 +100,5 @@ int send_event(int type, int keycode, Display *active_display)
 
 	return res;
 }
+
+#endif
