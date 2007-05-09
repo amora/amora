@@ -95,6 +95,7 @@ int main(int argc, char* argv[])
 
 	}
 
+	free(buf);
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");
 	close(server_socket);
