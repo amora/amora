@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
 	unsigned int opt = sizeof(rem_addr);
 	const int BUF_SIZE = 300;
 	char *buf = NULL;
+	struct service_description *sd = NULL;
 
 	/* Heap memory is easier to audit */
 	buf = malloc(BUF_SIZE);
@@ -52,6 +53,21 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	/* Service description registering */
+	sd = build_sd(channel);
+	if (!sd) {
+		printf("Error creating service description object! Aborting...\n");
+		return -1;
+	}
+	res = describe_service(sd);
+	if (res == -1) {
+		printf("Error registering service! Aborting...\n");
+		destroy_sd(sd);
+		return -1;
+	}
+
+
+	/* Socket creation */
 	server_socket = build_bluetooth_socket(channel);
 	if (server_socket == -1) {
 		printf("Failed creating bluetooth conn! Exiting...\n");
@@ -99,6 +115,7 @@ int main(int argc, char* argv[])
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");
 	close(server_socket);
+	destroy_sd(sd);
 
 	return 0;
 }
