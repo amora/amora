@@ -28,16 +28,42 @@
 #include <bluetooth/sdp.h>
 #include <bluetooth/sdp_lib.h>
 
-
+/** Service description structure.
+ *
+ * Use it to hold bluetooth service description, tell what the service does
+ * and which port/channel it runs.
+ */
 struct service_description {
+	/** Channel/port number. */
 	unsigned char channel;
+	/** ID */
 	unsigned int uuid;
+	/** Name of service, it appears for devices that connects with the
+	 * service
+	 */
 	char *service_name;
+	/** Description of service. */
 	char *service_dsc;
+	/** The service provider, who is the one responsible for the app. */
 	char *service_prov;
+	/** Session's pointer, I used pointer to void to abstract the type,
+	 * since each O.S. probably will have a different struct/object
+	 * to represent daemon bluetooth session.
+	 */
 	void *session;
 };
 
+/** This function builds a service description structure.
+ *
+ * It works like a constructor for service description structure, see
+ * \ref service_description. For while I only exported the channel interface
+ * when creating the structure, maybe in future I will let the user set
+ * other details while creating the structure.
+ *
+ * @param channel Number of channel/port where service will run.
+ *
+ * @return Pointer to bluetooth service description.
+ */
 struct service_description *build_sd(int channel)
 {
 	struct service_description *sd;
@@ -66,6 +92,12 @@ exit:
 }
 
 
+/** This function frees resources allocated in service description structure.
+ *
+ * It works like an object destructor.
+ *
+ * @param sd Service description pointer.
+ */
 void destroy_sd(struct service_description *sd)
 {
 
@@ -77,6 +109,7 @@ void destroy_sd(struct service_description *sd)
 
 /** Read and parse commands from socket.
  *
+ * It uses a new line as command terminating character, see \ref CMD_BREAK.
  *
  * @param client The socket open to client cell phone.
  * @param data Pointer to buffer to write data.
@@ -139,6 +172,16 @@ exit:
 	return s;
 }
 
+/** This functions talks with bluetooth daemon and registers the service
+ * with it.
+ *
+ * Beware... here goes the gory details of service registration. I'snt there
+ * an easier way to do this stuff?
+ *
+ * @param sd Service description pointer structure.
+ *
+ * @return 0 on sucess, -1 otherwise.
+ */
 int describe_service(struct service_description *sd) {
 
 
