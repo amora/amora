@@ -45,6 +45,20 @@ char *cell_key_code[] = { "UP",
 			  "RIGHT"
 };
 
+/** Mouse event codes, what we expect to receive from
+ * cell phone.
+ */
+char *cell_mouse_code[] = { "MOUSE_MOVE",
+			   "MOUSE_BUTTON_PRESS",
+			   "MOUSE_BUTTON_RELEASE",
+			   "MOUSE_BUTTON_RIGHT",
+			   "MOUSE_BUTTON_LEFT",
+			   "MOUSE_BUTTON_MIDDLE",
+			   "MOUSE_SCROLL_UP",
+			   "MOUSE_SCROLL_DOWN"
+};
+
+
 /** Special character to describe end of command */
 const char CMD_BREAK = '\n';
 
