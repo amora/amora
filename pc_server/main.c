@@ -38,6 +38,18 @@
 #include "protocol.h"
 #include "bluecode.h"
 
+
+/** Process event stream. Reads what new commands are being received
+ * in socket and send them to X session.
+ *
+ * @param fd Socket file descriptor.
+ * @param active_display Pointer to active display.
+ * @param clean_up Free local allocated resources.
+ *
+ * @return Number of bytes read on sucess, -1 on error.
+ */
+int process_events(int fd, Display *active_display, int clean_up);
+
 /** Main app function.
  *
  *
@@ -49,21 +61,13 @@
 int main(int argc, char* argv[])
 {
 	Display *own_display = NULL;
-	int bytes_read = 0, server_socket, client_socket, channel = 1, res;
+	int server_socket, client_socket, channel = 1, res;
+	int clean_up = 0;
 	fd_set fd_set_socket;
 	struct timeval time_socket;
 	struct sockaddr_rc rem_addr = { 0 };
 	unsigned int opt = sizeof(rem_addr);
-	const int BUF_SIZE = 300;
-	char *buf = NULL;
 	struct service_description *sd = NULL;
-
-	/* Heap memory is easier to audit */
-	buf = malloc(BUF_SIZE);
-	if (!buf) {
-		perror("Buffer memory allocation failed: ");
-		return -1;
-	}
 
 	own_display = construct_display(NULL);
 	if (!own_display) {
@@ -109,31 +113,61 @@ int main(int argc, char* argv[])
 		time_socket.tv_sec = 5;
 		time_socket.tv_usec = 0;
 			while (select(1, &fd_set_socket, NULL, NULL, &time_socket) != -1) {
-				ba2str(&rem_addr.rc_bdaddr, buf );
-				fprintf(stderr, "accepted connection from %s\n", buf);
+// 				ba2str(&rem_addr.rc_bdaddr, buf);
+// 				fprintf(stderr, "accepted connection from %s\n", buf);
+				res = process_events(client_socket, own_display, clean_up);
+				printf("Read bytes: %d\n", res);
 
-				bytes_read = read_socket(client_socket, buf, BUF_SIZE);
-				printf("%s\t%d\n", buf, bytes_read);
-				/* Remember that there is the CMD_BREAK character at end of
-				 * command!
-				 */
-				--bytes_read;
-				res = ecell_convert_ewindow(buf, bytes_read);
-				if (res == NONE)
-					printf("Invalid event!\n");
-				else
-					send_event(KeyPress, x_key_code[res], own_display);
 			}
 
 		close(client_socket);
 
 	}
 
-	free(buf);
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");
 	close(server_socket);
 	destroy_sd(sd);
+	res = process_events(client_socket = 0, own_display = NULL, clean_up = 1);
 
 	return 0;
+}
+
+
+int process_events(int fd, Display *active_display, int clean_up)
+{
+	static char *buffer = NULL;
+	const int BUF_SIZE = 300;
+	int bytes_read, result;
+
+	/* Call to just cleanup local allocated memory. */
+	if ((clean_up == 1) && (fd == 0) && (active_display == NULL)) {
+		free(buffer);
+		buffer = NULL;
+		return 0;
+	}
+
+	/* Heap memory is easier to audit */
+	if (!buffer) {
+		buffer = malloc(BUF_SIZE);
+		if (!buffer) {
+			perror("Buffer memory allocation failed: ");
+			return -1;
+		}
+	}
+
+	bytes_read = read_socket(fd, buffer, BUF_SIZE);
+	printf("%s\t%d\n", buffer, bytes_read);
+	/* Remember that there is the CMD_BREAK character at end of
+	 * command!
+	 */
+	--bytes_read;
+	result = ecell_convert_ewindow(buffer, bytes_read);
+	if (result == NONE)
+		printf("Invalid event!\n");
+	else
+		send_event(KeyPress, x_key_code[result], active_display);
+
+
+	return bytes_read;
 }
