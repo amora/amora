@@ -136,7 +136,7 @@ int mouse_move(int x, int y, Display *active_display)
 	res = XWarpPointer(active_display,
 		     None, DefaultRootWindow(active_display),
 		     0, 0, 0, 0,
-		     50, 50);
+		     x, y);
 
 	if (res == BadValue || res == BadWindow)
 		res = -1;
