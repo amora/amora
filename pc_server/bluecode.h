@@ -92,9 +92,9 @@ struct service_description *build_sd(int channel)
 
 	sd->channel = channel;
 	sd->uuid = 0xAFFF;
-	sd->service_name = strdup("Presenter 2 X client");
-	sd->service_dsc = strdup("A X handler for Nokia cellphone");
-	sd->service_prov = strdup("indt");
+	sd->service_name = strdup("Presenter 4 X ");
+	sd->service_dsc = strdup("A X handler for cellphone ");
+	sd->service_prov = strdup("Savago ");
 
 	if (sd->service_name && sd->service_dsc && sd->service_prov)
 		goto exit;
