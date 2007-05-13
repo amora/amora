@@ -1,4 +1,4 @@
-CC=ccache gcc
+CC=gcc
 
 
 test_presenter: main.o
@@ -12,3 +12,8 @@ docs: Doxyfile.in
 
 clean:
 	rm -fr *~ main.o test_presenter html latex
+
+
+tags:
+	find . -name '*.cpp' -o -name '*.h' -o -name '*.c' | xargs etags --append
+
