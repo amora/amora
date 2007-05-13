@@ -11,7 +11,7 @@ docs: Doxyfile.in
 	doxygen Doxyfile.in
 
 clean:
-	rm -fr *~ main.o test_presenter html latex
+	rm -fr *~ main.o test_presenter html latex semantic.cache TAGS
 
 
 tags:
