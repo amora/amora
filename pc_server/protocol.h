@@ -33,13 +33,14 @@
 
 #include <string.h>
 
+
 /** Command event codes */
 enum { UP, DOWN, LEFT, RIGHT, NONE } codes;
 
 /** Command event codes, what we expect to receive from
  * cell phone.
  */
-char *cell_key_code[] = { "UP",
+static char *cell_key_code[] = { "UP",
 			  "DOWN",
 			  "LEFT",
 			  "RIGHT"
@@ -48,7 +49,7 @@ char *cell_key_code[] = { "UP",
 /** Mouse event codes, what we expect to receive from
  * cell phone.
  */
-char *cell_mouse_code[] = { "MOUSE_MOVE",
+static char *cell_mouse_code[] = { "MOUSE_MOVE",
 			   "MOUSE_BUTTON_PRESS",
 			   "MOUSE_BUTTON_RELEASE",
 			   "MOUSE_BUTTON_RIGHT",
@@ -60,7 +61,7 @@ char *cell_mouse_code[] = { "MOUSE_MOVE",
 
 
 /** Special character to describe end of command */
-const char CMD_BREAK = '\n';
+static const char CMD_BREAK = '\n';
 
 
 /** Convert a cell event to correspondent X window event code.
@@ -74,7 +75,7 @@ const char CMD_BREAK = '\n';
  * not beauty.
  *
  */
-int ecell_convert_ewindow(char *event, int length)
+static int ecell_convert_ewindow(char *event, int length)
 {
 	int res = NONE;
 	if (!strncasecmp(event, cell_key_code[UP], length))
@@ -87,6 +88,7 @@ int ecell_convert_ewindow(char *event, int length)
 		res = RIGHT;
 
 	return res;
-}
+};
+
 
 #endif

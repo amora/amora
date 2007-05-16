@@ -34,9 +34,11 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <sys/socket.h>
 #include "x11_event.h"
-#include "protocol.h"
 #include "bluecode.h"
+#include "protocol.h"
 
 
 /** Process event stream. Reads what new commands are being received
@@ -65,7 +67,7 @@ int main(int argc, char* argv[])
 	int clean_up = 0;
 	fd_set fd_set_socket;
 	struct timeval time_socket;
-	struct sockaddr_rc rem_addr = { 0 };
+	struct sockaddr rem_addr = { 0 };
 	unsigned int opt = sizeof(rem_addr);
 	struct service_description *sd = NULL;
 
