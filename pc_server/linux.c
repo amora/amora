@@ -1,3 +1,12 @@
+/**
+ * @file   linux.c
+ * @author Adenilson Cavalcanti
+ * @date   Tue May 15 22:54:03 2007
+ *
+ * @brief  Linux bluetooth code.
+ *
+ * BlueZ dependent code goes here.
+ */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
