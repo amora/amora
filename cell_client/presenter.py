@@ -39,6 +39,10 @@ keyboard = Keyboard()
 
 running = 1
 canvas = appuifw.Canvas(event_callback = keyboard.handle_event, redraw_callback=None)
+mouse_x = 400
+mouse_y = 400
+delta = 10
+
 appuifw.app.body = canvas
 appuifw.app.exit_key_handler = quit
 
@@ -56,6 +60,30 @@ while running:
     elif keyboard.pressed(EScancode8):
         print u'DOWN'
         bt.write_line(u'DOWN')
+    elif keyboard.pressed(EScancodeUpArrow):
+        print u'MOUSE_UP'
+        mouse_y = mouse_y - delta
+        bt.write_line(u'MOUSE_MOVE')
+        bt.write_line(str(mouse_x))
+        bt.write_line(str(mouse_y))
+    elif keyboard.pressed(EScancodeDownArrow):
+        print u'MOUSE_DOWN'
+        mouse_y = mouse_y + delta
+        bt.write_line(u'MOUSE_MOVE')
+        bt.write_line(str(mouse_x))
+        bt.write_line(str(mouse_y))
+    elif keyboard.pressed(EScancodeLeftArrow):
+        print u'MOUSE_LEFT'
+        mouse_x = mouse_x - delta
+        bt.write_line(u'MOUSE_MOVE')
+        bt.write_line(str(mouse_x))
+        bt.write_line(str(mouse_y))
+    elif keyboard.pressed(EScancodeRightArrow):
+        print u'MOUSE_RIGHT'
+        mouse_x = mouse_x + delta
+        bt.write_line(u'MOUSE_MOVE')
+        bt.write_line(str(mouse_x))
+        bt.write_line(str(mouse_y))
     e32.ao_yield()
 
 
