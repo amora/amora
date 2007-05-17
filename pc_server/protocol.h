@@ -35,7 +35,11 @@
 
 
 /** Command event codes */
-enum { UP, DOWN, LEFT, RIGHT, NONE } codes;
+enum { UP, DOWN, LEFT, RIGHT,
+       MOUSE_MOVE, MOUSE_BUTTON_PRESS, MOUSE_BUTTON_RELEASE,
+       MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_LEFT, MOUSE_BUTTON_MIDDLE,
+       MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN,
+       NONE } codes;
 
 /** Command event codes, what we expect to receive from
  * cell phone.
@@ -64,7 +68,7 @@ static char *cell_mouse_code[] = { "MOUSE_MOVE",
 static const char CMD_BREAK = '\n';
 
 
-/** Convert a cell event to correspondent X window event code.
+/** Convert a cell button event to correspondent X window event code.
  *
  *
  * @param event String with event/command.
@@ -75,7 +79,7 @@ static const char CMD_BREAK = '\n';
  * not beauty.
  *
  */
-static int ecell_convert_ewindow(char *event, int length)
+static int ecell_button_ewindow(char *event, int length)
 {
 	int res = NONE;
 	if (!strncasecmp(event, cell_key_code[UP], length))
@@ -89,6 +93,19 @@ static int ecell_convert_ewindow(char *event, int length)
 
 	return res;
 };
+
+/** Convert a cell mouse event to correspondent X window code.
+ *
+ *
+ * @param event String with event/command.
+ * @param length Length of string command.
+ *
+ * @return A code representing the event or NONE otherwise.
+ */
+static int ecell_mouse_ewindow(char *event, int length)
+{
+	return NONE;
+}
 
 
 #endif

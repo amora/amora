@@ -164,10 +164,13 @@ int process_events(int fd, Display *active_display, int clean_up)
 	 * command!
 	 */
 	--bytes_read;
-	result = ecell_convert_ewindow(buffer, bytes_read);
-	if (result == NONE)
-		printf("Invalid event!\n");
-	else
+	result = ecell_button_ewindow(buffer, bytes_read);
+	/* Mouse event */
+	if (result == NONE) {
+		result = ecell_mouse_ewindow(buffer, bytes_read);
+		if (result == NONE)
+			printf("Invalid event!\n");
+	} else /* button event */
 		send_event(KeyPress, x_key_code[result], active_display);
 
 
