@@ -44,16 +44,16 @@ appuifw.app.exit_key_handler = quit
 
 bt.connect()
 while running:
-    if keyboard.pressed(EScancodeRightArrow):
+    if keyboard.pressed(EScancode6):
         print u'RIGHT'
         bt.write_line(u'RIGHT')
-    elif keyboard.pressed(EScancodeLeftArrow):
+    elif keyboard.pressed(EScancode4):
         print u'LEFT'
         bt.write_line(u'LEFT')
-    elif keyboard.pressed(EScancodeUpArrow):
+    elif keyboard.pressed(EScancode2):
         print u'UP'
         bt.write_line(u'UP')
-    elif keyboard.pressed(EScancodeDownArrow):
+    elif keyboard.pressed(EScancode8):
         print u'DOWN'
         bt.write_line(u'DOWN')
     e32.ao_yield()
