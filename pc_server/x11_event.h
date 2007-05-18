@@ -123,24 +123,31 @@ int send_event(int type, int keycode, Display *active_display)
  *
  * @param x Coordinate to move the mouse (origin at upper left corner of window).
  * @param y Coordinate to move the mouse.
- * @param active_display Pointer to active display.
  *
  * @return 0 on sucess, -1 otherwise.
  * TODO: I'm not sure what does return XWarpPointer... and have no man-pages on
  * my notebook (or even internet)... :-(
  */
-int mouse_move(int x, int y, Display *active_display)
+int mouse_move(int x, int y)
 {
 	int res = 0;
+	Display *display = XOpenDisplay(NULL);
+	if (!display) {
+		res = -1;
+		goto exit;
+	}
 
-	res = XWarpPointer(active_display,
-		     None, DefaultRootWindow(active_display),
-		     0, 0, 0, 0,
-		     x, y);
+	res = XWarpPointer(display,
+			   None, DefaultRootWindow(display),
+			   0, 0, 0, 0,
+			   x, y);
 
 	if (res == BadValue || res == BadWindow)
 		res = -1;
 
+	XCloseDisplay(display);
+
+ exit:
 	return res;
 
 }

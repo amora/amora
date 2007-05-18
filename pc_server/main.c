@@ -140,6 +140,8 @@ int process_events(int fd, Display *active_display, int clean_up)
 {
 	static char *buffer = NULL;
 	const int BUF_SIZE = 300;
+	static unsigned char mouse_event = 0, times = 0;
+	static int x_mouse, y_mouse;
 	int bytes_read, result;
 
 	/* Call to just cleanup local allocated memory. */
@@ -159,18 +161,47 @@ int process_events(int fd, Display *active_display, int clean_up)
 	}
 
 	bytes_read = read_socket(fd, buffer, BUF_SIZE);
-	printf("%s\t%d\n", buffer, bytes_read);
+
 	/* Remember that there is the CMD_BREAK character at end of
 	 * command!
 	 */
 	--bytes_read;
 	result = ecell_button_ewindow(buffer, bytes_read);
-	/* Mouse event */
+
+	/* TODO: move this code to a distinct function */
 	if (result == NONE) {
 		result = ecell_mouse_ewindow(buffer, bytes_read);
-		if (result == NONE)
-			printf("Invalid event!\n");
-	} else /* button event */
+
+		switch (result) {
+		case MOUSE_MOVE:
+			mouse_event = 1;
+			break;
+		case MOUSE_BUTTON_RIGHT:
+			/* TODO: add mouse event X code */
+			break;
+		case MOUSE_BUTTON_LEFT:
+			/* TODO: add mouse event X code */
+			break;
+		case NONE:
+			if (mouse_event == 1) {
+				if (times == 0) {
+					x_mouse = atoi(buffer);
+					++times;
+				} else {
+					y_mouse = atoi(buffer);
+					printf("\nx = %d\ty=%d\t\n\n",
+					       x_mouse, y_mouse);
+					result = mouse_move(x_mouse, y_mouse);
+					if (result == -1)
+						printf("Can't move mouse!");
+
+					times = 0;
+					mouse_event = 0;
+				}
+			} else
+				printf("Invalid event!\n");
+		}
+	} else
 		send_event(KeyPress, x_key_code[result], active_display);
 
 

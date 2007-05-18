@@ -104,7 +104,30 @@ static int ecell_button_ewindow(char *event, int length)
  */
 static int ecell_mouse_ewindow(char *event, int length)
 {
-	return NONE;
+  	int res = NONE;
+
+	if (!strncasecmp(event, cell_key_code[MOUSE_MOVE], length))
+		res = MOUSE_MOVE;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_PRESS], length))
+		res = MOUSE_BUTTON_PRESS;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RELEASE],
+			      length))
+		res = MOUSE_BUTTON_RELEASE;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RIGHT], length))
+		res = MOUSE_BUTTON_RIGHT;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_LEFT], length))
+		res = MOUSE_BUTTON_LEFT;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_MIDDLE],
+			      length))
+		res = MOUSE_BUTTON_MIDDLE;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_SCROLL_UP],
+			      length))
+		res = MOUSE_SCROLL_UP;
+	else if (!strncasecmp(event, cell_key_code[MOUSE_SCROLL_DOWN],
+			      length))
+		res = MOUSE_SCROLL_DOWN;
+
+	return res;
 }
 
 
