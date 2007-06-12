@@ -11,6 +11,9 @@
  * - autotools buildsystem.
  * - logging feature.
  * - catch SIGTERM or provide a way to clean exit (close sockets).
+ * - there is a condition just after connection when is possible
+ * to crash the server application if the mobile continue sending
+ * mouse events. See \ref mouse_move.
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

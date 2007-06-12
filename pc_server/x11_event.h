@@ -125,8 +125,12 @@ int send_event(int type, int keycode, Display *active_display)
  * @param y Coordinate to move the mouse.
  *
  * @return 0 on sucess, -1 otherwise.
- * TODO: I'm not sure what does return XWarpPointer... and have no man-pages on
- * my notebook (or even internet)... :-(
+ * \todo:
+ * - creating a new Display connection with X is inefficient, but for
+ * some reason, it doesn't work with a older connection.
+ * - there is a crash condition: if just after the connection the
+ * mobile client continuously send mouse events, it crashs when
+ * trying to create a new Display.
  */
 int mouse_move(int x, int y)
 {
