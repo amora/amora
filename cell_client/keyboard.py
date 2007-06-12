@@ -56,10 +56,13 @@ class Keyboard(object):
         #(i.e. obj = Keyboard()), it does nothing.
         self.event()
     #Use this to check if a button was pressed.
-    def pressed(self,scancode):
+    def pressed(self, scancode):
         if self.downs.get(scancode,0):
             self.downs[scancode]-=1
             return True
         return False
+    #Use this to check if a button is down
+    def is_down(self, scancode):
+        return self.state.get(scancode, 0)
 
 

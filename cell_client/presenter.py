@@ -48,37 +48,37 @@ appuifw.app.exit_key_handler = quit
 
 bt.connect()
 while running:
-    if keyboard.pressed(EScancode6):
+    if keyboard.is_down(EScancode6):
         print u'RIGHT'
         bt.write_line(u'RIGHT')
-    elif keyboard.pressed(EScancode4):
+    elif keyboard.is_down(EScancode4):
         print u'LEFT'
         bt.write_line(u'LEFT')
-    elif keyboard.pressed(EScancode2):
+    elif keyboard.is_down(EScancode2):
         print u'UP'
         bt.write_line(u'UP')
-    elif keyboard.pressed(EScancode8):
+    elif keyboard.is_down(EScancode8):
         print u'DOWN'
         bt.write_line(u'DOWN')
-    elif keyboard.pressed(EScancodeUpArrow):
+    elif keyboard.is_down(EScancodeUpArrow):
         print u'MOUSE_UP'
         mouse_y = mouse_y - delta
         bt.write_line(u'MOUSE_MOVE')
         bt.write_line(str(mouse_x))
         bt.write_line(str(mouse_y))
-    elif keyboard.pressed(EScancodeDownArrow):
+    elif keyboard.is_down(EScancodeDownArrow):
         print u'MOUSE_DOWN'
         mouse_y = mouse_y + delta
         bt.write_line(u'MOUSE_MOVE')
         bt.write_line(str(mouse_x))
         bt.write_line(str(mouse_y))
-    elif keyboard.pressed(EScancodeLeftArrow):
+    elif keyboard.is_down(EScancodeLeftArrow):
         print u'MOUSE_LEFT'
         mouse_x = mouse_x - delta
         bt.write_line(u'MOUSE_MOVE')
         bt.write_line(str(mouse_x))
         bt.write_line(str(mouse_y))
-    elif keyboard.pressed(EScancodeRightArrow):
+    elif keyboard.is_down(EScancodeRightArrow):
         print u'MOUSE_RIGHT'
         mouse_x = mouse_x + delta
         bt.write_line(u'MOUSE_MOVE')
