@@ -7,7 +7,6 @@
  *
  * This app is reponsible to receive events from cellphone and send them to X Server.
  * \todo
- * - mouse moving
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
