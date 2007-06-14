@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 
 		printf("Entering main loop...\n");
 		client_socket = accept(server_socket, (struct sockaddr *)&rem_addr, &opt);
-
+		printf("Accepted connection.\n");
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
