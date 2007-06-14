@@ -117,8 +117,9 @@ int main(int argc, char* argv[])
 // 				ba2str(&rem_addr.rc_bdaddr, buf);
 // 				fprintf(stderr, "accepted connection from %s\n", buf);
 				res = process_events(client_socket, own_display, clean_up);
+#ifdef VERBOSE
 				printf("Read bytes: %d\n", res);
-
+#endif
 			}
 
 		close(client_socket);
@@ -188,8 +189,10 @@ int process_events(int fd, Display *active_display, int clean_up)
 					++times;
 				} else {
 					y_mouse = atoi(buffer);
+#ifdef VERBOSE
 					printf("\nx = %d\ty=%d\t\n\n",
 					       x_mouse, y_mouse);
+#endif
 					result = mouse_move(x_mouse, y_mouse,
 							      active_display);
 					if (result == -1)
