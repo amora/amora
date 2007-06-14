@@ -23,6 +23,7 @@ import appuifw
 import e32
 from keyboard import *
 from bt_client import *
+from wallpaper import *
 
 class application:
     mouse_x = 400
@@ -35,18 +36,14 @@ class application:
     keyboard = None
     #Add another object for 'options' window
     def __init__(self):
-        self.wallpaper = appuifw.Canvas(None, None)
+        appuifw.app.title = u'P4X'
         appuifw.app.menu = [(u'connect', self.__connect), (u'start', self.start)]
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
-        self.keyboard = Keyboard()
         #Cleanup the screen
-        appuifw.app.body = self.wallpaper
-        self.wallpaper.clear()
-        appuifw.app.title = u'P4X'
-        self.presentation = appuifw.Canvas(event_callback =
-                                           self.keyboard.handle_event,
-                                           redraw_callback = None)
+        self.wallpaper = wallpaper()
+        appuifw.app.body = self.wallpaper.canvas
+        self.wallpaper.display()
     #Exit function
     def quit(self):
         self.running = 0
@@ -59,6 +56,13 @@ class application:
         self.bt.connect()
     #Start presentation mode
     def start(self):
+        #Presentation display
+        if self.keyboard == None:
+            self.keyboard = Keyboard()
+        if self.presentation == None:
+            self.presentation = appuifw.Canvas(event_callback =
+                                               self.keyboard.handle_event,
+                                               redraw_callback = None)
         self.running = 1
         appuifw.app.body = self.presentation
         appuifw.app.exit_key_handler = self.quit
