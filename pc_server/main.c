@@ -11,9 +11,6 @@
  * - autotools buildsystem.
  * - logging feature.
  * - catch SIGTERM or provide a way to clean exit (close sockets).
- * - there is a condition just after connection when is possible
- * to crash the server application if the mobile continue sending
- * mouse events. See \ref mouse_move.
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -193,7 +190,8 @@ int process_events(int fd, Display *active_display, int clean_up)
 					y_mouse = atoi(buffer);
 					printf("\nx = %d\ty=%d\t\n\n",
 					       x_mouse, y_mouse);
-					result = mouse_move(x_mouse, y_mouse);
+					result = mouse_move(x_mouse, y_mouse,
+							      active_display);
 					if (result == -1)
 						printf("Can't move mouse!");
 

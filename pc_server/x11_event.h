@@ -123,37 +123,36 @@ int send_event(int type, int keycode, Display *active_display)
  *
  * @param x Coordinate to move the mouse (origin at upper left corner of window).
  * @param y Coordinate to move the mouse.
+ * @param active_display Current Display, connection with X server (see
+ * \ref construct_display)
  *
  * @return 0 on sucess, -1 otherwise.
- * \todo:
- * - creating a new Display connection with X is inefficient, but for
- * some reason, it doesn't work with a older connection.
- * - there is a crash condition: if just after the connection the
- * mobile client continuously send mouse events, it crashs when
- * trying to create a new Display.
  */
-int mouse_move(int x, int y)
+int mouse_move(int x, int y, Display *active_display)
 {
 	int res = 0;
-	Display *display = XOpenDisplay(NULL);
-	if (!display) {
+	Window win;
+	int revert_to;
+
+	if (!active_display) {
 		res = -1;
 		goto exit;
 	}
 
-	res = XWarpPointer(display,
-			   None, DefaultRootWindow(display),
+	XGetInputFocus(active_display, &win, &revert_to);
+	res = XWarpPointer(active_display,
+			   None, DefaultRootWindow(active_display),
 			   0, 0, 0, 0,
 			   x, y);
 
 	if (res == BadValue || res == BadWindow)
 		res = -1;
 
-	XCloseDisplay(display);
 
  exit:
 	return res;
 
 }
+
 
 #endif
