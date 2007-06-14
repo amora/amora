@@ -36,7 +36,7 @@ class application:
     #Add another object for 'options' window
     def __init__(self):
         self.wallpaper = appuifw.Canvas(None, None)
-        appuifw.app.menu = [(u'start', self.start), (u'connect', self.__connect)]
+        appuifw.app.menu = [(u'connect', self.__connect), (u'start', self.start)]
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
         self.keyboard = Keyboard()
