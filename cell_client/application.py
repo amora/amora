@@ -46,8 +46,9 @@ class application:
         self.wallpaper.display()
     #Exit function
     def quit(self):
-        self.running = 0
-        self.bt.close()
+        self.running = -1
+        if self.bt != None:
+            self.bt.close()
         appuifw.app.set_exit()
     #Private function, will try to connect with a server PC
     #using bluetooth
@@ -56,6 +57,8 @@ class application:
         self.bt.connect()
     #Start presentation mode
     def start(self):
+        if self.running != 1:
+            return
         #Presentation display
         if self.keyboard == None:
             self.keyboard = Keyboard()

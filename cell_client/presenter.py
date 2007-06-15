@@ -29,4 +29,6 @@ flag = 1
 while flag:
     if (app.running == 1):
         app.start()
+    elif app.running == -1:
+        flag = 1
     e32.ao_yield()
