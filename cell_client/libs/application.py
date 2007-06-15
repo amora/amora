@@ -57,8 +57,6 @@ class application:
         self.bt.connect()
     #Start presentation mode
     def start(self):
-        if self.running != 1:
-            return
         #Presentation display
         if self.keyboard == None:
             self.keyboard = Keyboard()
@@ -105,8 +103,6 @@ class application:
             self.bt.write_line(u'MOUSE_MOVE')
             self.bt.write_line(str(self.mouse_x))
             self.bt.write_line(str(self.mouse_y))
-
-
 
 
 
