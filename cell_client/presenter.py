@@ -1,3 +1,8 @@
+# Author: Adenilson Cavalcanti
+# email: adenilson.silva@indt.org.br
+#        savagobr@yahoo.com
+#        Copyright 2007
+# About: Hold the application loop.
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

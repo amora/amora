@@ -1,6 +1,7 @@
 # Author: Adenilson Cavalcanti
 # email: adenilson.silva@indt.org.br
 #        savagobr@yahoo.com
+#        Copyright 2007
 # About: A stopwatch, used to control timer for presentation.
 #  I took this code from http://snippets.dzone.com/posts/show/776
 #  and I'm not sure who is the writter of it.

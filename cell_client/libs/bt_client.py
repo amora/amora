@@ -1,3 +1,10 @@
+# Author: Adenilson Cavalcanti
+# email: adenilson.silva@indt.org.br
+#        savagobr@yahoo.com
+#        Copyright 2007
+# About: a bluetooth class it scans for local devices, connects
+# with them and has methods to write data.
+# TODO: fix reading data method
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

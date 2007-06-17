@@ -1,8 +1,9 @@
-## Author: Adenilson Cavalcanti
-## email: adenilson.silva@indt.org.br
-##        Copyright 2007
-## About: a keyboard class for key event handling, based on
-## code written by Jurgen Scheible
+# Author: Adenilson Cavalcanti
+# email: adenilson.silva@indt.org.br
+#        savagobr@yahoo.com
+#        Copyright 2007
+# About: a keyboard class for key event handling, based on
+# code presented on 'Programming with PyS60'
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

@@ -1,3 +1,15 @@
+# Author: Adenilson Cavalcanti
+# email: adenilson.silva@indt.org.br
+#        savagobr@yahoo.com
+#        Copyright 2007
+# About: The main application class, will hold event processing
+# code as also objects to represent windows.
+# TODO:
+#  - option window class
+#  - slideshow class with icon animation
+#  - integrate with stopwatch code
+#  - handle slide preview (depends on bt_client)
+
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
