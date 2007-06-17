@@ -62,7 +62,7 @@ int process_events(int fd, Display *active_display, int clean_up);
 int main(int argc, char* argv[])
 {
 	Display *own_display = NULL;
-	int server_socket, client_socket, channel = 1, res;
+	int server_socket, client_socket, channel = 10, res;
 	int clean_up = 0;
 	fd_set fd_set_socket;
 	struct timeval time_socket;
