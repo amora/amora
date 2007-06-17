@@ -5,12 +5,16 @@
  *
  * @brief  Main server side presenter app.
  *
- * This app is reponsible to receive events from cellphone and send them to X Server.
+ * This app is reponsible to receive events from cellphone and send them to
+ * X Server.
  * \todo
+ * - a 'stop/close' command in protocol.
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
  * - catch SIGTERM or provide a way to clean exit (close sockets).
+ * - forking the process when new connection is received can be a good idea.
+ * - what about a heart beat between cellphone and server?
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -79,7 +83,8 @@ int main(int argc, char* argv[])
 	/* Service description registering */
 	sd = build_sd(channel);
 	if (!sd) {
-		printf("Error creating service description object! Aborting...\n");
+		printf("Error creating service description object!"
+		       "Aborting...\n");
 		return -1;
 	}
 	res = describe_service(sd);
@@ -107,16 +112,20 @@ int main(int argc, char* argv[])
 	while (1) {
 
 		printf("Entering main loop...\n");
-		client_socket = accept(server_socket, (struct sockaddr *)&rem_addr, &opt);
+		client_socket = accept(server_socket,
+				       (struct sockaddr *)&rem_addr, &opt);
 		printf("Accepted connection.\n");
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
 		time_socket.tv_usec = 0;
-			while (select(1, &fd_set_socket, NULL, NULL, &time_socket) != -1) {
+			while (select(1, &fd_set_socket, NULL, NULL,
+				      &time_socket) != -1) {
+				//TODO: move this code to bluetooth
 // 				ba2str(&rem_addr.rc_bdaddr, buf);
 // 				fprintf(stderr, "accepted connection from %s\n", buf);
-				res = process_events(client_socket, own_display, clean_up);
+				res = process_events(client_socket,
+						     own_display, clean_up);
 #ifdef VERBOSE
 				printf("Read bytes: %d\n", res);
 #endif
@@ -130,7 +139,8 @@ int main(int argc, char* argv[])
 	printf("Done, we are closing now.\n");
 	close(server_socket);
 	destroy_sd(sd);
-	res = process_events(client_socket = 0, own_display = NULL, clean_up = 1);
+	res = process_events(client_socket = 0, own_display = NULL,
+			     clean_up = 1);
 
 	return 0;
 }

@@ -39,7 +39,9 @@
 struct service_description *build_sd(int channel)
 {
 	struct service_description *sd;
-	sd = (struct service_description *) malloc(sizeof(struct service_description));
+	sd = (struct service_description *)
+		malloc(sizeof(struct service_description));
+
 	if (!sd)
 		goto mem_error;
 
@@ -129,13 +131,14 @@ int describe_service(struct service_description *sd)
 
 	uint32_t service_uuid_int[] = { 0, 0, 0, sd->uuid };
 	uint8_t rfcomm_channel = sd->channel;
-	const char *service_name = sd->service_name;//"Roto-Rooter Data Router";
-	const char *service_dsc = sd->service_dsc;//"An experimental plumbing router";
-	const char *service_prov = sd->service_prov;//"Roto-Rooter";
+	const char *service_name = sd->service_name;
+	const char *service_dsc = sd->service_dsc;
+	const char *service_prov = sd->service_prov;
 
 	uuid_t root_uuid, l2cap_uuid, rfcomm_uuid, svc_uuid;
-	sdp_list_t *l2cap_list = 0, *rfcomm_list = 0, *root_list = 0, *proto_list = 0,
-	  *access_proto_list = 0,  *svclass_id = 0, *profiles = 0;
+	sdp_list_t *l2cap_list = 0, *rfcomm_list = 0, *root_list = 0,
+		*proto_list = 0, *access_proto_list = 0,  *svclass_id = 0,
+		*profiles = 0;
 
 	sdp_data_t *channel = 0;
 	sdp_record_t *record = sdp_record_alloc();

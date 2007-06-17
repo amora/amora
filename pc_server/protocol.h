@@ -108,14 +108,17 @@ static int ecell_mouse_ewindow(char *event, int length)
 
 	if (!strncasecmp(event, cell_key_code[MOUSE_MOVE], length))
 		res = MOUSE_MOVE;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_PRESS], length))
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_PRESS],
+			      length))
 		res = MOUSE_BUTTON_PRESS;
 	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RELEASE],
 			      length))
 		res = MOUSE_BUTTON_RELEASE;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RIGHT], length))
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RIGHT],
+			      length))
 		res = MOUSE_BUTTON_RIGHT;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_LEFT], length))
+	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_LEFT],
+			      length))
 		res = MOUSE_BUTTON_LEFT;
 	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_MIDDLE],
 			      length))
