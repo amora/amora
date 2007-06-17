@@ -2,8 +2,8 @@
 # email: adenilson.silva@indt.org.br
 #        savagobr@yahoo.com
 #        Copyright 2007
-# About: a keyboard class for key event handling, based on
-# code written by Jurgen Scheible
+# About: a class to load, rescale and display a nice wallpaper in main
+# application.
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -32,13 +32,16 @@ class wallpaper:
     def __init__(self):
         self.keyboard = keyboard.Keyboard()
         self.image_obj = self.load_image()
-        #TODO: redraw works, but is a bit messy.
+        #TODO: redraw works, but is a bit messy. Do I really need a keyboard
+        # object?
         self.canvas = appuifw.Canvas(event_callback = self.keyboard.handle_event,
                                      redraw_callback = self.event_redraw)
+    #Call this method to display the wallpaper
     def display(self):
         self.canvas.clear()
         tmp = self.calc_position()
         self.canvas.blit(self.image_obj, target = tmp)
+    #Redraw function, used as a callback for canvas events.
     def event_redraw(self, other):
         self.display()
     #Calculates position where to blit the image in Canvas
@@ -61,7 +64,7 @@ class wallpaper:
                                  (img.size[1] * ratio_y)], keepaspect = 1)
         return scaled
 
-
+#Example of use
 # obj = wallpaper()
 # appuifw.body = obj.canvas
 # obj.display()

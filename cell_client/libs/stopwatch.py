@@ -5,6 +5,8 @@
 # About: A stopwatch, used to control timer for presentation.
 #  I took this code from http://snippets.dzone.com/posts/show/776
 #  and I'm not sure who is the writter of it.
+# TODO: refactor this code to fit the application mode (e.g. it
+# must receive a canvas object).
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

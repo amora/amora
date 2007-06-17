@@ -46,7 +46,7 @@ class application:
     running = 0
     bt = None
     keyboard = None
-    #Add another object for 'options' window
+    #TODO: Add another object for 'options' window
     def __init__(self):
         appuifw.app.title = u'P4X'
         appuifw.app.menu = [(u'connect', self.__connect), (u'start', self.start)]
@@ -69,7 +69,7 @@ class application:
         self.bt.connect()
     #Start presentation mode
     def start(self):
-        #Presentation display
+        #Creates presentation display if it already doesn't exist.
         if self.keyboard == None:
             self.keyboard = Keyboard()
         if self.presentation == None:

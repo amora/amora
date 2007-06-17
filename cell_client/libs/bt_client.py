@@ -2,7 +2,7 @@
 # email: adenilson.silva@indt.org.br
 #        savagobr@yahoo.com
 #        Copyright 2007
-# About: a bluetooth class it scans for local devices, connects
+# About: a bluetooth class, it scans for local devices, connects
 # with them and has methods to write data.
 # TODO: fix reading data method
 
@@ -30,6 +30,7 @@ import appuifw
 import e32
 
 class bt_client:
+    #TODO: error treatment
     def connect(self):
         self.sock = socket.socket(socket.AF_BT, socket.SOCK_STREAM)
         addr,services = socket.bt_discover()
@@ -46,6 +47,7 @@ class bt_client:
         print "Connecting to " + str(address) + "...",
         self.sock.connect(address)
         print "OK."
+    #FIXME: why this doesn't work?
 #     def readline(self):
 #         line=[]
 #         self.sock.recv(100)
@@ -56,8 +58,10 @@ class bt_client:
 #                 break
 #             line.append(ch)
 #        return ''.join(line)
+    #Writes a command line, adding a newline at end of string
     def write_line(self, command):
         self.sock.send(command + '\n');
+    #Closes bluetooth socket
     def close(self):
         self.sock.close()
 
