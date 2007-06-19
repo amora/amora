@@ -35,8 +35,10 @@
 
 
 /** X server key codes, you can get them from 'xev'
+ * ps: first element is -1, since enumerations should
+ * not have value zero. See \ref codes.
  */
-int x_key_code[] = { 98, 104, 100, 102 };
+int x_key_code[] = { -1, 98, 104, 100, 102 };
 
 
 /** Display handler creator.

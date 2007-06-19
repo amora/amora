@@ -34,41 +34,34 @@
 #include <string.h>
 
 
-/** Command event codes */
-enum { UP, DOWN, LEFT, RIGHT,
+/** Command event codes, has codes for:
+ * - Arrow keys
+ * - Mouse keys
+ * - Connection/protocol related
+ *
+ **/
+enum { NONE = -1,
+       UP = 1, DOWN, LEFT, RIGHT,
        MOUSE_MOVE, MOUSE_BUTTON_PRESS, MOUSE_BUTTON_RELEASE,
        MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_LEFT, MOUSE_BUTTON_MIDDLE,
-       MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN, CONN_CLOSE, SERVER_STOP,
-       RESOLUTION, IMG_FORMAT
-       NONE } codes;
+       MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN,
+       CONN_CLOSE, SERVER_STOP, RESOLUTION, IMG_FORMAT,
+       } codes;
 
-/** Command event codes, what we expect to receive from
- * cell phone.
- */
-static char *cell_key_code[] = { "UP",
-			  "DOWN",
-			  "LEFT",
-			  "RIGHT"
-};
 
-/** Mouse event codes, what we expect to receive from
- * cell phone.
- */
-static char *cell_mouse_code[] = { "MOUSE_MOVE",
-			   "MOUSE_BUTTON_PRESS",
-			   "MOUSE_BUTTON_RELEASE",
-			   "MOUSE_BUTTON_RIGHT",
-			   "MOUSE_BUTTON_LEFT",
-			   "MOUSE_BUTTON_MIDDLE",
-			   "MOUSE_SCROLL_UP",
-			   "MOUSE_SCROLL_DOWN"
-};
-
-/** Protocol control strings.
- *
- */
-static char protocol_codes[] = { "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
-				 "IMG_FORMAT" };
+/** Event command strings
+ * ps: first element is "EMPTY", since enumerations should
+ * not have value zero. See \ref codes.
+ **/
+static const char *all_codes[] = { "EMPTY",
+				   "UP", "DOWN", "LEFT", "RIGHT",
+				   "MOUSE_MOVE", "MOUSE_BUTTON_PRESS",
+				   "MOUSE_BUTTON_RELEASE",
+				   "MOUSE_BUTTON_RIGHT",
+				   "MOUSE_BUTTON_LEFT", "MOUSE_BUTTON_MIDDLE",
+				   "MOUSE_SCROLL_UP", "MOUSE_SCROLL_DOWN",
+				   "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
+				   "IMG_FORMAT" };
 
 
 /** Special character to describe end of command */
@@ -89,13 +82,13 @@ static const char CMD_BREAK = '\n';
 static int ecell_button_ewindow(char *event, int length)
 {
 	int res = NONE;
-	if (!strncasecmp(event, cell_key_code[UP], length))
+	if (!strncasecmp(event, all_codes[UP], length))
 		res = UP;
-	else if (!strncasecmp(event, cell_key_code[DOWN], length))
+	else if (!strncasecmp(event, all_codes[DOWN], length))
 		res = DOWN;
-	else if (!strncasecmp(event, cell_key_code[LEFT], length))
+	else if (!strncasecmp(event, all_codes[LEFT], length))
 		res = LEFT;
-	else if (!strncasecmp(event, cell_key_code[RIGHT], length))
+	else if (!strncasecmp(event, all_codes[RIGHT], length))
 		res = RIGHT;
 
 	return res;
@@ -113,31 +106,39 @@ static int ecell_mouse_ewindow(char *event, int length)
 {
   	int res = NONE;
 
-	if (!strncasecmp(event, cell_key_code[MOUSE_MOVE], length))
+	if (!strncasecmp(event, all_codes[MOUSE_MOVE], length))
 		res = MOUSE_MOVE;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_PRESS],
+	else if (!strncasecmp(event, all_codes[MOUSE_BUTTON_PRESS],
 			      length))
 		res = MOUSE_BUTTON_PRESS;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RELEASE],
+	else if (!strncasecmp(event, all_codes[MOUSE_BUTTON_RELEASE],
 			      length))
 		res = MOUSE_BUTTON_RELEASE;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_RIGHT],
+	else if (!strncasecmp(event, all_codes[MOUSE_BUTTON_RIGHT],
 			      length))
 		res = MOUSE_BUTTON_RIGHT;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_LEFT],
+	else if (!strncasecmp(event, all_codes[MOUSE_BUTTON_LEFT],
 			      length))
 		res = MOUSE_BUTTON_LEFT;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_BUTTON_MIDDLE],
+	else if (!strncasecmp(event, all_codes[MOUSE_BUTTON_MIDDLE],
 			      length))
 		res = MOUSE_BUTTON_MIDDLE;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_SCROLL_UP],
+	else if (!strncasecmp(event, all_codes[MOUSE_SCROLL_UP],
 			      length))
 		res = MOUSE_SCROLL_UP;
-	else if (!strncasecmp(event, cell_key_code[MOUSE_SCROLL_DOWN],
+	else if (!strncasecmp(event, all_codes[MOUSE_SCROLL_DOWN],
 			      length))
 		res = MOUSE_SCROLL_DOWN;
 
 	return res;
+}
+
+static int protocol_command(char *cmd, int length)
+{
+// 	int res = NONE;
+// 	if (!strncasecmp(cmd, all_codes[
+
+
 }
 
 
