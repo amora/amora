@@ -133,12 +133,31 @@ static int ecell_mouse_ewindow(char *event, int length)
 	return res;
 }
 
+/** Convert a cell mouse event to correspondent protocol code.
+ *
+ * @param event String with event/command.
+ * @param length Length of string command.
+ *
+ * @return A code representing the event or NONE otherwise.
+ *
+ * \todo:
+ * - implement logic processing for codes (SERVER_STOP,
+ * RESOLUTION, IMG_FORMAT). This relates with \ref
+ * main.c todos.
+ */
 static int protocol_command(char *cmd, int length)
 {
-// 	int res = NONE;
-// 	if (!strncasecmp(cmd, all_codes[
+ 	int res = NONE;
+ 	if (!strncasecmp(cmd, all_codes[CONN_CLOSE], length))
+		res = CONN_CLOSE;
+	else if (strncasecmp(cmd, all_codes[SERVER_STOP], length))
+		res = SERVER_STOP;
+	else if (strncasecmp(cmd, all_codes[RESOLUTION], length))
+		res = RESOLUTION;
+	else if (strncasecmp(cmd, all_codes[IMG_FORMAT], length))
+		res = CONN_CLOSE;
 
-
+	return res;
 }
 
 
