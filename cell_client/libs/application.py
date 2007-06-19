@@ -60,6 +60,8 @@ class application:
     def quit(self):
         self.running = -1
         if self.bt != None:
+            print u'EXIT'
+            self.bt.write_line(u'CONN_CLOSE')
             self.bt.close()
         appuifw.app.set_exit()
     #Private function, will try to connect with a server PC

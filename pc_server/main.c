@@ -43,6 +43,17 @@
 #include "bluecode.h"
 #include "protocol.h"
 
+/** Check for protocol commands in buffer, used by \ref process_events
+ *
+ *
+ * @param buffer A string buffer with commands (i.e. CONN_CLOSE), see
+ * \ref all_codes
+ * @param bytes_read Buffer length
+ *
+ * @return 0 for closing the connection.  \todo Think how
+ * to process other events.
+ */
+int treat_exit(char *buffer, int length);
 
 /** Process event stream. Reads what new commands are being received
  * in socket and send them to X session.
@@ -51,7 +62,7 @@
  * @param active_display Pointer to active display.
  * @param clean_up Free local allocated resources.
  *
- * @return Number of bytes read on sucess, -1 on error.
+ * @return Number of bytes read on sucess, -1 on error, 0 on exit.
  */
 int process_events(int fd, Display *active_display, int clean_up);
 
@@ -110,31 +121,42 @@ int main(int argc, char* argv[])
 	}
 
 	while (1) {
-
+	outer_while:
 		printf("Entering main loop...\n");
 		client_socket = accept(server_socket,
 				       (struct sockaddr *)&rem_addr, &opt);
+		if (client_socket == -1) {
+			printf("Failed opening connection, exiting...\n");
+			goto exit;
+		}
+
 		printf("Accepted connection.\n");
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
 		time_socket.tv_usec = 0;
-			while (select(1, &fd_set_socket, NULL, NULL,
-				      &time_socket) != -1) {
-				//TODO: move this code to bluetooth
+
+		while (select(1, &fd_set_socket, NULL, NULL,
+			      &time_socket) != -1) {
+			//TODO: move this code to bluetooth
 // 				ba2str(&rem_addr.rc_bdaddr, buf);
 // 				fprintf(stderr, "accepted connection from %s\n", buf);
-				res = process_events(client_socket,
-						     own_display, clean_up);
+			res = process_events(client_socket,
+					     own_display, clean_up);
 #ifdef VERBOSE
-				printf("Read bytes: %d\n", res);
+			printf("Read bytes: %d\n", res);
 #endif
+			if (!res) {
+				printf("Client asked to close connection\n\n");
+				close(client_socket);
+				client_socket = -1;
+				goto outer_while;
 			}
-
-		close(client_socket);
+		}
 
 	}
 
+exit:
 	res = destroy_display(own_display);
 	printf("Done, we are closing now.\n");
 	close(server_socket);
@@ -156,7 +178,9 @@ int process_events(int fd, Display *active_display, int clean_up)
 
 	/* Call to just cleanup local allocated memory. */
 	if ((clean_up == 1) && (fd == 0) && (active_display == NULL)) {
-		free(buffer);
+		if (buffer != NULL)
+			free(buffer);
+
 		buffer = NULL;
 		return 0;
 	}
@@ -176,12 +200,12 @@ int process_events(int fd, Display *active_display, int clean_up)
 	 * command!
 	 */
 	--bytes_read;
+
+	/* TODO: move this whole code block to a distinct function */
 	result = ecell_button_ewindow(buffer, bytes_read);
+ 	if (result == NONE) {
 
-	/* TODO: move this code to a distinct function */
-	if (result == NONE) {
 		result = ecell_mouse_ewindow(buffer, bytes_read);
-
 		switch (result) {
 		case MOUSE_MOVE:
 			mouse_event = 1;
@@ -211,12 +235,56 @@ int process_events(int fd, Display *active_display, int clean_up)
 					times = 0;
 					mouse_event = 0;
 				}
-			} else
+			} else {
+
+				result = treat_exit(buffer, bytes_read);
+				if (result == 0) {
+					bytes_read = result;
+					mouse_event = 0;
+					times = 0;
+					goto exit;
+				}
+
 				printf("Invalid event!\n");
+			}
 		}
-	} else
+		goto exit;
+	}
+
+	if (result != NONE) {
 		send_event(KeyPress, x_key_code[result], active_display);
+		goto exit;
+	}
 
-
+exit:
 	return bytes_read;
 }
+
+int treat_exit(char *buffer, int length) {
+
+	int result = protocol_command(buffer, length);
+	if (result != NONE) {
+
+		switch (result) {
+
+		case CONN_CLOSE:
+			result = 0;
+			break;
+			/* TODO: add server stop code */
+		case SERVER_STOP:
+			break;
+			/* TODO: add image handling/screenshot code */
+		case RESOLUTION:
+			break;
+			/* TODO: add image handling/screenshot code */
+		case IMG_FORMAT:
+			break;
+
+		}
+
+	}
+
+	return result;
+
+}
+
