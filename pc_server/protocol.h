@@ -155,7 +155,7 @@ static int protocol_command(char *cmd, int length)
 	else if (strncasecmp(cmd, all_codes[RESOLUTION], length))
 		res = RESOLUTION;
 	else if (strncasecmp(cmd, all_codes[IMG_FORMAT], length))
-		res = CONN_CLOSE;
+		res = IMG_FORMAT;
 
 	return res;
 }
