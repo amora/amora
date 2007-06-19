@@ -38,7 +38,8 @@
 enum { UP, DOWN, LEFT, RIGHT,
        MOUSE_MOVE, MOUSE_BUTTON_PRESS, MOUSE_BUTTON_RELEASE,
        MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_LEFT, MOUSE_BUTTON_MIDDLE,
-       MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN,
+       MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN, CONN_CLOSE, SERVER_STOP,
+       RESOLUTION, IMG_FORMAT
        NONE } codes;
 
 /** Command event codes, what we expect to receive from
@@ -62,6 +63,12 @@ static char *cell_mouse_code[] = { "MOUSE_MOVE",
 			   "MOUSE_SCROLL_UP",
 			   "MOUSE_SCROLL_DOWN"
 };
+
+/** Protocol control strings.
+ *
+ */
+static char protocol_codes[] = { "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
+				 "IMG_FORMAT" };
 
 
 /** Special character to describe end of command */
