@@ -79,12 +79,16 @@ class application:
         self.running = 1
         appuifw.app.body = self.presentation
         appuifw.app.exit_key_handler = self.quit
-        if self.keyboard.is_down(EScancode6):
+        #XXX: fix to make slide control work, I should write a code
+        # to process continously pressing given a time out value.
+        if self.keyboard.pressed(EScancode6):
             print u'RIGHT'
             self.bt.write_line(u'RIGHT')
-        elif self.keyboard.is_down(EScancode4):
+        elif self.keyboard.pressed(EScancode4):
             print u'LEFT'
             self.bt.write_line(u'LEFT')
+        #FIXME: behaviour is different here... keeping pressed button
+        # continue to send events.
         elif self.keyboard.is_down(EScancode2):
             print u'UP'
             self.bt.write_line(u'UP')
