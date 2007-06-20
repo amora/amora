@@ -8,7 +8,6 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
- * - a 'stop/close' command in protocol.
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
