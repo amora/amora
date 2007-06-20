@@ -8,6 +8,10 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
+ * - mouse click
+ * - ESC/Page UP/DOWN
+ * - new background/icon for connected status
+ * - refactor main.c, its starting to get smelly
  * - screenshot from active window.
  * - autotools buildsystem.
  * - logging feature.
