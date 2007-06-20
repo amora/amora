@@ -46,8 +46,8 @@
  *
  *
  * @param buffer A string buffer with commands (i.e. CONN_CLOSE), see
- * \ref all_codes
- * @param bytes_read Buffer length
+ * all_codes in \ref protocol.h
+ * @param length Buffer length
  *
  * @return 0 for closing the connection.  \todo Think how
  * to process other events.

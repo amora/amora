@@ -82,7 +82,8 @@ void destroy_sd(struct service_description *sd);
 
 /** Read and parse commands from socket.
  *
- * It uses a new line as command terminating character, see \ref CMD_BREAK.
+ * It uses a new line as command terminating character, see CMD_BREAK in
+ * source file \ref protocol.h.
  *
  * @param client The socket open to client cell phone.
  * @param data Pointer to buffer to write data.
