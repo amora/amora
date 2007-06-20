@@ -121,7 +121,6 @@ int main(int argc, char* argv[])
 	}
 
 	while (1) {
-	outer_while:
 		printf("Entering main loop...\n");
 		client_socket = accept(server_socket,
 				       (struct sockaddr *)&rem_addr, &opt);
@@ -150,7 +149,7 @@ int main(int argc, char* argv[])
 				printf("Client asked to close connection\n\n");
 				close(client_socket);
 				client_socket = -1;
-				goto outer_while;
+				break;
 			}
 		}
 
