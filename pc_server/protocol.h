@@ -135,7 +135,7 @@ static int ecell_mouse_ewindow(char *event, int length)
 
 /** Convert a cell mouse event to correspondent protocol code.
  *
- * @param event String with event/command.
+ * @param cmd String with event/command.
  * @param length Length of string command.
  *
  * @return A code representing the event or NONE otherwise.
