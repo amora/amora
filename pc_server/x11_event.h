@@ -32,7 +32,8 @@
 
 #include <X11/Xlib.h>
 #include <sys/timeb.h>
-
+#include <X11/extensions/XTest.h>
+#include "protocol.h"
 
 /** X server key codes, you can get them from 'xev'
  * ps: first element is -1, since enumerations should
@@ -156,5 +157,52 @@ int mouse_move(int x, int y, Display *active_display)
 
 }
 
+/** Function to send mouse button events.
+ *
+ * It requires XTest extension available on host, and also library
+ * XTest. I don't like to increase dependecies on server app, but
+ * don't know any other way to send mouse button events to X server.
+ *
+ * @param mouse_button Mouse button code, see \ref codes
+ * @param button_status If button is pressed (MOUSE_BUTTON_PRESS) or released
+ * (MOUSE_BUTTON_RELEASE)
+ * @param active_display Current Display, connection with X server (see
+ * \ref construct_display)
+ *
+ * @return 0 on sucess, -1 otherwise.
+ */
+int mouse_click(int mouse_button, int button_status, Display *active_display)
+{
+	int result = -1;
+	static int is_xtest_available = -1;
+	int ev, er, ma, mi;
+	int revert_to;
+	Window win;
+
+	if (is_xtest_available == -1)
+		is_xtest_available = XTestQueryExtension(active_display,
+							 &ev, &er, &ma, &mi);
+
+	if (is_xtest_available) {
+		XGetInputFocus(active_display, &win, &revert_to);
+
+		/* FIXME: errr... I think there is a mix up here, actually
+		 * is the left button.
+		 */
+		if (mouse_button == MOUSE_BUTTON_RIGHT &&
+			button_status == MOUSE_BUTTON_PRESS)
+			XTestFakeButtonEvent(active_display, 1, True, CurrentTime);
+		else if (mouse_button == MOUSE_BUTTON_RIGHT &&
+			button_status == MOUSE_BUTTON_RELEASE)
+			XTestFakeButtonEvent(active_display, 1, False, CurrentTime);
+		/* TODO: add code for other buttons */
+
+		XFlush(active_display);
+		result = 0;
+	} else
+		printf("Cannot create mouse click events\n");
+
+	return result;
+}
 
 #endif

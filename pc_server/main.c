@@ -8,7 +8,7 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
- * - mouse click
+ * - mouse drag, middle button and other button.
  * - ESC/Page UP/DOWN
  * - new background/icon for connected status
  * - refactor main.c, its starting to get smelly
@@ -174,7 +174,9 @@ int process_events(int fd, Display *active_display, int clean_up)
 {
 	static char *buffer = NULL;
 	const int BUF_SIZE = 300;
-	static unsigned char mouse_event = 0, times = 0;
+	static unsigned char mouse_event = 0, times = 0,
+		button_release = 0, button_press = 0,
+		button_right = 0, button_left = 0, button_middle = 0;
 	static int x_mouse, y_mouse;
 	int bytes_read, result;
 
@@ -213,10 +215,16 @@ int process_events(int fd, Display *active_display, int clean_up)
 			mouse_event = 1;
 			break;
 		case MOUSE_BUTTON_RIGHT:
-			/* TODO: add mouse event X code */
+			button_right = 1;
+			button_left = button_middle = 0;
 			break;
 		case MOUSE_BUTTON_LEFT:
-			/* TODO: add mouse event X code */
+			button_left = 1;
+			button_right = button_middle = 0;
+			break;
+		case MOUSE_BUTTON_MIDDLE:
+			button_middle = 1;
+			button_right = button_left = 0;
 			break;
 		case NONE:
 			if (mouse_event == 1) {
@@ -249,6 +257,22 @@ int process_events(int fd, Display *active_display, int clean_up)
 
 				printf("Invalid event!\n");
 			}
+			break;
+		default:
+			if (button_right)
+				mouse_click(MOUSE_BUTTON_RIGHT, result,
+					    active_display);
+			else if (button_left)
+				mouse_click(MOUSE_BUTTON_LEFT, result,
+					    active_display);
+			else if (button_middle)
+				mouse_click(MOUSE_BUTTON_MIDDLE, result,
+					    active_display);
+			break;
+#define VERBOSE
+#ifdef VERBOSE
+			printf("data = %s\n", buffer);
+#endif
 		}
 		goto exit;
 	}

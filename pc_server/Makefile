@@ -2,7 +2,7 @@ CC=gcc
 
 
 test_presenter: main.o linux.o
-	$(CC) -o test_presenter main.o linux.o -lX11 -lbluetooth
+	$(CC) -o test_presenter main.o linux.o -lX11 -lbluetooth -lXtst
 
 main.o: main.c linux.o
 	$(CC) -c main.c -Wall
