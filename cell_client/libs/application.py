@@ -97,6 +97,7 @@ class application:
         elif self.keyboard.is_down(EScancode8):
             print u'DOWN'
             self.bt.write_line(u'DOWN')
+        #Mouse move event processing
         elif self.keyboard.is_down(EScancodeUpArrow):
             print u'MOUSE_UP'
             self.mouse_y = self.mouse_y - self.delta
@@ -121,6 +122,12 @@ class application:
             self.bt.write_line(u'MOUSE_MOVE')
             self.bt.write_line(str(self.mouse_x))
             self.bt.write_line(str(self.mouse_y))
+        #Mouse click event processing
+        elif self.keyboard.pressed(EScancodeSelect):
+            print u'MOUSE CLICK'
+            self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
+            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
 
 
 
