@@ -35,5 +35,5 @@ while flag:
     if (app.running == 1):
         app.start()
     elif app.running == -1:
-        flag = 1
+        flag = 0
     e32.ao_yield()
