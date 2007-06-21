@@ -125,7 +125,7 @@ class application:
         #Mouse click event processing
         elif self.keyboard.pressed(EScancodeSelect):
             print u'MOUSE CLICK'
-            self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
+            self.bt.write_line(u'MOUSE_BUTTON_LEFT')
             self.bt.write_line(u'MOUSE_BUTTON_PRESS')
             self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
 

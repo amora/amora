@@ -186,13 +186,10 @@ int mouse_click(int mouse_button, int button_status, Display *active_display)
 	if (is_xtest_available) {
 		XGetInputFocus(active_display, &win, &revert_to);
 
-		/* FIXME: errr... I think there is a mix up here, actually
-		 * is the left button.
-		 */
-		if (mouse_button == MOUSE_BUTTON_RIGHT &&
+		if (mouse_button == MOUSE_BUTTON_LEFT &&
 			button_status == MOUSE_BUTTON_PRESS)
 			XTestFakeButtonEvent(active_display, 1, True, CurrentTime);
-		else if (mouse_button == MOUSE_BUTTON_RIGHT &&
+		else if (mouse_button == MOUSE_BUTTON_LEFT &&
 			button_status == MOUSE_BUTTON_RELEASE)
 			XTestFakeButtonEvent(active_display, 1, False, CurrentTime);
 		/* TODO: add code for other buttons */
