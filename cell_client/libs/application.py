@@ -131,7 +131,7 @@ class application:
         elif self.keyboard.pressed(EScancode7):
             print u'SCROLL_UP'
             self.bt.write_line(u'MOUSE_SCROLL_UP')
-        elif self.keyboard.pressed(EScancode9):
+        elif self.keyboard.pressed(EScancodeStar):
             print u'SCROLL_DOWN'
             self.bt.write_line(u'MOUSE_SCROLL_DOWN')
 
