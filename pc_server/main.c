@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 	}
 
 	printf("\nInitialization done, waiting cellphone connection...\n");
-	res = listen(server_socket, 1);
+	res = listen(server_socket, 10);
 	if (res) {
 		printf("Failed listening...\n");
 		return -1;
