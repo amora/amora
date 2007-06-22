@@ -128,6 +128,12 @@ class application:
             self.bt.write_line(u'MOUSE_BUTTON_LEFT')
             self.bt.write_line(u'MOUSE_BUTTON_PRESS')
             self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+        elif self.keyboard.pressed(EScancode7):
+            print u'SCROLL_UP'
+            self.bt.write_line(u'MOUSE_SCROLL_UP')
+        elif self.keyboard.pressed(EScancode9):
+            print u'SCROLL_DOWN'
+            self.bt.write_line(u'MOUSE_SCROLL_DOWN')
 
 
 
