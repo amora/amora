@@ -226,6 +226,12 @@ int process_events(int fd, Display *active_display, int clean_up)
 			button_middle = 1;
 			button_right = button_left = 0;
 			break;
+		case MOUSE_SCROLL_UP:
+			mouse_click(result, NULL, active_display);
+			break;
+		case MOUSE_SCROLL_DOWN:
+			mouse_click(result, NULL, active_display);
+			break;
 		case NONE:
 			if (mouse_event == 1) {
 				if (times == 0) {

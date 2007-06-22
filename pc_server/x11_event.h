@@ -188,11 +188,41 @@ int mouse_click(int mouse_button, int button_status, Display *active_display)
 
 		if (mouse_button == MOUSE_BUTTON_LEFT &&
 			button_status == MOUSE_BUTTON_PRESS)
-			XTestFakeButtonEvent(active_display, 1, True, CurrentTime);
+			XTestFakeButtonEvent(active_display, 1, True,
+					     CurrentTime);
 		else if (mouse_button == MOUSE_BUTTON_LEFT &&
 			button_status == MOUSE_BUTTON_RELEASE)
-			XTestFakeButtonEvent(active_display, 1, False, CurrentTime);
-		/* TODO: add code for other buttons */
+			XTestFakeButtonEvent(active_display, 1, False,
+					     CurrentTime);
+		else if (mouse_button == MOUSE_BUTTON_MIDDLE &&
+			button_status == MOUSE_BUTTON_PRESS)
+			XTestFakeButtonEvent(active_display, 2, True,
+					     CurrentTime);
+		else if (mouse_button == MOUSE_BUTTON_MIDDLE &&
+			button_status == MOUSE_BUTTON_RELEASE)
+			XTestFakeButtonEvent(active_display, 2, False,
+					     CurrentTime);
+		else if (mouse_button == MOUSE_BUTTON_RIGHT &&
+			button_status == MOUSE_BUTTON_PRESS)
+			XTestFakeButtonEvent(active_display, 3, True,
+					     CurrentTime);
+		else if (mouse_button == MOUSE_BUTTON_RIGHT &&
+			button_status == MOUSE_BUTTON_RELEASE)
+			XTestFakeButtonEvent(active_display, 3, False,
+					     CurrentTime);
+		else if (mouse_button == MOUSE_SCROLL_UP) {
+			XTestFakeButtonEvent(active_display, 4, True,
+					     CurrentTime);
+			XTestFakeButtonEvent(active_display, 4, False,
+					     CurrentTime);
+
+		} else if (mouse_button == MOUSE_SCROLL_DOWN) {
+			XTestFakeButtonEvent(active_display, 5, True,
+					     CurrentTime);
+			XTestFakeButtonEvent(active_display, 5, False,
+					     CurrentTime);
+
+		}
 
 		XFlush(active_display);
 		result = 0;
