@@ -35,11 +35,20 @@
 #include <X11/extensions/XTest.h>
 #include "protocol.h"
 
-/** X server key codes, you can get them from 'xev'
+/** X server key codes, you can get them from 'xev',
+ * bellow are the key codes for following keys:
+ * - Arrow up
+ * - Arrow down
+ * - Arrow left
+ * - Arrow right
+ * - Enter key
+ * - ESC key
+ * - Space key
+ *
  * ps: first element is -1, since enumerations should
  * not have value zero. See \ref codes.
  */
-int x_key_code[] = { -1, 98, 104, 100, 102 };
+int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65 };
 
 
 /** Display handler creator.

@@ -134,6 +134,15 @@ class application:
         elif self.keyboard.pressed(EScancodeStar):
             print u'SCROLL_DOWN'
             self.bt.write_line(u'MOUSE_SCROLL_DOWN')
-
+        #Special keys event processing
+        elif self.keyboard.pressed(EScancode9):
+            print u'ESC'
+            self.bt.write_line(u'ESC')
+        elif self.keyboard.pressed(EScancodeHash):
+            print u'SPACE'
+            self.bt.write_line(u'SPACE')
+        elif self.keyboard.pressed(EScancode5):
+            print u'ENTER'
+            self.bt.write_line(u'ENTER')
 
 
