@@ -274,10 +274,6 @@ int process_events(int fd, Display *active_display, int clean_up)
 				mouse_click(MOUSE_BUTTON_MIDDLE, result,
 					    active_display);
 			break;
-#define VERBOSE
-#ifdef VERBOSE
-			printf("data = %s\n", buffer);
-#endif
 		}
 		goto exit;
 	}

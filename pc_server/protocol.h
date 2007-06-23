@@ -42,7 +42,7 @@
  **/
 enum { NONE = -1,
        UP = 1, DOWN, LEFT, RIGHT,
-       ENTER, ESC, SPACE,
+       ENTER, ESC, SPACE, DEL, ALT, TAB,
        MOUSE_MOVE, MOUSE_BUTTON_PRESS, MOUSE_BUTTON_RELEASE,
        MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_LEFT, MOUSE_BUTTON_MIDDLE,
        MOUSE_SCROLL_UP, MOUSE_SCROLL_DOWN,
@@ -57,6 +57,7 @@ enum { NONE = -1,
 static const char *all_codes[] = { "EMPTY",
 				   "UP", "DOWN", "LEFT", "RIGHT",
 				   "ENTER", "ESC", "SPACE",
+				   "DEL", "ALT", "TAB",
 				   "MOUSE_MOVE", "MOUSE_BUTTON_PRESS",
 				   "MOUSE_BUTTON_RELEASE",
 				   "MOUSE_BUTTON_RIGHT",
@@ -98,6 +99,12 @@ static int ecell_button_ewindow(char *event, int length)
 		res = ESC;
 	else if (!strncasecmp(event, all_codes[SPACE], length))
 		res = SPACE;
+	else if (!strncasecmp(event, all_codes[DEL], length))
+		res = DEL;
+	else if (!strncasecmp(event, all_codes[ALT], length))
+		res = ALT;
+	else if (!strncasecmp(event, all_codes[TAB], length))
+		res = TAB;
 
 	return res;
 };
