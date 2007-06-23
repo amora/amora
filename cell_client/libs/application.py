@@ -138,7 +138,7 @@ class application:
         elif self.keyboard.pressed(EScancode9):
             print u'ESC'
             self.bt.write_line(u'ESC')
-        elif self.keyboard.pressed(EScancodeHash):
+        elif self.keyboard.pressed(EScancode0):
             print u'SPACE'
             self.bt.write_line(u'SPACE')
         elif self.keyboard.pressed(EScancode5):
