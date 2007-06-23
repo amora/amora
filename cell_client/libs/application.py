@@ -144,5 +144,8 @@ class application:
         elif self.keyboard.pressed(EScancode5):
             print u'ENTER'
             self.bt.write_line(u'ENTER')
+        elif self.keyboard.pressed(EScancodeBackspace):
+            print u'DEL'
+            self.bt.write_line(u'DEL')
 
 
