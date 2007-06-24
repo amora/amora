@@ -81,6 +81,7 @@ int read_socket(int client, char *data, int length)
 	memset(data, 0, length);
 
 	while (!strchr(data, CMD_BREAK) && (res < length)) {
+		/* TODO: add error checking here. */
 		tmp = read(client, data, length);
 		res += tmp;
 		length -= res;
