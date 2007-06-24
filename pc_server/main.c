@@ -57,6 +57,21 @@
  */
 int treat_exit(char *buffer, int length);
 
+
+/** Check for protocol commands, handle input events (mouse
+ * and keyboard).
+ *
+ *
+ * @param buffer A string buffer with commands (i.e. UP, DOWN), see
+ * all_codes in \ref protocol.h
+ * @param length Buffer length
+ * @param active_display Pointer to active display.
+ *
+ * @return 0 for closing the connection.
+ */
+int treat_events(char *buffer, int length, Display *active_display);
+
+
 /** Process event stream. Reads what new commands are being received
  * in socket and send them to X session.
  *
@@ -67,6 +82,7 @@ int treat_exit(char *buffer, int length);
  * @return Number of bytes read on sucess, -1 on error, 0 on exit.
  */
 int process_events(int fd, Display *active_display, int clean_up);
+
 
 /** Main app function.
  *
@@ -173,11 +189,8 @@ int process_events(int fd, Display *active_display, int clean_up)
 {
 	static char *buffer = NULL;
 	const int BUF_SIZE = 300;
-	static unsigned char mouse_event = 0, times = 0,
-		button_release = 0, button_press = 0,
-		button_right = 0, button_left = 0, button_middle = 0;
-	static int x_mouse, y_mouse;
-	int bytes_read, result;
+	int bytes_read, result = -1;
+	char *start, *end;
 
 	/* Call to just cleanup local allocated memory. */
 	if ((clean_up == 1) && (fd == 0) && (active_display == NULL)) {
@@ -193,22 +206,36 @@ int process_events(int fd, Display *active_display, int clean_up)
 		buffer = malloc(BUF_SIZE);
 		if (!buffer) {
 			perror("Buffer memory allocation failed: ");
-			return -1;
+			return result;
 		}
 	}
 
 	bytes_read = read_socket(fd, buffer, BUF_SIZE);
+	if (bytes_read == -1)
+		return result;
 
-	/* Remember that there is the CMD_BREAK character at end of
-	 * command!
-	 */
-	--bytes_read;
+	start = buffer;
+	while (end = strchr(start, CMD_BREAK)) {
+		result = treat_events(start, (end - start), active_display);
+		start = ++end;
+	}
+
+	return result;
+}
+
+int treat_events(char *buffer, int length, Display *active_display)
+{
+	static unsigned char mouse_event = 0, times = 0,
+		button_release = 0, button_press = 0,
+		button_right = 0, button_left = 0, button_middle = 0;
+	static int x_mouse, y_mouse;
+	int result;
 
 	/* TODO: move this whole code block to a distinct function */
-	result = ecell_button_ewindow(buffer, bytes_read);
+	result = ecell_button_ewindow(buffer, length);
  	if (result == NONE) {
 
-		result = ecell_mouse_ewindow(buffer, bytes_read);
+		result = ecell_mouse_ewindow(buffer, length);
 		switch (result) {
 		case MOUSE_MOVE:
 			mouse_event = 1;
@@ -252,9 +279,8 @@ int process_events(int fd, Display *active_display, int clean_up)
 				}
 			} else {
 
-				result = treat_exit(buffer, bytes_read);
+				result = treat_exit(buffer, length);
 				if (result == 0) {
-					bytes_read = result;
 					mouse_event = 0;
 					times = 0;
 					goto exit;
@@ -284,8 +310,10 @@ int process_events(int fd, Display *active_display, int clean_up)
 	}
 
 exit:
-	return bytes_read;
+	return result;
+
 }
+
 
 int treat_exit(char *buffer, int length) {
 
