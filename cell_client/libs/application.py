@@ -49,7 +49,10 @@ class application:
     #TODO: Add another object for 'options' window
     def __init__(self):
         appuifw.app.title = u'P4X'
-        appuifw.app.menu = [(u'connect', self.__connect), (u'start', self.start)]
+        appuifw.app.menu = [(u'Search devices', self.__connect),
+                            (u'Configuration', self.__configuration),
+                            (u'Help', self.__help),
+                            (u'Exit', self.quit)]
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
         #Cleanup the screen
@@ -64,11 +67,22 @@ class application:
             self.bt.write_line(u'CONN_CLOSE')
             self.bt.close()
         appuifw.app.set_exit()
+    #Call configuration dialog
+    #TODO: implement method.
+    def __configuration(self):
+        appuifw.note(u'Not implemented')
+    #Call Help dialog
+    #TODO: implement method.
+    def __help(self):
+        appuifw.note(u'Not implemented')
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
         self.bt = bt_client()
         self.bt.connect()
+        appuifw.app.menu = [(u'Start', self.start),
+                            (u'Help', self.__help),
+                            (u'Exit', self.quit)]
     #Start presentation mode
     def start(self):
         #Creates presentation display if it already doesn't exist.
