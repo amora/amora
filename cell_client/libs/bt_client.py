@@ -30,8 +30,19 @@ import appuifw
 import e32
 
 class bt_client:
-    #TODO: error treatment
+    #Default constructor
+    def __init__(self):
+        self.port = None
+        self.sock = None
+    #This method scans for bluetooth devices and create a socket
+    #with a user selected device.
     def connect(self):
+        self.port = None
+        #Close remaining connections
+        if self.sock != None:
+            self.sock.close()
+            self.sock = None
+        #Create new socket
         self.sock = socket.socket(socket.AF_BT, socket.SOCK_STREAM)
         addr,services = socket.bt_discover()
         print "Discovered: %s, %s"%(addr,services)
@@ -40,10 +51,10 @@ class bt_client:
             choices.sort()
             choice = appuifw.popup_menu([unicode(services[x]) + ": " + x
                                        for x in choices], u'Choose port:')
-            port = services[choices[choice]]
+            self.port = services[choices[choice]]
         else:
-            port = services[services.keys()[0]]
-        address = (addr,port)
+            self.port = services[services.keys()[0]]
+        address = (addr, self.port)
         print "Connecting to " + str(address) + "...",
         self.sock.connect(address)
         print "OK."
@@ -60,10 +71,12 @@ class bt_client:
 #        return ''.join(line)
     #Writes a command line, adding a newline at end of string
     def write_line(self, command):
-        self.sock.send(command + '\n');
+        if self.port != None:
+            self.sock.send(command + '\n');
     #Closes bluetooth socket
     def close(self):
-        self.sock.close()
+        if self.sock != None:
+            self.sock.close()
 
 
 
