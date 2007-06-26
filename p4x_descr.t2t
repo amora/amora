@@ -28,10 +28,10 @@ geek users.
 
 Even if there are already MS-Windows only applications with similar
 purpose, *nix users are forgotten. And strangely, the opensource projects
-are cryptic (or not strangely after all...) to use or plain and simple
+are cryptic to use (or not strangely after all...) or plain and simple
 don't work.
 
-I decided to write this code to answer my own need of a application that has:
+I decided to write this code to answer my own need of an application that has:
  - Nice GUI on cellphone
  - Server side doesn't require any configuration
 
@@ -74,7 +74,7 @@ After installing the dependencies, change to directory 'pc_server'
 and execute the following command:
 $make
 
-It will generate a executable file named 'test_presenter', you must
+It will generate an executable file named 'test_presenter', you must
 start the application (and make sure that the bluetooth dongle is
 connected to the computer):
 $./test_presenter
@@ -146,3 +146,14 @@ X server to control most of its apps.
 
  - Write a J2ME client for other cellphone models (Nokia S40, e.g. 6111).
 
+
+== Related Projects ==
+
+
+ - [controlblue http://code.google.com/p/controlblue/]
+
+ - [pys60rc http://pys60rc.sourceforge.net/]
+
+ - [GNOME Bluetooth Control Remoto (GBTcr) http://gbtcr.chileforge.cl/]
+
+ - [pys60miniapps xmms http://sourceforge.net/projects/pys60miniapps/]
