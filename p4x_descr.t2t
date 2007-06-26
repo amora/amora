@@ -110,7 +110,8 @@ a while to figure out rescale parameters for icon images.
 
  - Autotools buildsystem: because real programmers do it!
 
- - Create a deb file with server app.
+ - Create a deb file with server app (checkinstall make it easy if the app
+has an autotools-based buildsystem).
 
  - Current display thumbnail: this is going to be hard, will require at least
 one more dependency to convert a screenshot to an image compressed format (like
