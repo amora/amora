@@ -51,7 +51,15 @@ A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
 
 == Software dependencies ==
 
-To compile the source code (servner side only), you will need:
+To run the application, you need to install Python for S60, available in
+[PyS60 http://pys60.sourceforge.net]. There are 2 files required, the python
+interpreter and the python shell, you need to download them and install
+to be able to execute python programs in your cellphone.
+
+To install the cellphone client application, just copy the files in a folder
+named 'Python' in cellphone memory card.
+
+For server side, to compile the source code, you will need:
  - gcc compiler
  - Xlibs
  - XTest libs
@@ -62,8 +70,19 @@ And also XTest extension enabled in you X server (default on Ubuntu). So,
 in Ubuntu simply run in your terminal:
 $sudo apt-get install  gcc libxext-dev libbluetooth2-dev
 
+After installing the dependencies, change to directory 'pc_server'
+and execute the following command:
+$make
+
+It will generate a executable file named 'test_presenter', you must
+start the application (and make sure that the bluetooth dongle is
+connected to the computer):
+$./test_presenter
+
+
 
 = Project status =
+
 
 What works: mouse moving, left button clicking, mouse scroll wheel,
 keyboard shortcuts (ENTER, ESC, SPACE, Arrow keys).
@@ -87,7 +106,11 @@ a while to figure out rescale parameters for icon images.
 
  - Mouse drag: boring, but easy.
 
+ - Create a SIS file with python + app bundled.
+
  - Autotools buildsystem: because real programmers do it!
+
+ - Create a deb file with server app.
 
  - Current display thumbnail: this is going to be hard, will require at least
 one more dependency to convert a screenshot to an image compressed format (like
