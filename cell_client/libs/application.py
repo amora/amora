@@ -49,12 +49,20 @@ class application:
     #TODO: Add another object for 'options' window
     def __init__(self):
         appuifw.app.title = u'P4X'
+                            #(u'options', lambda:None)]
+        appuifw.app.exit_key_handler = self.quit
+        self.reset()
+    #Reset application to its initial state
+    def reset(self):
         appuifw.app.menu = [(u'Search devices', self.__connect),
                             (u'Configuration', self.__configuration),
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
-                            #(u'options', lambda:None)]
-        appuifw.app.exit_key_handler = self.quit
+        if self.keyboard != None:
+            self.keyboard = None
+        if self.presentation != None:
+            self.presentation = None
+        self.running = 0
         #Cleanup the screen
         self.wallpaper = wallpaper()
         appuifw.app.body = self.wallpaper.canvas
@@ -81,8 +89,14 @@ class application:
         self.bt = bt_client()
         self.bt.connect()
         appuifw.app.menu = [(u'Start', self.start),
+                            (u'Disconnect', self.__reset),
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
+    #Reset connection, restore initial GUI menu elements
+    def __reset(self):
+        self.bt.write_line(u'CONN_CLOSE')
+        self.bt.close()
+        self.reset()
     #Start presentation mode
     def start(self):
         #Creates presentation display if it already doesn't exist.
@@ -92,6 +106,11 @@ class application:
             self.presentation = appuifw.Canvas(event_callback =
                                                self.keyboard.handle_event,
                                                redraw_callback = None)
+        #First time the function is called, change menu
+        if self.running == 0:
+            appuifw.app.menu = [(u'Disconnect', self.__reset),
+                                (u'Help', self.__help),
+                                (u'Exit', self.quit)]
         self.running = 1
         appuifw.app.body = self.presentation
         appuifw.app.exit_key_handler = self.quit

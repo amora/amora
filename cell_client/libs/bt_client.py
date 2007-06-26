@@ -77,6 +77,8 @@ class bt_client:
     def close(self):
         if self.sock != None:
             self.sock.close()
+            self.port = None
+            self.sock = None
 
 
 
