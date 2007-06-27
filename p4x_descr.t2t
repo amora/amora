@@ -1,0 +1,159 @@
+P4X: Presenter for X
+Adenilson Cavalcanti (savagobr@yahoo.com)
+
+
+= Abstract =
+
+You got a cellphone with bluetooth and still need to manually control
+slides when making a presentation?
+
+Don't worry anymore, P4X (Presenter 4 X) implements control of mouse
+and most of keyboard shortcuts (ESC, ENTER, SPACE, arrow keys, etc)
+making easy this task.
+
+Currently, the client is implemented in Python for S60 (Nokia cellphones)
+and the server is written in C programming language using Xlib and XTest to
+send events for X session and POSIX socket API for I/O.
+
+For bluetooth SDP I used BlueZ (so for while, this part of server is
+Linux only), there are plans to port the server to run in other
+*nix architectures (FreeBSD, Solaris, Mac OSX).
+
+
+= Rationale =
+
+Most of notebooks are bluetooth ready, and case negative, a bluetooth dongle
+is really cheap, as also cellphones with bluetooth are common place for
+geek users.
+
+Even if there are already MS-Windows only applications with similar
+purpose, *nix users are forgotten. And strangely, the opensource projects
+are cryptic to use (or not strangely after all...) or plain and simple
+don't work.
+
+I decided to write this code to answer my own need of an application that has:
+ - Nice GUI on cellphone
+ - Server side doesn't require any configuration
+
+
+Also, expanding the idea of a simple remote control, I will add some features
+that can be potentially useful for slide presentations:
+ - a stopwatch
+ - window preview in cellphone (to be implemented)
+
+
+== Hardware required ==
+
+A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
+(tested on Ubuntu 6.06 and 6.10) and a bluetooth dongle.
+
+
+
+== Software dependencies ==
+
+To run the application, you need to install Python for S60, available in
+[PyS60 http://pys60.sourceforge.net]. There are 2 files required, the python
+interpreter and the python shell, you need to download them and install
+to be able to execute python programs in your cellphone.
+
+To install the cellphone client application, just copy the files in a folder
+named 'Python' in cellphone memory card.
+
+For server side, to compile the source code, you will need:
+ - gcc compiler
+ - Xlibs
+ - XTest libs
+ - BlueZ libs
+
+
+And also XTest extension enabled in you X server (default on Ubuntu). So,
+in Ubuntu simply run in your terminal:
+$sudo apt-get install  gcc libxext-dev libbluetooth2-dev
+
+After installing the dependencies, change to directory 'pc_server'
+and execute the following command:
+$make
+
+It will generate an executable file named 'test_presenter', you must
+start the application (and make sure that the bluetooth dongle is
+connected to the computer):
+$./test_presenter
+
+
+
+= Project status =
+
+
+What works: mouse moving, left button clicking, mouse scroll wheel,
+keyboard shortcuts (ENTER, ESC, SPACE, Arrow keys).
+
+Cellphone client can be started independently of server side application.
+You can close the connection from cellphone and later reconnect without
+restarting the server.
+
+Its stable and I already use it to control my slides and movie watching (i.e.:
+I can start a slide presentation, stop it, move the mouse cursor to a
+directory, double click in a video file and control most of actions in
+MPlayer).
+
+
+== What is next ==
+
+ - Icon animation to display event type in cellphone: easy, but takes
+a while to figure out rescale parameters for icon images.
+
+ - Integrate stopwatch: easy, already got some code for it.
+
+ - Mouse drag: boring, but easy.
+
+ - Create a SIS file with python + app bundled.
+
+ - Autotools buildsystem: because real programmers do it!
+
+ - Create a deb file with server app (checkinstall make it easy if the app
+has an autotools-based buildsystem).
+
+ - Current display thumbnail: this is going to be hard, will require at least
+one more dependency to convert a screenshot to an image compressed format (like
+JPEG) to save bluetooth use. It is not going to be usable for cellphone with
+resolution lower than 176x208 (i.e. Nokia N70).
+
+ - Integration of bluetooth preview with cellphone client GUI: user must
+have alternatives like enable/disable window preview, swap view mode
+(fullscreen X widescreen), set quality/compression parameters.
+
+ - Heart beat between the server and cellphone client: not easy, I think it
+will need a thread in cellphone.
+
+ - Forking the server process when receiving a new connection: easy, can be
+not really necessary with heart beat.
+
+ - cellphone client mouse acceleration: currently I use a fixed amount of
+pixels to move the mouse around (let's call it **delta**). A dynamic delta
+can improve mouse moving, based on last time the user pressed/moved the mouse.
+
+ - A logging feature: can help to track bugs, but up until now just nice to
+have.
+
+ - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
+SDP API is documented in BSD) and **if** there are source code examples
+available.
+
+ - Solaris port: no idea too, same case as FreeBSD.
+
+ - Mac OSX: well, it has 1 more factor of difficulty since Mac doesn't use
+X server to control most of its apps.
+
+ - Write a J2ME client for other cellphone models (Nokia S40, e.g. 6111).
+
+
+== Related Projects ==
+
+
+ - [controlblue http://code.google.com/p/controlblue/]
+
+ - [pys60rc http://pys60rc.sourceforge.net/]
+
+ - [GNOME Bluetooth Control Remoto (GBTcr) http://gbtcr.chileforge.cl/]
+
+ - [pys60miniapps xmms http://sourceforge.net/projects/pys60miniapps/]
