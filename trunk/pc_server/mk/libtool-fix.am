@@ -1,0 +1,5 @@
+ # fix make -s
+ # please keep this "if" indented
+ ifneq (,$(findstring s,$(MAKEFLAGS)))
+ LIBTOOL += --silent
+ endif
