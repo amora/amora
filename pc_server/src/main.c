@@ -92,16 +92,18 @@ int process_events(int fd, Display *active_display, int clean_up);
  *
  * @return 0 on sucess, -1 on error.
  */
-int main(int argc, char* argv[])
+int main(void)
 {
 	Display *own_display = NULL;
 	int server_socket, client_socket, channel = 10, res;
 	int clean_up = 0;
 	fd_set fd_set_socket;
 	struct timeval time_socket;
-	struct sockaddr rem_addr = { 0 };
+	struct sockaddr rem_addr;
 	unsigned int opt = sizeof(rem_addr);
 	struct service_description *sd = NULL;
+
+	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
 	own_display = construct_display(NULL);
 	if (!own_display) {
@@ -215,7 +217,7 @@ int process_events(int fd, Display *active_display, int clean_up)
 		return result;
 
 	start = buffer;
-	while (end = strchr(start, CMD_BREAK)) {
+	while ((end = strchr(start, CMD_BREAK))) {
 		result = treat_events(start, (end - start), active_display);
 		start = ++end;
 	}
@@ -226,7 +228,6 @@ int process_events(int fd, Display *active_display, int clean_up)
 int treat_events(char *buffer, int length, Display *active_display)
 {
 	static unsigned char mouse_event = 0, times = 0,
-		button_release = 0, button_press = 0,
 		button_right = 0, button_left = 0, button_middle = 0;
 	static int x_mouse, y_mouse;
 	int result;
@@ -253,10 +254,10 @@ int treat_events(char *buffer, int length, Display *active_display)
 			button_right = button_left = 0;
 			break;
 		case MOUSE_SCROLL_UP:
-			mouse_click(result, NULL, active_display);
+			mouse_click(result, 0, active_display);
 			break;
 		case MOUSE_SCROLL_DOWN:
-			mouse_click(result, NULL, active_display);
+			mouse_click(result, 0, active_display);
 			break;
 		case NONE:
 			if (mouse_event == 1) {

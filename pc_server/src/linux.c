@@ -94,8 +94,10 @@ int read_socket(int client, char *data, int length)
 
 int build_bluetooth_socket(unsigned int channel)
 {
-	struct sockaddr_rc loc_addr = { 0 };
+	struct sockaddr_rc loc_addr;
 	int s, res = -1;
+
+	memset(&loc_addr, 0, sizeof(struct sockaddr_rc));
 
 	s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 	if (s == -1)
