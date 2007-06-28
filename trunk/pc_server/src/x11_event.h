@@ -62,7 +62,7 @@ int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65, 107, 64, 23 };
  *
  * @return A pointer to a display structure or NULL in error.
  */
-Display* construct_display(char *display_name)
+static Display* construct_display(char *display_name)
 {
 
 	Display *res;
@@ -81,7 +81,7 @@ Display* construct_display(char *display_name)
  *
  * @return Result of XCloseDisplay call.
  */
-int destroy_display(Display *active_display)
+static int destroy_display(Display *active_display)
 {
 	int res;
 	res = XCloseDisplay(active_display);
@@ -98,7 +98,7 @@ int destroy_display(Display *active_display)
  *
  * @return On sucess 0, -1 otherwise.
  */
-int send_event(int type, int keycode, Display *active_display)
+static int send_event(int type, int keycode, Display *active_display)
 {
 	int res = 0;
 	XEvent event;
@@ -143,7 +143,7 @@ int send_event(int type, int keycode, Display *active_display)
  *
  * @return 0 on sucess, -1 otherwise.
  */
-int mouse_move(int x, int y, Display *active_display)
+static int mouse_move(int x, int y, Display *active_display)
 {
 	int res = 0;
 	Window win;
@@ -183,7 +183,7 @@ int mouse_move(int x, int y, Display *active_display)
  *
  * @return 0 on sucess, -1 otherwise.
  */
-int mouse_click(int mouse_button, int button_status, Display *active_display)
+static int mouse_click(int mouse_button, int button_status, Display *active_display)
 {
 	int result = -1;
 	static int is_xtest_available = -1;
