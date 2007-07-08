@@ -47,7 +47,7 @@ struct service_description *build_sd(int channel)
 
 	sd->channel = channel;
 	sd->uuid = 0xAFFF;
-	sd->service_name = strdup("Presenter 4 X ");
+	sd->service_name = strdup("Amora: assistant ");
 	sd->service_dsc = strdup("A X handler for cellphone ");
 	sd->service_prov = strdup("Savago ");
 
