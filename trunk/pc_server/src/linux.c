@@ -147,7 +147,7 @@ int describe_service(struct service_description *sd)
 	sdp_data_t *channel = 0;
 	sdp_record_t *record = sdp_record_alloc();
 
-	int err = 0;
+	int err = -1;
 	sdp_session_t *session = 0;
 	sdp_profile_desc_t profile;
 
@@ -193,11 +193,17 @@ int describe_service(struct service_description *sd)
 	// connect to the local SDP server, register the service record, and
 	// disconnect
 	session = sdp_connect(BDADDR_ANY, BDADDR_LOCAL, SDP_RETRY_IF_BUSY);
+	if (!session) {
+		printf("describe_service: cannot connect to bluetooth"
+		       " device. Is bluetooth daemon running?\n");
+		goto exit;
+	}
+
 	err = sdp_record_register(session, record, 0);
 	if (err == -1) {
 		printf("describe_service: error registering service!");
 	}
-
+exit:
 	// cleanup
 	sdp_data_free(channel);
 	sdp_list_free(l2cap_list, 0);
