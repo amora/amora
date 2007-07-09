@@ -104,8 +104,6 @@ a while to figure out rescale parameters for icon images.
 
  - Integrate stopwatch: easy, already got some code for it.
 
- - Mouse drag: boring, but easy.
-
  - Create a SIS file with python + app bundled.
 
  - Create a deb file with server app (checkinstall make it easy if the app
@@ -155,3 +153,5 @@ X server to control most of its apps.
  - [GNOME Bluetooth Control Remoto (GBTcr) http://gbtcr.chileforge.cl/]
 
  - [pys60miniapps xmms http://sourceforge.net/projects/pys60miniapps/]
+
+ - [bluetricks http://nacaolivre.org/2007/06/30/python-bluetooth-pys60-e-imaginacao/]
