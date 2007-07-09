@@ -123,11 +123,7 @@ class application:
         elif self.keyboard.pressed(EScancode4):
             print u'LEFT'
             self.bt.write_line(u'LEFT')
-        #FIXME: behaviour is different here... keeping pressed button
-        # continue to send events.
-        elif self.keyboard.is_down(EScancode2):
-            print u'UP'
-            self.bt.write_line(u'UP')
+        #TODO: remove this, map F5 key (slideshow start)
         elif self.keyboard.is_down(EScancode8):
             print u'DOWN'
             self.bt.write_line(u'DOWN')
@@ -172,6 +168,16 @@ class application:
                 self.press_flag = 0
                 self.bt.write_line(u'MOUSE_BUTTON_LEFT')
                 self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+        elif self.keyboard.pressed(EScancode2):
+            print u'MOUSE CLICK MIDDLE'
+            self.bt.write_line(u'MOUSE_BUTTON_MIDDLE')
+            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+        elif self.keyboard.pressed(EScancode3):
+            print u'MOUSE CLICK RIGHT'
+            self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
+            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
         elif self.keyboard.pressed(EScancode7):
             print u'SCROLL_UP'
             self.bt.write_line(u'MOUSE_SCROLL_UP')
