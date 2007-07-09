@@ -111,6 +111,7 @@ class application:
             appuifw.app.menu = [(u'Disconnect', self.__reset),
                                 (u'Help', self.__help),
                                 (u'Exit', self.quit)]
+            self.press_flag = 0
         self.running = 1
         appuifw.app.body = self.presentation
         appuifw.app.exit_key_handler = self.quit
@@ -161,6 +162,16 @@ class application:
             self.bt.write_line(u'MOUSE_BUTTON_LEFT')
             self.bt.write_line(u'MOUSE_BUTTON_PRESS')
             self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+        elif self.keyboard.pressed(EScancode1):
+            print u'MOUSE CLICK_HOLD'
+            if self.press_flag == 0:
+                self.bt.write_line(u'MOUSE_BUTTON_LEFT')
+                self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+                self.press_flag = 1
+            else:
+                self.press_flag = 0
+                self.bt.write_line(u'MOUSE_BUTTON_LEFT')
+                self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
         elif self.keyboard.pressed(EScancode7):
             print u'SCROLL_UP'
             self.bt.write_line(u'MOUSE_SCROLL_UP')
