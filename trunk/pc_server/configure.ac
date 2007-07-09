@@ -6,7 +6,7 @@ dnl Process this file with autoconf to produce a configure script.
 # Based on sniffdet configure.ac: http://sniffdet.sourceforge.net
 # Licensed under GNU-GPL
 
-AC_INIT(Amora Server, 0.1, adenilson.silva@indt.org.br, amora)
+AC_INIT(Amora Server, 0.1, savagobr@yahoo.com, amora_server)
 AC_PREREQ(2.58)
 
 AC_CONFIG_SRCDIR([src/main.c])
