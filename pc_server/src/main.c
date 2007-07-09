@@ -8,7 +8,6 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
- * - mouse drag, middle button and other button.
  * - new background/icon for connected status
  * - refactor main.c, its starting to get smelly
  * - screenshot from active window.
