@@ -48,7 +48,7 @@ class application:
     keyboard = None
     #TODO: Add another object for 'options' window
     def __init__(self):
-        appuifw.app.title = u'P4X'
+        appuifw.app.title = u'Amora'
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
         self.reset()
