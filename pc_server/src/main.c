@@ -41,6 +41,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <string.h>
 #include "x11_event.h"
 #include "bluecode.h"
 #include "protocol.h"
