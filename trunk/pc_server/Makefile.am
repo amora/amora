@@ -13,10 +13,9 @@ AUTOMAKE_OPTIONS = foreign
 # amora itself
 bin_PROGRAMS = amora
 amora_SOURCES = $(csourcedir)/main.c \
-                   $(csourcedir)/linux.c \
-                   $(csourcedir)/bluecode.h \
-                   $(csourcedir)/protocol.h \
-                   $(csourcedir)/x11_event.h
+                   $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
+                   $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
+                   $(csourcedir)/bluecode.h $(csourcedir)/linux.c
 amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS)
 amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS)
 
