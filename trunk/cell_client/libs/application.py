@@ -123,10 +123,6 @@ class application:
         elif self.keyboard.pressed(EScancode4):
             print u'LEFT'
             self.bt.write_line(u'LEFT')
-        #TODO: remove this, map F5 key (slideshow start)
-        elif self.keyboard.is_down(EScancode8):
-            print u'DOWN'
-            self.bt.write_line(u'DOWN')
         #Mouse move event processing
         elif self.keyboard.is_down(EScancodeUpArrow):
             print u'MOUSE_UP'
@@ -197,5 +193,11 @@ class application:
         elif self.keyboard.pressed(EScancodeBackspace):
             print u'DEL'
             self.bt.write_line(u'DEL')
+        elif self.keyboard.pressed(EScancode8):
+            print u'SLIDESHOW - F5'
+            self.bt.write_line(u'SLIDESHOW')
+        elif self.keyboard.pressed(EScancodeHash):
+            print u'Fullscreen - F'
+            self.bt.write_line(u'FULLSCREEN')
 
 

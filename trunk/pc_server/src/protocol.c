@@ -6,16 +6,18 @@
  * not have value zero. See \ref codes.
  **/
 const char *all_codes[] = { "EMPTY",
-				   "UP", "DOWN", "LEFT", "RIGHT",
-				   "ENTER", "ESC", "SPACE",
-				   "DEL", "ALT", "TAB",
-				   "MOUSE_MOVE", "MOUSE_BUTTON_PRESS",
-				   "MOUSE_BUTTON_RELEASE",
-				   "MOUSE_BUTTON_RIGHT",
-				   "MOUSE_BUTTON_LEFT", "MOUSE_BUTTON_MIDDLE",
-				   "MOUSE_SCROLL_UP", "MOUSE_SCROLL_DOWN",
-				   "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
-				   "IMG_FORMAT" };
+			    "UP", "DOWN", "LEFT", "RIGHT",
+			    "ENTER", "ESC", "SPACE",
+			    "DEL", "ALT", "TAB",
+			    "SLIDESHOW", "FULLSCREEN",
+			    "MOUSE_MOVE", "MOUSE_BUTTON_PRESS",
+			    "MOUSE_BUTTON_RELEASE",
+			    "MOUSE_BUTTON_RIGHT",
+			    "MOUSE_BUTTON_LEFT", "MOUSE_BUTTON_MIDDLE",
+			    "MOUSE_SCROLL_UP", "MOUSE_SCROLL_DOWN",
+			    "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
+			    "IMG_FORMAT"
+			    };
 
 
 int ecell_button_ewindow(char *event, int length)
@@ -41,6 +43,10 @@ int ecell_button_ewindow(char *event, int length)
 		res = ALT;
 	else if (!strncasecmp(event, all_codes[TAB], length))
 		res = TAB;
+	else if (!strncasecmp(event, all_codes[SLIDESHOW], length))
+		res = SLIDESHOW;
+	else if (!strncasecmp(event, all_codes[FULLSCREEN], length))
+		res = FULLSCREEN;
 
 	return res;
 }

@@ -45,11 +45,14 @@
  * - Del key 107
  * - Alt key 64
  * - Tab key 23
+ * - F5 key (start slideshow in OpenOffice.org)
+ * - F key (fullscreen for Mplayer and Totem)
  *
  * ps: first element is -1, since enumerations should
  * not have value zero. See \ref codes.
  */
-static int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65, 107, 64, 23 };
+static int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65, 107, 64, 23, 71,
+			    41 };
 
 /** Display handler creator.
  *
