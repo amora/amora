@@ -59,7 +59,7 @@ int log_message(unsigned int ldest, const char *fmt, ...)
 	time_t curtime;
 	char buf[MAXLINE];
 	char msg[MAXLINE];
-	int fd;
+	int fd = -1;
 
 	va_start(ap, fmt);
 	vsnprintf(buf, MAXLINE, fmt, ap);
@@ -101,7 +101,8 @@ int log_message(unsigned int ldest, const char *fmt, ...)
 	}
 
 	va_end(ap);
-	close(fd);
+	if (fd > 0)
+		close(fd);
 
 	return 0;
 }
