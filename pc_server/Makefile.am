@@ -15,7 +15,8 @@ bin_PROGRAMS = amora
 amora_SOURCES = $(csourcedir)/main.c \
                    $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                    $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
-                   $(csourcedir)/bluecode.h $(csourcedir)/linux.c
+                   $(csourcedir)/bluecode.h $(csourcedir)/linux.c \
+                   $(csourcedir)/log.h $(csourcedir)/log.c
 amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS)
 amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS)
 
