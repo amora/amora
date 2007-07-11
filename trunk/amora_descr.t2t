@@ -128,9 +128,6 @@ not really necessary with heart beat.
 pixels to move the mouse around (let's call it **delta**). A dynamic delta
 can improve mouse moving, based on last time the user pressed/moved the mouse.
 
- - A logging feature: can help to track bugs, but up until now just nice to
-have.
-
  - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
 SDP API is documented in BSD) and **if** there are source code examples
 available.
