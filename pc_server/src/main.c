@@ -43,6 +43,7 @@
 #include "x11_event.h"
 #include "bluecode.h"
 #include "protocol.h"
+#include "log.h"
 
 /** Check for protocol commands in buffer, used by \ref process_events
  *
@@ -106,20 +107,23 @@ int main(void)
 
 	own_display = construct_display(NULL);
 	if (!own_display) {
-		printf("Error creating display object! Aborting...\n");
+		log_message(FIL|ERR, "Error creating display object!"
+				"Aborting...\n");
 		return -1;
 	}
 
 	/* Service description registering */
 	sd = build_sd(channel);
 	if (!sd) {
-		printf("Error creating service description object!"
-		       "Aborting...\n");
+		log_message(FIL|ERR, "Error creating service description"
+			    "object!"
+			    "Aborting...\n");
 		return -1;
 	}
 	res = describe_service(sd);
 	if (res == -1) {
-		printf("Error registering service! Aborting...\n");
+		log_message(FIL|ERR, "Error registering service!"
+			    "Aborting...\n");
 		destroy_sd(sd);
 		return -1;
 	}
@@ -128,27 +132,30 @@ int main(void)
 	/* Socket creation */
 	server_socket = build_bluetooth_socket(channel);
 	if (server_socket == -1) {
-		printf("Failed creating bluetooth conn! Exiting...\n");
+		log_message(FIL|ERR, "Failed creating bluetooth conn!"
+			    "Exiting...\n");
 		return -1;
 	}
 
-	printf("\nInitialization done, waiting cellphone connection...\n");
+	log_message(FIL|OUT, "\nInitialization done, waiting cellphone"
+		    " connection...\n");
 	res = listen(server_socket, 10);
 	if (res) {
-		printf("Failed listening...\n");
+		log_message(FIL|OUT, "Failed listening...\n");
 		return -1;
 	}
 
 	while (1) {
-		printf("Entering main loop...\n");
+		log_message(FIL|OUT, "Entering main loop...\n");
 		client_socket = accept(server_socket,
 				       (struct sockaddr *)&rem_addr, &opt);
 		if (client_socket == -1) {
-			printf("Failed opening connection, exiting...\n");
+			log_message(FIL|ERR, "Failed opening connection,"
+				    " exiting...\n");
 			goto exit;
 		}
 
-		printf("Accepted connection.\n");
+		log_message(FIL|OUT, "Accepted connection.\n");
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
@@ -165,7 +172,8 @@ int main(void)
 			printf("Read bytes: %d\n", res);
 #endif
 			if (!res) {
-				printf("Client asked to close connection\n\n");
+				log_message(FIL|OUT, "Client asked to close"
+					    "connection\n\n");
 				close(client_socket);
 				client_socket = -1;
 				break;
@@ -176,7 +184,7 @@ int main(void)
 
 exit:
 	res = destroy_display(own_display);
-	printf("Done, we are closing now.\n");
+	log_message(FIL|OUT, "Done, we are closing now.\n");
 	close(server_socket);
 	destroy_sd(sd);
 	res = process_events(client_socket = 0, own_display = NULL,
@@ -272,7 +280,8 @@ int treat_events(char *buffer, int length, Display *active_display)
 					result = mouse_move(x_mouse, y_mouse,
 							      active_display);
 					if (result == -1)
-						printf("Can't move mouse!");
+						log_message(FIL|ERR, "Can't"
+							    "move mouse!");
 
 					times = 0;
 					mouse_event = 0;
@@ -286,7 +295,7 @@ int treat_events(char *buffer, int length, Display *active_display)
 					goto exit;
 				}
 
-				printf("Invalid event!\n");
+				log_message(FIL|ERR, "Invalid event!\n");
 			}
 			break;
 		default:

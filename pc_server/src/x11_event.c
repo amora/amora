@@ -3,6 +3,7 @@
 #include <X11/extensions/XTest.h>
 #include "x11_event.h"
 #include "protocol.h"
+#include "log.h"
 
 Display* construct_display(char *display_name)
 {
@@ -142,7 +143,7 @@ int mouse_click(int mouse_button, int button_status, Display *active_display)
 		XFlush(active_display);
 		result = 0;
 	} else
-		printf("Cannot create mouse click events\n");
+		log_message(FIL|ERR, "Cannot create mouse click events\n");
 
 	return result;
 }
