@@ -28,6 +28,7 @@
 
 #include "bluecode.h"
 #include "protocol.h"
+#include "log.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -55,7 +56,7 @@ struct service_description *build_sd(int channel)
 		goto exit;
 
 mem_error:
-	printf("build_sd: failed service allocation structure!");
+	log_message(FIL|ERR, "build_sd: failed service allocation structure!");
 	if (sd)
 		free(sd);
 	sd = NULL;
@@ -117,12 +118,12 @@ int build_bluetooth_socket(unsigned int channel)
 	goto exit;
 
 close:
-	fprintf(stderr, "closing socket...\n");
+	log_message(FIL|ERR, "closing socket...\n");
 	close(s);
 	s = -1;
 
 error:
-	fprintf(stderr, "build_bluetooth_socket error!\n");
+	log_message(FIL|ERR, "build_bluetooth_socket error!\n");
 
 exit:
 	return s;
@@ -194,14 +195,16 @@ int describe_service(struct service_description *sd)
 	// disconnect
 	session = sdp_connect(BDADDR_ANY, BDADDR_LOCAL, SDP_RETRY_IF_BUSY);
 	if (!session) {
-		printf("describe_service: cannot connect to bluetooth"
-		       " device. Is bluetooth daemon running?\n");
+		log_message(FIL|ERR, "describe_service: cannot connect to"
+			    "bluetooth"
+			    " device. Is bluetooth daemon running?\n");
 		goto exit;
 	}
 
 	err = sdp_record_register(session, record, 0);
 	if (err == -1) {
-		printf("describe_service: error registering service!");
+		log_message(FIL|ERR, "describe_service: error registering"
+			    "service!");
 	}
 exit:
 	// cleanup
@@ -216,4 +219,3 @@ exit:
 
 	return err;
 }
-
