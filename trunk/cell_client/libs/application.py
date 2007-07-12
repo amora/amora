@@ -97,6 +97,8 @@ class application:
             self.help_screen.clear()
             self.help_screen.read('E:\\Python\\data\\start_help.txt')
             self.help_screen.display()
+        elif self.running == 1:
+            appuifw.note(u'Joystick moves the mouse cursor')
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
