@@ -33,9 +33,11 @@
 
 import appuifw
 import e32
+import time
 from keyboard import *
 from bt_client import *
 from wallpaper import *
+from helpwindow import *
 
 class application:
     mouse_x = 400
@@ -43,6 +45,7 @@ class application:
     delta = 10
     wallpaper = None
     presentation = None
+    help_screen = None
     running = 0
     bt = None
     keyboard = None
@@ -65,6 +68,8 @@ class application:
         self.running = 0
         #Cleanup the screen
         self.wallpaper = wallpaper()
+        #TODO: move this code to wallpaper.display() method (like
+        #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
         self.wallpaper.display()
     #Exit function
@@ -80,9 +85,14 @@ class application:
     def __configuration(self):
         appuifw.note(u'Not implemented')
     #Call Help dialog
-    #TODO: implement method.
+    #TODO: implement help for other application states: connected, started.
     def __help(self):
-        appuifw.note(u'Not implemented')
+        if self.help_screen == None:
+            self.help_screen = helpwindow()
+        if self.running == 0:
+            self.help_screen.clear()
+            self.help_screen.read('E:\\Python\\data\\conn_help.txt')
+            self.help_screen.display()
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
@@ -92,6 +102,11 @@ class application:
                             (u'Disconnect', self.__reset),
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
+        self.running = 2
+        #TODO: move this code to wallpaper.display() method (like
+        #helpwindow.display() method)
+        appuifw.app.body = self.wallpaper.canvas
+        self.wallpaper.display()
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
         self.bt.write_line(u'CONN_CLOSE')
