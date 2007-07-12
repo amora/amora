@@ -1,0 +1,25 @@
+Now your cellphone is connected with the PC amora server.
+
+If you wish to send commands:
+  - In menu option, select
+	'Start'
+
+You can also disconnect the cellphone. For this:
+  - In menu option, select
+	'Disconnect'
+
+The following mouse commands are supported:
+  1) Mouse moving and click: use cellphone joystick
+  2) Mouse drag: press key '1' and use joystick
+  3) Middle and right mouse buttons: keys '2' and '3'
+  4) Mouse wheel: keys '7' (scroll up) and '*' (scroll down)
+
+And also some keyboard shortcuts:
+  ENTER: key '5'
+  Arrow key left: key '4'
+  Arrow key right: key '6'
+  F5: key '8'
+  SPACE: key '0'
+  ESC: key '9'
+  F (mplayer fullscreen): key '#'
+  DEL: clear key

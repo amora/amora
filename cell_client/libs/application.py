@@ -93,6 +93,10 @@ class application:
             self.help_screen.clear()
             self.help_screen.read('E:\\Python\\data\\conn_help.txt')
             self.help_screen.display()
+        elif self.running == 2:
+            self.help_screen.clear()
+            self.help_screen.read('E:\\Python\\data\\start_help.txt')
+            self.help_screen.display()
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
@@ -103,10 +107,6 @@ class application:
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
         self.running = 2
-        #TODO: move this code to wallpaper.display() method (like
-        #helpwindow.display() method)
-        appuifw.app.body = self.wallpaper.canvas
-        self.wallpaper.display()
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
         self.bt.write_line(u'CONN_CLOSE')
@@ -122,7 +122,7 @@ class application:
                                                self.keyboard.handle_event,
                                                redraw_callback = None)
         #First time the function is called, change menu
-        if self.running == 0:
+        if self.running == 0 or self.running == 2:
             appuifw.app.menu = [(u'Disconnect', self.__reset),
                                 (u'Help', self.__help),
                                 (u'Exit', self.quit)]
