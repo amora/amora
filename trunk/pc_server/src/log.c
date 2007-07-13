@@ -117,14 +117,3 @@ int log_message(unsigned int ldest, const char *fmt, ...)
 	return result;
 }
 
-void dief(const char *fmt, ...)
-{
-	char msg[MAXLINE];
-	va_list ap;
-
-	va_start(ap, fmt);
-	vsnprintf(msg, sizeof(msg), fmt, ap);
-	log_message(ERR | FIL, msg);
-	va_end(ap);
-	exit(1);
-}
