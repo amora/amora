@@ -77,6 +77,8 @@ int mouse_move(int x, int y, Display *active_display)
 			   0, 0, 0, 0,
 			   x, y);
 
+	//needed to flush events before any new command.
+	XFlush(active_display);
 	if (res == BadValue || res == BadWindow)
 		res = -1;
 
