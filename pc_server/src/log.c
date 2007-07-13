@@ -55,14 +55,21 @@ static void get_timestamp(time_t curtime, char *timestamp)
 int log_message(unsigned int ldest, const char *fmt, ...)
 {
 	va_list ap;
-	char *timestamp;
+	char *timestamp = NULL;
 	time_t curtime;
 	char buf[MAXLINE];
 	char msg[MAXLINE];
 	int fd = -1;
+	int result = 0;
 
 	va_start(ap, fmt);
 	vsnprintf(buf, MAXLINE, fmt, ap);
+
+	timestamp = malloc(BSIZE * sizeof(char));
+	if (!timestamp) {
+		result = -1;
+		goto exit;
+	}
 
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
@@ -71,7 +78,6 @@ int log_message(unsigned int ldest, const char *fmt, ...)
 			return -1;
 		}
 
-		timestamp = malloc(BSIZE * sizeof(char));
 		curtime = time(NULL);
 		get_timestamp(curtime, timestamp);
 
@@ -104,7 +110,11 @@ int log_message(unsigned int ldest, const char *fmt, ...)
 	if (fd > 0)
 		close(fd);
 
-	return 0;
+	if (timestamp)
+		free(timestamp);
+
+ exit:
+	return result;
 }
 
 void dief(const char *fmt, ...)
