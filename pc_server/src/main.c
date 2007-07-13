@@ -240,9 +240,11 @@ int treat_events(char *buffer, int length, Display *active_display)
 
 	/* TODO: move this whole code block to a distinct function */
 	result = ecell_button_ewindow(buffer, length);
+	log_message(FIL, "ecell_button = %d\n", result);
  	if (result == NONE) {
 
 		result = ecell_mouse_ewindow(buffer, length);
+		log_message(FIL, "ecell_mouse = %d\n", result);
 		switch (result) {
 		case MOUSE_MOVE:
 			mouse_event = 1;
@@ -266,16 +268,19 @@ int treat_events(char *buffer, int length, Display *active_display)
 			mouse_click(result, 0, active_display);
 			break;
 		case NONE:
+			log_message(FIL, "mouse_event = %d", mouse_event);
 			if (mouse_event == 1) {
 				if (times == 0) {
 					x_mouse = atoi(buffer);
 					++times;
 				} else {
+
 					y_mouse = atoi(buffer);
-#ifdef VERBOSE
-					printf("\nx = %d\ty=%d\t\n\n",
-					       x_mouse, y_mouse);
-#endif
+
+					log_message(FIL,
+						    "x = %d\ty=%d\t",
+						    x_mouse, y_mouse);
+
 					result = mouse_move(x_mouse, y_mouse,
 							      active_display);
 					if (result == -1)
