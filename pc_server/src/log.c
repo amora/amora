@@ -43,6 +43,19 @@
 /** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
 
+void log_clean_resources(struct log_resource *ptr)
+{
+	if (ptr) {
+		close(ptr->fd);
+		free(ptr->message);
+		free(ptr->timestamp);
+		free(ptr->log_filename);
+		free(ptr);
+		ptr = NULL;
+	}
+
+}
+
 struct log_resource* log_build_resources(char *filename)
 {
 	struct log_resource *result = NULL;
