@@ -65,6 +65,7 @@ int treat_exit(char *buffer, int length);
  * all_codes in \ref protocol.h
  * @param length Buffer length
  * @param active_display Pointer to active display.
+ * @param log A structure of log resources, see \ref log_resource.
  *
  * @return 0 for closing the connection.
  */
@@ -79,6 +80,7 @@ int treat_events(char *buffer, int length, Display *active_display,
  * @param fd Socket file descriptor.
  * @param active_display Pointer to active display.
  * @param clean_up Free local allocated resources.
+ * @param log A structure of log resources, see \ref log_resource.
  *
  * @return Number of bytes read on sucess, -1 on error, 0 on exit.
  */

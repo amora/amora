@@ -38,7 +38,9 @@
 
 #include "log.h"
 
+/** Length of timestamp buffer */
 #define TIMESTAMP_LENGTH 20
+/** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
 
 struct log_resource* log_build_resources(char *filename)

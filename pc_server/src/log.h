@@ -43,7 +43,7 @@ struct log_resource {
 	int fd;
 	/** Time stamp buffer */
 	char *timestamp;
-	/** Message buffer, will be of size \ref MAXLINE. */
+	/** Message buffer, will be of size \ref MSG_BUFFER_LENGTH */
 	char *message;
 	/** Temporary buffer */
 	char *buffer;
