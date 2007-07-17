@@ -91,10 +91,6 @@ int process_events(int fd, Display *active_display, int clean_up,
 
 /** Main app function.
  *
- *
- * @param argc Number of arguments.
- * @param argv Arguments values.
- *
  * @return 0 on sucess, -1 on error.
  */
 int main(void)
@@ -256,7 +252,7 @@ int treat_events(char *buffer, int length, Display *active_display,
 	/* TODO: move this whole code block to a distinct function */
 	result = ecell_button_ewindow(buffer, length);
 	log_message(FIL, log, "ecell_button = %d\n", result);
- 	if (result == NONE) {
+	if (result == NONE) {
 
 		result = ecell_mouse_ewindow(buffer, length);
 		log_message(FIL, log, "ecell_mouse = %d\n", result);

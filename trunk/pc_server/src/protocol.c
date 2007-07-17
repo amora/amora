@@ -54,7 +54,7 @@ int ecell_button_ewindow(char *event, int length)
 
 int ecell_mouse_ewindow(char *event, int length)
 {
-  	int res = NONE;
+	int res = NONE;
 
 	if (!strncasecmp(event, all_codes[MOUSE_MOVE], length))
 		res = MOUSE_MOVE;
@@ -86,8 +86,8 @@ int ecell_mouse_ewindow(char *event, int length)
 
 int protocol_command(char *cmd, int length)
 {
- 	int res = NONE;
- 	if (!strncasecmp(cmd, all_codes[CONN_CLOSE], length))
+	int res = NONE;
+	if (!strncasecmp(cmd, all_codes[CONN_CLOSE], length))
 		res = CONN_CLOSE;
 	else if (strncasecmp(cmd, all_codes[SERVER_STOP], length))
 		res = SERVER_STOP;
