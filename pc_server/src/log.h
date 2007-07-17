@@ -31,37 +31,57 @@
 #ifndef _H_LOG
 #define _H_LOG
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #define SYS   0x01 << 0
 #define FIL   0x01 << 1
 #define OUT   0x01 << 2
 #define ERR   0x01 << 3
 
-#define MAXLINE 1024
-#define LOG_FILE "/tmp/amora.log"
+/** Log structure, contains resources used by logging function.
+ */
+struct log_resource {
+	/** File descriptor */
+	int fd;
+	/** Time stamp buffer */
+	char *timestamp;
+	/** Message buffer, will be of size \ref MAXLINE. */
+	char *message;
+	/** Temporary buffer */
+	char *buffer;
+	/** Timestamp buffer length */
+	int ts_length;
+	/** Maximum line length, equal 3 times 80 columns */
+	int length;
+	/** log file path name */
+	char *log_filename;
 
-/* General debug macro */
-#ifdef DEBUG
-#define DPRINT(fmt, ...) printf("DEBUG: "fmt"\n", ##__VA_ARGS__)
-#else
-#define DPRINT(fmt, ...)
-#endif
+};
+
+
+/** Builds a log resource structure.
+ *
+ * Use it to initialize log buffers and open file descriptors.
+ *
+ * @param filename Path and filename for log file.
+ */
+struct log_resource* log_build_resources(char *filename);
+
+
+/** Deallocate log resource structure.
+ *
+ * Use it to clean up resouces used by log function.
+ */
+void log_clean_resources(struct log_resource *ptr);
+
 
 /** Report log messages.
  *
  * @param ldest log destination(s) (syslog, file, stdout, etc)
+ * @param resource A log resource structure, see \ref log_resource.
  * @param format message to log.
  *
  * @return 0 on success, -1 otherwise
  */
-int log_message(unsigned int ldest, const char *format, ...);
-
-/** Report a fatal error and terminate.
- *
- * @param fmt message to log.
- */
-void dief(const char *fmt, ...);
+int log_message(unsigned int ldest, struct log_resource *resource,
+		const char *format, ...);
 
 #endif

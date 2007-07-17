@@ -68,7 +68,9 @@ int treat_exit(char *buffer, int length);
  *
  * @return 0 for closing the connection.
  */
-int treat_events(char *buffer, int length, Display *active_display);
+int treat_events(char *buffer, int length, Display *active_display,
+		 struct log_resource *log);
+
 
 
 /** Process event stream. Reads what new commands are being received
@@ -80,7 +82,9 @@ int treat_events(char *buffer, int length, Display *active_display);
  *
  * @return Number of bytes read on sucess, -1 on error, 0 on exit.
  */
-int process_events(int fd, Display *active_display, int clean_up);
+int process_events(int fd, Display *active_display, int clean_up,
+		   struct log_resource *log);
+
 
 
 /** Main app function.
@@ -101,12 +105,16 @@ int main(void)
 	struct sockaddr rem_addr;
 	unsigned int opt = sizeof(rem_addr);
 	struct service_description *sd = NULL;
+	struct log_resource *log = NULL;
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
+	/* TODO: check for environment variable */
+	log = log_build_resources(NULL);
+
 	own_display = construct_display(NULL);
 	if (!own_display) {
-		log_message(FIL|ERR, "Error creating display object!"
+		log_message(FIL|ERR, log, "Error creating display object!"
 				"Aborting...\n");
 		return -1;
 	}
@@ -114,14 +122,14 @@ int main(void)
 	/* Service description registering */
 	sd = build_sd(channel);
 	if (!sd) {
-		log_message(FIL|ERR, "Error creating service description"
+		log_message(FIL|ERR, log, "Error creating service description"
 			    "object!"
 			    "Aborting...\n");
 		return -1;
 	}
 	res = describe_service(sd);
 	if (res == -1) {
-		log_message(FIL|ERR, "Error registering service!"
+		log_message(FIL|ERR, log, "Error registering service!"
 			    "Aborting...\n");
 		destroy_sd(sd);
 		return -1;
@@ -131,30 +139,30 @@ int main(void)
 	/* Socket creation */
 	server_socket = build_bluetooth_socket(channel);
 	if (server_socket == -1) {
-		log_message(FIL|ERR, "Failed creating bluetooth conn!"
+		log_message(FIL|ERR, log, "Failed creating bluetooth conn!"
 			    "Exiting...\n");
 		return -1;
 	}
 
-	log_message(FIL|OUT, "\nInitialization done, waiting cellphone"
+	log_message(FIL|OUT, log, "\nInitialization done, waiting cellphone"
 		    " connection...\n");
 	res = listen(server_socket, 10);
 	if (res) {
-		log_message(FIL|OUT, "Failed listening...\n");
+		log_message(FIL|OUT, log, "Failed listening...\n");
 		return -1;
 	}
 
 	while (1) {
-		log_message(FIL|OUT, "Entering main loop...\n");
+		log_message(FIL|OUT, log, "Entering main loop...\n");
 		client_socket = accept(server_socket,
 				       (struct sockaddr *)&rem_addr, &opt);
 		if (client_socket == -1) {
-			log_message(FIL|ERR, "Failed opening connection,"
+			log_message(FIL|ERR, log, "Failed opening connection,"
 				    " exiting...\n");
 			goto exit;
 		}
 
-		log_message(FIL|OUT, "Accepted connection.\n");
+		log_message(FIL|OUT, log, "Accepted connection.\n");
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
@@ -166,12 +174,13 @@ int main(void)
 // 				ba2str(&rem_addr.rc_bdaddr, buf);
 // 				fprintf(stderr, "accepted connection from %s\n", buf);
 			res = process_events(client_socket,
-					     own_display, clean_up);
+					     own_display, clean_up, log);
 #ifdef VERBOSE
 			printf("Read bytes: %d\n", res);
 #endif
 			if (!res) {
-				log_message(FIL|OUT, "Client asked to close"
+				log_message(FIL|OUT, log,
+					    "Client asked to close"
 					    "connection\n\n");
 				close(client_socket);
 				client_socket = -1;
@@ -183,17 +192,18 @@ int main(void)
 
 exit:
 	res = destroy_display(own_display);
-	log_message(FIL|OUT, "Done, we are closing now.\n");
+	log_message(FIL|OUT, log, "Done, we are closing now.\n");
 	close(server_socket);
 	destroy_sd(sd);
 	res = process_events(client_socket = 0, own_display = NULL,
-			     clean_up = 1);
+			     clean_up = 1, log);
 
 	return 0;
 }
 
 
-int process_events(int fd, Display *active_display, int clean_up)
+int process_events(int fd, Display *active_display, int clean_up,
+		   struct log_resource *log)
 {
 	static char *buffer = NULL;
 	const int BUF_SIZE = 300;
@@ -224,14 +234,16 @@ int process_events(int fd, Display *active_display, int clean_up)
 
 	start = buffer;
 	while ((end = strchr(start, CMD_BREAK))) {
-		result = treat_events(start, (end - start), active_display);
+		result = treat_events(start, (end - start), active_display,
+				      log);
 		start = ++end;
 	}
 
 	return result;
 }
 
-int treat_events(char *buffer, int length, Display *active_display)
+int treat_events(char *buffer, int length, Display *active_display,
+		 struct log_resource *log)
 {
 	static unsigned char mouse_event = 0, times = 0,
 		button_right = 0, button_left = 0, button_middle = 0;
@@ -240,11 +252,11 @@ int treat_events(char *buffer, int length, Display *active_display)
 
 	/* TODO: move this whole code block to a distinct function */
 	result = ecell_button_ewindow(buffer, length);
-	log_message(FIL, "ecell_button = %d\n", result);
+	log_message(FIL, log, "ecell_button = %d\n", result);
  	if (result == NONE) {
 
 		result = ecell_mouse_ewindow(buffer, length);
-		log_message(FIL, "ecell_mouse = %d\n", result);
+		log_message(FIL, log, "ecell_mouse = %d\n", result);
 		switch (result) {
 		case MOUSE_MOVE:
 			mouse_event = 1;
@@ -268,7 +280,7 @@ int treat_events(char *buffer, int length, Display *active_display)
 			mouse_click(result, 0, active_display);
 			break;
 		case NONE:
-			log_message(FIL, "mouse_event = %d", mouse_event);
+			log_message(FIL, log, "mouse_event = %d", mouse_event);
 			if (mouse_event == 1) {
 				if (times == 0) {
 					x_mouse = atoi(buffer);
@@ -277,14 +289,15 @@ int treat_events(char *buffer, int length, Display *active_display)
 
 					y_mouse = atoi(buffer);
 
-					log_message(FIL,
+					log_message(FIL, log,
 						    "x = %d\ty=%d\t",
 						    x_mouse, y_mouse);
 
 					result = mouse_move(x_mouse, y_mouse,
 							      active_display);
 					if (result == -1)
-						log_message(FIL|ERR, "Can't"
+						log_message(FIL|ERR, log,
+							    "Can't"
 							    "move mouse!");
 
 					times = 0;
@@ -299,7 +312,7 @@ int treat_events(char *buffer, int length, Display *active_display)
 					goto exit;
 				}
 
-				log_message(FIL|ERR, "Invalid event!\n");
+				log_message(FIL|ERR, log, "Invalid event!\n");
 			}
 			break;
 		default:
