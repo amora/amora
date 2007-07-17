@@ -38,82 +38,124 @@
 
 #include "log.h"
 
-#define BSIZE 128
+#define TIMESTAMP_LENGTH 20
+#define MSG_BUFFER_LENGTH 240
 
-static void get_timestamp(time_t curtime, char *timestamp)
+struct log_resource* log_build_resources(char *filename)
 {
-	struct tm *loctime;
-	char buf[BSIZE];
+	struct log_resource *result = NULL;
+	result = (struct log_resource *) malloc(sizeof(struct log_resource));
+	if (!result) {
+		perror("Failed allocation of log resource structure!\n");
+		goto exit;
 
-	loctime = localtime(&curtime);
+	}
 
-	/* the date in a nice format. */
-	strftime(buf, BSIZE, "%b %d %T", loctime);
-	strncpy(timestamp, buf, BSIZE);
+	memset(result, 0, sizeof(struct log_resource));
+	result->ts_length = TIMESTAMP_LENGTH;
+	result->length = MSG_BUFFER_LENGTH;
+
+	result->timestamp = (char*) malloc(sizeof(char) * result->ts_length);
+	result->message = (char*) malloc(sizeof(char) * result->length);
+        result->buffer = (char*) malloc(sizeof(char) * result->length);
+
+	if ((!result->timestamp) || (!result->message) || (!result->buffer)) {
+		perror("Failed allocation of log internal buffers!\n");
+		goto failed;
+	}
+
+	if (filename)
+		result->log_filename = strdup(filename);
+	else
+		result->log_filename = strdup("/tmp/amora.log");
+
+	if (!result->log_filename) {
+		perror("Failed log filename copying!\n");
+		goto failed;
+	}
+
+	result->fd = open(result->log_filename, O_APPEND|O_WRONLY|O_CREAT,
+			  0644);
+	if (result->fd < 0) {
+		perror("Error opening log file");
+		goto failed;
+	}
+
+ 	goto exit;
+
+failed:
+	if (result->timestamp)
+		free(result->timestamp);
+	if (result->message)
+		free(result->message);
+	if (result->buffer)
+		free(result->buffer);
+
+	free(result);
+	result = NULL;
+
+exit:
+	return result;
 }
 
-int log_message(unsigned int ldest, const char *fmt, ...)
+static void get_timestamp(char *timestamp, int length)
+{
+	struct tm *loctime;
+	time_t curtime;
+
+	curtime = time(NULL);
+	loctime = localtime(&curtime);
+	strftime(timestamp, length - 1, "%b %d %T", loctime);
+}
+
+int log_message(unsigned int ldest, struct log_resource *resource,
+		const char *format, ...)
 {
 	va_list ap;
-	char *timestamp = NULL;
-	time_t curtime;
-	char buf[MAXLINE];
-	char msg[MAXLINE];
 	int fd = -1;
 	int result = 0;
 
-	va_start(ap, fmt);
-	vsnprintf(buf, MAXLINE, fmt, ap);
+	if (!resource)
+		return result;
 
-	timestamp = malloc(BSIZE * sizeof(char));
-	if (!timestamp) {
-		result = -1;
-		goto exit;
-	}
+	va_start(ap, format);
+	vsnprintf(resource->buffer, resource->length, format, ap);
 
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
-		if ((fd = open(LOG_FILE, O_APPEND|O_WRONLY|O_CREAT,0644)) < 0) {
-			fprintf(stderr, "Error opening log file: %s\n", LOG_FILE);
-			return -1;
-		}
 
-		curtime = time(NULL);
-		get_timestamp(curtime, timestamp);
-
-		if (fd != -1) {
-			snprintf(msg, MAXLINE, "[%s]: %s\n", timestamp, buf);
-			write(fd, msg, strlen(msg));
-		} else {
-			return -1;
-		}
+		get_timestamp(resource->timestamp, resource->ts_length);
+		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
+			 resource->timestamp, resource->buffer);
+		write(resource->fd, resource->message,
+		      strlen(resource->message));
 	}
 
 	/* log to stdout */
 	if (ldest & OUT) {
-		snprintf(msg, MAXLINE, "%s\n", buf);
-		write(STDOUT_FILENO, msg, strlen(msg));
+		snprintf(resource->message, resource->length - 1, "%s\n",
+			 resource->buffer);
+		write(STDOUT_FILENO, resource->message,
+		      strlen(resource->message));
 	}
 
 	/* log to syslog */
 	if (ldest & SYS) {
-		syslog(LOG_INFO, buf);
+		syslog(LOG_INFO, resource->buffer);
 	}
 
 	/* log to stderr */
 	if (ldest & ERR) {
-		snprintf(msg, MAXLINE, "%s\n", buf);
-		write(STDERR_FILENO, msg, strlen(msg));
+		snprintf(resource->message, resource->length -1, "%s\n",
+			 resource->buffer);
+		write(STDERR_FILENO, resource->message,
+		      strlen(resource->message));
 	}
 
 	va_end(ap);
 	if (fd > 0)
 		close(fd);
 
-	if (timestamp)
-		free(timestamp);
-
- exit:
 	return result;
 }
 

@@ -56,7 +56,7 @@ struct service_description *build_sd(int channel)
 		goto exit;
 
 mem_error:
-	log_message(FIL|ERR, "build_sd: failed service allocation structure!");
+	perror("build_sd: failed service allocation structure!");
 	if (sd)
 		free(sd);
 	sd = NULL;
@@ -118,12 +118,12 @@ int build_bluetooth_socket(unsigned int channel)
 	goto exit;
 
 close:
-	log_message(FIL|ERR, "closing socket...\n");
+	perror("closing socket...\n");
 	close(s);
 	s = -1;
 
 error:
-	log_message(FIL|ERR, "build_bluetooth_socket error!\n");
+	perror("build_bluetooth_socket error!\n");
 
 exit:
 	return s;
@@ -195,7 +195,7 @@ int describe_service(struct service_description *sd)
 	// disconnect
 	session = sdp_connect(BDADDR_ANY, BDADDR_LOCAL, SDP_RETRY_IF_BUSY);
 	if (!session) {
-		log_message(FIL|ERR, "describe_service: cannot connect to"
+		perror("describe_service: cannot connect to"
 			    "bluetooth"
 			    " device. Is bluetooth daemon running?\n");
 		goto exit;
@@ -203,7 +203,7 @@ int describe_service(struct service_description *sd)
 
 	err = sdp_record_register(session, record, 0);
 	if (err == -1) {
-		log_message(FIL|ERR, "describe_service: error registering"
+		perror("describe_service: error registering"
 			    "service!");
 	}
 exit:
