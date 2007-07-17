@@ -155,16 +155,16 @@ int describe_service(struct service_description *sd)
 	sdp_session_t *session = 0;
 	sdp_profile_desc_t profile;
 
-	// set the general service ID
+	/* set the general service ID */
 	sdp_uuid128_create(&svc_uuid, &service_uuid_int);
 	sdp_set_service_id(record, svc_uuid);
 
-	// make the service record publicly browsable
+	/* make the service record publicly browsable */
 	sdp_uuid16_create(&root_uuid, PUBLIC_BROWSE_GROUP);
 	root_list = sdp_list_append(0, &root_uuid);
 	sdp_set_browse_groups(record, root_list);
 
-	//Set port attributes
+	/* Set port attributes */
 	sdp_uuid16_create(&root_uuid, SERIAL_PORT_SVCLASS_ID);
 	svclass_id = sdp_list_append(0, &root_uuid);
 	sdp_set_service_classes(record, svclass_id);
@@ -175,27 +175,28 @@ int describe_service(struct service_description *sd)
 	sdp_set_profile_descs(record, profiles);
 
 
-	// set l2cap information
+	/* set l2cap information */
 	sdp_uuid16_create(&l2cap_uuid, L2CAP_UUID);
 	l2cap_list = sdp_list_append(0, &l2cap_uuid);
 	proto_list = sdp_list_append(0, l2cap_list);
 
-	// set rfcomm information
+	/* set rfcomm information */
 	sdp_uuid16_create(&rfcomm_uuid, RFCOMM_UUID);
 	channel = sdp_data_alloc(SDP_UINT8, &rfcomm_channel);
 	rfcomm_list = sdp_list_append(0, &rfcomm_uuid);
 	sdp_list_append(rfcomm_list, channel);
 	sdp_list_append(proto_list, rfcomm_list);
 
-	// attach protocol information to service record
+	/* attach protocol information to service record */
 	access_proto_list = sdp_list_append(0, proto_list);
 	sdp_set_access_protos(record, access_proto_list);
 
-	// set the name, provider, and description
+	/* set the name, provider, and description */
 	sdp_set_info_attr(record, service_name, service_prov, service_dsc);
 
-	// connect to the local SDP server, register the service record, and
-	// disconnect
+	/* connect to the local SDP server, register the service record, and
+	 * disconnect
+	 */
 	session = sdp_connect(BDADDR_ANY, BDADDR_LOCAL, SDP_RETRY_IF_BUSY);
 	if (!session) {
 		perror("describe_service: cannot connect to"
@@ -210,7 +211,7 @@ int describe_service(struct service_description *sd)
 			    "service!");
 	}
 exit:
-	// cleanup
+	/* cleanup */
 	sdp_data_free(channel);
 	sdp_list_free(l2cap_list, 0);
 	sdp_list_free(rfcomm_list, 0);
