@@ -200,7 +200,7 @@ exit:
 	res = process_events(client_socket = 0, own_display = NULL,
 			     clean_up = 1, log);
 	log_clean_resources(log);
-	
+
 	return 0;
 }
 
