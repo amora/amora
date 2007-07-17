@@ -69,11 +69,14 @@ exit:
 
 void destroy_sd(struct service_description *sd)
 {
-
-	free(sd->service_name);
-	free(sd->service_dsc);
-	free(sd->service_prov);
-	sdp_close((sdp_session_t *)sd->session);
+	if (sd) {
+		free(sd->service_name);
+		free(sd->service_dsc);
+		free(sd->service_prov);
+		sdp_close((sdp_session_t *)sd->session);
+		free(sd);
+		sd = NULL;
+	}
 }
 
 int read_socket(int client, char *data, int length)
