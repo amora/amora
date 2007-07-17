@@ -30,9 +30,9 @@ int send_event(int type, int keycode, Display *active_display)
 	XEvent event;
 	Window win;
 	int revert_to;
-        struct timeb t;
+	struct timeb t;
 
-        ftime(&t);
+	ftime(&t);
 
 	XGetInputFocus(active_display, &win, &revert_to);
 
@@ -52,7 +52,7 @@ int send_event(int type, int keycode, Display *active_display)
 	event.xkey.same_screen=True;
 
 	res = XSendEvent(active_display, InputFocus, True, 3, &event);
-        XFlush(active_display);
+	XFlush(active_display);
 
 	if (res == BadValue || res == BadWindow)
 		res = -1;
@@ -83,7 +83,7 @@ int mouse_move(int x, int y, Display *active_display)
 		res = -1;
 
 
- exit:
+exit:
 	return res;
 
 }

@@ -72,7 +72,7 @@ struct log_resource* log_build_resources(char *filename)
 
 	result->timestamp = (char*) malloc(sizeof(char) * result->ts_length);
 	result->message = (char*) malloc(sizeof(char) * result->length);
-        result->buffer = (char*) malloc(sizeof(char) * result->length);
+	result->buffer = (char*) malloc(sizeof(char) * result->length);
 
 	if ((!result->timestamp) || (!result->message) || (!result->buffer)) {
 		perror("Failed allocation of log internal buffers!\n");
@@ -96,7 +96,7 @@ struct log_resource* log_build_resources(char *filename)
 		goto failed;
 	}
 
- 	goto exit;
+	goto exit;
 
 failed:
 	if (result->timestamp)
