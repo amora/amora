@@ -179,7 +179,7 @@ int main(void)
 					     own_display, clean_up, log);
 			if (!res) {
 				log_message(FIL|OUT, log,
-					    "Client asked to close"
+					    "Client asked to close "
 					    "connection\n\n");
 				close(client_socket);
 				client_socket = -1;
