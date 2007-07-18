@@ -168,14 +168,9 @@ int main(void)
 
 		while (select(1, &fd_set_socket, NULL, NULL,
 			      &time_socket) != -1) {
-			//TODO: move this code to bluetooth
-// 				ba2str(&rem_addr.rc_bdaddr, buf);
-// 				fprintf(stderr, "accepted connection from %s\n", buf);
+
 			res = process_events(client_socket,
 					     own_display, clean_up, log);
-#ifdef VERBOSE
-			printf("Read bytes: %d\n", res);
-#endif
 			if (!res) {
 				log_message(FIL|OUT, log,
 					    "Client asked to close"
