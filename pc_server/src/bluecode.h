@@ -32,6 +32,10 @@
 #ifndef __BLUECODE_PC__
 #define __BLUECODE_PC__
 
+
+//#include <sys/types.h>
+#include <sys/socket.h>
+
 /** Service description structure.
  *
  * Use it to hold bluetooth service description, tell what the service does
@@ -116,5 +120,13 @@ int build_bluetooth_socket(unsigned int channel);
  */
 int describe_service(struct service_description *sd);
 
+
+/** Translated remote client address to a more human readable
+ * format. It gives the MAC address of bluetooth client device.
+ *
+ * @param client_address Socket address peer socket pointer.
+ * @param buffer A string buffer to hold translated address.
+ */
+void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
 
 #endif
