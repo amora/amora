@@ -104,6 +104,9 @@ int main(void)
 	unsigned int opt = sizeof(rem_addr);
 	struct service_description *sd = NULL;
 	struct log_resource *log = NULL;
+	int length = 20;
+	char buffer[length];
+
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
@@ -160,7 +163,10 @@ int main(void)
 			goto exit;
 		}
 
-		log_message(FIL|OUT, log, "Accepted connection.\n");
+		client_bluetooth_id(&rem_addr, buffer);
+		log_message(FIL|OUT, log, "Accepted connection. Client is "
+			    "%s\n", buffer);
+
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;

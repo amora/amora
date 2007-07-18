@@ -223,3 +223,14 @@ exit:
 
 	return err;
 }
+
+void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
+{
+	struct sockaddr_rc *ptr;
+	ptr = (struct sockaddr_rc*) client_address;
+
+	if (buffer)
+		ba2str(&(ptr->rc_bdaddr), buffer);
+
+}
+
