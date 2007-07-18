@@ -99,34 +99,18 @@ MPlayer).
 
 == What is next ==
 
- - Icon animation to display event type in cellphone: easy, but takes
-a while to figure out rescale parameters for icon images.
-
- - Integrate stopwatch: easy, already got some code for it.
-
- - Create a SIS file with python + app bundled.
+ - See project page, in 'Issues' tab.
 
  - Create a deb file with server app (checkinstall make it easy if the app
 has an autotools-based buildsystem).
 
- - Current display thumbnail: this is going to be hard, will require at least
-one more dependency to convert a screenshot to an image compressed format (like
-JPEG) to save bluetooth use. It is not going to be usable for cellphone with
-resolution lower than 176x208 (i.e. Nokia N70).
-
- - Integration of bluetooth preview with cellphone client GUI: user must
+ - Integration of thumbnail preview with cellphone client GUI: user must
 have alternatives like enable/disable window preview, swap view mode
-(fullscreen X widescreen), set quality/compression parameters.
-
- - Heart beat between the server and cellphone client: not easy, I think it
-will need a thread in cellphone.
+(fullscreen X widescreen), set quality/compression of thumbnail image
+parameters.
 
  - Forking the server process when receiving a new connection: easy, can be
 not really necessary with heart beat.
-
- - cellphone client mouse acceleration: currently I use a fixed amount of
-pixels to move the mouse around (let's call it **delta**). A dynamic delta
-can improve mouse moving, based on last time the user pressed/moved the mouse.
 
  - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
 SDP API is documented in BSD) and **if** there are source code examples
