@@ -29,9 +29,9 @@ import appuifw
 import keyboard
 
 class wallpaper:
-    def __init__(self):
+    def __init__(self, filename):
         self.keyboard = keyboard.Keyboard()
-        self.image_obj = self.load_image()
+        self.image_obj = self.load_image(filename)
         #TODO: redraw works, but is a bit messy. Do I really need a keyboard
         # object?
         self.canvas = appuifw.Canvas(event_callback = self.keyboard.handle_event,
@@ -50,13 +50,12 @@ class wallpaper:
         target = [0, -10]
         return target
     #Calculates aspect ratio and resize original image
-    def load_image(self):
+    def load_image(self, filename):
         canvas = appuifw.Canvas(None, None)
         screen_size = canvas.size
         canvas = None
         border_perc = None
-        #FIXME: location dependent code!
-        img = graphics.Image.open('E:\\python\\imgs\\wallpaper_wide.jpg')
+        img = graphics.Image.open(filename)
         ratio_x = screen_size[0]/float(img.size[0])
         ratio_y = screen_size[1]/float(img.size[1])
         print [ratio_x, ratio_y]
