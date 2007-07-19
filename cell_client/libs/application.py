@@ -67,7 +67,8 @@ class application:
             self.presentation = None
         self.running = 0
         #Cleanup the screen
-        self.wallpaper = wallpaper()
+        #FIXME: location dependent code!
+        self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide_off.jpg')
         #TODO: move this code to wallpaper.display() method (like
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
