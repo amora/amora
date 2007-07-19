@@ -109,6 +109,13 @@ class application:
                             (u'Disconnect', self.__reset),
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
+        #Cleanup the screen
+        #FIXME: location dependent code!
+        self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide.jpg')
+        #TODO: move this code to wallpaper.display() method (like
+        #helpwindow.display() method)
+        appuifw.app.body = self.wallpaper.canvas
+        self.wallpaper.display()
         self.running = 2
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
