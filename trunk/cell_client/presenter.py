@@ -25,6 +25,7 @@
 '''
 import appuifw
 import e32
+import sys
 
 sys.path.append('E:\\python\\libs\\')
 from application import *
