@@ -35,6 +35,8 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
 #include <bluetooth/sdp.h>
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_lib.h>
 #include <bluetooth/sdp_lib.h>
 
 struct service_description *build_sd(int channel)
@@ -66,6 +68,13 @@ exit:
 	return sd;
 }
 
+int check_device(void)
+{
+	if (hci_get_route(NULL) < 0)
+		return -1;
+
+	return 0;
+}
 
 void destroy_sd(struct service_description *sd)
 {
@@ -233,4 +242,3 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 		ba2str(&(ptr->rc_bdaddr), buffer);
 
 }
-

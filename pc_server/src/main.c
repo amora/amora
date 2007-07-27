@@ -113,6 +113,12 @@ int main(void)
 	/* TODO: check for environment variable */
 	log = log_build_resources(NULL);
 
+	if (check_device() < 0) {
+		log_message(FIL|ERR, log, "No bluetooth device/dongle available."
+				" Aborting...\n");
+		return -1;
+	}
+
 	own_display = construct_display(NULL);
 	if (!own_display) {
 		log_message(FIL|ERR, log, "Error creating display object!"
