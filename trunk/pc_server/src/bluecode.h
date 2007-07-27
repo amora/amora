@@ -74,6 +74,11 @@ struct service_description {
  */
 struct service_description *build_sd(int channel);
 
+/** Checks if has a bluetooth device available.
+ *
+ * @return 0 in sucess, -1 otherwise.
+ */
+int check_device(void);
 
 /** This function frees resources allocated in service description structure.
  *
