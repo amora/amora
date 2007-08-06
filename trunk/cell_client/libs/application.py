@@ -119,8 +119,9 @@ class application:
         self.running = 2
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
-        self.bt.write_line(u'CONN_CLOSE')
-        self.bt.close()
+        if self.bt != None:
+            self.bt.write_line(u'CONN_CLOSE')
+            self.bt.close()
         self.reset()
     #Start presentation mode
     def start(self):
@@ -142,87 +143,93 @@ class application:
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
         # to process continously pressing given a time out value.
-        if self.keyboard.pressed(EScancode6):
-            print u'RIGHT'
-            self.bt.write_line(u'RIGHT')
-        elif self.keyboard.pressed(EScancode4):
-            print u'LEFT'
-            self.bt.write_line(u'LEFT')
-        #Mouse move event processing
-        elif self.keyboard.is_down(EScancodeUpArrow):
-            print u'MOUSE_UP'
-            self.mouse_y = self.mouse_y - self.delta
-            self.bt.write_line(u'MOUSE_MOVE')
-            self.bt.write_line(str(self.mouse_x))
-            self.bt.write_line(str(self.mouse_y))
-        elif self.keyboard.is_down(EScancodeDownArrow):
-            print u'MOUSE_DOWN'
-            self.mouse_y = self.mouse_y + self.delta
-            self.bt.write_line(u'MOUSE_MOVE')
-            self.bt.write_line(str(self.mouse_x))
-            self.bt.write_line(str(self.mouse_y))
-        elif self.keyboard.is_down(EScancodeLeftArrow):
-            print u'MOUSE_LEFT'
-            self.mouse_x = self.mouse_x - self.delta
-            self.bt.write_line(u'MOUSE_MOVE')
-            self.bt.write_line(str(self.mouse_x))
-            self.bt.write_line(str(self.mouse_y))
-        elif self.keyboard.is_down(EScancodeRightArrow):
-            print u'MOUSE_RIGHT'
-            self.mouse_x = self.mouse_x + self.delta
-            self.bt.write_line(u'MOUSE_MOVE')
-            self.bt.write_line(str(self.mouse_x))
-            self.bt.write_line(str(self.mouse_y))
-        #Mouse click event processing
-        elif self.keyboard.pressed(EScancodeSelect):
-            print u'MOUSE CLICK'
-            self.bt.write_line(u'MOUSE_BUTTON_LEFT')
-            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
-            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
-        elif self.keyboard.pressed(EScancode1):
-            print u'MOUSE CLICK_HOLD'
-            if self.press_flag == 0:
+        try:
+            if self.keyboard.pressed(EScancode6):
+                print u'RIGHT'
+                self.bt.write_line(u'RIGHT')
+            elif self.keyboard.pressed(EScancode4):
+                print u'LEFT'
+                self.bt.write_line(u'LEFT')
+            #Mouse move event processing
+            elif self.keyboard.is_down(EScancodeUpArrow):
+                print u'MOUSE_UP'
+                self.mouse_y = self.mouse_y - self.delta
+                self.bt.write_line(u'MOUSE_MOVE')
+                self.bt.write_line(str(self.mouse_x))
+                self.bt.write_line(str(self.mouse_y))
+            elif self.keyboard.is_down(EScancodeDownArrow):
+                print u'MOUSE_DOWN'
+                self.mouse_y = self.mouse_y + self.delta
+                self.bt.write_line(u'MOUSE_MOVE')
+                self.bt.write_line(str(self.mouse_x))
+                self.bt.write_line(str(self.mouse_y))
+            elif self.keyboard.is_down(EScancodeLeftArrow):
+                print u'MOUSE_LEFT'
+                self.mouse_x = self.mouse_x - self.delta
+                self.bt.write_line(u'MOUSE_MOVE')
+                self.bt.write_line(str(self.mouse_x))
+                self.bt.write_line(str(self.mouse_y))
+            elif self.keyboard.is_down(EScancodeRightArrow):
+                print u'MOUSE_RIGHT'
+                self.mouse_x = self.mouse_x + self.delta
+                self.bt.write_line(u'MOUSE_MOVE')
+                self.bt.write_line(str(self.mouse_x))
+                self.bt.write_line(str(self.mouse_y))
+            #Mouse click event processing
+            elif self.keyboard.pressed(EScancodeSelect):
+                print u'MOUSE CLICK'
                 self.bt.write_line(u'MOUSE_BUTTON_LEFT')
                 self.bt.write_line(u'MOUSE_BUTTON_PRESS')
-                self.press_flag = 1
-            else:
-                self.press_flag = 0
-                self.bt.write_line(u'MOUSE_BUTTON_LEFT')
                 self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
-        elif self.keyboard.pressed(EScancode2):
-            print u'MOUSE CLICK MIDDLE'
-            self.bt.write_line(u'MOUSE_BUTTON_MIDDLE')
-            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
-            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
-        elif self.keyboard.pressed(EScancode3):
-            print u'MOUSE CLICK RIGHT'
-            self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
-            self.bt.write_line(u'MOUSE_BUTTON_PRESS')
-            self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
-        elif self.keyboard.pressed(EScancode7):
-            print u'SCROLL_UP'
-            self.bt.write_line(u'MOUSE_SCROLL_UP')
-        elif self.keyboard.pressed(EScancodeStar):
-            print u'SCROLL_DOWN'
-            self.bt.write_line(u'MOUSE_SCROLL_DOWN')
-        #Special keys event processing
-        elif self.keyboard.pressed(EScancode9):
-            print u'ESC'
-            self.bt.write_line(u'ESC')
-        elif self.keyboard.pressed(EScancode0):
-            print u'SPACE'
-            self.bt.write_line(u'SPACE')
-        elif self.keyboard.pressed(EScancode5):
-            print u'ENTER'
-            self.bt.write_line(u'ENTER')
-        elif self.keyboard.pressed(EScancodeBackspace):
-            print u'DEL'
-            self.bt.write_line(u'DEL')
-        elif self.keyboard.pressed(EScancode8):
-            print u'SLIDESHOW - F5'
-            self.bt.write_line(u'SLIDESHOW')
-        elif self.keyboard.pressed(EScancodeHash):
-            print u'Fullscreen - F'
-            self.bt.write_line(u'FULLSCREEN')
+            elif self.keyboard.pressed(EScancode1):
+                print u'MOUSE CLICK_HOLD'
+                if self.press_flag == 0:
+                    self.bt.write_line(u'MOUSE_BUTTON_LEFT')
+                    self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+                    self.press_flag = 1
+                else:
+                    self.press_flag = 0
+                    self.bt.write_line(u'MOUSE_BUTTON_LEFT')
+                    self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+            elif self.keyboard.pressed(EScancode2):
+                print u'MOUSE CLICK MIDDLE'
+                self.bt.write_line(u'MOUSE_BUTTON_MIDDLE')
+                self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+                self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+            elif self.keyboard.pressed(EScancode3):
+                print u'MOUSE CLICK RIGHT'
+                self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
+                self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+                self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+            elif self.keyboard.pressed(EScancode7):
+                print u'SCROLL_UP'
+                self.bt.write_line(u'MOUSE_SCROLL_UP')
+            elif self.keyboard.pressed(EScancodeStar):
+                print u'SCROLL_DOWN'
+                self.bt.write_line(u'MOUSE_SCROLL_DOWN')
+            #Special keys event processing
+            elif self.keyboard.pressed(EScancode9):
+                print u'ESC'
+                self.bt.write_line(u'ESC')
+            elif self.keyboard.pressed(EScancode0):
+                print u'SPACE'
+                self.bt.write_line(u'SPACE')
+            elif self.keyboard.pressed(EScancode5):
+                print u'ENTER'
+                self.bt.write_line(u'ENTER')
+            elif self.keyboard.pressed(EScancodeBackspace):
+                print u'DEL'
+                self.bt.write_line(u'DEL')
+            elif self.keyboard.pressed(EScancode8):
+                print u'SLIDESHOW - F5'
+                self.bt.write_line(u'SLIDESHOW')
+            elif self.keyboard.pressed(EScancodeHash):
+                print u'Fullscreen - F'
+                self.bt.write_line(u'FULLSCREEN')
+        except:
+            appuifw.note(u'Connection is over, server down!')
+            self.bt.close()
+            self.bt = None
+            self.reset()
 
 
