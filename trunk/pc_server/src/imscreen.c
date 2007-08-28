@@ -1,6 +1,6 @@
 /**
  * @file   imscreen.c
- * @author Adenilson Cavalcanti <adedasil@axon2>
+ * @author Adenilson Cavalcanti
  * @date   Tue Aug 28 13:27:13 2007
  *
  * @brief  Screenshot and image handling module.
@@ -28,6 +28,11 @@
  */
 
 #include "imscreen.h"
+#include "string.h"
+
+const int const FILE_EXTENSION_LENGTH = 3;
+const char const FILE_EXTENSION_MARK = '.';
+char *const FILE_DEFAULT_FORMAT = ".png";
 
 int screen_capture(Display *display, Imlib_Image *image)
 {
@@ -65,3 +70,29 @@ int screen_capture(Display *display, Imlib_Image *image)
 exit:
 	return res;
 }
+
+
+int save_image(Imlib_Image *image, char *name)
+{
+	int res = -1;
+	char *ptr;
+
+	if (!(*image))
+		goto exit;
+
+	/* Checks for extension format, if it has more than 3 characters,
+	 * defaults to ".png".
+	 */
+	ptr = (name - FILE_EXTENSION_LENGTH);
+	if ((*(ptr - 1)) != FILE_EXTENSION_MARK)
+		ptr = FILE_DEFAULT_FORMAT;
+
+	imlib_context_set_image(*image);
+	imlib_image_set_format(ptr);
+	imlib_save_image(name);
+
+
+exit:
+	return res;
+}
+

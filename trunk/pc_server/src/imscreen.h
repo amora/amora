@@ -1,6 +1,6 @@
 /**
  * @file   imscreen.h
- * @author Adenilson Cavalcanti <adedasil@axon2>
+ * @author Adenilson Cavalcanti
  * @date   Tue Aug 28 12:08:21 2007
  *
  * @brief  Screenshot and image handling module.
@@ -36,15 +36,24 @@
 /** Creates a screenshot from active window.
  *
  *
- * @param display Display pointer (see \ref contruct_display).
+ * @param display Display pointer (see \ref x11_event.h contruct_display).
  * @param image A imlib2 image pointer.
  *
- * @return 0 for sucess, -1 otherwise.
+ * @return 0 for success, -1 otherwise.
  */
 int screen_capture(Display *display, Imlib_Image *image);
 
 
-
+/** Saves an image structure to filesystem.
+ *
+ *
+ * @param image An imlib image pointer (hopefully with screen data taken by
+ * \ref screen_capture).
+ * @param name A file name (e.g. "screenshot.jpg")
+ *
+ * @return 0 for success, -1 otherwise.
+ */
+int save_image(Imlib_Image *image, char *name);
 
 
 #endif
