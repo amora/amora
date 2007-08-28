@@ -36,7 +36,7 @@
  * - Mouse keys
  * - Connection/protocol related
  *
- **/
+ */
 enum { NONE = -1,
        UP = 1, DOWN, LEFT, RIGHT,
        ENTER, ESC, SPACE, DEL, ALT, TAB,

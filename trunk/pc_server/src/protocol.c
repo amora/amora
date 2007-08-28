@@ -22,7 +22,7 @@
 /** Event command strings
  * ps: first element is "EMPTY", since enumerations should
  * not have value zero. See \ref codes.
- **/
+ */
 const char *all_codes[] = { "EMPTY",
 			    "UP", "DOWN", "LEFT", "RIGHT",
 			    "ENTER", "ESC", "SPACE",
