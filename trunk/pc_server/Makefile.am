@@ -16,9 +16,11 @@ amora_SOURCES = $(csourcedir)/main.c \
                    $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                    $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
                    $(csourcedir)/bluecode.h $(csourcedir)/linux.c \
-                   $(csourcedir)/log.h $(csourcedir)/log.c
-amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS)
-amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS)
+                   $(csourcedir)/log.h $(csourcedir)/log.c \
+		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
+
+amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
+amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
 
 EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/m4/check.m4 \
