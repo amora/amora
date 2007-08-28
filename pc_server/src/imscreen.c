@@ -30,8 +30,18 @@
 #include "imscreen.h"
 #include "string.h"
 
+/** We expect file extension names to have only 3 characters (e.g. jpg, bmp,
+ * png, etc).
+ */
 const int const FILE_EXTENSION_LENGTH = 3;
+
+/** The file extension separator must be the dot (e.g. '.png')
+ */
 const char const FILE_EXTENSION_MARK = '.';
+
+/** If function \ref save_image fails to identify filename extension, it
+ * defaults to 'png' format.
+ */
 char *const FILE_DEFAULT_FORMAT = ".png";
 
 int screen_capture(Display *display, Imlib_Image *image)
