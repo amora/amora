@@ -50,7 +50,7 @@ int screen_capture(Display *display, Imlib_Image *image)
 	Window window;
 	XWindowAttributes window_attr;
 
-	if ((!(*image)) || (!display))
+	if ((!image) || (!display))
 		goto exit;
 
 	tmp = XGetInputFocus(display, &window, &revert_to);
@@ -87,7 +87,7 @@ int save_image(Imlib_Image *image, char *name)
 	int res = 0;
 	char *ptr;
 
-	if (!(*image))
+	if (!image)
 		goto exit;
 
 	/* Checks for extension format, if it has more than 3 characters,
@@ -110,7 +110,7 @@ int rescale_image(Imlib_Image *image, int new_width, int new_height,
 		  Imlib_Image *rescaled)
 {
 	int res = -1;
-	if ((!*image) || (!(*rescaled)))
+	if ((!image) || (!rescaled))
 		goto exit;
 
 	imlib_context_set_image(image);
@@ -128,7 +128,7 @@ exit:
 int rotate_image(Imlib_Image *image)
 {
 	int res = -1;
-	if ((!*image))
+	if (!image)
 		goto exit;
 
 	imlib_context_set_image(image);
