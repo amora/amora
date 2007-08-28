@@ -35,6 +35,8 @@
 
 /** Creates a screenshot from active window.
  *
+ * It has some calls for Xlib to discover current active window (and its
+ * dimensions).
  *
  * @param display Display pointer (see \ref x11_event.h contruct_display).
  * @param image A imlib2 image pointer.
