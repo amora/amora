@@ -72,4 +72,18 @@ int rescale_image(Imlib_Image *image, int new_width, int new_height,
 		  Imlib_Image *rescaled);
 
 
+
+/** Rotate image, just a thin wrapper around Imlib2.
+ *
+ * Some cellphones can benefit viewing screenshot thumbnail if its
+ * rotated (e.g. N93, N73). Others don't require it (E61).
+ * It does transformation 'in place'.
+ *
+ * @param image An imlib image pointer (hopefully with screen data taken by
+ * \ref screen_capture).
+ *
+ * @return 0 for success, -1 otherwise.
+ */
+int rotate_image(Imlib_Image *image);
+
 #endif
