@@ -84,7 +84,7 @@ exit:
 
 int save_image(Imlib_Image *image, char *name)
 {
-	int res = -1;
+	int res = 0;
 	char *ptr;
 
 	if (!(*image))
@@ -99,8 +99,8 @@ int save_image(Imlib_Image *image, char *name)
 
 	imlib_context_set_image(*image);
 	imlib_image_set_format(ptr);
+	/* TODO: how to check for success in imlib? */
 	imlib_save_image(name);
-
 
 exit:
 	return res;
