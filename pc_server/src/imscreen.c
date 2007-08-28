@@ -106,3 +106,21 @@ exit:
 	return res;
 }
 
+int rescale_image(Imlib_Image *image, int new_width, int new_height,
+		  Imlib_Image *rescaled)
+{
+	int res = -1;
+	if ((!*image) || (!(*rescaled)))
+		goto exit;
+
+	imlib_context_set_image(image);
+	*rescaled = imlib_create_cropped_scaled_image(0, 0,
+						     imlib_image_get_width(),
+						     imlib_image_get_height(),
+						     new_width, new_height);
+
+	res = 0;
+exit:
+	return res;
+}
+
