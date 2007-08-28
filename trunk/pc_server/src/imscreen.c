@@ -59,6 +59,9 @@ int screen_capture(Display *display, Imlib_Image *image)
 						  window_attr.width,
 						  window_attr.height, 1);
 
+	if (*image)
+		res = 0;
+
 exit:
 	return res;
 }
