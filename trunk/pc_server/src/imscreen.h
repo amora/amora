@@ -56,4 +56,18 @@ int screen_capture(Display *display, Imlib_Image *image);
 int save_image(Imlib_Image *image, char *name);
 
 
+/** Rescale image, just a thin wrapper around Imlib2.
+ *
+ * @param image An imlib image pointer (hopefully with screen data taken by
+ * \ref screen_capture).
+ * @param new_width New width dimension (e.g. 320 pixels)
+ * @param new_height New height dimension (e.g. 240 pixels)
+ * @param rescaled Image pointer that will hold rescaled new image.
+ *
+ * @return 0 for success, -1 otherwise.
+ */
+int rescale_image(Imlib_Image *image, int new_width, int new_height,
+		  Imlib_Image *rescaled);
+
+
 #endif
