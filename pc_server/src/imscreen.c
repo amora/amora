@@ -124,3 +124,17 @@ exit:
 	return res;
 }
 
+
+int rotate_image(Imlib_Image *image)
+{
+	int res = -1;
+	if ((!*image))
+		goto exit;
+
+	imlib_context_set_image(image);
+	imlib_image_orientate(1);
+
+	res = 0;
+exit:
+	return res;
+}
