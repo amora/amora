@@ -1,6 +1,7 @@
 /**
  * @file   log.c
  * @author Vanderson Rodrigues
+ * @author Adenilson Cavalcanti
  * @date  Tue Jul 10 16:29:07 2007
  *
  * @brief Simple logging system.
@@ -11,7 +12,7 @@
  */
 
 /*  Copyright (C) 2007  Vanderson Rodrigues <vanderson.gold@gmail.com>
- *
+ *  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
