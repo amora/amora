@@ -57,6 +57,12 @@ PKG_CHECK_MODULES(LIBXTST, xtst,, \
 AC_SUBST(LIBXTST_CFLAGS)
 AC_SUBST(LIBXTST_LIBS)
 
+
+PKG_CHECK_MODULES(LIBIMLIB2, imlib2,, \
+	  AC_MSG_ERROR("*** Imlib2 developement files not found! You need it to build $PACKAGE_NAME. ***"))
+AC_SUBST(LIBIMLIB2_CFLAGS)
+AC_SUBST(LIBIMLIB2_LIBS)
+
 # enable configure options and automake conditionals useful for developers
 # look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)
@@ -76,8 +82,8 @@ $PACKAGE_NAME $PACKAGE_VERSION configuration:
   Source code location:       ${srcdir}
   Host System Type:           ${host}
   Compiler:                   ${CC}
-  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${ac_devel_default_warnings}
-  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS}
+  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${LIBIMLIB2_CFLAGS} ${ac_devel_default_warnings}
+  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS} ${LIBIMLIB2_LIBS}
   Install path (prefix):      ${prefix}
 
   Now type 'make' to build $PACKAGE_NAME $PACKAGE_VERSION.
