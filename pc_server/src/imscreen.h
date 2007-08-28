@@ -37,15 +37,11 @@
  *
  *
  * @param display Display pointer (see \ref contruct_display).
- * @param window A window pointer.
- * @param window_attr The current window attribute.
  * @param image A imlib2 image pointer.
  *
  * @return 0 for sucess, -1 otherwise.
  */
-int screen_capture(Display *display, Window *window,
-		   XWindowAttributes *window_attr,
-		   Imlib_Image *image);
+int screen_capture(Display *display, Imlib_Image *image);
 
 
 
