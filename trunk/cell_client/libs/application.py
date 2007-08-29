@@ -118,6 +118,9 @@ class application:
             try:
                 if self.configuration.screenshot:
                     self.bt.write_line(u'SCREEN_MODE_ON')
+                    self.bt.write_line(u'SCREEN_RESOLUTION')
+                    self.bt.write_line(str(self.wallpaper.screen_size()[0]))
+                    self.bt.write_line(str(self.wallpaper.screen_size()[1]))
                 else:
                     self.bt.write_line(u'SCREEN_MODE_OFF')
                 if self.configuration.rotate:
