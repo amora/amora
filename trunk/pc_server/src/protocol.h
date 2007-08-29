@@ -84,11 +84,6 @@ int ecell_mouse_ewindow(char *event, int length);
  * @param length Length of string command.
  *
  * @return A code representing the event or NONE otherwise.
- *
- * \todo:
- * - implement logic processing for codes (SERVER_STOP,
- * RESOLUTION, IMG_FORMAT). This relates with \ref
- * main.c todos.
  */
 int protocol_command(char *cmd, int length);
 
