@@ -352,30 +352,37 @@ exit:
 
 int treat_command(char *buffer, int length) {
 
-	int result = protocol_command(buffer, length);
+	static int screen_capture = 0, screen_rotate = 0,
+		width = 320, height = 240;
+	int result;
+
+	result = protocol_command(buffer, length);
 	if (result != NONE) {
 
 		switch (result) {
 
 		case CONN_CLOSE:
-			//
+			screen_capture = screen_rotate = 0;
+			width = 320;
+			height = 240;
 			break;
-			/* TODO: add server stop code */
-		case SERVER_STOP:
+		case SERVER_STOP:/* TODO: add server stop code */
 			break;
-			/* TODO: add image handling/screenshot code */
 		case RESOLUTION:
 			break;
-			/* TODO: add image handling/screenshot code */
 		case IMG_FORMAT:
 			break;
 		case SCREEN_MODE_ON:
+			screen_capture = 1;
 			break;
 		case SCREEN_MODE_OFF:
+			screen_capture = 0;
 			break;
 		case SCREEN_ROTATE:
+			screen_rotate = 1;
 			break;
 		case SCREEN_NORMAL:
+			screen_rotate = 0;
 			break;
 		case SCREEN_RESOLUTION:
 			break;
@@ -384,6 +391,7 @@ int treat_command(char *buffer, int length) {
 		case SCREEN_HEIGHT:
 			break;
 		case SCREEN_TAKE:
+			/* TODO: add image handling/screenshot code */
 			break;
 
 
