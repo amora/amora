@@ -113,6 +113,24 @@ class application:
     def __connect(self):
         self.bt = bt_client()
         self.bt.connect()
+        #Prepare server for screenshot mode
+        if self.bt.sock != None:
+            try:
+                if self.configuration.screenshot:
+                    self.bt.write_line(u'SCREEN_MODE_ON')
+                else:
+                    self.bt.write_line(u'SCREEN_MODE_OFF')
+                if self.configuration.rotate:
+                    self.bt.write_line(u'SCREEN_ROTATE')
+                else:
+                    self.bt.write_line(u'SCREEN_NORMAL')
+            except:
+                appuifw.note(u'Connection is over, server down!')
+                self.bt.close()
+                self.bt = None
+                self.reset()
+                return
+        #Proceed with normal flow
         appuifw.app.menu = [(u'Start', self.start),
                             (u'Disconnect', self.__reset),
                             (u'Help', self.__help),
