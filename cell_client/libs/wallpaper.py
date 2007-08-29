@@ -27,6 +27,7 @@
 import graphics
 import appuifw
 import keyboard
+import sysinfo
 
 class wallpaper:
     def __init__(self, filename):
@@ -62,6 +63,9 @@ class wallpaper:
         scaled = img.resize([(img.size[0] * ratio_x),
                                  (img.size[1] * ratio_y)], keepaspect = 1)
         return scaled
+    #Auxiliar function, returns screensize
+    def screen_size(self):
+        return sysinfo.display_pixels()
 
 #Example of use
 # obj = wallpaper()
