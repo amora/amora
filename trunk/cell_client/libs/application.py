@@ -38,6 +38,7 @@ from keyboard import *
 from bt_client import *
 from wallpaper import *
 from helpwindow import *
+from configure import *
 
 class application:
     mouse_x = 400
@@ -49,11 +50,13 @@ class application:
     running = 0
     bt = None
     keyboard = None
+    configuration = None
     #TODO: Add another object for 'options' window
     def __init__(self):
         appuifw.app.title = u'Amora'
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
+        self.configuration = configure()
         self.reset()
     #Reset application to its initial state
     def reset(self):
@@ -84,7 +87,7 @@ class application:
     #Call configuration dialog
     #TODO: implement method.
     def __configuration(self):
-        appuifw.note(u'Not implemented')
+        self.configuration.display()
     #Call Help dialog
     #TODO: implement help for other application states: connected, started.
     def __help(self):
