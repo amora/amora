@@ -353,8 +353,10 @@ exit:
 int treat_command(char *buffer, int length) {
 
 	static int screen_capture = 0, screen_rotate = 0,
-		width = 320, height = 240;
-	int result;
+		width = 320, height = 240, flag = 0, times = 0;
+	int result, tmp;
+
+	printf("width = %d\theight = %d\n", width, height);
 
 	result = protocol_command(buffer, length);
 	if (result != NONE) {
@@ -365,6 +367,7 @@ int treat_command(char *buffer, int length) {
 			screen_capture = screen_rotate = 0;
 			width = 320;
 			height = 240;
+			flag = 0;
 			break;
 		case SERVER_STOP:/* TODO: add server stop code */
 			break;
@@ -385,6 +388,7 @@ int treat_command(char *buffer, int length) {
 			screen_rotate = 0;
 			break;
 		case SCREEN_RESOLUTION:
+			flag = 1;
 			break;
 		case SCREEN_WIDTH:
 			break;
@@ -393,7 +397,17 @@ int treat_command(char *buffer, int length) {
 		case SCREEN_TAKE:
 			/* TODO: add image handling/screenshot code */
 			break;
-
+		case NONE:
+			if (flag) {
+				tmp = atoi(buffer);
+				if (!times) {
+					++times;
+					width = tmp;
+				} else {
+					times = flag = 0;
+					height = tmp;
+				}
+			}
 
 		}
 
