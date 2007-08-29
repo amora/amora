@@ -51,6 +51,9 @@ class application:
     bt = None
     keyboard = None
     configuration = None
+    #Sets default window title
+    def __window_title(self):
+        appuifw.app.title = u'Amora'
     #TODO: Add another object for 'options' window
     def __init__(self):
         appuifw.app.title = u'Amora'
@@ -60,6 +63,7 @@ class application:
         self.reset()
     #Reset application to its initial state
     def reset(self):
+        self.__window_title()
         appuifw.app.menu = [(u'Search devices', self.__connect),
                             (u'Configuration', self.__configuration),
                             (u'Help', self.__help),
@@ -88,6 +92,7 @@ class application:
     #TODO: implement method.
     def __configuration(self):
         self.configuration.display()
+        self.__window_title()
     #Call Help dialog
     #TODO: implement help for other application states: connected, started.
     def __help(self):
