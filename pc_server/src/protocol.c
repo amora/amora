@@ -34,7 +34,11 @@ const char *all_codes[] = { "EMPTY",
 			    "MOUSE_BUTTON_LEFT", "MOUSE_BUTTON_MIDDLE",
 			    "MOUSE_SCROLL_UP", "MOUSE_SCROLL_DOWN",
 			    "CONN_CLOSE", "SERVER_STOP", "RESOLUTION",
-			    "IMG_FORMAT"
+			    "IMG_FORMAT",
+			    "SCREEN_MODE_ON", "SCREEN_MODE_OFF",
+			    "SCREEN_ROTATE", "SCREEN_NORMAL",
+			    "SCREEN_RESOLUTION", "SCREEN_WIDTH",
+			    "SCREEN_HEIGHT", "SCREEN_TAKE"
 			    };
 
 
