@@ -51,8 +51,9 @@
  * all_codes in \ref protocol.h
  * @param length Buffer length
  *
- * @return 0 for closing the connection.  \todo Think how
- * to process other events.
+ * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * (see \ref codes).
+ * \todo Think how to process other events.
  */
 int treat_command(char *buffer, int length);
 
@@ -67,7 +68,8 @@ int treat_command(char *buffer, int length);
  * @param active_display Pointer to active display.
  * @param log A structure of log resources, see \ref log_resource.
  *
- * @return 0 for closing the connection.
+ * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * (see \ref codes).
  */
 int treat_events(char *buffer, int length, Display *active_display,
 		 struct log_resource *log);
@@ -82,7 +84,8 @@ int treat_events(char *buffer, int length, Display *active_display,
  * @param clean_up Free local allocated resources.
  * @param log A structure of log resources, see \ref log_resource.
  *
- * @return Number of bytes read on sucess, -1 on error, 0 on exit.
+ * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * (see \ref codes).
  */
 int process_events(int fd, Display *active_display, int clean_up,
 		   struct log_resource *log);
@@ -183,7 +186,7 @@ int main(void)
 
 			res = process_events(client_socket,
 					     own_display, clean_up, log);
-			if (!res) {
+			if (res == CONN_CLOSE) {
 				log_message(FIL|OUT, log,
 					    "Client asked to close "
 					    "connection\n\n");
@@ -312,7 +315,7 @@ int treat_events(char *buffer, int length, Display *active_display,
 			} else {
 
 				result = treat_command(buffer, length);
-				if (result == 0) {
+				if (result == CONN_CLOSE) {
 					mouse_event = 0;
 					times = 0;
 					goto exit;
@@ -355,7 +358,7 @@ int treat_command(char *buffer, int length) {
 		switch (result) {
 
 		case CONN_CLOSE:
-			result = 0;
+			//
 			break;
 			/* TODO: add server stop code */
 		case SERVER_STOP:
