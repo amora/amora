@@ -4,7 +4,6 @@
 #        Copyright 2007
 # About: a bluetooth class, it scans for local devices, connects
 # with them and has methods to write data.
-# TODO: fix reading data method
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -34,6 +33,7 @@ class bt_client:
     def __init__(self):
         self.port = None
         self.sock = None
+        self.byte_read = 8192
     #This method scans for bluetooth devices and create a socket
     #with a user selected device.
     def connect(self):
@@ -58,17 +58,17 @@ class bt_client:
         print "Connecting to " + str(address) + "...",
         self.sock.connect(address)
         print "OK."
-    #FIXME: why this doesn't work?
-#     def readline(self):
-#         line=[]
-#         self.sock.recv(100)
-#         line.append(ch)
-#         while 1:
-#             ch=self.sock.recv(100)
-#             if(ch=='\n'):
-#                 break
-#             line.append(ch)
-#        return ''.join(line)
+    #Reads a byte stream from socket and writes in a file (you should
+    #provide the file handler)
+    def readline(self, fout):
+        try:
+            while 1:
+                ch = self.sock.recv(self.byte_read)
+                fout.write(ch)
+                if ch == 0:
+                    break
+        except:
+            print 'Got exception!!'
     #Writes a command line, adding a newline at end of string
     def write_line(self, command):
         if self.port != None:
