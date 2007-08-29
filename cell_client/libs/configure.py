@@ -38,8 +38,8 @@ class configure:
     def __init__(self):
         self.states = [u'On', u'Off']
         self.modes = [u'Normal', u'Rotate']
-        self.widget = [(u'Preview', 'combo', (states, 0)),
-                       (u'Image', 'combo', (modes, 0))]
+        self.widget = [(u'Preview', 'combo', (self.states, 0)),
+                       (u'Image', 'combo', (self.modes, 0))]
     #Callback to get user defined options
     def save_state(self, current_list):
         self.option_list = current_list
