@@ -54,7 +54,7 @@
  * @return 0 for closing the connection.  \todo Think how
  * to process other events.
  */
-int treat_exit(char *buffer, int length);
+int treat_command(char *buffer, int length);
 
 
 /** Check for protocol commands, handle input events (mouse
@@ -311,7 +311,7 @@ int treat_events(char *buffer, int length, Display *active_display,
 				}
 			} else {
 
-				result = treat_exit(buffer, length);
+				result = treat_command(buffer, length);
 				if (result == 0) {
 					mouse_event = 0;
 					times = 0;
@@ -347,7 +347,7 @@ exit:
 }
 
 
-int treat_exit(char *buffer, int length) {
+int treat_command(char *buffer, int length) {
 
 	int result = protocol_command(buffer, length);
 	if (result != NONE) {
@@ -366,6 +366,23 @@ int treat_exit(char *buffer, int length) {
 			/* TODO: add image handling/screenshot code */
 		case IMG_FORMAT:
 			break;
+		case SCREEN_MODE_ON:
+			break;
+		case SCREEN_MODE_OFF:
+			break;
+		case SCREEN_ROTATE:
+			break;
+		case SCREEN_NORMAL:
+			break;
+		case SCREEN_RESOLUTION:
+			break;
+		case SCREEN_WIDTH:
+			break;
+		case SCREEN_HEIGHT:
+			break;
+		case SCREEN_TAKE:
+			break;
+
 
 		}
 

@@ -117,6 +117,23 @@ int protocol_command(char *cmd, int length)
 		res = RESOLUTION;
 	else if (strncasecmp(cmd, all_codes[IMG_FORMAT], length))
 		res = IMG_FORMAT;
+	else if (strncasecmp(cmd, all_codes[SCREEN_MODE_ON], length))
+		res = SCREEN_MODE_ON;
+	else if (strncasecmp(cmd, all_codes[SCREEN_MODE_OFF], length))
+		res = SCREEN_MODE_OFF;
+	else if (strncasecmp(cmd, all_codes[SCREEN_ROTATE], length))
+		res = SCREEN_ROTATE;
+	else if (strncasecmp(cmd, all_codes[SCREEN_NORMAL], length))
+		res = SCREEN_NORMAL;
+	else if (strncasecmp(cmd, all_codes[SCREEN_RESOLUTION], length))
+		res = SCREEN_RESOLUTION;
+	else if (strncasecmp(cmd, all_codes[SCREEN_WIDTH], length))
+		res = SCREEN_WIDTH;
+	else if (strncasecmp(cmd, all_codes[SCREEN_HEIGHT], length))
+		res = SCREEN_HEIGHT;
+	else if (strncasecmp(cmd, all_codes[SCREEN_TAKE], length))
+		res = SCREEN_TAKE;
+
 
 	return res;
 }
