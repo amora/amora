@@ -134,4 +134,16 @@ int describe_service(struct service_description *sd);
  */
 void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
 
+
+
+/** Sends a file (e.g. image created with \ref imscreen.c save_image) to
+ * a client socket.
+ *
+ * @param client_socket A socket open to client.
+ * @param filename Filename to target file.
+ *
+ * @return 0 for sucess, -1 otherwise.
+ */
+int send_file(int client_socket, char *filename);
+
 #endif

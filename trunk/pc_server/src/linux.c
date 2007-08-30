@@ -38,6 +38,11 @@
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/sdp_lib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/sendfile.h>
+
 
 struct service_description *build_sd(int channel)
 {
@@ -241,4 +246,31 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 	if (buffer)
 		ba2str(&(ptr->rc_bdaddr), buffer);
 
+}
+
+int send_file(int client_socket, char *filename)
+{
+	struct stat src_stat;
+	int source, result = -1;
+	off_t offset = 0;
+
+	source = open(filename, O_RDONLY);
+	if (source == -1) {
+		perror("send_file: failed opening source file!\n");
+		goto exit;
+	}
+
+	fstat(source, &src_stat);
+
+	result = sendfile(client_socket, source, &offset, src_stat.st_size);
+	if (result != src_stat.st_size) {
+		perror("send_file: failed sending file to client!\n");
+		result = -1;
+	} else
+		result = 0;
+
+	close(source);
+
+exit:
+	return result;
 }
