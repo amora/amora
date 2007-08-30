@@ -319,9 +319,9 @@ int treat_events(char *buffer, int length, Display *active_display,
 					mouse_event = 0;
 					times = 0;
 					goto exit;
-				}
-
-				log_message(FIL|ERR, log, "Invalid event!\n");
+				} else if (result == NONE)
+					log_message(FIL|ERR, log,
+						    "Invalid event!\n");
 			}
 			break;
 		default:
@@ -353,67 +353,64 @@ exit:
 int treat_command(char *buffer, int length) {
 
 	static int screen_capture = 0, screen_rotate = 0,
-		width = 320, height = 240, flag = 0, times = 0;
+		width = 176, height = 208, flag = 0, times = 0;
 	int result, tmp;
 
-	printf("width = %d\theight = %d\n", width, height);
-
 	result = protocol_command(buffer, length);
-	if (result != NONE) {
 
-		switch (result) {
+	switch (result) {
 
-		case CONN_CLOSE:
-			screen_capture = screen_rotate = 0;
-			width = 320;
-			height = 240;
-			flag = 0;
-			break;
-		case SERVER_STOP:/* TODO: add server stop code */
-			break;
-		case RESOLUTION:
-			break;
-		case IMG_FORMAT:
-			break;
-		case SCREEN_MODE_ON:
-			screen_capture = 1;
-			break;
-		case SCREEN_MODE_OFF:
-			screen_capture = 0;
-			break;
-		case SCREEN_ROTATE:
-			screen_rotate = 1;
-			break;
-		case SCREEN_NORMAL:
-			screen_rotate = 0;
-			break;
-		case SCREEN_RESOLUTION:
-			flag = 1;
-			break;
-		case SCREEN_WIDTH:
-			break;
-		case SCREEN_HEIGHT:
-			break;
-		case SCREEN_TAKE:
-			/* TODO: add image handling/screenshot code */
-			break;
-		case NONE:
-			if (flag) {
-				tmp = atoi(buffer);
-				if (!times) {
-					++times;
-					width = tmp;
-				} else {
-					times = flag = 0;
-					height = tmp;
-				}
-			}
+	case CONN_CLOSE:
+		screen_capture = screen_rotate = 0;
+		width = 320;
+		height = 240;
+		flag = 0;
+		break;
+	case SERVER_STOP:/* TODO: add server stop code */
+		break;
+	case RESOLUTION:
+		break;
+	case IMG_FORMAT:
+		break;
+	case SCREEN_MODE_ON:
+		screen_capture = 1;
+		break;
+	case SCREEN_MODE_OFF:
+		screen_capture = 0;
+		break;
+	case SCREEN_ROTATE:
+		screen_rotate = 1;
+		break;
+	case SCREEN_NORMAL:
+		screen_rotate = 0;
+		break;
+	case SCREEN_RESOLUTION:
+		flag = 1;
+		break;
+	case SCREEN_WIDTH:
+		break;
+	case SCREEN_HEIGHT:
+		break;
+	case SCREEN_TAKE:
+		/* TODO: add image handling/screenshot code */
+		break;
+	case NONE:
+		tmp = atoi(buffer);
+		if (flag)
+			result = SCREEN_RESOLUTION;
 
+		if (flag && (!times)) {
+			++times;
+			if (tmp > 0)
+				width = tmp;
+		} else if (flag && times) {
+			flag = times = 0;
+			if (tmp > 0)
+				height = tmp;
 		}
 
 	}
 
 	return result;
-
 }
 
