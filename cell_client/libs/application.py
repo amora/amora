@@ -220,11 +220,12 @@ class application:
                     self.press_flag = 0
                     self.bt.write_line(u'MOUSE_BUTTON_LEFT')
                     self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
-            elif self.keyboard.pressed(EScancode2):
-                print u'MOUSE CLICK MIDDLE'
-                self.bt.write_line(u'MOUSE_BUTTON_MIDDLE')
-                self.bt.write_line(u'MOUSE_BUTTON_PRESS')
-                self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+#            elif self.keyboard.pressed(EScancode2):
+# I'm going to use mouse middle button (number 2) to trigger for screenshot
+#                 print u'MOUSE CLICK MIDDLE'
+#                 self.bt.write_line(u'MOUSE_BUTTON_MIDDLE')
+#                 self.bt.write_line(u'MOUSE_BUTTON_PRESS')
+#                 self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
             elif self.keyboard.pressed(EScancode3):
                 print u'MOUSE CLICK RIGHT'
                 self.bt.write_line(u'MOUSE_BUTTON_RIGHT')
@@ -255,6 +256,25 @@ class application:
             elif self.keyboard.pressed(EScancodeHash):
                 print u'Fullscreen - F'
                 self.bt.write_line(u'FULLSCREEN')
+            #Take screenshot and blit it to screen (only for mouse middle button)
+            #TODO:
+            # - move this code to a new class method
+            # - make it run in a distinct thread (now it hangs for 5s)
+            # - discover a way to transfer image without using files (its slow!)
+            # - self.presentation must have a draw callback for redraw
+            if self.configuration.screenshot and self.keyboard.pressed(EScancode2):
+                try:
+                    screen_flag = 0
+                    self.bt.write_line(u'SCREEN_TAKE')
+                    fout = open(u'E:\\test.png', 'w')
+                    res = bt.readline(fout)
+                    fout.close()
+                    img = graphics.Image.open('E:\\test.png')
+                    canvas.clear()
+                    canvas.blit(img)
+                except:
+                    appuifw.note(u'Cannot transfer thumbnail!')
+                    raise 'I\'m done here!'
         except:
             appuifw.note(u'Connection is over, server down!')
             self.bt.close()
