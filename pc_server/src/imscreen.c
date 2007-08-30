@@ -93,7 +93,7 @@ int save_image(Imlib_Image *image, char *name)
 	/* Checks for extension format, if it has more than 3 characters,
 	 * defaults to ".png".
 	 */
-	ptr = (name - FILE_EXTENSION_LENGTH);
+	ptr = name + (strlen(name) - (FILE_EXTENSION_LENGTH));
 	if ((*(ptr - 1)) != FILE_EXTENSION_MARK)
 		ptr = FILE_DEFAULT_FORMAT;
 
@@ -113,7 +113,7 @@ int rescale_image(Imlib_Image *image, int new_width, int new_height,
 	if ((!image) || (!rescaled))
 		goto exit;
 
-	imlib_context_set_image(image);
+	imlib_context_set_image(*image);
 	*rescaled = imlib_create_cropped_scaled_image(0, 0,
 						     imlib_image_get_width(),
 						     imlib_image_get_height(),
@@ -131,7 +131,7 @@ int rotate_image(Imlib_Image *image)
 	if (!image)
 		goto exit;
 
-	imlib_context_set_image(image);
+	imlib_context_set_image(*image);
 	imlib_image_orientate(1);
 
 	res = 0;

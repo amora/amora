@@ -43,6 +43,7 @@
 #include "bluecode.h"
 #include "protocol.h"
 #include "log.h"
+#include "imscreen.h"
 
 /** Check for protocol commands in buffer, used by \ref process_events
  *
@@ -52,11 +53,13 @@
  * @param length Buffer length
  * @param client_socket Client socket connection descriptor. This function will
  * take screenshots and write data back to client.
+ * @param active_display Pointer to active display. This function need access to
+ * display connection to grab screenshots.
  *
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
-int treat_command(char *buffer, int length, int client_socket);
+int treat_command(char *buffer, int length, int client_socket, Display *active_display);
 
 
 /** Check for protocol commands, handle input events (mouse
@@ -317,7 +320,8 @@ int treat_events(char *buffer, int length, Display *active_display,
 			} else {
 
 				result = treat_command(buffer, length,
-						       client_socket);
+						       client_socket,
+						       active_display);
 				if (result == CONN_CLOSE) {
 					mouse_event = 0;
 					times = 0;
@@ -353,19 +357,21 @@ exit:
 }
 
 
-int treat_command(char *buffer, int length, int client_socket)
+int treat_command(char *buffer, int length, int client_socket,
+		  Display *active_display)
 {
 
-	static int screen_capture = 0, screen_rotate = 0,
+	static int do_capture = 0, screen_rotate = 0,
 		width = 176, height = 208, flag = 0, times = 0;
 	int result, tmp;
+	Imlib_Image image, rescaled;
 
 	result = protocol_command(buffer, length);
 
 	switch (result) {
 
 	case CONN_CLOSE:
-		screen_capture = screen_rotate = 0;
+		do_capture = screen_rotate = 0;
 		width = 320;
 		height = 240;
 		flag = 0;
@@ -377,10 +383,10 @@ int treat_command(char *buffer, int length, int client_socket)
 	case IMG_FORMAT:
 		break;
 	case SCREEN_MODE_ON:
-		screen_capture = 1;
+		do_capture = 1;
 		break;
 	case SCREEN_MODE_OFF:
-		screen_capture = 0;
+		do_capture = 0;
 		break;
 	case SCREEN_ROTATE:
 		screen_rotate = 1;
@@ -396,8 +402,36 @@ int treat_command(char *buffer, int length, int client_socket)
 	case SCREEN_HEIGHT:
 		break;
 	case SCREEN_TAKE:
-		/* TODO: add image handling/screenshot code */
-		printf("Client has asked for screenshot!\n");
+		tmp = screen_capture(active_display, &image);
+		if (tmp) {
+			perror("failed screen capture!\n");
+			result = NONE;
+			break;
+		}
+
+		tmp = rescale_image(&image, width, height, &rescaled);
+		if (tmp) {
+			perror("failed screen capture!\n");
+			result = NONE;
+			break;
+		}
+
+		if (screen_rotate) {
+			tmp = rotate_image(&rescaled);
+			if (tmp) {
+				perror("failed screen capture!\n");
+				result = NONE;
+				break;
+			}
+		}
+
+		tmp = save_image(&rescaled, "/tmp/screenshot.png");
+		if (tmp) {
+			perror("failed screen capture!\n");
+			result = NONE;
+			break;
+		}
+		/*TODO: write back image data to client socket */
 		break;
 	case NONE:
 		tmp = atoi(buffer);
