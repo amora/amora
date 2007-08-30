@@ -42,6 +42,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <sys/sendfile.h>
+#include <errno.h>
 
 
 struct service_description *build_sd(int channel)
@@ -248,12 +249,16 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 
 }
 
+#define STRANGE_BUG
+int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
+
 int send_file(int client_socket, char *filename)
 {
 	struct stat src_stat;
 	int source, result = -1;
+#ifndef STRANGE_BUG
 	off_t offset = 0;
-
+#endif
 	source = open(filename, O_RDONLY);
 	if (source == -1) {
 		perror("send_file: failed opening source file!\n");
@@ -261,8 +266,11 @@ int send_file(int client_socket, char *filename)
 	}
 
 	fstat(source, &src_stat);
-
+#ifndef STRANGE_BUG
 	result = sendfile(client_socket, source, &offset, src_stat.st_size);
+#else
+	result = hack_send_file(client_socket, source, src_stat);
+#endif
 	if (result != src_stat.st_size) {
 		perror("send_file: failed sending file to client!\n");
 		result = -1;
@@ -273,4 +281,41 @@ int send_file(int client_socket, char *filename)
 
 exit:
 	return result;
+}
+
+int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
+{
+	int bytes, res;
+	int length = 8192;
+	char buffer[length];
+	const int maximum_digit_byte_count = 5;
+
+	bytes = 0;
+	snprintf(buffer, length, "%d", (int)mstat.st_size);
+	res = write(client_socket, buffer, maximum_digit_byte_count);
+	if (res == -1) {
+		printf("Error sending image file size!\n");
+		return -1;
+	}
+
+	while (bytes < mstat.st_size) {
+
+		res = read(file_descriptor, buffer, length);
+		if (res == -1) {
+			printf("Error reading image file!\n");
+			return -1;
+		}
+
+		res = write(client_socket, buffer, res);
+		if (res == -1) {
+			printf("Error writing data: %s\n",
+			       strerror(errno));
+			return -1;
+		}
+
+		bytes += res;
+
+	}
+	sleep(1.0);
+	return bytes;
 }
