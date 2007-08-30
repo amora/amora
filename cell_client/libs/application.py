@@ -51,6 +51,7 @@ class application:
     bt = None
     keyboard = None
     configuration = None
+    img = None
     #Sets default window title
     def __window_title(self):
         appuifw.app.title = u'Amora'
@@ -80,6 +81,7 @@ class application:
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
         self.wallpaper.display()
+        self.img = None
     #Exit function
     def quit(self):
         self.running = -1
@@ -152,15 +154,21 @@ class application:
             self.bt.write_line(u'CONN_CLOSE')
             self.bt.close()
         self.reset()
+    #Ugly hack to print screenshot
+    def presentationdisplay(self, other):
+        if self.presentation != None:
+            self.presentation.clear()
+        if self.img != None:
+            self.presentation.blit(self.img)
     #Start presentation mode
     def start(self):
         #Creates presentation display if it already doesn't exist.
         if self.keyboard == None:
             self.keyboard = Keyboard()
         if self.presentation == None:
-            self.presentation = appuifw.Canvas(event_callback =
-                                               self.keyboard.handle_event,
-                                               redraw_callback = None)
+            self.presentation = appuifw.Canvas(event_callback = self.keyboard.handle_event, redraw_callback = self.presentationdisplay)
+                                               #redraw_callback = None)
+            appuifw.app.body = self.presentation
         #First time the function is called, change menu
         if self.running == 0 or self.running == 2:
             appuifw.app.menu = [(u'Disconnect', self.__reset),
@@ -168,7 +176,6 @@ class application:
                                 (u'Exit', self.quit)]
             self.press_flag = 0
         self.running = 1
-        appuifw.app.body = self.presentation
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
         # to process continously pressing given a time out value.
@@ -271,9 +278,8 @@ class application:
                         res = self.bt.readline(fout)
                     except:
                         appuifw.note(u'Failed reading!')
-                    img = graphics.Image.open('E:\\test.png')
-                    self.presentation.clear()
-                    self.presentation.blit(img)
+                    self.img = graphics.Image.open('E:\\test.png')
+                    self.presentationdisplay('dumbo')
                 except:
                     appuifw.note(u'Cannot transfer thumbnail!')
                     raise 'I\'m done here!'
