@@ -61,12 +61,19 @@ class bt_client:
     #Reads a byte stream from socket and writes in a file (you should
     #provide the file handler)
     def readline(self, fout):
+        if self.port == None:
+            appuifw.note(u'Invalid port!')
+            return
+        bytes = 0
+        size = 0
+        ch = 0
         try:
-            while 1:
+            size = int(self.sock.recv(5))
+            while bytes < size:
                 ch = self.sock.recv(self.byte_read)
                 fout.write(ch)
-                if ch == 0:
-                    break
+                bytes += len(ch)
+            fout.close()
         except:
             print 'Got exception!!'
     #Writes a command line, adding a newline at end of string

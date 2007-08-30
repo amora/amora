@@ -265,13 +265,15 @@ class application:
             if self.configuration.screenshot and self.keyboard.pressed(EScancode2):
                 try:
                     screen_flag = 0
-                    self.bt.write_line(u'SCREEN_TAKE')
                     fout = open(u'E:\\test.png', 'w')
-                    res = bt.readline(fout)
-                    fout.close()
+                    self.bt.write_line(u'SCREEN_TAKE')
+                    try:
+                        res = self.bt.readline(fout)
+                    except:
+                        appuifw.note(u'Failed reading!')
                     img = graphics.Image.open('E:\\test.png')
-                    canvas.clear()
-                    canvas.blit(img)
+                    self.presentation.clear()
+                    self.presentation.blit(img)
                 except:
                     appuifw.note(u'Cannot transfer thumbnail!')
                     raise 'I\'m done here!'
