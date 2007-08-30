@@ -50,12 +50,13 @@
  * @param buffer A string buffer with commands (i.e. CONN_CLOSE), see
  * all_codes in \ref protocol.h
  * @param length Buffer length
+ * @param client_socket Client socket connection descriptor. This function will
+ * take screenshots and write data back to client.
  *
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
- * \todo Think how to process other events.
  */
-int treat_command(char *buffer, int length);
+int treat_command(char *buffer, int length, int client_socket);
 
 
 /** Check for protocol commands, handle input events (mouse
@@ -67,13 +68,14 @@ int treat_command(char *buffer, int length);
  * @param length Buffer length
  * @param active_display Pointer to active display.
  * @param log A structure of log resources, see \ref log_resource.
+ * @param client_socket Client socket connection descriptor (really used by
+ * \ref treat_command).
  *
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
 int treat_events(char *buffer, int length, Display *active_display,
-		 struct log_resource *log);
-
+		 struct log_resource *log, int client_socket);
 
 
 /** Process event stream. Reads what new commands are being received
@@ -244,7 +246,7 @@ int process_events(int fd, Display *active_display, int clean_up,
 	start = buffer;
 	while ((end = strchr(start, CMD_BREAK))) {
 		result = treat_events(start, (end - start), active_display,
-				      log);
+				      log, fd);
 		start = ++end;
 	}
 
@@ -252,7 +254,7 @@ int process_events(int fd, Display *active_display, int clean_up,
 }
 
 int treat_events(char *buffer, int length, Display *active_display,
-		 struct log_resource *log)
+		 struct log_resource *log, int client_socket)
 {
 	static unsigned char mouse_event = 0, times = 0,
 		button_right = 0, button_left = 0, button_middle = 0;
@@ -314,7 +316,8 @@ int treat_events(char *buffer, int length, Display *active_display,
 				}
 			} else {
 
-				result = treat_command(buffer, length);
+				result = treat_command(buffer, length,
+						       client_socket);
 				if (result == CONN_CLOSE) {
 					mouse_event = 0;
 					times = 0;
@@ -350,7 +353,8 @@ exit:
 }
 
 
-int treat_command(char *buffer, int length) {
+int treat_command(char *buffer, int length, int client_socket)
+{
 
 	static int screen_capture = 0, screen_rotate = 0,
 		width = 176, height = 208, flag = 0, times = 0;
@@ -393,6 +397,7 @@ int treat_command(char *buffer, int length) {
 		break;
 	case SCREEN_TAKE:
 		/* TODO: add image handling/screenshot code */
+		printf("Client has asked for screenshot!\n");
 		break;
 	case NONE:
 		tmp = atoi(buffer);
