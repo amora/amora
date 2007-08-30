@@ -65,6 +65,7 @@ class application:
     #Reset application to its initial state
     def reset(self):
         self.__window_title()
+        appuifw.app.screen = 'normal'
         appuifw.app.menu = [(u'Search devices', self.__connect),
                             (u'Configuration', self.__configuration),
                             (u'Help', self.__help),
@@ -168,6 +169,8 @@ class application:
         if self.presentation == None:
             self.presentation = appuifw.Canvas(event_callback = self.keyboard.handle_event, redraw_callback = self.presentationdisplay)
                                                #redraw_callback = None)
+
+            appuifw.app.screen = 'full'
             appuifw.app.body = self.presentation
         #First time the function is called, change menu
         if self.running == 0 or self.running == 2:
