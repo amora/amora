@@ -431,7 +431,13 @@ int treat_command(char *buffer, int length, int client_socket,
 			result = NONE;
 			break;
 		}
-		/*TODO: write back image data to client socket */
+
+		tmp = send_file(client_socket, "/tmp/screenshot.png");
+		if (tmp) {
+			perror("failed screen transfer!\n");
+			result = NONE;
+			break;
+		}
 		break;
 	case NONE:
 		tmp = atoi(buffer);
