@@ -288,11 +288,12 @@ int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
 	int bytes, res;
 	int length = 8192;
 	char buffer[length];
-	const int maximum_digit_byte_count = 5;
+	int byte_count;
 
 	bytes = 0;
-	snprintf(buffer, length, "%d", (int)mstat.st_size);
-	res = write(client_socket, buffer, maximum_digit_byte_count);
+	snprintf(buffer, (length - 1), "%d", (int)mstat.st_size);
+	byte_count = strnlen(buffer, length);
+	res = write(client_socket, buffer, byte_count);
 	if (res == -1) {
 		printf("Error sending image file size!\n");
 		return -1;
@@ -316,6 +317,6 @@ int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
 		bytes += res;
 
 	}
-	sleep(1.0);
+
 	return bytes;
 }

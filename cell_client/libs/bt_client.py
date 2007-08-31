@@ -68,7 +68,7 @@ class bt_client:
         size = 0
         ch = 0
         try:
-            size = int(self.sock.recv(5))
+            size = int(self.sock.recv(10))
             while bytes < size:
                 ch = self.sock.recv(self.byte_read)
                 fout.write(ch)
