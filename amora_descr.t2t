@@ -104,11 +104,6 @@ MPlayer).
  - Create a deb file with server app (checkinstall make it easy if the app
 has an autotools-based buildsystem).
 
- - Integration of thumbnail preview with cellphone client GUI: user must
-have alternatives like enable/disable window preview, swap view mode
-(fullscreen X widescreen), set quality/compression of thumbnail image
-parameters.
-
  - Forking the server process when receiving a new connection: easy, can be
 not really necessary with heart beat.
 
