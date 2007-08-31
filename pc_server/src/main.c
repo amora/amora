@@ -10,7 +10,6 @@
  * \todo
  * - new background/icon for connected status
  * - refactor main.c, its starting to get smelly
- * - screenshot from active window.
  * - catch SIGTERM or provide a way to clean exit (close sockets).
  * - forking the process when new connection is received can be a good idea.
  * - what about a heart beat between cellphone and server?

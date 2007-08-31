@@ -26,6 +26,7 @@
  *
  */
 
+/** strnlen is GNU extension, this makes the compiler happy. */
 #define _GNU_SOURCE
 
 #include "bluecode.h"
@@ -252,7 +253,21 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 
 }
 
+/** Linux sendfile is failing (probably I'm not using it correctly). */
 #define STRANGE_BUG
+
+/** Copy a file content over other (use it to copy a file to a remote client
+ * socket).
+ *
+ * I don't know why, but linux 'sendfile' is failing in file -> bluetooth case.
+ *
+ * @param client_socket A destination descriptor (i.e. to remote client).
+ * @param file_descriptor A source descriptor (i.e. from a file)
+ * @param mstat Source descriptor stats structure (to known amount of bytes
+ * to be transfered).
+ *
+ * @return 0 on sucess, -1 otherwise.
+ */
 int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
 
 int send_file(int client_socket, char *filename)
