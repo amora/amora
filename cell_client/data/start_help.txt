@@ -11,7 +11,7 @@ You can also disconnect the cellphone. For this:
 The following mouse commands are supported:
   1) Mouse moving and click: use cellphone joystick
   2) Mouse drag: press key '1' and use joystick
-  3) Middle and right mouse buttons: keys '2' and '3'
+  3) Right mouse button: keys '3'
   4) Mouse wheel: keys '7' (scroll up) and '*' (scroll down)
 
 And also some keyboard shortcuts:
@@ -23,3 +23,4 @@ And also some keyboard shortcuts:
   ESC: key '9'
   F (mplayer fullscreen): key '#'
   DEL: clear key
+  SCREENSHOT: use key '2'
