@@ -23,6 +23,26 @@
 #include "protocol.h"
 #include "log.h"
 
+/** X server key codes, you can get them from 'xev',
+ * bellow are the key codes for following keys:
+ * - Arrow up 98
+ * - Arrow down 104
+ * - Arrow left 100
+ * - Arrow right 102
+ * - Enter key 36
+ * - ESC key 9
+ * - Space key 65
+ * - Del key 107
+ * - Alt key 64
+ * - Tab key 23
+ * - F5 key (start slideshow in OpenOffice.org)
+ * - F key (fullscreen for Mplayer and Totem)
+ *
+ * ps: first element is -1, since enumerations should
+ * not have value zero. See \ref codes.
+ */
+int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65, 107, 64, 23, 71, 41 };
+
 Display* construct_display(char *display_name)
 {
 
