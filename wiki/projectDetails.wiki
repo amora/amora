@@ -26,7 +26,7 @@ that can be potentially useful for slide presentations:
 
 == Hardware required ==
 A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
-(tested on Ubuntu 6.06 and 6.10) and a bluetooth dongle.
+(tested on Ubuntu 6.06, 6.10, 7.02 i386 and x86-64, Debian) and a bluetooth dongle.
 
 == Software dependencies ==
 To run the application, you need to install Python for S60, available in
