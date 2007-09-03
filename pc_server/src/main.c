@@ -8,7 +8,6 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
- * - new background/icon for connected status
  * - refactor main.c, its starting to get smelly
  * - catch SIGTERM or provide a way to clean exit (close sockets).
  * - forking the process when new connection is received can be a good idea.
