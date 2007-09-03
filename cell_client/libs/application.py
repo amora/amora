@@ -253,6 +253,10 @@ class application:
                 self.bt.write_line(u'MOUSE_BUTTON_PRESS')
                 self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
                 if self.click_and_screen:
+                    #FIXME: synchronization between click and new slide
+                    #display will require a change in protocol or IPC
+                    #with OpenOffice/Acrobat/etc
+                    time.sleep(1.0)
                     self.__take_screenshot()
             elif self.keyboard.pressed(EScancode1):
                 print u'MOUSE CLICK_HOLD'
