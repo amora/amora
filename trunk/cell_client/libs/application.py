@@ -52,6 +52,7 @@ class application:
     keyboard = None
     configuration = None
     img = None
+    click_and_screen = False
     #Sets default window title
     def __window_title(self):
         appuifw.app.title = u'Amora'
@@ -83,6 +84,7 @@ class application:
         appuifw.app.body = self.wallpaper.canvas
         self.wallpaper.display()
         self.img = None
+        self.click_and_screen = False
     #Exit function
     def quit(self):
         self.running = -1
@@ -165,6 +167,31 @@ class application:
             self.presentation.clear()
         if self.img != None:
             self.presentation.blit(self.img)
+    #Sets click and screen mode
+    def __click_screen(self):
+        if self.click_and_screen:
+            self.click_and_screen = False
+            appuifw.note(u'Click and screen off.')
+        else:
+            self.click_and_screen = True
+            appuifw.note(u'Click and screen on.')
+    #This private function send request, read, blit screenshot
+    #TODO:
+    # - make it run in a distinct thread (now it hangs for 2s)
+    # - discover a way to transfer image without using files
+    def __take_screenshot(self):
+        try:
+            fout = open(u'E:\\test.png', 'w')
+            self.bt.write_line(u'SCREEN_TAKE')
+            try:
+                res = self.bt.readline(fout)
+            except:
+                appuifw.note(u'Failed reading!')
+            self.img = graphics.Image.open('E:\\test.png')
+            self.presentationdisplay('dumbo')
+        except:
+            appuifw.note(u'Cannot transfer thumbnail!')
+            raise 'I\'m done here!'
     #Start presentation mode
     def start(self):
         #Creates presentation display if it already doesn't exist.
@@ -179,6 +206,7 @@ class application:
         #First time the function is called, change menu
         if self.running == 0 or self.running == 2:
             appuifw.app.menu = [(u'Disconnect', self.__reset),
+                                (u'Auto screen', self.__click_screen),
                                 (u'Help', self.__help),
                                 (u'Exit', self.quit)]
             self.press_flag = 0
@@ -224,6 +252,8 @@ class application:
                 self.bt.write_line(u'MOUSE_BUTTON_LEFT')
                 self.bt.write_line(u'MOUSE_BUTTON_PRESS')
                 self.bt.write_line(u'MOUSE_BUTTON_RELEASE')
+                if self.click_and_screen:
+                    self.__take_screenshot()
             elif self.keyboard.pressed(EScancode1):
                 print u'MOUSE CLICK_HOLD'
                 if self.press_flag == 0:
@@ -270,26 +300,8 @@ class application:
             elif self.keyboard.pressed(EScancodeHash):
                 print u'Fullscreen - F'
                 self.bt.write_line(u'FULLSCREEN')
-            #Take screenshot and blit it to screen (only for mouse middle button)
-            #TODO:
-            # - move this code to a new class method
-            # - make it run in a distinct thread (now it hangs for 5s)
-            # - discover a way to transfer image without using files (its slow!)
-            # - self.presentation must have a draw callback for redraw
             if self.configuration.screenshot and self.keyboard.pressed(EScancode2):
-                try:
-                    screen_flag = 0
-                    fout = open(u'E:\\test.png', 'w')
-                    self.bt.write_line(u'SCREEN_TAKE')
-                    try:
-                        res = self.bt.readline(fout)
-                    except:
-                        appuifw.note(u'Failed reading!')
-                    self.img = graphics.Image.open('E:\\test.png')
-                    self.presentationdisplay('dumbo')
-                except:
-                    appuifw.note(u'Cannot transfer thumbnail!')
-                    raise 'I\'m done here!'
+                self.__take_screenshot()
         except:
             appuifw.note(u'Connection is over, server down!')
             self.bt.close()
