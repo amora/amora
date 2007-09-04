@@ -187,3 +187,50 @@ int mouse_click(int mouse_button, int button_status, Display *active_display)
 
 	return result;
 }
+
+Window find_real_window_down(Display *display, Window window)
+{
+	Atom wm_state, type;
+	int format;
+	unsigned long nitems, after;
+	unsigned char* prop;
+
+	Window root, parent, old_parent;
+	Window* children;
+	unsigned int nchildren;
+	Window result;
+
+	wm_state = XInternAtom(display, "WM_STATE", False);
+
+	do {
+		old_parent = window;
+
+		/* TODO: check return value of Xlib functions */
+		XQueryTree(display, window, &root, &parent, &children,
+			   &nchildren);
+
+		XGetWindowProperty(display, window, wm_state, 0, 0, False,
+				   AnyPropertyType, &type, &format,
+				   &nitems, &after, &prop);
+
+		if (prop != NULL)
+			XFree(prop);
+		prop = NULL;
+
+		if (children != NULL) {
+			XFree(children);
+			children = NULL;
+		}
+
+		window = parent;
+
+	} while (parent != root);
+
+	/* Has no attribute */
+	if ((type == None) && (format == 0) && (after == 0))
+		result = old_parent;
+	else
+		result = window;
+
+	return result;
+}

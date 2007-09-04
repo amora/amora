@@ -94,4 +94,14 @@ int mouse_move(int x, int y, Display *active_display);
  */
 int mouse_click(int mouse_button, int button_status, Display *active_display);
 
+/** Use this function to discover which is the real window. GTK+ puts the focus *inside* toplevel
+ * (thanks Owen Taylor for the tip!).
+ *
+ * @param display A pointer to current display (see \ref construct_display).
+ * @param window Current active window.
+ *
+ * @return The original window or the real window.
+ */
+Window find_real_window_down(Display *display, Window window);
+
 #endif
