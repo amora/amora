@@ -29,6 +29,7 @@
 
 #include "imscreen.h"
 #include "string.h"
+#include "x11_event.h"
 
 /** We expect file extension names to have only 3 characters (e.g. jpg, bmp,
  * png, etc).
@@ -61,6 +62,16 @@ int screen_capture(Display *display, Imlib_Image *image)
 	if ((tmp == BadDrawable) || (tmp == BadWindow))
 		goto exit;
 
+	/* TODO: for while, only gtk based applications get window
+	 * decoration borders in screenshot. It would be nice
+	 * this to be one user option (with/without decoration).
+	 */
+	if ((window_attr.width == 1) && (window_attr.height == 1)) {
+		window = find_real_window_down(display, window);
+		tmp = XGetWindowAttributes(display, window, &window_attr);
+		if ((tmp == BadDrawable) || (tmp == BadWindow))
+			goto exit;
+	}
 
 	imlib_context_set_anti_alias(1);
 	imlib_context_set_blend(0);
