@@ -408,6 +408,7 @@ int treat_command(char *buffer, int length, int client_socket,
 		}
 
 		tmp = rescale_image(&image, width, height, &rescaled);
+		imlib_free_image();
 		if (tmp) {
 			perror("failed screen capture!\n");
 			result = NONE;
@@ -417,6 +418,7 @@ int treat_command(char *buffer, int length, int client_socket,
 		if (screen_rotate) {
 			tmp = rotate_image(&rescaled);
 			if (tmp) {
+				imlib_free_image();
 				perror("failed screen capture!\n");
 				result = NONE;
 				break;
@@ -424,6 +426,7 @@ int treat_command(char *buffer, int length, int client_socket,
 		}
 
 		tmp = save_image(&rescaled, "/tmp/screenshot.png");
+		imlib_free_image();
 		if (tmp) {
 			perror("failed screen capture!\n");
 			result = NONE;
