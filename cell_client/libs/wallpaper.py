@@ -29,6 +29,20 @@ import appuifw
 import keyboard
 import sysinfo
 
+
+#Use it to define which aspect the screen has.
+def is_widescreen():
+    res = -1
+    tmp = sysinfo.display_pixels()
+    tmp = tmp[0]/tmp[1]
+    if tmp > 1.3:
+        res = True
+    elif tmp < 0.76:
+        res = False
+    return res
+
+
+
 class wallpaper:
     def __init__(self, filename):
         self.keyboard = keyboard.Keyboard()
@@ -48,12 +62,12 @@ class wallpaper:
     #Calculates position where to blit the image in Canvas
     def calc_position(self):
         #this magic value works for N93, E61, N70
-        target = [0, -10]
+        target = [0, 0]
         return target
     #Calculates aspect ratio and resize original image
     def load_image(self, filename):
         canvas = appuifw.Canvas(None, None)
-        screen_size = canvas.size
+        screen_size = self.screen_size()
         canvas = None
         border_perc = None
         img = graphics.Image.open(filename)
@@ -66,7 +80,6 @@ class wallpaper:
     #Auxiliar function, returns screensize
     def screen_size(self):
         return sysinfo.display_pixels()
-
 #Example of use
 # obj = wallpaper()
 # appuifw.body = obj.canvas

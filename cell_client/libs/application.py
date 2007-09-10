@@ -64,7 +64,7 @@ class application:
     #Reset application to its initial state
     def reset(self):
         self.__window_title()
-        appuifw.app.screen = 'normal'
+        appuifw.app.screen = 'full'
         appuifw.app.menu = [(u'Search devices', self.__connect),
                             (u'Configuration', self.__configuration),
                             (u'Help', self.__help),
@@ -76,7 +76,10 @@ class application:
         self.running = 0
         #Cleanup the screen
         #FIXME: location dependent code!
-        self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide_off.jpg')
+        if is_widescreen():
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide_off.jpg')
+        else:
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_full_off.jpg')
         #TODO: move this code to wallpaper.display() method (like
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
@@ -147,7 +150,10 @@ class application:
                             (u'Exit', self.quit)]
         #Cleanup the screen
         #FIXME: location dependent code!
-        self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide.jpg')
+        if is_widescreen():
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide.jpg')
+        else:
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_full.jpg')
         #TODO: move this code to wallpaper.display() method (like
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
