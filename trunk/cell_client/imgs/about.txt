@@ -1,6 +1,5 @@
-This beautiful art were extracted from Frozen-bubble and
-gnome projects.
+The penguins art were extracted from Frozen-bubble, while the icons
+and wallpaper was done by Wilson Prata (wilsonprata@gmail.com).
 
-I'm not sure what is the license of both, but I'm planning
-to ask help of some friends to get some new art for my
-project.
+The crude work of copying and pasting is my fault...
+
