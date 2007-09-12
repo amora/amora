@@ -37,11 +37,24 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <string.h>
+#include <time.h>
 #include "x11_event.h"
 #include "bluecode.h"
 #include "protocol.h"
 #include "log.h"
 #include "imscreen.h"
+
+/** Checks for client socket status, if its still valid.
+ *
+ * Currently, only a dummy function, its not able to detect if the client
+ * is dead.
+ *
+ * @param client_socket The client socket descriptor.
+ *
+ * @return 0 when connection is ok, -1 for error.
+ * \todo Write a function that really works.
+ */
+int check_socket_validity(int client_socket);
 
 /** Check for protocol commands in buffer, used by \ref process_events
  *
@@ -112,6 +125,7 @@ int main(void)
 	struct log_resource *log = NULL;
 	int length = 20;
 	char buffer[length];
+	time_t last_test;
 
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
@@ -179,24 +193,74 @@ int main(void)
 		log_message(FIL|OUT, log, "Accepted connection. Client is "
 			    "%s\n", buffer);
 
+		res = process_events(client_socket, own_display, clean_up,
+				     log);
+
 		FD_ZERO(&fd_set_socket);
 		FD_SET(client_socket, &fd_set_socket);
 		time_socket.tv_sec = 5;
 		time_socket.tv_usec = 0;
 
-		while (select(1, &fd_set_socket, NULL, NULL,
-			      &time_socket) != -1) {
+		last_test = time(NULL);
+		while ((res = select(client_socket + 1, &fd_set_socket, NULL,
+				     NULL, &time_socket)) != -1) {
 
-			res = process_events(client_socket,
-					     own_display, clean_up, log);
-			if (res == CONN_CLOSE) {
-				log_message(FIL|OUT, log,
-					    "Client asked to close "
-					    "connection\n\n");
-				close(client_socket);
-				client_socket = -1;
-				break;
+			/* Linux resets timeout */
+			FD_ZERO(&fd_set_socket);
+			FD_SET(client_socket, &fd_set_socket);
+			time_socket.tv_sec = 5;
+			time_socket.tv_usec = 0;
+
+			if (res == 1) {
+				res = check_socket_validity(client_socket);
+
+				if (res < 0) {
+
+					/* FIXME: 3x the same block code
+					 * is awful.
+					 */
+					log_message(FIL|OUT, log,
+						    "Connection no longer"
+						    "valid\n");
+
+					close(client_socket);
+					client_socket = -1;
+					break;
+				}
+
+				res = process_events(client_socket,
+						     own_display, clean_up,
+						     log);
+
+				if (res == CONN_CLOSE) {
+					log_message(FIL|OUT, log,
+						    "Client asked to close "
+						    "connection\n\n");
+					close(client_socket);
+					client_socket = -1;
+					break;
+				}
+				last_test = time(NULL);
 			}
+
+			res = time(NULL);
+			if ((res - last_test) > 20) {
+				log_message(FIL, log, "Timeout, check for "
+					    "socket status");
+				last_test = res;
+				res = check_socket_validity(client_socket);
+				if (res < 0) {
+					log_message(FIL|OUT, log,
+						    "Connection no longer"
+						    "valid\n");
+
+					close(client_socket);
+					client_socket = -1;
+					break;
+				}
+
+			}
+
 		}
 
 	}
@@ -243,6 +307,8 @@ int process_events(int fd, Display *active_display, int clean_up,
 	bytes_read = read_socket(fd, buffer, BUF_SIZE);
 	if (bytes_read == -1)
 		return result;
+
+	log_message(FIL, log, "Read buffer = %s\n", buffer);
 
 	start = buffer;
 	while ((end = strchr(start, CMD_BREAK))) {
@@ -458,5 +524,18 @@ int treat_command(char *buffer, int length, int client_socket,
 	}
 
 	return result;
+}
+
+int check_socket_validity(int client_socket)
+{
+	int res;
+	char buffer[1];
+
+	/* Try to read twice */
+	res = read(client_socket, buffer, 0);
+	if (!res)
+		res = read(client_socket, buffer, 0);
+
+	return res;
 }
 
