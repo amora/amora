@@ -8,6 +8,7 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
+ * - \ref check_socket_validity is just a stub
  * - refactor main.c, its starting to get smelly
  * - catch SIGTERM or provide a way to clean exit (close sockets).
  * - forking the process when new connection is received can be a good idea.
