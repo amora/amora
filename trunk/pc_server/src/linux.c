@@ -105,8 +105,11 @@ int read_socket(int client, char *data, int length)
 	--length;
 
 	while (!strchr(data, CMD_BREAK) && (res < length)) {
-		/* TODO: add error checking here. */
 		tmp = read(client, data, length);
+
+		if ((tmp == -1) && (errno == ECONNRESET))
+			return tmp;
+
 		res += tmp;
 		length -= res;
 	}

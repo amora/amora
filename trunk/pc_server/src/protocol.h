@@ -37,7 +37,7 @@
  * - Connection/protocol related
  *
  */
-enum { NONE = -1,
+enum { NONE = -2,
        UP = 1, DOWN, LEFT, RIGHT,
        ENTER, ESC, SPACE, DEL, ALT, TAB,
        SLIDESHOW, FULLSCREEN,
