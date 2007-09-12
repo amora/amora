@@ -62,6 +62,9 @@ int destroy_display(Display *active_display)
 	return res;
 }
 
+/* Derived from sendevent.c
+ * Copyright (C) 2002 Erich Kitzmüller  erich.kitzmueller@itek.at
+ */
 int send_event(int type, int keycode, Display *active_display)
 {
 	int res = 0;
