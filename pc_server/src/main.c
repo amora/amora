@@ -240,6 +240,16 @@ int main(void)
 					client_socket = -1;
 					break;
 				}
+
+				if (res == -1) {
+					log_message(FIL|OUT, log,
+						    "Client died or closed "
+						    "connection\n\n");
+					close(client_socket);
+					client_socket = -1;
+					break;
+				}
+
 				last_test = time(NULL);
 			}
 
@@ -305,8 +315,10 @@ int process_events(int fd, Display *active_display, int clean_up,
 	}
 
 	bytes_read = read_socket(fd, buffer, BUF_SIZE);
-	if (bytes_read == -1)
+	if (bytes_read == -1) {
+		log_message(FIL|OUT, log, "Error trying to read socket!");
 		return result;
+	}
 
 	log_message(FIL, log, "Read buffer = %s\n", buffer);
 
