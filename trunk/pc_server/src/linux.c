@@ -154,7 +154,10 @@ exit:
 	return s;
 }
 
-
+/* This code is derived from Albert Huang description of
+ * how to describe/register a service withing SDP.
+ * Copyright (C) 2005 Albert Huang
+ */
 int describe_service(struct service_description *sd)
 {
 
@@ -186,7 +189,15 @@ int describe_service(struct service_description *sd)
 	root_list = sdp_list_append(0, &root_uuid);
 	sdp_set_browse_groups(record, root_list);
 
-	/* Set port attributes */
+	/* Set port attributes, this description came from sdptool.c (from
+	 * bluez-utils/tools).
+	 * Copyright (C) 2001-2002  Nokia Corporation
+	 * Copyright (C) 2002-2003  Maxim Krasnyansky <maxk@qualcomm.com>
+	 * Copyright (C) 2002-2007  Marcel Holtmann <marcel@holtmann.org>
+	 * Copyright (C) 2002-2003  Stephen Crane <steve.crane@rococosoft.com>
+	 * Copyright (C) 2002-2003  Jean Tourrilhes <jt@hpl.hp.com>
+	 *
+	 */
 	sdp_uuid16_create(&root_uuid, SERIAL_PORT_SVCLASS_ID);
 	svclass_id = sdp_list_append(0, &root_uuid);
 	sdp_set_service_classes(record, svclass_id);
