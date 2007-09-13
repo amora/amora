@@ -68,12 +68,16 @@ connected to the computer):
 $./amora
 
 = Project status =
-What works: mouse moving, clicking (all 3 buttons), mouse drag, mouse scroll wheel,
+What works: mouse moving, clicking, mouse drag, mouse scroll wheel,
 keyboard shortcuts (ENTER, ESC, SPACE, F5, 'F', left and right arrow keys).
+
+You can ask for screenshots of active window as also use a mode where for each mouse click the screenshot of active window is taken (very handy when driving slides).
 
 Cellphone client can be started independently of server side application.
 You can close the connection from cellphone and later reconnect without
 restarting the server.
+
+The server can detect when the client just died (e.g. cellphone turned off) as also the client can detect when the server is down.
 
 Its stable and I already use it to control my slides and movie watching (i.e.:
 I can start a slide presentation, stop it, move the mouse cursor to a
