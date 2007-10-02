@@ -2,7 +2,7 @@
 = Software installing instructions =
 
 == Software dependencies ==
-To run the application, you need to install Python for S60, available in
+To run the application, you need to install Python for S60 in your cellphone, available in
 [http://pys60.sourceforge.net PyS60]. There are 2 files required, the python
 interpreter and the python shell, you need to download them and install
 to be able to execute python programs in your cellphone.
@@ -23,8 +23,13 @@ in Ubuntu simply run in your terminal:
 
 $sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
 
-After installing the dependencies, change to directory 'pc_server'
-and execute the following commands:
+After installing the dependencies, extract server app tarball with:
+
+$ tar -zxvf amora_server-0.x.tar.gz 
+
+where _x_ is the *current* download version.
+
+Change to the extracted directory and execute the following commands:
 
 $mkdir build
 
@@ -39,3 +44,14 @@ start the application (and make sure that the bluetooth dongle is
 connected to the computer):
 
 $./amora
+
+
+== Repository version ==
+
+If you checked out the code from repository, you need first to generate the build system scripts. This one requires autotools packages (automake, etc).
+
+You first run in the directory pc_server:
+
+$ autoreconf -i --force
+
+and then just follow previous instructions for tarball version.
