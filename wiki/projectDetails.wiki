@@ -1,5 +1,5 @@
 #labels Featured,Phase-Requirements,Phase-Deploy
-'''Amora: a mobile remote assistant'''
+''Amora: a mobile remote assistant'''
 
 ''Adenilson Cavalcanti (savagobr@yahoo.com)''
 
@@ -28,44 +28,6 @@ that can be potentially useful for slide presentations:
 A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
 (tested on Ubuntu 6.06, 6.10, 7.02 i386 and x86-64, Debian) and a bluetooth dongle.
 
-== Software dependencies ==
-To run the application, you need to install Python for S60, available in
-[http://pys60.sourceforge.net PyS60]. There are 2 files required, the python
-interpreter and the python shell, you need to download them and install
-to be able to execute python programs in your cellphone.
-
-To install the cellphone client application, just copy the files in a folder
-named 'Python' in cellphone memory card.
-
-For server side, to compile the source code, you will need:
-
-  * gcc compiler
-  * Xlibs
-  * XTest libs
-  * BlueZ libs
-  * Imlib2 libs
-
-And also XTest extension enabled in you X server (default on Ubuntu). So,
-in Ubuntu simply run in your terminal:
-
-$sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
-
-After installing the dependencies, change to directory 'pc_server'
-and execute the following commands:
-
-$mkdir build
-
-$cd build
-
-$../configure
-
-$make
-
-It will generate an executable file named 'amora', you must
-start the application (and make sure that the bluetooth dongle is
-connected to the computer):
-
-$./amora
 
 = Project status =
 What works: mouse moving, clicking, mouse drag, mouse scroll wheel,
