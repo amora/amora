@@ -55,8 +55,7 @@ class application:
     def __window_title(self):
         appuifw.app.title = u'Amora'
     #TODO: Add another object for 'options' window
-    def __init__(self, app_path):
-        self.path = app_path
+    def __init__(self):
         appuifw.app.title = u'Amora'
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
@@ -78,10 +77,9 @@ class application:
         #Cleanup the screen
         #FIXME: location dependent code!
         if is_widescreen():
-            self.wallpaper = wallpaper(
-					self.path+'imgs\\wallpaper_wide_off.jpg')
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide_off.jpg')
         else:
-            self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_full_off.jpg')
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_full_off.jpg')
         #TODO: move this code to wallpaper.display() method (like
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
@@ -108,11 +106,11 @@ class application:
             self.help_screen = helpwindow()
         if self.running == 0:
             self.help_screen.clear()
-            self.help_screen.read(self.path+'data\\conn_help.txt')
+            self.help_screen.read('E:\\Python\\data\\conn_help.txt')
             self.help_screen.display()
         elif self.running == 2:
             self.help_screen.clear()
-            self.help_screen.read(self.path+'data\\start_help.txt')
+            self.help_screen.read('E:\\Python\\data\\start_help.txt')
             self.help_screen.display()
         elif self.running == 1:
             appuifw.note(u'Joystick moves the mouse cursor')
@@ -153,9 +151,9 @@ class application:
         #Cleanup the screen
         #FIXME: location dependent code!
         if is_widescreen():
-            self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_wide.jpg')
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_wide.jpg')
         else:
-            self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_full.jpg')
+            self.wallpaper = wallpaper('E:\\python\\imgs\\wallpaper_full.jpg')
         #TODO: move this code to wallpaper.display() method (like
         #helpwindow.display() method)
         appuifw.app.body = self.wallpaper.canvas
@@ -187,13 +185,13 @@ class application:
     # - discover a way to transfer image without using files
     def __take_screenshot(self):
         try:
-            fout = open(self.path+'test.png', 'w')
+            fout = open(u'E:\\test.png', 'w')
             self.bt.write_line(u'SCREEN_TAKE')
             try:
                 res = self.bt.readline(fout)
             except:
                 appuifw.note(u'Failed reading!')
-            self.img = graphics.Image.open(self.path+'test.png')
+            self.img = graphics.Image.open('E:\\test.png')
             self.presentationdisplay('dumbo')
         except:
             appuifw.note(u'Cannot transfer thumbnail!')
