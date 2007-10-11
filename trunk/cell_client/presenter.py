@@ -37,7 +37,7 @@ def get_path():
             return os.path.join(drive, AMORA_PATH1)
         elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "presenter.py")):
             return os.path.join(drive, AMORA_PATH2)
-	
+
 full_path = get_path()
 sys.path.append(os.path.join(full_path, "libs"))
 from application import *
