@@ -26,11 +26,24 @@
 import appuifw
 import e32
 import sys
+import os
 
-sys.path.append('E:\\python\\libs\\')
+AMORA_PATH1 = "\\python\\"
+AMORA_PATH2 = "\\Data\\python\\"
+
+def get_path():
+    for drive in [str(x) for x in e32.drive_list()]:
+        if os.path.isfile(os.path.join(drive, AMORA_PATH1, "presenter.py")):
+            return os.path.join(drive, AMORA_PATH1)
+        elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "presenter.py")):
+            return os.path.join(drive, AMORA_PATH2)
+	
+full_path = get_path()
+sys.path.append(os.path.join(full_path, "libs"))
 from application import *
 
-app = application()
+app = application(full_path)
+
 flag = 1
 while flag:
     if (app.running == 1):
