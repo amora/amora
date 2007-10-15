@@ -1,0 +1,10 @@
+#labels Phase-Requirements
+What is next for amora
+
+= Version 0.9 =
+
+ * keymap, credits screen, app running from drive C, stopwatch
+
+= Version 1.0 =
+
+ * server clean up (logging optional), solve OpenOffice screenshot bug, debian package and SIS package.
