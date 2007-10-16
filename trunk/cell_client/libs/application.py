@@ -76,7 +76,6 @@ class application:
             self.presentation = None
         self.running = 0
         #Cleanup the screen
-        #FIXME: location dependent code!
         if is_widescreen():
             self.wallpaper = wallpaper(
 					self.path+'imgs\\wallpaper_wide_off.jpg')
@@ -151,7 +150,6 @@ class application:
                             (u'Help', self.__help),
                             (u'Exit', self.quit)]
         #Cleanup the screen
-        #FIXME: location dependent code!
         if is_widescreen():
             self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_wide.jpg')
         else:
