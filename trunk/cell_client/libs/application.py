@@ -170,7 +170,7 @@ class application:
         if self.presentation != None:
             self.presentation.clear()
         if self.img != None:
-            self.presentation.blit(self.img)
+            self.presentation.blit(self.img, target = (0,0), scale = 1)
     #Sets click and screen mode
     def __click_screen(self):
         if self.click_and_screen:
