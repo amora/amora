@@ -55,7 +55,7 @@ class wallpaper:
     def display(self):
         self.canvas.clear()
         tmp = self.calc_position()
-        self.canvas.blit(self.image_obj, target = tmp)
+        self.canvas.blit(self.image_obj, target = tmp, scale = 1)
     #Redraw function, used as a callback for canvas events.
     def event_redraw(self, other):
         self.display()
