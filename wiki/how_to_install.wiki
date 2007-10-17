@@ -5,7 +5,7 @@
 === Software Dependencies ===
 The client requires installing Python for S60 (version 1.3.22 or 1.4.0), and you can download it from [http://sourceforge.net/project/showfiles.php?group_id=154155 sourceforge]. Pay attention that there are different versions of PyS60 for 2ed and 3ed devices.
 
-To install, copy the .sis files "PythonForS60" and "PythonScriptShell" to your
+To install, copy the 2 sis files (python and the script shell) to your
 cellphone and select them using the standard file browser application
 of cellphone. Alternatively, you can see other ways to install
 [http://wiki.opensource.nokia.com/projects/Installing_PyS60 here].
