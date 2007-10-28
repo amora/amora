@@ -5,6 +5,10 @@ What is next for amora
 
  * keymap, credits screen, app running from drive C, stopwatch
 
+ * webpage portuguese version
+
 = Version 1.0 =
 
  * server clean up (logging optional), solve OpenOffice screenshot bug, debian package and SIS package.
+
+ * application portuguese version
