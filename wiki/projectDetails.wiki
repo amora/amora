@@ -22,7 +22,6 @@ Also, expanding the idea of a simple remote control, I will add some features
 that can be potentially useful for slide presentations:
 
   * a stopwatch
-  * window preview in cellphone (to be implemented)
 
 == Hardware required ==
 A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
