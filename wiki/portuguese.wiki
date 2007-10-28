@@ -60,3 +60,29 @@ Havendo estas dependências pré-instaladas, rode em um terminal:
 $ autoreconf -i --force
 
 e então basta seguir as instruções anteriores para compilar a versão tarball do servidor.
+
+= Sobre o projeto =
+
+O foco do projeto é em construir um programa para celular com interface intuitiva e cujo servidor no lado do PC não requira nenhuma configuração complexa.
+
+O que funciona: movimento de mouse, clique, arrastar com o mouse, scroll wheel, atalhos de teclado (ENTER, ESC, ESPAÇO, F5, 'F', setas direita/esquerda). Abaixo você pode ver o mapeamento dos comandos nas teclas do celular:
+
+http://amora.googlecode.com/svn/wiki/keymap_wide.jpg
+
+Você pode solicitar imagens das janelas ativas e também usar um modo onde cada clique do mouse automaticamente gera a imagem da janela ativa (útil quando controlando slides de uma apresentação).
+
+O projeto já exibe as características:
+
+ * cliente do celular pode ser iniciado indendentemente do servidor no PC
+
+ * é possível fechar a conecção e depois abri-la novamente
+
+ * o servidor pode detectar se o cliente por algum motivo morreu
+
+ * o cliente pode detectar se o servidor caiu
+
+
+Já é bastante estável e eu já o utilizo para controlar meus slides e quando assisto filmes: é possível começar uma apresentação, pará-la, mover o cursor para um diretório, fazer duplo clique em um arquivo de vídeo e controlar a maior parte das ações no mplayer).
+
+
+
