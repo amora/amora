@@ -1,0 +1,62 @@
+#labels Featured,Phase-Deploy
+= Instruções de instalação =
+
+== Cliente no celular ==
+=== Dependências ===
+O cliente depende do Python para S60 (testado em 1.3.22, 1.4.0 e 1.4.1) e podem ser encontrados no [http://sourceforge.net/project/showfiles.php?group_id=154155 sourceforge]. Apenas atente que há versões diferentes do python dependendo da versão do seu celular (se for 2 ou 3 edição).
+
+Para instalar o python, copie os 2 arquivos .sis (python e o script shell) para seu telefone e selecione-os usando o gerenciador de arquivos do próprio telefone. Existem outras alternativas para realizar a instalação do python, maiores detalhes [http://wiki.opensource.nokia.com/projects/Installing_PyS60 aqui].
+
+=== Instalando o Amora ===
+Crie uma pasta no cartão de memória do telefone (E:\Python) e copie o conteúdo do arquivo comprimido do cliente do [http://amora.googlecode.com/files/amora_client-0.8.tar.bz2 amora] na pasta.
+
+Você deve usar o python script shell (haverá um ícone na pasta 'minhas aplicações') para iniciar o cliente do amora (selecione o arquivo 'presenter.py'). No python script shell, selecione 'Options->Run script'.
+
+O cliente do amora deve ser executado se você realizou os passos corretamente até aqui.
+
+== Servidor de PC ==
+=== Dependências de Software ==
+Para compilar no lado do servidor, você deve ter instalados:
+
+  * gcc compilador
+  * Xlibs
+  * XTest libs
+  * BlueZ libs
+  * Imlib2 libs
+
+E também a extensão XTest habilitada no seu servidor X (padrão no Ubuntu). Então, no Ubuntu, execute em um terminal:
+
+$sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
+
+
+=== Compilando ===
+Depois de instalar as dependências, extraia os arquivos do servidor com:
+
+$ tar -zxvf amora_server-0.x.tar.gz
+
+onde _x_ é a versão *atual* do servidor.
+
+Mude para o diretório extraído e execute os comandos:
+
+$mkdir build
+
+$cd build
+
+$../configure
+
+$make
+
+Ele deve gerar um executável chamado 'amora', você deve começar a aplicação (e lembre-se de se certificar se o seu dongle bluetooth está conectado):
+
+$./amora
+
+
+== Versão do repositório ==
+
+Se você baixou o código do repositório, você deve primeiro gerar os scripts de compilação. Isto exige como dependências os pacotes do autotools (automake, etc).
+
+Havendo estas dependências pré-instaladas, rode em um terminal:
+
+$ autoreconf -i --force
+
+e então basta seguir as instruções anteriores para compilar a versão tarball do servidor.
