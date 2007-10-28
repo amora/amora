@@ -31,7 +31,10 @@ A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
 
 = Project status =
 What works: mouse moving, clicking, mouse drag, mouse scroll wheel,
-keyboard shortcuts (ENTER, ESC, SPACE, F5, 'F', left and right arrow keys).
+keyboard shortcuts (ENTER, ESC, SPACE, F5, 'F', left and right arrow keys). Bellow you can see the key layout for commands:
+
+http://amora.googlecode.com/svn/wiki/cellphone.jpg
+
 
 You can ask for screenshots of active window as also use a mode where for each mouse click the screenshot of active window is taken (very handy when driving slides).
 
