@@ -115,6 +115,15 @@ class application:
             self.help_screen.display()
         elif self.running == 1:
             appuifw.note(u'Joystick moves the mouse cursor')
+            img_file_name = None
+            try:
+                if is_widescreen():
+                    self.img = graphics.Image.open(self.path + 'imgs\\keymap_wide.jpg')
+                else:
+                    self.img = graphics.Image.open(self.path + 'imgs\\keymap_full.jpg')
+                self.presentationdisplay('dumbo')
+            except:
+                appuifw.note(u'Error displaying help!')
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
@@ -169,8 +178,10 @@ class application:
     def presentationdisplay(self, other):
         if self.presentation != None:
             self.presentation.clear()
-        if self.img != None:
-            self.presentation.blit(self.img, target = (0,0), scale = 1)
+            if self.img != None:
+                self.presentation.blit(self.img, target = (0,0), scale = 1)
+        else:
+            appuifw.note(u'Error, cannot display presentation.')
     #Sets click and screen mode
     def __click_screen(self):
         if self.click_and_screen:

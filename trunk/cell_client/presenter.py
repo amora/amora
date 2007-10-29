@@ -32,7 +32,10 @@ AMORA_PATH1 = "\\python\\"
 AMORA_PATH2 = "\\Data\\python\\"
 
 def get_path():
-    for drive in [str(x) for x in e32.drive_list()]:
+    drives_list = e32.drive_list()
+    #Gives preference to load from drive 'E:'
+    drives_list.reverse()
+    for drive in [str(x) for x in drives_list]:
         if os.path.isfile(os.path.join(drive, AMORA_PATH1, "presenter.py")):
             return os.path.join(drive, AMORA_PATH1)
         elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "presenter.py")):
