@@ -3,12 +3,12 @@ What is next for amora
 
 = Version 0.9 =
 
- * keymap, credits screen, app running from drive C, stopwatch
+ * keymap, credits screen, app running from drive C
 
  * webpage portuguese version
 
 = Version 1.0 =
 
- * server clean up (logging optional), solve OpenOffice screenshot bug, debian package and SIS package.
+ * server clean up (logging optional), solve OpenOffice screenshot bug, debian package and SIS package
 
- * application portuguese version
+ * stopwatch, application portuguese version
