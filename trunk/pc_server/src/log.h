@@ -32,14 +32,10 @@
 #ifndef _H_LOG
 #define _H_LOG
 
-/** Define log message destination, this one is for syslog. */
-#define SYS   0x01 << 0
 /** Message destination: log file */
-#define FIL   0x01 << 1
+#define FIL   0x01 << 0
 /** Message destination:  stdout*/
-#define OUT   0x01 << 2
-/** Message destination:  stderr */
-#define ERR   0x01 << 3
+#define OUT   0x01 << 1
 
 /** Log structure, contains resources used by logging function.
  */
