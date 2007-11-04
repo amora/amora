@@ -130,6 +130,9 @@ class application:
     #About box displaying
     def __about(self):
         try:
+            #Restore window state if it has changed
+            if appuifw.app.screen == 'large':
+                appuifw.app.screen = 'full'
             #First about screen
             if is_widescreen():
                 self.wallpaper = wallpaper(self.path + 'imgs\\about_wide01.png')
