@@ -106,10 +106,12 @@ class application:
         if self.help_screen == None:
             self.help_screen = helpwindow()
         if self.running == 0:
+            appuifw.app.screen = 'large'
             self.help_screen.clear()
             self.help_screen.read(self.path+'data\\conn_help.txt')
             self.help_screen.display()
         elif self.running == 2:
+            appuifw.app.screen = 'large'
             self.help_screen.clear()
             self.help_screen.read(self.path+'data\\start_help.txt')
             self.help_screen.display()
@@ -147,6 +149,9 @@ class application:
                     self.bt.write_line(u'SCREEN_ROTATE')
                 else:
                     self.bt.write_line(u'SCREEN_NORMAL')
+                #Restore window state if it has changed
+                if appuifw.app.screen == 'large':
+                    appuifw.app.screen = 'full'
             except:
                 appuifw.note(u'Connection is over, server down!')
                 self.bt.close()
