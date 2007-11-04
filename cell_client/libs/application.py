@@ -69,6 +69,7 @@ class application:
         appuifw.app.menu = [(u'Search devices', self.__connect),
                             (u'Configuration', self.__configuration),
                             (u'Help', self.__help),
+                            (u'About', self.__about),
                             (u'Exit', self.quit)]
         if self.keyboard != None:
             self.keyboard = None
@@ -126,6 +127,34 @@ class application:
                 self.presentationdisplay('dumbo')
             except:
                 appuifw.note(u'Error displaying help!')
+    #About box displaying
+    def __about(self):
+        try:
+            #First about screen
+            if is_widescreen():
+                self.wallpaper = wallpaper(self.path + 'imgs\\about_wide01.png')
+            else:
+                self.wallpaper = wallpaper(self.path + 'imgs\\about_full01.png')
+            appuifw.app.body = self.wallpaper.canvas
+            self.wallpaper.display()
+            #Second about screen
+            if is_widescreen():
+                self.wallpaper = wallpaper(self.path + 'imgs\\about_wide02.png')
+            else:
+                self.wallpaper = wallpaper(self.path + 'imgs\\about_full02.png')
+            time.sleep(3.0)
+            appuifw.app.body = self.wallpaper.canvas
+            self.wallpaper.display()
+            #Displays initial wallpaer
+            if is_widescreen():
+                self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_wide_off.jpg')
+            else:
+                self.wallpaper = wallpaper(self.path+'imgs\\wallpaper_full_off.jpg')
+            time.sleep(3.0)
+            appuifw.app.body = self.wallpaper.canvas
+            self.wallpaper.display()
+        except:
+                appuifw.note(u'Cannot find about box image!')
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
