@@ -135,14 +135,14 @@ int main(void)
 	log = log_build_resources(NULL);
 
 	if (check_device() < 0) {
-		log_message(FIL|ERR, log, "No bluetooth device/dongle available."
+		log_message(FIL|OUT, log, "No bluetooth device/dongle available."
 				" Aborting...\n");
 		return -1;
 	}
 
 	own_display = construct_display(NULL);
 	if (!own_display) {
-		log_message(FIL|ERR, log, "Error creating display object!"
+		log_message(FIL|OUT, log, "Error creating display object!"
 				"Aborting...\n");
 		return -1;
 	}
@@ -150,14 +150,14 @@ int main(void)
 	/* Service description registering */
 	sd = build_sd(channel);
 	if (!sd) {
-		log_message(FIL|ERR, log, "Error creating service description"
+		log_message(FIL|OUT, log, "Error creating service description"
 			    "object!"
 			    "Aborting...\n");
 		return -1;
 	}
 	res = describe_service(sd);
 	if (res == -1) {
-		log_message(FIL|ERR, log, "Error registering service!"
+		log_message(FIL|OUT, log, "Error registering service!"
 			    "Aborting...\n");
 		destroy_sd(sd);
 		return -1;
@@ -167,7 +167,7 @@ int main(void)
 	/* Socket creation */
 	server_socket = build_bluetooth_socket(channel);
 	if (server_socket == -1) {
-		log_message(FIL|ERR, log, "Failed creating bluetooth conn!"
+		log_message(FIL|OUT, log, "Failed creating bluetooth conn!"
 			    "Exiting...\n");
 		return -1;
 	}
@@ -185,7 +185,7 @@ int main(void)
 		client_socket = accept(server_socket,
 				       (struct sockaddr *)&rem_addr, &opt);
 		if (client_socket == -1) {
-			log_message(FIL|ERR, log, "Failed opening connection,"
+			log_message(FIL|OUT, log, "Failed opening connection,"
 				    " exiting...\n");
 			goto exit;
 		}
@@ -387,7 +387,7 @@ int treat_events(char *buffer, int length, Display *active_display,
 					result = mouse_move(x_mouse, y_mouse,
 							      active_display);
 					if (result == -1)
-						log_message(FIL|ERR, log,
+						log_message(FIL|OUT, log,
 							    "Can't"
 							    "move mouse!");
 
@@ -404,7 +404,7 @@ int treat_events(char *buffer, int length, Display *active_display,
 					times = 0;
 					goto exit;
 				} else if (result == NONE)
-					log_message(FIL|ERR, log,
+					log_message(FIL|OUT, log,
 						    "Invalid event!\n");
 			}
 			break;
