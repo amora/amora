@@ -155,19 +155,6 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 		      strlen(resource->message));
 	}
 
-	/* log to syslog */
-	if (ldest & SYS) {
-		syslog(LOG_INFO, resource->buffer);
-	}
-
-	/* log to stderr */
-	if (ldest & ERR) {
-		snprintf(resource->message, resource->length -1, "%s\n",
-			 resource->buffer);
-		write(STDERR_FILENO, resource->message,
-		      strlen(resource->message));
-	}
-
 	va_end(ap);
 	if (fd > 0)
 		close(fd);
