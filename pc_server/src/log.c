@@ -41,58 +41,60 @@
 
 /** Length of timestamp buffer */
 #define TIMESTAMP_LENGTH 20
+
 /** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
 
-void log_clean_resources(struct log_resource *ptr)
+void log_clean_resources(struct log_resource *res)
 {
-	if (ptr) {
-		close(ptr->fd);
-		free(ptr->message);
-		free(ptr->timestamp);
-		free(ptr->log_filename);
-		free(ptr);
-		ptr = NULL;
+	if (res) {
+		close(res->fd);
+		free(res->message);
+		free(res->timestamp);
+		free(res->log_filename);
+		free(res);
+		res = NULL;
 	}
-
 }
+
 
 struct log_resource* log_build_resources(char *filename)
 {
-	struct log_resource *result = NULL;
-	result = (struct log_resource *) malloc(sizeof(struct log_resource));
-	if (!result) {
+	struct log_resource *resource;
+	resource = (struct log_resource *) malloc(sizeof(struct log_resource));
+	if (!resource) {
 		perror("Failed allocation of log resource structure!\n");
 		goto exit;
-
 	}
 
-	memset(result, 0, sizeof(struct log_resource));
-	result->ts_length = TIMESTAMP_LENGTH;
-	result->length = MSG_BUFFER_LENGTH;
+	memset(resource, 0, sizeof(struct log_resource));
+	resource->ts_length = TIMESTAMP_LENGTH;
+	resource->length = MSG_BUFFER_LENGTH;
 
-	result->timestamp = (char*) malloc(result->ts_length);
-	result->message = (char*) malloc(result->length);
-	result->buffer = (char*) malloc(result->length);
+	resource->timestamp = (char*) malloc(resource->ts_length);
+	resource->message = (char*) malloc(resource->length);
+	resource->buffer = (char*) malloc(resource->length);
 
-	if ((!result->timestamp) || (!result->message) || (!result->buffer)) {
+	if ((!resource->timestamp) || (!resource->message)
+			|| (!resource->buffer)) {
 		perror("Failed allocation of log internal buffers!\n");
 		goto failed;
 	}
 
-	if (filename)
-		result->log_filename = strdup(filename);
-	else
-		result->log_filename = strdup("/tmp/amora.log");
+	if (!filename) {
+		perror("Invalid log filename\n");
+		goto failed;
+	}
 
-	if (!result->log_filename) {
+	resource->log_filename = strdup(filename);
+	if (!resource->log_filename) {
 		perror("Failed log filename copying!\n");
 		goto failed;
 	}
 
-	result->fd = open(result->log_filename, O_APPEND|O_WRONLY|O_CREAT,
-			  0644);
-	if (result->fd < 0) {
+	resource->fd = open(resource->log_filename,
+			O_APPEND|O_WRONLY|O_CREAT, 0644);
+	if (resource->fd < 0) {
 		perror("Error opening log file");
 		goto failed;
 	}
@@ -100,19 +102,20 @@ struct log_resource* log_build_resources(char *filename)
 	goto exit;
 
 failed:
-	if (result->timestamp)
-		free(result->timestamp);
-	if (result->message)
-		free(result->message);
-	if (result->buffer)
-		free(result->buffer);
+	if (resource->timestamp)
+		free(resource->timestamp);
+	if (resource->message)
+		free(resource->message);
+	if (resource->buffer)
+		free(resource->buffer);
 
-	free(result);
-	result = NULL;
+	free(resource);
+	resource = NULL;
 
 exit:
-	return result;
+	return resource;
 }
+
 
 static void get_timestamp(char *timestamp, int length)
 {
@@ -124,22 +127,21 @@ static void get_timestamp(char *timestamp, int length)
 	strftime(timestamp, length - 1, "%b %d %T", loctime);
 }
 
+
 int log_message(unsigned int ldest, struct log_resource *resource,
 		const char *format, ...)
 {
 	va_list ap;
 	int fd = -1;
-	int result = 0;
 
 	if (!resource)
-		return result;
+		return -1;
 
 	va_start(ap, format);
 	vsnprintf(resource->buffer, resource->length, format, ap);
 
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
-
 		get_timestamp(resource->timestamp, resource->ts_length);
 		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
 			 resource->timestamp, resource->buffer);
@@ -159,6 +161,6 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 	if (fd > 0)
 		close(fd);
 
-	return result;
+	return 0;
 }
 
