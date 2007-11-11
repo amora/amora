@@ -184,7 +184,7 @@ m4_ifdef([AM_PATH_CHECK],
  ])
 
 if test "$ac_warnings_enabled" = yes; then
-  AC_SUBST(ac_devel_default_warnings, ["\
+  AC_SUBST(ac_devel_default_warnings, ["-Wall -W \
 -Wmissing-declarations -Wmissing-prototypes \
 -Wredundant-decls -Wshadow -Wbad-function-cast \
 -Wcast-qual"])
