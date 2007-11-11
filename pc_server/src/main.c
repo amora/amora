@@ -55,7 +55,7 @@
  * @return 0 when connection is ok, -1 for error.
  * \todo Write a function that really works.
  */
-int check_socket_validity(int client_socket);
+static int check_socket_validity(int client_socket);
 
 /** Check for protocol commands in buffer, used by \ref process_events
  *
@@ -71,7 +71,7 @@ int check_socket_validity(int client_socket);
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
-int treat_command(char *buffer, int length, int client_socket, Display *active_display);
+static int treat_command(char *buffer, int length, int client_socket, Display *active_display);
 
 
 /** Check for protocol commands, handle input events (mouse
@@ -89,7 +89,7 @@ int treat_command(char *buffer, int length, int client_socket, Display *active_d
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
-int treat_events(char *buffer, int length, Display *active_display,
+static int treat_events(char *buffer, int length, Display *active_display,
 		 struct log_resource *log, int client_socket);
 
 
@@ -104,7 +104,7 @@ int treat_events(char *buffer, int length, Display *active_display,
  * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
-int process_events(int fd, Display *active_display, int clean_up,
+static int process_events(int fd, Display *active_display, int clean_up,
 		   struct log_resource *log);
 
 
@@ -289,7 +289,7 @@ exit:
 }
 
 
-int process_events(int fd, Display *active_display, int clean_up,
+static int process_events(int fd, Display *active_display, int clean_up,
 		   struct log_resource *log)
 {
 	static char *buffer = NULL;
@@ -333,7 +333,8 @@ int process_events(int fd, Display *active_display, int clean_up,
 	return result;
 }
 
-int treat_events(char *buffer, int length, Display *active_display,
+
+static int treat_events(char *buffer, int length, Display *active_display,
 		 struct log_resource *log, int client_socket)
 {
 	static unsigned char mouse_event = 0, times = 0,
@@ -434,7 +435,7 @@ exit:
 }
 
 
-int treat_command(char *buffer, int length, int client_socket,
+static int treat_command(char *buffer, int length, int client_socket,
 		  Display *active_display)
 {
 
@@ -539,7 +540,7 @@ int treat_command(char *buffer, int length, int client_socket,
 	return result;
 }
 
-int check_socket_validity(int client_socket)
+static int check_socket_validity(int client_socket)
 {
 	int res;
 	char buffer[1];
