@@ -131,8 +131,8 @@ int main(void)
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
-	/* TODO: check for environment variable */
-	log = log_build_resources(NULL);
+	/* TODO: accept it as part of argv[] or use an env variable */
+	log = log_build_resources("amora.log");
 
 	if (check_device() < 0) {
 		log_message(FIL|OUT, log, "No bluetooth device/dongle available."
