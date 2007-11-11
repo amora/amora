@@ -1,6 +1,7 @@
 /**
  * @file   log.h
- * @author Vanderson Rodrigues
+ * @author Ademar de Souza Reis Jr.
+ * @author Milton Soares Filho
  * @author Adenilson Cavalcanti
  * @date  Tue Jul 10 16:09:20 2007
  *
@@ -11,7 +12,8 @@
  *
  */
 
-/*  Copyright (C) 2007  Vanderson Rodrigues <vanderson.gold@gmail.com>
+/*  Copyright (C) 2002,2003 Ademar de Souza Reis Jr. <myself@ademar.org>
+ *  Copyright (C) 2002,2003 Milton Soares Filho <eu_mil@yahoo.com>
  *  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
