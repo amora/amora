@@ -29,13 +29,12 @@ EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/mk/auxdevel.am \
              $(srcdir)/mk/libtool-fix.am \
              $(srcdir)/README \
-             $(srcdir)/BUILD-FAQ \
              $(srcdir)/COPYING \
-             Doxyfile
+             Doxyfile.in
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-efence --enable-debug \
-                            --enable-warnings --enable-check
+                            --enable-warnings --disable-check
 
 # this variable is scanned by autoreconf and needs to be static (no expansion)
 ACLOCAL_AMFLAGS = -I m4
