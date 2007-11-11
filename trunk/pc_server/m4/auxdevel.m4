@@ -112,8 +112,8 @@ fi
 #
 # --enable-lcov checks for gcov and lcov.
 #
-# --enable-warnings enables a lot of warnings in the variable
-#   ac_devel_default_warnings.
+# --enable-warnings adds a lot of extra gcc warnings flags in the
+#   variable ac_devel_default_warnings.
 #
 # See also the file auxdevel.am, with Makefile usage of the conditionals set by
 # these options.
@@ -127,7 +127,7 @@ ac_isodate="`date +%Y-%m-%d`"
 AC_SUBST(ac_isodate)
 
 AC_ARG_ENABLE(warnings,
-  AS_HELP_STRING([--enable-warnings], [Enable lots of GCC compile warnings]),
+  AS_HELP_STRING([--enable-warnings], [Enable extra GCC warnings flags]),
     [ac_warnings_enabled=$enableval], [ac_warnings_enabled=no])
 AC_ARG_ENABLE(efence,
   AS_HELP_STRING([--enable-efence], [Enable EletricFence]),
@@ -184,12 +184,12 @@ m4_ifdef([AM_PATH_CHECK],
  ])
 
 if test "$ac_warnings_enabled" = yes; then
-  AC_SUBST(ac_devel_default_warnings, ["-Wall -W \
+  AC_SUBST(ac_devel_default_warnings, ["\
 -Wmissing-declarations -Wmissing-prototypes \
 -Wredundant-decls -Wshadow -Wbad-function-cast \
 -Wcast-qual"])
 else
-  AC_SUBST(ac_devel_default_warnings, [""])
+  AC_SUBST(ac_devel_default_warnings, ["-Wall -W"])
 fi
 
 if test "$ac_efence_enabled" = yes; then
