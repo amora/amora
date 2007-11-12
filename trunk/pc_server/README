@@ -6,6 +6,10 @@ application. Amora also has a screenshot feature, where you can see
 the thumbnail in the cellphone screen of currently in focus window in
 the desktop.
 
+In order to use amora, you need a mobile phone with amora-client
+installed and running. The current client is implemented in Python
+for S60 (Nokia cellphones).
+
 http://code.google.com/p/amora/
 
 # vim: et:
