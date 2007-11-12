@@ -505,7 +505,9 @@ static int treat_command(char *buffer, int length, int client_socket,
 			}
 		}
 
-		tmp = save_image(&rescaled, "/tmp/screenshot.png");
+		/* XXX, TODO: we should have a tmp or working dir for
+		 * amora-server created with mkdtemp(3) */
+		tmp = save_image(&rescaled, "amora-screenshot.png");
 		imlib_free_image();
 		if (tmp) {
 			perror("failed screen capture!\n");
@@ -513,7 +515,7 @@ static int treat_command(char *buffer, int length, int client_socket,
 			break;
 		}
 
-		tmp = send_file(client_socket, "/tmp/screenshot.png");
+		tmp = send_file(client_socket, "amora-screenshot.png");
 		if (tmp) {
 			perror("failed screen transfer!\n");
 			result = NONE;
