@@ -34,6 +34,7 @@ EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/README \
              $(srcdir)/COPYING \
              Doxyfile.in \
+             amora.spec \
 			 amora.1
 
 
