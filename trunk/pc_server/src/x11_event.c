@@ -22,7 +22,6 @@
 #include <X11/extensions/XTest.h>
 #include "x11_event.h"
 #include "protocol.h"
-#include "log.h"
 
 /** X server key codes, you can get them from 'xev',
  * bellow are the key codes for following keys:

@@ -31,7 +31,6 @@
 
 #include "bluecode.h"
 #include "protocol.h"
-#include "log.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
