@@ -8,12 +8,12 @@
  * @brief Amora Log system definitions.
  *
  * This logging system  can be used to log in: syslog, files, stdout and
- * stderr.
+ * stderr. Based on code from sniffdet: http://sniffdet.sf.net
  *
  */
 
-/*  Copyright (C) 2002,2003 Ademar de Souza Reis Jr. <myself@ademar.org>
- *  Copyright (C) 2002,2003 Milton Soares Filho <eu_mil@yahoo.com>
+/*  Copyright (C) 2002, 2003 Ademar de Souza Reis Jr. <myself@ademar.org>
+ *  Copyright (C) 2002, 2003 Milton Soares Filho <eu_mil@yahoo.com>
  *  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef _H_LOG
-#define _H_LOG
+#ifndef __LOG_H__
+#define __LOG_H__
 
 /** Message destination: log file */
 #define FIL   0x01 << 0
@@ -56,7 +56,6 @@ struct log_resource {
 	int length;
 	/** log file path name */
 	char *log_filename;
-
 };
 
 
