@@ -12,8 +12,8 @@
  *
  */
 
-/*  Copyright (C) 2002,2003 Ademar de Souza Reis Jr. <myself@ademar.org>
- *  Copyright (C) 2002,2003 Milton Soares Filho <eu_mil@yahoo.com>
+/*  Copyright (C) 2002, 2003 Ademar de Souza Reis Jr. <myself@ademar.org>
+ *  Copyright (C) 2002, 2003 Milton Soares Filho <eu_mil@yahoo.com>
  *  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -46,6 +47,8 @@
 
 /** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
+
+static void get_timestamp(char *timestamp, int length);
 
 void log_clean_resources(struct log_resource *res)
 {
@@ -119,22 +122,11 @@ exit:
 }
 
 
-static void get_timestamp(char *timestamp, int length)
-{
-	struct tm *loctime;
-	time_t curtime;
-
-	curtime = time(NULL);
-	loctime = localtime(&curtime);
-	strftime(timestamp, length - 1, "%b %d %T", loctime);
-}
-
 
 int log_message(unsigned int ldest, struct log_resource *resource,
 		const char *format, ...)
 {
 	va_list ap;
-	int fd = -1;
 
 	if (!resource)
 		return -1;
@@ -160,9 +152,19 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 	}
 
 	va_end(ap);
-	if (fd > 0)
-		close(fd);
 
 	return 0;
 }
+
+
+static void get_timestamp(char *timestamp, int length)
+{
+	struct tm *loctime;
+	time_t curtime;
+
+	curtime = time(NULL);
+	loctime = localtime(&curtime);
+	strftime(timestamp, length - 1, "%b %d %T", loctime);
+}
+
 
