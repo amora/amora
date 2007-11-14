@@ -10,13 +10,13 @@
  * \todo
  * - \ref check_socket_validity is just a stub
  * - refactor main.c, its starting to get smelly
+ * - use mkdtemp() when storing temporary screenshot
  * - catch SIGTERM or provide a way to clean exit (close sockets).
  * - forking the process when new connection is received can be a good idea.
- * - what about a heart beat between cellphone and server?
+ * - what about a heartbeat between cellphone and server?
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,6 @@ int main(void)
 	int length = 20;
 	char buffer[length];
 	time_t last_test;
-
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
@@ -378,7 +377,6 @@ static int treat_events(char *buffer, int length, Display *active_display,
 					x_mouse = atoi(buffer);
 					++times;
 				} else {
-
 					y_mouse = atoi(buffer);
 
 					log_message(FIL, log,
@@ -396,7 +394,6 @@ static int treat_events(char *buffer, int length, Display *active_display,
 					mouse_event = 0;
 				}
 			} else {
-
 				result = treat_command(buffer, length,
 						       client_socket,
 						       active_display);
@@ -454,7 +451,7 @@ static int treat_command(char *buffer, int length, int client_socket,
 		height = 240;
 		flag = 0;
 		break;
-	case SERVER_STOP:/* TODO: add server stop code */
+	case SERVER_STOP: /* TODO: add server stop code */
 		break;
 	case RESOLUTION:
 		break;
