@@ -18,7 +18,7 @@
  */
 
 #include <stdio.h>
-#include <sys/timeb.h>
+#include <sys/time.h>
 #include <X11/extensions/XTest.h>
 #include "x11_event.h"
 #include "protocol.h"
@@ -71,9 +71,9 @@ int send_event(int type, int keycode, Display *active_display)
 	XEvent event;
 	Window win;
 	int revert_to;
-	struct timeb t;
+	struct timeval t;
 
-	ftime(&t);
+	gettimeofday(&t, NULL);
 
 	XGetInputFocus(active_display, &win, &revert_to);
 
@@ -84,7 +84,7 @@ int send_event(int type, int keycode, Display *active_display)
 	event.xkey.window = win;
 	event.xkey.root = XDefaultRootWindow(active_display);
 	event.xkey.subwindow = None;
-	event.xkey.time = t.time*1000+t.millitm;
+	event.xkey.time = t.tv_usec;
 	event.xkey.x = 0;
 	event.xkey.y = 0;
 	event.xkey.x_root = 0;
