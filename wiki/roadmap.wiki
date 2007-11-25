@@ -9,6 +9,6 @@ What is next for amora
 
 = Version 1.0 =
 
- * server clean up (logging optional), solve OpenOffice screenshot bug, debian package and SIS package
+ * server clean up (logging optional), debian package and SIS package
 
- * stopwatch, application portuguese version
+ * stopwatch, application portuguese version, screenshot timeout config screen
