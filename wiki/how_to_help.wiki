@@ -3,7 +3,7 @@
 
 So, you came to known Amora and think you could help in development? Good news, helping is easy!
 
-There area several different ways to help us to make amora even better.
+There are several different ways to help us to make amora even better.
 
 
 == Programmers ==
