@@ -33,6 +33,7 @@
  *
  */
 
+#include <libgen.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -44,6 +45,13 @@
 #include "protocol.h"
 #include "log.h"
 #include "imscreen.h"
+
+/** Show program usage
+ *
+ * @param path the program binary path
+ *
+ */
+static void show_usage(const char *path);
 
 /** Checks for client socket status, if its still valid.
  *
@@ -111,9 +119,12 @@ static int process_events(int fd, Display *active_display, int clean_up,
 
 /** Main app function.
  *
+ * @param argc argument counter
+ * @param argv argument vector
+ *
  * @return 0 on sucess, -1 on error.
  */
-int main(void)
+int main(int argc, char **argv)
 {
 	Display *own_display = NULL;
 	int server_socket, client_socket, channel = 10, res;
@@ -125,13 +136,33 @@ int main(void)
 	struct service_description *sd = NULL;
 	struct log_resource *log = NULL;
 	int length = 20;
-	char buffer[length];
+	char buffer[length], arg, *logfile = NULL;
 	time_t last_test;
+
+	if (argc > 4) {
+		show_usage(argv[0]);
+		return -1;
+	}
+
+	while ((arg = getopt(argc, argv, "l:h")) != -1) {
+		switch (arg) {
+			case 'l':
+				logfile = optarg;
+				break;
+			case 'h':
+				show_usage(argv[0]);
+				return 0;
+			default:
+				return -1;
+		}
+	}
+
+	if (!logfile)
+		logfile = "amora.log";
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
-	/* TODO: accept it as part of argv[] or use an env variable */
-	log = log_build_resources("amora.log");
+	log = log_build_resources(logfile);
 
 	if (check_device() < 0) {
 		log_message(FIL|OUT, log, "No bluetooth device/dongle available."
@@ -537,6 +568,21 @@ static int treat_command(char *buffer, int length, int client_socket,
 	}
 
 	return result;
+}
+
+static void show_usage(const char *path)
+{
+	char *name, *p = strdup(path);
+
+	name = basename(p);
+
+	printf("Usage: %s [-l logfile] [-h]\n"
+	       "\n"
+	       "  -h                         show this help message.\n"
+	       "  -l logfile                 set the log file path.\n"
+	       "\n", name);
+
+	free(p);
 }
 
 static int check_socket_validity(int client_socket)
