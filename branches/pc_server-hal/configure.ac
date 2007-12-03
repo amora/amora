@@ -4,6 +4,8 @@ dnl Process this file with autoconf to produce a configure script.
 # (C) 2006 Ademar de Souza Reis Jr. <ademar@ademar.org>
 #
 # Based on sniffdet configure.ac: http://sniffdet.sourceforge.net
+# Configurable options based on tracker configure.ac: http://www.gnome.org/projects/tracker/
+#
 # Licensed under GNU-GPL
 
 AC_INIT(Amora Server, 0.9svn, savagobr@yahoo.com, amora_server)
@@ -63,6 +65,20 @@ PKG_CHECK_MODULES(LIBIMLIB2, imlib2,, \
 AC_SUBST(LIBIMLIB2_CFLAGS)
 AC_SUBST(LIBIMLIB2_LIBS)
 
+# HAL support to detect removal of bluetooth dongle
+AC_ARG_ENABLE(hal, AC_HELP_STRING([--disable-hal], [Disable HAL support]),, [enable_hal=yes])
+if test "x$enable_hal" = "xyes"; then
+        PKG_CHECK_MODULES(LIBHAL, [hal >= 0.5], [have_hal=yes], [have_hal=no])
+        AC_SUBST(LIBHAL_CFLAGS)
+        AC_SUBST(LIBHAL_LIBS)
+else
+        have_hal="no (disabled)"
+fi
+
+if test "x$have_hal" = "xyes"; then
+        AC_DEFINE(HAVE_HAL, [], [Define if we have HAL])
+fi
+
 # enable configure options and automake conditionals useful for developers
 # look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)
@@ -81,9 +97,10 @@ $PACKAGE_NAME $PACKAGE_VERSION configuration:
 -----------------------------
   Source code location:       ${srcdir}
   Host System Type:           ${host}
+  HAL support:                ${have_hal}
   Compiler:                   ${CC}
-  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${LIBIMLIB2_CFLAGS} ${ac_devel_default_warnings}
-  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS} ${LIBIMLIB2_LIBS}
+  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${LIBIMLIB2_CFLAGS} ${LIBHAL_CFLAGS} ${ac_devel_default_warnings}
+  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS} ${LIBIMLIB2_LIBS} ${LIBHAL_LIBS}
   Install path (prefix):      ${prefix}
 
   Now type 'make' to build $PACKAGE_NAME $PACKAGE_VERSION.
