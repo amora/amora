@@ -195,15 +195,17 @@ int main(int argc, char **argv)
 
 
 	/* Socket creation */
-	server_socket = build_bluetooth_socket(channel);
+	server_socket = build_bluetooth_socket(channel, sd);
 	if (server_socket == -1) {
 		log_message(FIL|OUT, log, "Failed creating bluetooth conn!"
 			    "Exiting...\n");
 		return -1;
 	}
 
+	log_message(FIL, log, "Bluetooth device code hci = %d\n", sd->hci_id);
 	log_message(FIL|OUT, log, "\nInitialization done, waiting cellphone"
 		    " connection...\n");
+
 	res = listen(server_socket, 10);
 	if (res) {
 		log_message(FIL|OUT, log, "Failed listening...\n");

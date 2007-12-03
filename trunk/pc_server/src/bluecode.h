@@ -59,6 +59,8 @@ struct service_description {
 	 * to represent daemon bluetooth session.
 	 */
 	void *session;
+	/** Bluetooth dongle descriptor ID. */
+	int hci_id;
 };
 
 /** This function builds a service description structure.
@@ -107,10 +109,12 @@ int read_socket(int client, char *data, int length);
  *
  *
  * @param channel Number of channel to be used to export the server service.
+ * @param sd Service description structure pointer.
  *
  * @return Socket in sucess, -1 otherwise.
  */
-int build_bluetooth_socket(unsigned int channel);
+int build_bluetooth_socket(unsigned int channel,
+			   struct service_description *sd);
 
 
 /** This functions talks with bluetooth daemon and registers the service
