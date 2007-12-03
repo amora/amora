@@ -79,10 +79,7 @@ exit:
 
 int check_device(void)
 {
-	if (hci_get_route(NULL) < 0)
-		return -1;
-
-	return 0;
+	return hci_get_route(NULL);
 }
 
 void destroy_sd(struct service_description *sd)
@@ -118,10 +115,19 @@ int read_socket(int client, char *data, int length)
 }
 
 
-int build_bluetooth_socket(unsigned int channel)
+int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
 {
 	struct sockaddr_rc loc_addr;
 	int s, res = -1;
+
+	sd->hci_id = check_device();
+
+	if (sd->hci_id == -1)
+		goto error;
+	if (hci_open_dev(sd->hci_id) < 0)
+		goto error;
+	else
+		hci_close_dev(sd->hci_id);
 
 	memset(&loc_addr, 0, sizeof(struct sockaddr_rc));
 
