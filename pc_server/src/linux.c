@@ -118,7 +118,8 @@ int read_socket(int client, char *data, int length)
 int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
 {
 	struct sockaddr_rc loc_addr;
-	int s, res = -1;
+	int s, res;
+	s = res = -1;
 
 	sd->hci_id = check_device();
 
