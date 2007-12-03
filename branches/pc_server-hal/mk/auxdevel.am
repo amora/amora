@@ -1,0 +1,82 @@
+# auxdevel.am -- Makefile snippet to be included in Makefile.am for projects
+# making use of auxdevel.m4
+#
+# This file appends data to many Make variables.  It would be an error to append
+# to an undefined variable.  However, if you're using auxdevel.m4, it takes care
+# of that by defining the variables used here with empty values.
+#
+# This file set some flags in AM_CFLAGS and LDADD.  Be careful that these global
+# variables will be overwritten by target-specific _CFLAGS and _LDADD/_LIBADD.
+
+
+# Global flags
+AM_CFLAGS += -I$(csourcedir) $(if $(headerdir), -I$(headerdir),)
+AM_CFLAGS += $(ac_devel_default_warnings)
+
+if LCOV
+AM_CFLAGS += -fprofile-arcs -ftest-coverage
+MOSTLYCLEANFILES += *.bb *.bbg *.gcno
+CLEANFILES += *.da *.gcda *.lcov
+endif
+
+# Documentation
+docs:
+	mkdir -p docs
+clean-docs:
+	rm -rf docs
+clean-local: clean-docs
+
+doc: doxygen lcov
+DOXYOUT=docs/doxygen
+doxygen: docs Doxyfile
+	mkdir -p $(DOXYOUT)
+	(cat Doxyfile; echo "OUTPUT_DIRECTORY = " \"$(DOXYOUT)\" ) \
+	| doxygen -
+
+if LCOV
+LCOVOUT=docs/lcov-reports
+LCOVLOG=docs/lcov_log.txt
+
+# TODO: the first sed regexp is due to a gcov/lcov bug which adds a
+# trailing build/ in the path to source.  This should be better investigated.
+#
+# TODO: the second sed regexp removes "..".  It would be best if we could do that
+# in auxdevel.m4.
+#
+# TODO: for GCOV reasons a symlink pointing to $(csourcedir) is needed when
+# building in a directory outside of $(sourcedir) even thought we remove
+# the trailing build/ from pathnames.
+#
+lcov: docs $(TESTS)
+	@[ ! -e $$(basename $(csourcedir)) ] && ln -s $(csourcedir) . || true
+	@( \
+	rm -f .lcov_test_run_error; \
+	for test in $(TESTS); do \
+		lcov --zerocounters --directory . --quiet ;\
+		\
+		(./$$test 2>&1 || touch .lcov_test_run_error) \
+		| grep -E -v '^arc profiling: Can.t open output file' \
+		| grep -E -v '(Electric Fence.*Bruce Perens|^$$)' ;\
+		\
+		lcov --capture --directory . \
+		--output-file $$test-info.lcov \
+		--test-name "$$test (check)" --quiet ;\
+		\
+		for testdir in "$(abs_utestdir)" "$(abs_mytestdir)" $(lcov_ignore_dirs); do \
+			test "$$testdir" && lcov --remove $$test-info.lcov \
+			"$$testdir*" \
+			--quiet -o $$test-info.lcov ;\
+		done ;\
+		sed --in-place  \
+		-e "/^SF:/s;$(ac_devel_abs_builddir);$(ac_devel_abs_srcdir);" \
+		$$test-info.lcov ;\
+	done ;\
+	genhtml *.lcov --output-directory=$(LCOVOUT) \
+	| grep 'Overall coverage rate' ) | tee $(LCOVLOG)
+	@[ -L $$(basename $(csourcedir)) ] && rm $$(basename $(csourcedir)) || true
+	@[ ! -f .lcov_test_run_error ]
+else
+lcov: ;
+endif
+
+.PHONY: doc doxygen lcov
