@@ -33,6 +33,8 @@
  *
  */
 
+#include "config.h"
+
 #include <libgen.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -144,13 +146,17 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	while ((arg = getopt(argc, argv, "l:h")) != -1) {
+	while ((arg = getopt(argc, argv, "l:hv")) != -1) {
 		switch (arg) {
 			case 'l':
 				logfile = optarg;
 				break;
 			case 'h':
 				show_usage(argv[0]);
+				return 0;
+			case 'v':
+				printf("%s (build %s)\n", PACKAGE_STRING,
+						BUILDVERSION);
 				return 0;
 			default:
 				return -1;
@@ -578,10 +584,11 @@ static void show_usage(const char *path)
 
 	name = basename(p);
 
-	printf("Usage: %s [-l logfile] [-h]\n"
+	printf("Usage: %s [-l logfile] [-h] [-v]\n"
 	       "\n"
 	       "  -h                         show this help message.\n"
 	       "  -l logfile                 set the log file path.\n"
+	       "  -v version                 show version.\n"
 	       "\n", name);
 
 	free(p);
