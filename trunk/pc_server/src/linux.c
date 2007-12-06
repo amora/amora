@@ -44,9 +44,15 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <sys/sendfile.h>
 #include <errno.h>
 
+
+/** Linux sendfile is failing (probably I'm not using it correctly). */
+#define STRANGE_BUG
+
+#ifndef STRANGE_BUG
+#include <sys/sendfile.h>
+#endif
 
 struct service_description *build_sd(int channel)
 {
@@ -272,9 +278,6 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 		ba2str(&(ptr->rc_bdaddr), buffer);
 
 }
-
-/** Linux sendfile is failing (probably I'm not using it correctly). */
-#define STRANGE_BUG
 
 /** Copy a file content over other (use it to copy a file to a remote client
  * socket).
