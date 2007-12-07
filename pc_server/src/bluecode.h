@@ -35,7 +35,7 @@
 
 //#include <sys/types.h>
 #include <sys/socket.h>
-
+#include <sys/stat.h>
 /** Service description structure.
  *
  * Use it to hold bluetooth service description, tell what the service does
@@ -139,6 +139,20 @@ int describe_service(struct service_description *sd);
 void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
 
 
+/** Copy a file content over other (use it to copy a file to a remote client
+ * socket).
+ *
+ * I don't know why, but linux 'sendfile' is failing in file -> bluetooth case.
+ *
+ * @param client_socket A destination descriptor (i.e. to remote client).
+ * @param file_descriptor A source descriptor (i.e. from a file)
+ * @param mstat Source descriptor stats structure (to known amount of bytes
+ * to be transfered).
+ *
+ * @return 0 on sucess, -1 otherwise.
+ */
+int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
+
 
 /** Sends a file (e.g. image created with \ref imscreen.c save_image) to
  * a client socket.
@@ -149,5 +163,6 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
  * @return 0 for sucess, -1 otherwise.
  */
 int send_file(int client_socket, char *filename);
+
 
 #endif

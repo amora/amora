@@ -6,6 +6,10 @@
  * @brief  Linux bluetooth code.
  *
  * BlueZ dependent code goes here.
+ *
+ * \todo
+ * - remove unused includes
+ *
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -54,35 +58,6 @@
 #include <sys/sendfile.h>
 #endif
 
-struct service_description *build_sd(int channel)
-{
-	struct service_description *sd;
-	sd = (struct service_description *)
-		malloc(sizeof(struct service_description));
-
-	if (!sd)
-		goto mem_error;
-
-	sd->channel = channel;
-	sd->uuid = 0xAFFF;
-	sd->service_name = strdup("Amora: assistant ");
-	sd->service_dsc = strdup("A X handler for cellphone ");
-	sd->service_prov = strdup("Savago ");
-
-	if (sd->service_name && sd->service_dsc && sd->service_prov)
-		goto exit;
-
-mem_error:
-	perror("build_sd: failed service allocation structure!");
-	if (sd)
-		free(sd);
-	sd = NULL;
-
-exit:
-
-	return sd;
-}
-
 int check_device(void)
 {
 	return hci_get_route(NULL);
@@ -99,27 +74,6 @@ void destroy_sd(struct service_description *sd)
 		sd = NULL;
 	}
 }
-
-int read_socket(int client, char *data, int length)
-{
-	int res = 0, tmp;
-	memset(data, 0, length);
-	--length;
-
-	while (!strchr(data, CMD_BREAK) && (res < length)) {
-		tmp = read(client, data, length);
-
-		if ((tmp == -1) && (errno == ECONNRESET))
-			return tmp;
-
-		res += tmp;
-		length -= res;
-	}
-	/* Adding ending of string */
-	data[res] = '\0';
-	return res;
-}
-
 
 int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
 {
@@ -277,87 +231,4 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 	if (buffer)
 		ba2str(&(ptr->rc_bdaddr), buffer);
 
-}
-
-/** Copy a file content over other (use it to copy a file to a remote client
- * socket).
- *
- * I don't know why, but linux 'sendfile' is failing in file -> bluetooth case.
- *
- * @param client_socket A destination descriptor (i.e. to remote client).
- * @param file_descriptor A source descriptor (i.e. from a file)
- * @param mstat Source descriptor stats structure (to known amount of bytes
- * to be transfered).
- *
- * @return 0 on sucess, -1 otherwise.
- */
-int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
-
-int send_file(int client_socket, char *filename)
-{
-	struct stat src_stat;
-	int source, result = -1;
-#ifndef STRANGE_BUG
-	off_t offset = 0;
-#endif
-	source = open(filename, O_RDONLY);
-	if (source == -1) {
-		perror("send_file: failed opening source file!\n");
-		goto exit;
-	}
-
-	fstat(source, &src_stat);
-#ifndef STRANGE_BUG
-	result = sendfile(client_socket, source, &offset, src_stat.st_size);
-#else
-	result = hack_send_file(client_socket, source, src_stat);
-#endif
-	if (result != src_stat.st_size) {
-		perror("send_file: failed sending file to client!\n");
-		result = -1;
-	} else
-		result = 0;
-
-	close(source);
-
-exit:
-	return result;
-}
-
-int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
-{
-	int bytes, res;
-	int length = 8192;
-	char buffer[length];
-	int byte_count;
-
-	bytes = 0;
-	snprintf(buffer, (length - 1), "%d", (int)mstat.st_size);
-	byte_count = strnlen(buffer, length);
-	res = write(client_socket, buffer, byte_count);
-	if (res == -1) {
-		printf("Error sending image file size!\n");
-		return -1;
-	}
-
-	while (bytes < mstat.st_size) {
-
-		res = read(file_descriptor, buffer, length);
-		if (res == -1) {
-			printf("Error reading image file!\n");
-			return -1;
-		}
-
-		res = write(client_socket, buffer, res);
-		if (res == -1) {
-			printf("Error writing data: %s\n",
-			       strerror(errno));
-			return -1;
-		}
-
-		bytes += res;
-
-	}
-
-	return bytes;
 }
