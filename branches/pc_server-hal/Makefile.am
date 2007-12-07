@@ -10,6 +10,10 @@
 
 AUTOMAKE_OPTIONS = foreign
 
+if HAVE_HAL
+hal_sources = $(csourcedir)/hal.h $(csourcedir)/hal.c
+endif
+
 # amora itself
 bin_PROGRAMS = amora
 amora_SOURCES = $(csourcedir)/main.c \
@@ -17,7 +21,8 @@ amora_SOURCES = $(csourcedir)/main.c \
                    $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
                    $(csourcedir)/bluecode.h $(csourcedir)/linux.c \
                    $(csourcedir)/log.h $(csourcedir)/log.c \
-		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
+		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c \
+		   $(hal_sources)
 
 amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS) $(LIBHAL_LIBS)
 amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS) $(LIBHAL_CFLAGS)

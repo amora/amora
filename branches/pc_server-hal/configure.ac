@@ -79,6 +79,8 @@ if test "x$have_hal" = "xyes"; then
         AC_DEFINE(HAVE_HAL, [], [Define if we have HAL])
 fi
 
+AM_CONDITIONAL(HAVE_HAL, test "x$have_hal" = "xyes")
+
 # enable configure options and automake conditionals useful for developers
 # look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)

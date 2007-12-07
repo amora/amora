@@ -46,6 +46,10 @@
 #include "log.h"
 #include "imscreen.h"
 
+#ifdef HAVE_HAL
+#include "hal.h"
+#endif
+
 /** Show program usage
  *
  * @param path the program binary path
@@ -159,6 +163,11 @@ int main(int argc, char **argv)
 
 	if (!logfile)
 		logfile = "amora.log";
+
+#ifdef HAVE_HAL
+	if (hal_init() < 0)
+		return -1;
+#endif
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
