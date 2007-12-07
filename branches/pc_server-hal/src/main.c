@@ -33,6 +33,8 @@
  *
  */
 
+#include "config.h"
+
 #include <libgen.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -45,10 +47,7 @@
 #include "protocol.h"
 #include "log.h"
 #include "imscreen.h"
-
-#ifdef HAVE_HAL
 #include "hal.h"
-#endif
 
 /** Show program usage
  *
@@ -132,8 +131,11 @@ int main(int argc, char **argv)
 {
 	Display *own_display = NULL;
 	int server_socket, client_socket, channel = 10, res;
+#ifdef HAVE_HAL
+	int hal_fd;
+#endif
 	int clean_up = 0;
-	fd_set fd_set_socket;
+	fd_set readfds;
 	struct timeval time_socket;
 	struct sockaddr rem_addr;
 	unsigned int opt = sizeof(rem_addr);
@@ -163,11 +165,6 @@ int main(int argc, char **argv)
 
 	if (!logfile)
 		logfile = "amora.log";
-
-#ifdef HAVE_HAL
-	if (hal_init() < 0)
-		return -1;
-#endif
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
@@ -202,7 +199,6 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-
 	/* Socket creation */
 	server_socket = build_bluetooth_socket(channel, sd);
 	if (server_socket == -1) {
@@ -210,6 +206,11 @@ int main(int argc, char **argv)
 			    "Exiting...\n");
 		return -1;
 	}
+
+#ifdef HAVE_HAL
+	if ((hal_fd = hal_init(sd->hci_id)) < 0)
+		return -1;
+#endif
 
 	log_message(FIL, log, "Bluetooth device code hci = %d\n", sd->hci_id);
 	log_message(FIL|OUT, log, "\nInitialization done, waiting cellphone"
@@ -238,20 +239,17 @@ int main(int argc, char **argv)
 		res = process_events(client_socket, own_display, clean_up,
 				     log);
 
-		FD_ZERO(&fd_set_socket);
-		FD_SET(client_socket, &fd_set_socket);
+		FD_ZERO(&readfds);
+#ifdef HAVE_HAL
+		FD_SET(hal_fd, &readfds);
+#endif
+		FD_SET(client_socket, &readfds);
 		time_socket.tv_sec = 5;
 		time_socket.tv_usec = 0;
 
 		last_test = time(NULL);
-		while ((res = select(client_socket + 1, &fd_set_socket, NULL,
+		while ((res = select(client_socket + 1, &readfds, NULL,
 				     NULL, &time_socket)) != -1) {
-
-			/* Linux resets timeout */
-			FD_ZERO(&fd_set_socket);
-			FD_SET(client_socket, &fd_set_socket);
-			time_socket.tv_sec = 5;
-			time_socket.tv_usec = 0;
 
 			if (res == 1) {
 				res = check_socket_validity(client_socket);
@@ -313,6 +311,14 @@ int main(int argc, char **argv)
 
 			}
 
+			/* Linux resets timeout */
+			FD_ZERO(&readfds);
+#ifdef HAVE_HAL
+			FD_SET(hal_fd, &readfds);
+#endif
+			FD_SET(client_socket, &readfds);
+			time_socket.tv_sec = 5;
+			time_socket.tv_usec = 0;
 		}
 
 	}

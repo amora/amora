@@ -24,6 +24,8 @@
  *
  */
 
+#include "config.h"
+
 #ifndef __HAL_H__
 #define __HAL_H__
 
@@ -34,9 +36,11 @@
  *
  * HAL is used to detect the bluetooth dongle removal
  *
- * @return the DBUS file descriptor, -1 on error.
+ * @param hci_id the inteface identifier (hciN, where N is the hci_id)
+ *
+ * @return the DBUS file descriptor or -1 on error.
  */
-static int hal_init(void);
+int hal_init(int hci_id);
 
 
 #endif /* HAVE_HAL */

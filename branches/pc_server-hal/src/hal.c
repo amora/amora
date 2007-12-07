@@ -32,11 +32,12 @@
 #include <libhal.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #include "hal.h"
 
 
-/** Bluetooh identifier */
+/** Bluetooh identifier  - FIXME: memory leak */
 static char *bluetooth_udi;
 
 
@@ -55,7 +56,7 @@ static void print_error(const char *message, const DBusError *error)
 }
 
 
-/** Initiate HAL/DBUS subsystem
+/** Callback called when some device is removed
  *
  * @param ctx HAL context
  * @param udi HAL unique hardware identifier
@@ -64,19 +65,84 @@ static void print_error(const char *message, const DBusError *error)
 static void hal_removed_cb(LibHalContext *ctx, const char *udi) {
 	(void) ctx;
 
+	assert(udi);
+
 	if (strcmp(bluetooth_udi, udi) == 0) {
 		printf("Bluetooth device removed.\n");
 	}
 }
 
 
-int hal_init(void)
+/** Find the udi based on hci interface indentifier
+ *
+ * @param ctx HAL context
+ * @param hci_id the inteface identifier (hciN, where N is the hci_id)
+ *
+ * @return the device udi or NULL if not found
+ *
+ */
+static char *find_udi_by_ifid(LibHalContext *ctx, int hci_id)
+{
+	DBusError error;
+	char **devices, *hal_ifid, *ret = NULL;
+	char ifid[6];
+	int i, num, match = 0;
+
+	assert(ctx);
+
+	snprintf(ifid, sizeof(ifid), "hci%d", hci_id);
+
+	dbus_error_init(&error);
+	devices = libhal_find_device_by_capability(ctx, "bluetooth_hci",
+		&num, &error);
+
+	if (dbus_error_is_set(&error)) {
+		print_error("HAL error", &error);
+		goto out;
+	}
+
+	if (devices && devices[0]) {
+		for (i = 0; i < num; i++) {
+			hal_ifid = libhal_device_get_property_string(ctx, devices[i],
+					"bluetooth_hci.interface_name", &error);
+
+			if (dbus_error_is_set(&error)) {
+				print_error("HAL error", &error);
+				goto out;
+			}
+
+			if (hal_ifid) {
+				if (strcmp(hal_ifid, ifid) == 0)
+					match = 1;
+
+				libhal_free_string(hal_ifid);
+			}
+
+			if (match) {
+				printf("HAL: setting watch to %s.\n", ifid);
+				ret = strdup(devices[i]);
+				break;
+			}
+		}
+		dbus_free_string_array(devices);
+	}
+
+out:
+	if (dbus_error_is_set(&error))
+		dbus_error_free(&error);
+
+	return ret;
+}
+
+
+int hal_init(int hci_id)
 {
 	LibHalContext *ctx;
 	DBusConnection *dbus_conn;
 	DBusError error;
-	char **devices;
-	int num, ret = -1;
+	int ret = -1;
+
+	printf("HAL: starting.\n");
 
 	dbus_error_init(&error);
 
@@ -98,18 +164,11 @@ int hal_init(void)
 		goto out;
 	}
 
-	devices = libhal_find_device_by_capability(ctx, "bluetooth_hci",
-			&num, &error);
-
-	if (dbus_error_is_set(&error)) {
-		print_error("HAL error", &error);
+	bluetooth_udi = find_udi_by_ifid(ctx, hci_id);
+	if (!bluetooth_udi) {
+		print_error("Bluetooth device not found", NULL);
 		libhal_ctx_free(ctx);
 		goto out;
-	}
-
-	if (devices && devices[0]) {
-		bluetooth_udi = strdup(devices[0]);
-		dbus_free_string_array(devices);
 	}
 
 	libhal_ctx_set_device_removed(ctx, hal_removed_cb);
