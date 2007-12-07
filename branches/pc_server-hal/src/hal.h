@@ -27,6 +27,8 @@
 #ifndef __HAL_H__
 #define __HAL_H__
 
+#ifdef HAVE_HAL
+
 
 /** Initiate HAL/DBUS subsystem
  *
@@ -37,4 +39,6 @@
 static int hal_init(void);
 
 
-#endif /* __HAL_H__
+#endif /* HAVE_HAL */
+
+#endif /* __HAL_H__ */

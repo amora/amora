@@ -33,6 +33,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "hal.h"
+
 
 /** Bluetooh identifier */
 static char *bluetooth_udi;
@@ -75,9 +77,6 @@ int hal_init(void)
 	DBusError error;
 	char **devices;
 	int num, ret = -1;
-
-	if (ctx)
-		print_error("HAL already initialized", NULL);
 
 	dbus_error_init(&error);
 
