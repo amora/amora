@@ -7,6 +7,9 @@
  *
  * The code here is responsible to take screenshots from active window,
  * resize and save it to filesystem.
+ *
+ * \todo
+ * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

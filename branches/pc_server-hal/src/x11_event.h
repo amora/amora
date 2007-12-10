@@ -7,6 +7,9 @@
  *
  * This file will hold functions that interact with X server, sending
  * events to window session.
+ *
+ * \todo
+ * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

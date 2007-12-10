@@ -5,6 +5,8 @@
  *
  * @brief Amora HAL subsystem API
  *
+ * \todo
+ * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2007 <tmpsantos@gmail.com>

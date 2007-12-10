@@ -10,7 +10,8 @@
  * \todo
  * - use mkdtemp() when storing temporary screenshot
  * - catch SIGTERM or provide a way to clean exit (close sockets).
- * - forking the process when new connection is received can be a good idea.
+ * - add utests using 'check' library
+ *
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
