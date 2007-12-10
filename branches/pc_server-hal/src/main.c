@@ -80,7 +80,6 @@ static int client_socket_cb(int client_socket);
 static int server_socket_cb(int server_socket);
 
 
-
 /** HAL file descriptor callback
  *
  * @param hal_fd the file descriptor itself
@@ -88,7 +87,9 @@ static int server_socket_cb(int server_socket);
  * @return 0 on sucess, -1 otherwise
  *
  */
+#ifdef HAVE_HAL
 static int hal_cb(int hal_fd);
+#endif
 
 
 /** Show program usage
@@ -518,6 +519,7 @@ static void show_usage(const char *path)
 	free(p);
 }
 
+#ifdef HAVE_HAL
 static int hal_cb(int hal_fd)
 {
 	int ret = hal_dispatch();
@@ -530,6 +532,7 @@ static int hal_cb(int hal_fd)
 
 	return ret;
 }
+#endif
 
 static int client_socket_cb(int client_socket)
 {
