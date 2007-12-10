@@ -170,16 +170,12 @@ int hal_init(int hci_id)
 		goto out;
 	}
 
-	printf("point1\n");
-
 	hal.bluetooth_udi = find_udi_by_ifid(ctx, hci_id);
 	if (!hal.bluetooth_udi) {
 		print_error("Bluetooth device not found", NULL);
 		libhal_ctx_free(ctx);
 		goto out;
 	}
-
-	printf("point2\n");
 
 	libhal_ctx_set_device_removed(ctx, hal_removed_cb);
 	dbus_connection_get_unix_fd(hal.dbus, &ret);
