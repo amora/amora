@@ -65,7 +65,8 @@ out:
 }
 
 
-int loop_add(const int fd, int (*callback) (int fd)) {
+int loop_add(const int fd, int (*callback) (int fd))
+{
 	int ret = -1;
 
 	assert(fd >= 0 && fd < FD_SETSIZE && callback);
@@ -86,7 +87,8 @@ out:
 }
 
 
-int loop_remove(const int fd) {
+int loop_remove(const int fd)
+{
 	int i, ret = -1;
 
 	assert(fd >= 0 && fd < FD_SETSIZE);
@@ -132,3 +134,4 @@ int loop(void)
 out:
 	return ret;
 }
+
