@@ -283,7 +283,7 @@ static int process_events(int fd, int clean_up)
 	}
 
 	bytes_read = read_socket(fd, buffer, BUF_SIZE);
-	if (bytes_read == -1) {
+	if (bytes_read == -1 || bytes_read == 0) {
 		log_message(FIL|OUT, amora.log, "Error trying to read socket!");
 		return result;
 	}
