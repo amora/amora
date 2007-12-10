@@ -29,7 +29,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <sys/select.h>
-#include <stdio.h>
 
 #include "loop.h"
 
