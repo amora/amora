@@ -30,10 +30,39 @@
 #define __LOOP_H__
 
 
+/** Remove a file descriptor from the loop set
+ *
+ * Note: the program is responsible to close the fd
+ *
+ * @param fd the fd that should be removed
+ *
+ * @return 0 on sucess, -1 otherwise
+ *
+ */
 int loop_remove(const int fd);
 
+
+/** Add a file descriptor to the loop fd_set
+ * 
+ * @param fd the file descriptor itself
+ * @param callback the callback that will be called when fd is ready.
+ * Note: the callback must return 0 on sucess and -1 on fail.
+ *
+ * @return 0 on sucess, -1 otherwise
+ *
+ */
 int loop_add(const int fd, int (*callback) (int fd));
 
+
+/** Loop pooling the file descriptor set
+ *
+ * The loop will return when an error occurs with some file descritor
+ * in the set or when the set became empty. Otherwise, the loop will
+ * run forever.
+ *
+ * @return 0 on sucess, -1 otherwise
+ *
+ */
 int loop(void);
 
 

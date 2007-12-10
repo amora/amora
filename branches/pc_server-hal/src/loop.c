@@ -32,13 +32,25 @@
 
 #include <stdio.h>
 
+
+/** The loop resource holder */
 static struct loop_set_s {
+	/** The callback for each fd using the fd as index */
 	int (*callback[FD_SETSIZE]) (int fd);
+	/** The fd with max number as required by select(). Don't ask me why. */
 	int nfds;
+	/** The fd set, only ready for reading is supported by now */
 	fd_set readfds;
 } loop_set;
 
 
+/** Dispatch the event
+ *
+ * @param fd the file descriptor that has trigged the event
+ *
+ * @return 0 on sucess, -1 otherwise
+ *
+ */
 static int dispatch(int fd)
 {
 	assert(fd >= 0 && fd < FD_SETSIZE);
@@ -47,6 +59,13 @@ static int dispatch(int fd)
 }
 
 
+/** Check if the given fd_set is empty
+ *
+ * @param fds the fd_set conforming select.h
+ *
+ * @return 1 if the set is empty, 0 otherwise
+ *
+ */
 static int is_empty(fd_set *fds)
 {
 	int i, ret = 1;
