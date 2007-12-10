@@ -30,8 +30,6 @@
  *
  */
 
-#include "config.h"
-
 #ifndef __LOOP_H__
 #define __LOOP_H__
 
@@ -73,3 +71,4 @@ int loop(void);
 
 
 #endif /* __LOOP_H__ */
+

@@ -24,8 +24,6 @@
  *
  */
 
-#include "config.h"
-
 #include <assert.h>
 #include <stdlib.h>
 #include <sys/select.h>
