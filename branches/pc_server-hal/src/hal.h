@@ -1,7 +1,7 @@
 /**
  * @file   hal.h
  * @author Thiago Marcos P. Santos
- * @date  Tue Jul 10 16:09:20 2007
+ * @date   Sun Dec  9 22:36:27 AMT 2007
  *
  * @brief Amora HAL subsystem API
  *
@@ -41,6 +41,22 @@
  * @return the DBUS file descriptor or -1 on error.
  */
 int hal_init(int hci_id);
+
+
+/** Dispatch HAL queued events
+ *
+ * Must be called when DBUS file descriptor is ready for read()
+ *
+ * @return 1 on sucess or -1 on error.
+ */
+int hal_dispatch(void);
+
+
+/** Check if there is a bluetooth dongle connected
+ *
+ * @return 1 if dongle is connected or 0 otherwise.
+ */
+int hal_has_dongle(void);
 
 
 #endif /* HAVE_HAL */

@@ -1,7 +1,7 @@
 /**
  * @file   hal.c
  * @author Thiago Marcos P. Santos 
- * @date   Fri May  4 14:25:09 2007
+ * @date   Sun Dec  9 22:36:27 AMT 2007
  *
  * @brief  HAL hardware detection system support
  *
@@ -28,17 +28,22 @@
  *
  */
 
+#include <assert.h>
 #include <dbus/dbus.h>
 #include <libhal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "hal.h"
 
-
-/** Bluetooh identifier  - FIXME: memory leak */
-static char *bluetooth_udi;
+/** HAL userdata */
+static struct hal_s {
+	/** Bluetooh identifier - FIXME: memory leak */
+	char *bluetooth_udi;
+	/** DBUS connection handler */
+	DBusConnection *dbus;
+} hal;
 
 
 /** Print error messages to stderr
@@ -67,8 +72,10 @@ static void hal_removed_cb(LibHalContext *ctx, const char *udi) {
 
 	assert(udi);
 
-	if (strcmp(bluetooth_udi, udi) == 0) {
+	if (strcmp(hal.bluetooth_udi, udi) == 0) {
 		printf("Bluetooth device removed.\n");
+		free(hal.bluetooth_udi);
+		hal.bluetooth_udi = NULL;
 	}
 }
 
@@ -138,7 +145,6 @@ out:
 int hal_init(int hci_id)
 {
 	LibHalContext *ctx;
-	DBusConnection *dbus_conn;
 	DBusError error;
 	int ret = -1;
 
@@ -146,8 +152,8 @@ int hal_init(int hci_id)
 
 	dbus_error_init(&error);
 
-	dbus_conn = dbus_bus_get(DBUS_BUS_SYSTEM, &error);
-	if (!dbus_conn) {
+	hal.dbus = dbus_bus_get(DBUS_BUS_SYSTEM, &error);
+	if (!hal.dbus) {
 		print_error("DBUS connection failed", &error);
 		goto out;
 	}
@@ -158,26 +164,39 @@ int hal_init(int hci_id)
 		goto out;
 	}
 
-	libhal_ctx_set_dbus_connection(ctx, dbus_conn);
+	libhal_ctx_set_dbus_connection(ctx, hal.dbus);
 	if (!libhal_ctx_init(ctx, &error)) {
 		print_error("HAL startup failed", &error);
 		goto out;
 	}
 
-	bluetooth_udi = find_udi_by_ifid(ctx, hci_id);
-	if (!bluetooth_udi) {
+	hal.bluetooth_udi = find_udi_by_ifid(ctx, hci_id);
+	if (!hal.bluetooth_udi) {
 		print_error("Bluetooth device not found", NULL);
 		libhal_ctx_free(ctx);
 		goto out;
 	}
 
 	libhal_ctx_set_device_removed(ctx, hal_removed_cb);
-	dbus_connection_get_unix_fd(dbus_conn, &ret);
+	dbus_connection_get_unix_fd(hal.dbus, &ret);
 
 out:
 	if (dbus_error_is_set(&error))
 		dbus_error_free(&error);
 
 	return ret;
+}
+
+
+int hal_dispatch(void)
+{
+	dbus_connection_read_write_dispatch(hal.dbus, 0);
+
+	return 0;
+}
+
+int hal_has_dongle(void)
+{
+	return hal.bluetooth_udi ? 1 : 0;
 }
 
