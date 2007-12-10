@@ -8,11 +8,9 @@
  * This app is reponsible to receive events from cellphone and send them to
  * X Server.
  * \todo
- * - refactor main.c, its starting to get smelly
  * - use mkdtemp() when storing temporary screenshot
  * - catch SIGTERM or provide a way to clean exit (close sockets).
  * - forking the process when new connection is received can be a good idea.
- * - what about a heartbeat between cellphone and server?
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

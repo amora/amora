@@ -1,6 +1,6 @@
 /**
  * @file   hal.c
- * @author Thiago Marcos P. Santos 
+ * @author Thiago Marcos P. Santos
  * @date   Sun Dec  9 22:36:27 AMT 2007
  *
  * @brief  HAL hardware detection system support

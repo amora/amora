@@ -43,7 +43,7 @@ int loop_remove(const int fd);
 
 
 /** Add a file descriptor to the loop fd_set
- * 
+ *
  * @param fd the file descriptor itself
  * @param callback the callback that will be called when fd is ready.
  * Note: the callback must return 0 on sucess and -1 on fail.
