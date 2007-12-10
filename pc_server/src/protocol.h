@@ -8,6 +8,8 @@
  * I'm still working on a protocol for handling events and data
  * exchange between the cellphone and PC.
  *
+ * \todo
+ * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>

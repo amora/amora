@@ -9,6 +9,9 @@
  * I believe that each one has a different implementation for bluetooth stack
  * but hope that all them maintain the idea of sockets/fd to write and read
  * data from bluetooth.
+ *
+ * \todo
+ * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
