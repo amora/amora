@@ -92,12 +92,12 @@ static char *find_udi_by_ifid(LibHalContext *ctx, int hci_id)
 {
 	DBusError error;
 	char **devices, *hal_ifid, *ret = NULL;
-	char ifid[6];
+	char ifid[7];
 	int i, num, match = 0;
 
 	assert(ctx);
 
-	snprintf(ifid, sizeof(ifid), "hci%d", hci_id);
+	snprintf(ifid, sizeof(ifid - 1), "hci%d", hci_id);
 
 	dbus_error_init(&error);
 	devices = libhal_find_device_by_capability(ctx, "bluetooth_hci",
@@ -170,12 +170,16 @@ int hal_init(int hci_id)
 		goto out;
 	}
 
+	printf("point1\n");
+
 	hal.bluetooth_udi = find_udi_by_ifid(ctx, hci_id);
 	if (!hal.bluetooth_udi) {
 		print_error("Bluetooth device not found", NULL);
 		libhal_ctx_free(ctx);
 		goto out;
 	}
+
+	printf("point2\n");
 
 	libhal_ctx_set_device_removed(ctx, hal_removed_cb);
 	dbus_connection_get_unix_fd(hal.dbus, &ret);
