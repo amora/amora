@@ -104,8 +104,9 @@ int send_event(int type, int keycode, Display *active_display)
 int mouse_move(int x, int y, Display *active_display)
 {
 	int res = 0;
-	Window win;
-	int revert_to;
+	Window win, child, root;
+	int revert_to, root_x, root_y, win_x, win_y;
+	unsigned int mask;
 
 	if (!active_display) {
 		res = -1;
@@ -113,10 +114,19 @@ int mouse_move(int x, int y, Display *active_display)
 	}
 
 	XGetInputFocus(active_display, &win, &revert_to);
+
+
+	res = XQueryPointer(active_display,
+			   DefaultRootWindow(active_display), &root, &child,
+			   &root_x, &root_y, &win_x, &win_y, &mask);
+
+	/* Mouse move using current pointer position as start reference
+	 * plus 'delta'.
+	 */
 	res = XWarpPointer(active_display,
 			   None, DefaultRootWindow(active_display),
 			   0, 0, 0, 0,
-			   x, y);
+			   root_x + x, root_y + y);
 
 	/* needed to flush events before any new command. */
 	XFlush(active_display);
