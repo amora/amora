@@ -1,7 +1,7 @@
 #labels Phase-Requirements,Featured
 What is next for amora
 
-= Version 0.9 =
+= Version 0.9 (done!) =
 
  * keymap, credits screen, app running from drive C
 
@@ -9,6 +9,12 @@ What is next for amora
 
 = Version 1.0 =
 
- * server clean up (logging optional), debian package and SIS package
+ * server clean up (logging optional), debian package and SIS package, bug fixes
 
  * stopwatch, application portuguese version, screenshot timeout config screen
+
+= Version 1.1 =
+
+ * server: multiple clients support, detect bluetooth dongle connection/disconnection
+
+ * client: menu navigation changes, keymap layout plugins
