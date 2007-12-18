@@ -18,6 +18,7 @@ amora_SOURCES = $(csourcedir)/main.c \
                    $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \
                    $(csourcedir)/linux.c \
                    $(csourcedir)/log.h $(csourcedir)/log.c \
+		   $(csourcedir)/loop.h $(csourcedir)/loop.c \
 		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
 amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
