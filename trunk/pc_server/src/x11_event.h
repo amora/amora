@@ -65,7 +65,7 @@ int destroy_display(Display *active_display);
  * @param keycode Keycode of event (i.e. 98 for up arrow).
  * @param active_display Pointer to display structure (see \ref construct_display).
  *
- * @return On sucess 0, -1 otherwise.
+ * @return On success 0, -1 otherwise.
  */
 int send_event(int type, int keycode, Display *active_display);
 
@@ -77,7 +77,7 @@ int send_event(int type, int keycode, Display *active_display);
  * @param active_display Current Display, connection with X server (see
  * \ref construct_display)
  *
- * @return 0 on sucess, -1 otherwise.
+ * @return 0 on success, -1 otherwise.
  */
 int mouse_move(int x, int y, Display *active_display);
 
@@ -93,7 +93,7 @@ int mouse_move(int x, int y, Display *active_display);
  * @param active_display Current Display, connection with X server (see
  * \ref construct_display)
  *
- * @return 0 on sucess, -1 otherwise.
+ * @return 0 on success, -1 otherwise.
  */
 int mouse_click(int mouse_button, int button_status, Display *active_display);
 
