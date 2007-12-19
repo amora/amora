@@ -62,7 +62,7 @@ struct amora_s {
  *
  * @param client_socket the file descriptor itself
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 static int client_socket_cb(int client_socket);
@@ -72,7 +72,7 @@ static int client_socket_cb(int client_socket);
  *
  * @param server_socket the file descriptor itself
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 static int server_socket_cb(int server_socket);
@@ -96,7 +96,7 @@ static void show_usage(const char *path);
  * take screenshots and write data back to client.
  * display connection to grab screenshots.
  *
- * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * @return Number of bytes read on success, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
 static int treat_command(char *buffer, int length, int client_socket);
@@ -112,7 +112,7 @@ static int treat_command(char *buffer, int length, int client_socket);
  * @param client_socket Client socket connection descriptor (really used by
  * \ref treat_command).
  *
- * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * @return Number of bytes read on success, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
 static int treat_events(char *buffer, int length, int client_socket);
@@ -124,7 +124,7 @@ static int treat_events(char *buffer, int length, int client_socket);
  * @param fd Socket file descriptor.
  * @param clean_up Free local allocated resources.
  *
- * @return Number of bytes read on sucess, -1 on error, CONN_CLOSE on exit
+ * @return Number of bytes read on success, -1 on error, CONN_CLOSE on exit
  * (see \ref codes).
  */
 static int process_events(int fd, int clean_up);
@@ -135,7 +135,7 @@ static int process_events(int fd, int clean_up);
  * @param argc argument counter
  * @param argv argument vector
  *
- * @return 0 on sucess, -1 on error.
+ * @return 0 on success, -1 on error.
  */
 int main(int argc, char **argv)
 {

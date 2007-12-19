@@ -81,7 +81,7 @@ struct service_description *build_sd(int channel);
 
 /** Checks if has a bluetooth device available.
  *
- * @return 0 in sucess, -1 otherwise.
+ * @return 0 in success, -1 otherwise.
  */
 int check_device(void);
 
@@ -114,7 +114,7 @@ int read_socket(int client, char *data, int length);
  * @param channel Number of channel to be used to export the server service.
  * @param sd Service description structure pointer.
  *
- * @return Socket in sucess, -1 otherwise.
+ * @return Socket in success, -1 otherwise.
  */
 int build_bluetooth_socket(unsigned int channel,
 			   struct service_description *sd);
@@ -128,7 +128,7 @@ int build_bluetooth_socket(unsigned int channel,
  *
  * @param sd Service description pointer structure.
  *
- * @return 0 on sucess, -1 otherwise.
+ * @return 0 on success, -1 otherwise.
  */
 int describe_service(struct service_description *sd);
 
@@ -152,7 +152,7 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
  * @param mstat Source descriptor stats structure (to known amount of bytes
  * to be transfered).
  *
- * @return 0 on sucess, -1 otherwise.
+ * @return 0 on success, -1 otherwise.
  */
 int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
 
@@ -163,7 +163,7 @@ int hack_send_file(int client_socket, int file_descriptor, struct stat mstat);
  * @param client_socket A socket open to client.
  * @param filename Filename to target file.
  *
- * @return 0 for sucess, -1 otherwise.
+ * @return 0 for success, -1 otherwise.
  */
 int send_file(int client_socket, char *filename);
 

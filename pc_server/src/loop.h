@@ -40,7 +40,7 @@
  *
  * @param fd the fd that should be removed
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 int loop_remove(const int fd);
@@ -50,9 +50,9 @@ int loop_remove(const int fd);
  *
  * @param fd the file descriptor itself
  * @param callback the callback that will be called when fd is ready.
- * Note: the callback must return 0 on sucess and -1 on fail.
+ * Note: the callback must return 0 on success and -1 on fail.
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 int loop_add(const int fd, int (*callback) (int fd));
@@ -64,7 +64,7 @@ int loop_add(const int fd, int (*callback) (int fd));
  * in the set or when the set became empty. Otherwise, the loop will
  * run forever.
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 int loop(void);
