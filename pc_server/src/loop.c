@@ -46,7 +46,7 @@ static struct loop_set_s {
  *
  * @param fd the file descriptor that has trigged the event
  *
- * @return 0 on sucess, -1 otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
 static int dispatch(int fd)
