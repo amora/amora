@@ -11,8 +11,8 @@
 AUTOMAKE_OPTIONS = foreign
 
 # amora itself
-bin_PROGRAMS = amora
-amora_SOURCES = $(csourcedir)/main.c \
+bin_PROGRAMS = amorad
+amorad_SOURCES = $(csourcedir)/main.c \
                    $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                    $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
                    $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \
@@ -21,8 +21,8 @@ amora_SOURCES = $(csourcedir)/main.c \
 		   $(csourcedir)/loop.h $(csourcedir)/loop.c \
 		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
-amora_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
-amora_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
+amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
+amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
 
 amoramandir = $(mandir)/man1
 amoraman_DATA = amora.1
