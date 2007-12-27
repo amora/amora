@@ -36,9 +36,9 @@ def get_path():
     #Gives preference to load from drive 'E:'
     drives_list.reverse()
     for drive in [str(x) for x in drives_list]:
-        if os.path.isfile(os.path.join(drive, AMORA_PATH1, "presenter.py")):
+        if os.path.isfile(os.path.join(drive, AMORA_PATH1, "amora.py")):
             return os.path.join(drive, AMORA_PATH1)
-        elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "presenter.py")):
+        elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "amora.py")):
             return os.path.join(drive, AMORA_PATH2)
 
 full_path = get_path()
