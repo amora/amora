@@ -177,10 +177,6 @@ class application:
                         self.bt.write_line(str(self.wallpaper.screen_size()[0]))
                 else:
                     self.bt.write_line(u'SCREEN_MODE_OFF')
-                if self.configuration.rotate:
-                    self.bt.write_line(u'SCREEN_ROTATE')
-                else:
-                    self.bt.write_line(u'SCREEN_NORMAL')
                 #Restore window state if it has changed
                 if appuifw.app.screen == 'large':
                     appuifw.app.screen = 'full'
@@ -233,6 +229,10 @@ class application:
     # - discover a way to transfer image without using files
     def __take_screenshot(self):
         try:
+            if self.configuration.rotate:
+                self.bt.write_line(u'SCREEN_ROTATE')
+            else:
+                self.bt.write_line(u'SCREEN_NORMAL')
             fout = open(self.path+'test.png', 'w')
             self.bt.write_line(u'SCREEN_TAKE')
             try:
