@@ -101,6 +101,16 @@ class application:
     def __configuration(self):
         self.configuration.display()
         self.__window_title()
+    #Load and display keymap
+    def __display_keymap(self):
+        try:
+            if is_widescreen():
+                self.img = graphics.Image.open(self.path + 'imgs\\keymap_wide.jpg')
+            else:
+                self.img = graphics.Image.open(self.path + 'imgs\\keymap_full.jpg')
+            self.presentationdisplay()
+        except:
+            appuifw.note(u'Error displaying help!')
     #Call Help dialog
     #TODO: implement help for other application states: connected, started.
     def __help(self):
@@ -118,15 +128,7 @@ class application:
             self.help_screen.display()
         elif self.running == 1:
             appuifw.note(u'Joystick moves the mouse cursor')
-            img_file_name = None
-            try:
-                if is_widescreen():
-                    self.img = graphics.Image.open(self.path + 'imgs\\keymap_wide.jpg')
-                else:
-                    self.img = graphics.Image.open(self.path + 'imgs\\keymap_full.jpg')
-                self.presentationdisplay()
-            except:
-                appuifw.note(u'Error displaying help!')
+            self.__display_keymap()
     #About box displaying
     def __about(self):
         try:
@@ -258,13 +260,14 @@ class application:
 
             appuifw.app.screen = 'full'
             appuifw.app.body = self.presentation
-        #First time the function is called, change menu
+        #First time the function is called, change menu and display keymap
         if self.running == 0 or self.running == 2:
             appuifw.app.menu = [(u'Disconnect', self.__reset),
                                 (u'Auto screen', self.__click_screen),
                                 (u'Help', self.__help),
                                 (u'Exit', self.quit)]
             self.press_flag = 0
+            self.__display_keymap()
         self.running = 1
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
