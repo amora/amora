@@ -124,7 +124,7 @@ class application:
                     self.img = graphics.Image.open(self.path + 'imgs\\keymap_wide.jpg')
                 else:
                     self.img = graphics.Image.open(self.path + 'imgs\\keymap_full.jpg')
-                self.presentationdisplay('dumbo')
+                self.presentationdisplay()
             except:
                 appuifw.note(u'Error displaying help!')
     #About box displaying
@@ -208,11 +208,14 @@ class application:
             self.bt.close()
         self.reset()
     #Ugly hack to print screenshot
-    def presentationdisplay(self, other):
+    def presentationdisplay(self, a_img = None):
         if self.presentation != None:
             self.presentation.clear()
+            if a_img != None:
+                self.img = a_img
+
             if self.img != None:
-                self.presentation.blit(self.img, target = (0,0), scale = 1)
+                    self.presentation.blit(self.img, target = (0,0), scale = 1)
         else:
             appuifw.note(u'Error, cannot display presentation.')
     #Sets click and screen mode
@@ -240,7 +243,7 @@ class application:
             except:
                 appuifw.note(u'Failed reading!')
             self.img = graphics.Image.open(self.path+'test.png')
-            self.presentationdisplay('dumbo')
+            self.presentationdisplay()
         except:
             appuifw.note(u'Cannot transfer thumbnail!')
             raise 'I\'m done here!'
