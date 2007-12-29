@@ -5,8 +5,11 @@
 # About: A stopwatch, used to control timer for presentation.
 #  I took this code from http://snippets.dzone.com/posts/show/776
 #  and I'm not sure who is the writter of it.
-# TODO: refactor this code to fit the application mode (e.g. it
-# must receive a canvas object).
+# TODO:
+# - Font size can change according to cellphone Symbian version and
+# currently it doesn't work fine in N95.
+# - The clean up rectangle should be a percentage of screen and *not*
+# hard coded pixel dimensions
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -38,23 +41,24 @@ class stopwatch:
     running = 0
     time_start = None
     elap = 0.0
-    def __init__(self):
-        appuifw.app.screen = 'full'
-        self.canvas = appuifw.Canvas(self.update)
-        appuifw.app.body = self.canvas
-        self.canvas.bind(key_codes.EKeySelect, self.toggle)
-        self.update()
-    def update(self, rect = None, x = 0, y = 20):
+    acanvas = None
+    #Updates the clock in Canvas
+    def update(self, canvas = None, rect = None, x = 0, y = 20):
+        if canvas != None:
+            self.acanvas = canvas
         if self.running:
             self.elap = time.clock() - self.time_start
-            e32.ao_sleep(0.05, self.update)
+            e32.ao_sleep(0.2, self.update)
         t = self.elap
         min = int(t / 60)
         sec =  int(t - min*60)
         hsec = int((t - min*60 - sec)*100)
-        self.canvas.clear()
-        self.canvas.text((x, y), u"%02d:%02d:%02d" % (min,sec,hsec), font='title',
-                         fill = 0x0000FF)
+        if self.acanvas != None:
+            self.acanvas.rectangle((x, 0, (x + 75), (y + 1)), fill = 0xFFFFFF)
+            self.acanvas.text((x, y), u"%02d:%02d:%02d" % (min,sec,hsec),
+                              font='title',
+                              fill = 0x0000FF)
+    #Set/unset timer
     def toggle(self):
         if self.running:
             self.running = 0
@@ -63,14 +67,20 @@ class stopwatch:
             self.running = 1
             self.time_start = time.clock() - self.elap
             self.update()
+    #Resets class
     def reset(self):
         self.running = 0
         self.elap = 0.0
-        self.update()
+        self.acanvas = None
 
 
-sw = stopwatch()
-lock = e32.Ao_lock()
-appuifw.app.menu = [(u'Reset', sw.reset), (u'Close', lock.signal)]
-appuifw.app.exit_key_handler = lock.signal
-lock.wait()
+def test(param):
+    global tc, clock
+    clock.update(tc)
+
+
+
+# clock = stopwatch()
+# clock.toggle()
+# tc = appuifw.Canvas(test)
+# appuifw.app.body = tc

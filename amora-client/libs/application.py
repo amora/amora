@@ -6,7 +6,7 @@
 # code as also objects to represent windows.
 # TODO:
 #  - slideshow class with icon animation
-#  - integrate with stopwatch code
+
 
 
 '''
@@ -37,6 +37,7 @@ from bt_client import *
 from wallpaper import *
 from helpwindow import *
 from configure import *
+from stopwatch import *
 
 class application:
     mouse_x = 400
@@ -51,6 +52,7 @@ class application:
     configuration = None
     img = None
     click_and_screen = False
+    clock = None
     #Sets default window title
     def __window_title(self):
         appuifw.app.title = u'Amora'
@@ -61,6 +63,7 @@ class application:
                             #(u'options', lambda:None)]
         appuifw.app.exit_key_handler = self.quit
         self.configuration = configure()
+        self.clock = stopwatch()
         self.reset()
     #Reset application to its initial state
     def reset(self):
@@ -88,6 +91,8 @@ class application:
         self.wallpaper.display()
         self.img = None
         self.click_and_screen = False
+        #Resets timer clock
+        self.clock.reset()
     #Exit function
     def quit(self):
         self.running = -1
@@ -212,14 +217,16 @@ class application:
     #Ugly hack to print screenshot
     def presentationdisplay(self, a_img = None):
         if self.presentation != None:
-            self.presentation.clear()
+            self.clock.update(self.presentation)
             if a_img != None:
                 self.img = a_img
 
             if self.img != None:
-                    self.presentation.blit(self.img, target = (0,0), scale = 1)
+                self.presentation.clear()
+                self.presentation.blit(self.img, target = (0,0), scale = 1)
         else:
             appuifw.note(u'Error, cannot display presentation.')
+        #Updates stopwatch
     #Sets click and screen mode
     def __click_screen(self):
         if self.click_and_screen:
@@ -268,6 +275,7 @@ class application:
                                 (u'Exit', self.quit)]
             self.press_flag = 0
             self.__display_keymap()
+            self.clock.toggle()
         self.running = 1
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
