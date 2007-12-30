@@ -217,7 +217,8 @@ class application:
     #Ugly hack to print screenshot
     def presentationdisplay(self, a_img = None):
         if self.presentation != None:
-            self.clock.update(self.presentation)
+            if self.configuration.stopwatch:
+                self.clock.update(self.presentation)
             if a_img != None:
                 self.img = a_img
 
@@ -275,7 +276,8 @@ class application:
                                 (u'Exit', self.quit)]
             self.press_flag = 0
             self.__display_keymap()
-            self.clock.toggle()
+            if self.configuration.stopwatch:
+                self.clock.toggle()
         self.running = 1
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
