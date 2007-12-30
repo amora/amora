@@ -6,8 +6,7 @@
 #  I took this code from http://snippets.dzone.com/posts/show/776
 #  and I'm not sure who is the writter of it.
 # TODO:
-# - Font size can change according to cellphone Symbian version and
-# currently it doesn't work fine in N95.
+# - Font size can change according to cellphone Symbian version
 # - The clean up rectangle should be a percentage of screen and *not*
 # hard coded pixel dimensions
 
@@ -42,8 +41,11 @@ class stopwatch:
     time_start = None
     elap = 0.0
     acanvas = None
+    x = 0
+    y = 20
+    blank_width = 85
     #Updates the clock in Canvas
-    def update(self, canvas = None, rect = None, x = 0, y = 20):
+    def update(self, canvas = None):
         if canvas != None:
             self.acanvas = canvas
         if self.running:
@@ -54,8 +56,10 @@ class stopwatch:
         sec =  int(t - min*60)
         hsec = int((t - min*60 - sec)*100)
         if self.acanvas != None:
-            self.acanvas.rectangle((x, 0, (x + 75), (y + 1)), fill = 0xFFFFFF)
-            self.acanvas.text((x, y), u"%02d:%02d:%02d" % (min,sec,hsec),
+            self.acanvas.rectangle((self.x, 0, (self.x + self.blank_width),
+                                    (self.y + 1)), fill = 0xFFFFFF)
+            self.acanvas.text((self.x, self.y),
+                              u"%02d:%02d:%02d" % (min,sec,hsec),
                               font='title',
                               fill = 0x0000FF)
     #Set/unset timer
@@ -67,16 +71,32 @@ class stopwatch:
             self.running = 1
             self.time_start = time.clock() - self.elap
             self.update()
-    #Resets class
+    #Reset only the counter
+    def reset_counter(self):
+        self.elap = 0.0
+        self.time_start = time.clock()
+    #Resets all internal class data
     def reset(self):
         self.running = 0
         self.elap = 0.0
+        self.time_start = None
         self.acanvas = None
+        self.x = 0
+        self.y = 20
+    #Sets length of blanking retangle
+    def set_blank_width(self, length):
+        if length > 70:
+            self.blank_width = length
+    #Sets position where stopwatch is drawn
+    def set_position(self, x, y):
+        if (x > -1) and (y > 19):
+            self.x = x
+            self.y = y
 
 
-def test(param):
-    global tc, clock
-    clock.update(tc)
+# def test(param):
+#     global tc, clock
+#     clock.update(tc)
 
 
 
@@ -84,3 +104,11 @@ def test(param):
 # clock.toggle()
 # tc = appuifw.Canvas(test)
 # appuifw.app.body = tc
+# appuifw.app.screen = 'full'
+# #N95: Symbian 9.1, 240x320
+# clock.set_position(140, 20)
+# #E61: Symbian 9.0, 320x240
+# clock.set_position(250, 20)
+# #N93: Symbian 9.0, 240x320
+# clock.set_position(160, 20)
+
