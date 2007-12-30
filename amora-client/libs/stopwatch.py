@@ -92,6 +92,14 @@ class stopwatch:
         if (x > -1) and (y > 19):
             self.x = x
             self.y = y
+    #Returns a menu subitem to control stopwatch
+    def create_submenu_lst(self):
+        sub_menu_lst = (u'Stopwatch',
+                ((u'Reset', self.reset_counter),
+                  (u'Toggle', self.toggle)
+                  )
+                )
+        return sub_menu_lst
 
 
 # def test(param):
@@ -105,6 +113,15 @@ class stopwatch:
 # tc = appuifw.Canvas(test)
 # appuifw.app.body = tc
 # appuifw.app.screen = 'full'
+
+# def _exit():
+#     print 'exit'
+
+
+# appuifw.app.menu = [ clock.create_submenu_lst(),
+#                      (u'Exit', _exit)]
+
+
 # #N95: Symbian 9.1, 240x320
 # clock.set_position(140, 20)
 # #E61: Symbian 9.0, 320x240
