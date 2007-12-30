@@ -34,15 +34,19 @@ class configure:
     screenshot = True
     rotate = False
     stopwatch = True
+    screenshot_wait = 2.0
     option_list = 0
+    bkp_list = None
     #Constructor
     def __init__(self):
         self.states = [u'On', u'Off']
         self.modes = [u'Normal', u'Rotate']
         self.clock = [u'On', u'Off']
+        self.screenshot_lst = [u'1.0', u'1.5', u'2.0', u'3.0', u'5.0']
         self.widget = [(u'Preview', 'combo', (self.states, 0)),
                        (u'Image', 'combo', (self.modes, 0)),
-                       (u'Stopwatch', 'combo', (self.clock, 0))]
+                       (u'Clock', 'combo', (self.clock, 0)),
+                       (u'A.screen', 'combo', (self.screenshot_lst, 0))]
     #Callback to get user defined options
     def save_state(self, current_list):
         self.option_list = current_list
@@ -64,6 +68,12 @@ class configure:
         else:
             self.stopwatch = False
             print u'dont use stopwatch'
+        #Autoscreen delay time
+        self.screenshot_wait = float(self.screenshot_lst[current_list[3][2][1]])
+        print u'use ' + str(self.screenshot_wait) + "s delay in autoscreen"
+        self.bkp_list = current_list
+    def debug(self):
+        return self.bkp_list
     #Creates the form and display it
     def display(self):
         appuifw.app.title = u'Amora: Configuration'
@@ -72,3 +82,7 @@ class configure:
         obj.execute()
         e32.ao_yield()
 
+
+#Usage example
+# obj = configure()
+# obj.display()

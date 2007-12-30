@@ -224,7 +224,7 @@ class application:
 
             if self.img != None:
                 self.presentation.clear()
-                self.presentation.blit(self.img, target = (0,0), scale = 1)
+                self.presentation.blit(image = self.img, target = (0,0), scale = 1)
         else:
             appuifw.note(u'Error, cannot display presentation.')
         #Updates stopwatch
@@ -324,7 +324,8 @@ class application:
                     #FIXME: synchronization between click and new slide
                     #display will require a change in protocol or IPC
                     #with OpenOffice/Acrobat/etc
-                    time.sleep(1.0)
+                    print u'Sleeping for ' + str(self.configuration.screenshot_wait)
+                    time.sleep(self.configuration.screenshot_wait)
                     self.__take_screenshot()
             elif self.keyboard.pressed(EScancode1):
                 print u'MOUSE CLICK_HOLD'
