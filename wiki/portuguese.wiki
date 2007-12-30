@@ -85,4 +85,6 @@ O projeto já exibe as características:
 Já é bastante estável e eu já o utilizo para controlar meus slides e quando assisto filmes: é possível começar uma apresentação, pará-la, mover o cursor para um diretório, fazer duplo clique em um arquivo de vídeo e controlar a maior parte das ações no mplayer).
 
 
+== Grupo de usuários ==
 
+Se você tem questões, sugestões, relatos de problemas ou apenas deseja compartilhar suas experiências com o Amora, então visite: http://groups.google.com/group/amora-user
