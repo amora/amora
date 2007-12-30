@@ -72,3 +72,8 @@ You first run in the directory pc_server:
 $ autoreconf -i --force
 
 and then just follow previous instructions for tarball version.
+
+
+== User group ==
+
+Do you have questions, suggestions, bug reports or wish to share your experience with Amora? Please, visit Amora discussion group at: http://groups.google.com/group/amora-user
