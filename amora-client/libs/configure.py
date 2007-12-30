@@ -33,13 +33,16 @@ class configure:
     modded_options = 0
     screenshot = True
     rotate = False
+    stopwatch = True
     option_list = 0
     #Constructor
     def __init__(self):
         self.states = [u'On', u'Off']
         self.modes = [u'Normal', u'Rotate']
+        self.clock = [u'On', u'Off']
         self.widget = [(u'Preview', 'combo', (self.states, 0)),
-                       (u'Image', 'combo', (self.modes, 0))]
+                       (u'Image', 'combo', (self.modes, 0)),
+                       (u'Stopwatch', 'combo', (self.clock, 0))]
     #Callback to get user defined options
     def save_state(self, current_list):
         self.option_list = current_list
@@ -55,6 +58,12 @@ class configure:
         else:
             self.rotate = False
             print u'dont rotate image'
+        if current_list[2][2][1] == 0L:
+            self.stopwatch = True
+            print u'use stopwatch'
+        else:
+            self.stopwatch = False
+            print u'dont use stopwatch'
     #Creates the form and display it
     def display(self):
         appuifw.app.title = u'Amora: Configuration'
