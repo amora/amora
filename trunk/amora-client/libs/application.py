@@ -270,14 +270,21 @@ class application:
             appuifw.app.body = self.presentation
         #First time the function is called, change menu and display keymap
         if self.running == 0 or self.running == 2:
-            appuifw.app.menu = [(u'Disconnect', self.__reset),
-                                (u'Auto screen', self.__click_screen),
-                                (u'Help', self.__help),
-                                (u'Exit', self.quit)]
+            if self.configuration.stopwatch:
+                appuifw.app.menu = [ self.clock.create_submenu_lst(),
+                                     (u'Disconnect', self.__reset),
+                                     (u'Auto screen', self.__click_screen),
+                                     (u'Help', self.__help),
+                                     (u'Exit', self.quit)]
+                self.clock.toggle()
+            else:
+                appuifw.app.menu = [ (u'Disconnect', self.__reset),
+                                     (u'Auto screen', self.__click_screen),
+                                     (u'Help', self.__help),
+                                     (u'Exit', self.quit)]
+
             self.press_flag = 0
             self.__display_keymap()
-            if self.configuration.stopwatch:
-                self.clock.toggle()
         self.running = 1
         appuifw.app.exit_key_handler = self.quit
         #XXX: fix to make slide control work, I should write a code
