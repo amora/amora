@@ -28,20 +28,34 @@ import e32
 import sys
 import os
 
+AMORA_UID = u"ef0b4099"
+
 AMORA_PATH1 = "\\python\\"
 AMORA_PATH2 = "\\Data\\python\\"
+AMORA_PATH3 = "\\Private\\ef0b4099\\"
 
-def get_path():
+def get_path(app_name):
     drives_list = e32.drive_list()
     #Gives preference to load from drive 'E:'
     drives_list.reverse()
     for drive in [str(x) for x in drives_list]:
-        if os.path.isfile(os.path.join(drive, AMORA_PATH1, "amora.py")):
+        if os.path.isfile(os.path.join(drive, AMORA_PATH1, app_name)):
             return os.path.join(drive, AMORA_PATH1)
-        elif os.path.isfile(os.path.join(drive, AMORA_PATH2, "amora.py")):
+        elif os.path.isfile(os.path.join(drive, AMORA_PATH2, app_name)):
             return os.path.join(drive, AMORA_PATH2)
+        elif os.path.isfile(os.path.join(drive, AMORA_PATH3, app_name)):
+            return os.path.join(drive, AMORA_PATH3)
 
-full_path = get_path()
+
+full_path = get_path('default.py')
+if full_path == None:
+    full_path = get_path('amora.py')
+    if full_path == None:
+        appuifw.note(u'Using fallback path')
+        full_path = u'C:\\' + u'Private' + u'\\' + AMORA_UID + u'\\'
+
+
+
 sys.path.append(os.path.join(full_path, "libs"))
 from application import *
 
@@ -54,3 +68,5 @@ while flag:
     elif app.running == -1:
         flag = 0
     e32.ao_yield()
+
+
