@@ -3,6 +3,8 @@
 #        savagobr@yahoo.com
 #        Copyright 2007
 # About: Hold the application loop.
+# - refactor continuous keypress code (and move it to 'application' and
+# 'keyboard' class)
 
 '''
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
@@ -34,6 +36,19 @@ AMORA_PATH1 = "\\python\\"
 AMORA_PATH2 = "\\Data\\python\\"
 AMORA_PATH3 = "\\Private\\ef0b4099\\"
 
+# the initial timer is triggered, follow up the keys in the pressablekeys. makoto
+def pressablekeys_followup():
+    escancode_isdown = app.pressablekeys_isdown()
+
+    if (escancode_isdown):
+        timer.cancel()
+        app.pressablekeys_process(escancode_isdown)
+        timer.after(0.1, pressablekeys_followup)
+    else:
+        timer.cancel()
+
+
+
 def get_path(app_name):
     drives_list = e32.drive_list()
     #Gives preference to load from drive 'E:'
@@ -55,18 +70,24 @@ if full_path == None:
         full_path = u'C:\\' + u'Private' + u'\\' + AMORA_UID + u'\\'
 
 
-
 sys.path.append(os.path.join(full_path, "libs"))
 from application import *
 
 app = application(full_path)
 
+timer = e32.Ao_timer()
+
 flag = 1
 while flag:
     if (app.running == 1):
-        app.start()
+        escancode_pressed = app.pressablekeys_pressed()
+        if (escancode_pressed):
+            timer.cancel()
+            app.pressablekeys_process(escancode_pressed)
+            timer.after(1.5, pressablekeys_followup)
+        else:
+            app.otherkeys_process()
     elif app.running == -1:
         flag = 0
     e32.ao_yield()
-
 

@@ -5,7 +5,9 @@
 # About: The main application class, will hold event processing
 # code as also objects to represent windows.
 # TODO:
-#  - slideshow class with icon animation
+# - slideshow class with icon animation
+# - refactor continuous keypress code (and move it to 'application' and
+# 'keyboard' class)
 
 
 
@@ -56,6 +58,10 @@ class application:
     #Sets default window title
     def __window_title(self):
         appuifw.app.title = u'Amora'
+
+    # Pressable keys allow continuous key-press. makoto
+    pressablekeys = {EScancode6: 'RIGHT', EScancode4: 'LEFT'}
+
     #TODO: Add another object for 'options' window
     def __init__(self, app_path):
         self.path = app_path
@@ -257,47 +263,43 @@ class application:
         except:
             appuifw.note(u'Cannot transfer thumbnail!')
             raise 'I\'m done here!'
-    #Start presentation mode
-    def start(self):
-        #Creates presentation display if it already doesn't exist.
-        if self.keyboard == None:
-            self.keyboard = Keyboard()
-        if self.presentation == None:
-            self.presentation = appuifw.Canvas(event_callback = self.keyboard.handle_event, redraw_callback = self.presentationdisplay)
-                                               #redraw_callback = None)
 
-            appuifw.app.screen = 'full'
-            appuifw.app.body = self.presentation
-        #First time the function is called, change menu and display keymap
-        if self.running == 0 or self.running == 2:
-            if self.configuration.stopwatch:
-                appuifw.app.menu = [ self.clock.create_submenu_lst(),
-                                     (u'Disconnect', self.__reset),
-                                     (u'Auto screen', self.__click_screen),
-                                     (u'Help', self.__help),
-                                     (u'Exit', self.quit)]
-                self.clock.toggle()
-            else:
-                appuifw.app.menu = [ (u'Disconnect', self.__reset),
-                                     (u'Auto screen', self.__click_screen),
-                                     (u'Help', self.__help),
-                                     (u'Exit', self.quit)]
+    # return the pressed keys escancode from the pressablekeys. makoto
+    def pressablekeys_pressed(self):
+        result = 0
+        for i in self.pressablekeys.keys():
+            if self.keyboard.pressed(i):
+                result = i
+                break
+        return result
 
-            self.press_flag = 0
-            self.__display_keymap()
-        self.running = 1
-        appuifw.app.exit_key_handler = self.quit
+    # return the is_down keys escancode from the pressablekeys.
+    def pressablekeys_isdown(self):
+        result = 0
+        for i in self.pressablekeys.keys():
+            if self.keyboard.is_down(i):
+                result = i
+                break
+        return result
+
+    # process the keys in the pressablekeys. makoto
+    def pressablekeys_process(self, escancode):
+        try:
+            print self.pressablekeys[escancode]
+            self.bt.write_line(self.pressablekeys[escancode])
+        except:
+            appuifw.note(u'Connection is over, server down!')
+            self.bt.close()
+            self.bt = None
+            self.reset()
+
+    # process the keys, not in the pressablekeys. makoto
+    def otherkeys_process(self):
         #XXX: fix to make slide control work, I should write a code
         # to process continously pressing given a time out value.
         try:
-            if self.keyboard.pressed(EScancode6):
-                print u'RIGHT'
-                self.bt.write_line(u'RIGHT')
-            elif self.keyboard.pressed(EScancode4):
-                print u'LEFT'
-                self.bt.write_line(u'LEFT')
             #Mouse move event processing
-            elif self.keyboard.is_down(EScancodeUpArrow):
+            if self.keyboard.is_down(EScancodeUpArrow):
                 print u'MOUSE_UP'
                 self.mouse_y = -self.delta
                 self.bt.write_line(u'MOUSE_MOVE')
@@ -387,5 +389,36 @@ class application:
             self.bt.close()
             self.bt = None
             self.reset()
+
+    #Start presentation mode
+    def start(self):
+        #Creates presentation display if it already doesn't exist.
+        if self.keyboard == None:
+            self.keyboard = Keyboard()
+        if self.presentation == None:
+            self.presentation = appuifw.Canvas(event_callback = self.keyboard.handle_event, redraw_callback = self.presentationdisplay)
+                                               #redraw_callback = None)
+
+            appuifw.app.screen = 'full'
+            appuifw.app.body = self.presentation
+        #First time the function is called, change menu and display keymap
+        if self.running == 0 or self.running == 2:
+            if self.configuration.stopwatch:
+                appuifw.app.menu = [ self.clock.create_submenu_lst(),
+                                     (u'Disconnect', self.__reset),
+                                     (u'Auto screen', self.__click_screen),
+                                     (u'Help', self.__help),
+                                     (u'Exit', self.quit)]
+                self.clock.toggle()
+            else:
+                appuifw.app.menu = [ (u'Disconnect', self.__reset),
+                                     (u'Auto screen', self.__click_screen),
+                                     (u'Help', self.__help),
+                                     (u'Exit', self.quit)]
+
+            self.press_flag = 0
+            self.__display_keymap()
+        self.running = 1
+        appuifw.app.exit_key_handler = self.quit
 
 
