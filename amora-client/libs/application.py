@@ -44,7 +44,7 @@ from stopwatch import *
 class application:
     mouse_x = 400
     mouse_y = 400
-    delta = 10
+    delta = 2
     wallpaper = None
     presentation = None
     help_screen = None
