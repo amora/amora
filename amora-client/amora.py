@@ -36,7 +36,8 @@ AMORA_PATH1 = "\\python\\"
 AMORA_PATH2 = "\\Data\\python\\"
 AMORA_PATH3 = "\\Private\\ef0b4099\\"
 
-# the initial timer is triggered, follow up the keys in the pressablekeys. makoto
+# the initial timer is triggered, follow up the keys in the pressablekeys
+# contribution by Makoto Sugano
 def pressablekeys_followup():
     escancode_isdown = app.pressablekeys_isdown()
 
