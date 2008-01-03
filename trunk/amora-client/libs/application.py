@@ -111,6 +111,7 @@ class application:
     #TODO: implement method.
     def __configuration(self):
         self.configuration.display()
+        self.delta = self.configuration.mouse_delta
         self.__window_title()
     #Load and display keymap
     def __display_keymap(self):
