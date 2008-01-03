@@ -59,7 +59,7 @@ class application:
     def __window_title(self):
         appuifw.app.title = u'Amora'
 
-    # Pressable keys allow continuous key-press. makoto
+    # Pressable keys allow continuous key-press
     pressablekeys = {EScancode6: 'RIGHT', EScancode4: 'LEFT'}
 
     #TODO: Add another object for 'options' window
@@ -264,7 +264,8 @@ class application:
             appuifw.note(u'Cannot transfer thumbnail!')
             raise 'I\'m done here!'
 
-    # return the pressed keys escancode from the pressablekeys. makoto
+    # return the pressed keys escancode from the pressablekeys
+    # contribution by Makoto Sugano
     def pressablekeys_pressed(self):
         result = 0
         for i in self.pressablekeys.keys():
@@ -274,6 +275,7 @@ class application:
         return result
 
     # return the is_down keys escancode from the pressablekeys.
+    # contribution by Makoto Sugano
     def pressablekeys_isdown(self):
         result = 0
         for i in self.pressablekeys.keys():
@@ -282,7 +284,8 @@ class application:
                 break
         return result
 
-    # process the keys in the pressablekeys. makoto
+    # process the keys in the pressablekeys
+    # contribution by Makoto Sugano
     def pressablekeys_process(self, escancode):
         try:
             print self.pressablekeys[escancode]
@@ -293,7 +296,7 @@ class application:
             self.bt = None
             self.reset()
 
-    # process the keys, not in the pressablekeys. makoto
+    # process the keys, not in the pressablekeys
     def otherkeys_process(self):
         #XXX: fix to make slide control work, I should write a code
         # to process continously pressing given a time out value.
