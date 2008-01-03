@@ -35,6 +35,7 @@ class configure:
     rotate = False
     stopwatch = True
     screenshot_wait = 2.0
+    mouse_delta = 2
     option_list = 0
     bkp_list = None
     #Constructor
@@ -46,7 +47,8 @@ class configure:
         self.widget = [(u'Preview', 'combo', (self.states, 0)),
                        (u'Image', 'combo', (self.modes, 0)),
                        (u'Clock', 'combo', (self.clock, 0)),
-                       (u'A.screen', 'combo', (self.screenshot_lst, 0))]
+                       (u'A.screen', 'combo', (self.screenshot_lst, 0)),
+                       (u'M.delta', 'number', 2)]
     #Callback to get user defined options
     def save_state(self, current_list):
         self.option_list = current_list
@@ -72,6 +74,8 @@ class configure:
         self.screenshot_wait = float(self.screenshot_lst[current_list[3][2][1]])
         print u'use ' + str(self.screenshot_wait) + "s delay in autoscreen"
         self.bkp_list = current_list
+        #Mouse delta value
+        self.mouse_delta = current_list[4][2]
     def debug(self):
         return self.bkp_list
     #Creates the form and display it
