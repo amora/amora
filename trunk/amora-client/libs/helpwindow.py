@@ -34,6 +34,7 @@ class helpwindow:
     def __init__(self):
         self.text = appuifw.Text()
         self.text.style = appuifw.STYLE_BOLD
+        self.text.color = 0xd41968
     #Clean method, purges text contents
     def clear(self):
         self.text.clear()
