@@ -1,7 +1,7 @@
 #labels Phase-Requirements,Featured
 What is next for amora
 
-= Version 0.9 (done!) =
+= Version 0.9 (November - done!) =
 
  * keymap, credits screen, app running from drive C
 
