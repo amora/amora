@@ -43,7 +43,7 @@ restarting the server.
 
 The server can detect when the client just died (e.g. cellphone turned off) as also the client can detect when the server is down.
 
-Not only that, but the server in Amora version 1.0 supports multiple cellphones at *same* time (tested with 3 distinct devices).
+Not only that, but the server in Amora version 1.0 supports multiple cellphones at *same* time (tested with 3 distinct devices) for collaborative presentations.
 
 Its stable and I already use it to control my slides and movie watching (i.e.:
 I can start a slide presentation, stop it, move the mouse cursor to a
