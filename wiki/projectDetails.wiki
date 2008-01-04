@@ -18,14 +18,15 @@ I decided to write this code to answer my own need of an application that has:
   * Nice GUI on cellphone
   * Server side doesn't require any configuration
 
-Also, expanding the idea of a simple remote control, Amora server version 1.0 has some features that can be potentially useful for slide presentations:
+Also, expanding the idea of a simple remote control, Amora version 1.0 has some features that can be potentially useful for slide presentations:
 
   * a stopwatch
   * active window screenshot
+  * Server support for multiple clients
 
 == Hardware required ==
 A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
-(tested on Ubuntu 6.06, 6.10, 7.02 i386 and x86-64, Debian) and a bluetooth dongle.
+(tested on Ubuntu 6.06, 6.10, 7.02, 7.10 i386 and x86-64, Debian) and a bluetooth dongle.
 
 
 = Project status =
