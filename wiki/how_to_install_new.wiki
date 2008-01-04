@@ -1,0 +1,120 @@
+#labels Featured,Phase-Deploy
+= Software installing instructions: Amora 1.0 =
+
+== Cellphone client ==
+=== If you have Python installed ===
+
+Simply download and install amora-version.sis to your cellphone. Assuming that
+you had sent the file to your cellphone using bluetooth as a message:
+
+http://amora.googlecode.com/svn/wiki/install01.jpg
+
+
+Selecting it will display the questions: Install Amora: assistant?
+
+http://amora.googlecode.com/svn/wiki/install02.jpg
+
+
+Select Yes. Then it will display a security warning (its fine, choose continue
+in the screens bellow)
+
+http://amora.googlecode.com/svn/wiki/install03.jpg
+
+http://amora.googlecode.com/svn/wiki/install04.jpg
+
+http://amora.googlecode.com/svn/wiki/install05.jpg
+
+
+Of course you can send the SIS file to cellphone in several different ways too
+(using USB cable, copying to memory card, etc) and later select it using the
+S60 file browser.
+
+If in early  steps of installing you see this image dialog
+
+http://amora.googlecode.com/svn/wiki/without01.jpg
+
+this means that you *don't* have Python installed. Just advance to next section
+where you can find instructions.
+
+
+=== If you DONT have Python installed ===
+
+Download the file amora-version-deps.sis to you cellphone. It has Python
+(required dependency) and Python Scriptshell (optional) bundled together with
+Amora client for Nokia S60 smartphones.
+
+Just follow through the screens selecting *continue*, as bellow:
+
+http://amora.googlecode.com/svn/wiki/without02.jpg
+
+http://amora.googlecode.com/svn/wiki/without03.jpg
+
+http://amora.googlecode.com/svn/wiki/without04.jpg
+
+http://amora.googlecode.com/svn/wiki/without05.jpg
+
+http://amora.googlecode.com/svn/wiki/without07.jpg
+
+http://amora.googlecode.com/svn/wiki/without08.jpg
+
+
+== PC server ==
+
+=== Debian/Ubuntu users ===
+
+Just download and install the debian package. To install, run in a terminal:
+
+$sudo dpkg -i amora-server-version.deb
+
+And if it installed fine, you should be able to start the server running a
+terminal:
+
+$amorad
+
+
+=== Installing from source ===
+
+==== Software dependencies ====
+
+For server side, to compile the source code, you will need:
+
+  * gcc compiler
+  * Xlibs
+  * XTest libs
+  * BlueZ libs
+  * Imlib2 libs
+
+And also XTest extension enabled in you X server (default on Ubuntu). So,
+in Ubuntu simply run in your terminal:
+
+$sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
+
+
+==== Installing ====
+
+After installing the dependencies, extract server app tarball with:
+
+$ tar -zxvf amora_server-0.x.tar.gz
+
+where _x_ is the *current* download version.
+
+Change to the extracted directory and execute the following commands:
+
+$mkdir build
+
+$cd build
+
+$../configure
+
+$make
+
+It will generate an executable file named 'amora', you must
+start the application (and make sure that the bluetooth dongle is
+connected to the computer):
+
+$./amorad
+
+
+== User group ==
+
+Do you have questions, suggestions, bug reports or wish to share your experience with Amora? Please, visit Amora discussion group at: http://groups.google.com/group/amora-user
