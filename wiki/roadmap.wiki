@@ -9,12 +9,12 @@ What is next for amora
 
 = Version 1.0 =
 
- * server: multiple clients support, clean up (logging optional), debian package, bug fixes
+ * server: multiple clients support, clean up, debian package, bug fixes
 
- * client: SIS package, stopwatch, screenshot timeout configuration screen
+ * client: SIS package, stopwatch, configuration screen (screenshot timeout, mouse cursor delta), time based continuous keypressing support (left/right arrow keys)
 
 = Version 1.1 =
 
  * server: detect bluetooth dongle connection/disconnection, pluggable architecture
 
- * client: menu navigation changes, keymap layout plugins, application portuguese version 
+ * client: menu navigation changes, keymap layout plugins, application Portuguese version
