@@ -1,4 +1,4 @@
-amora-server (0.9-1) unstable; urgency=low
+amora-server (1.0-0) unstable; urgency=low
 
   * Initial Debian package release.
 
