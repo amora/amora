@@ -36,10 +36,10 @@ I decided to write this code to answer my own need of an application that has:
  - Server side doesn't require any configuration
 
 
-Also, expanding the idea of a simple remote control, I will add some features
+Also, expanding the idea of a simple remote control, it has some features
 that can be potentially useful for slide presentations:
  - a stopwatch
- - window preview in cellphone (to be implemented)
+ - active window screenshot
 
 
 == Hardware required ==
@@ -87,9 +87,14 @@ $./test_presenter
 What works: mouse moving, left button clicking, mouse scroll wheel,
 keyboard shortcuts (ENTER, ESC, SPACE, Arrow keys).
 
+You can ask for screenshots of active window as also use a mode where for each mouse click the screenshot of active window is taken (very handy when driving slides).
+
 Cellphone client can be started independently of server side application.
 You can close the connection from cellphone and later reconnect without
 restarting the server.
+
+Not only that, but the server in Amora version 1.0 supports multiple cellphones at *same* time (tested with 3 distinct devices) for collaborative presentations.
+
 
 Its stable and I already use it to control my slides and movie watching (i.e.:
 I can start a slide presentation, stop it, move the mouse cursor to a
@@ -101,12 +106,6 @@ MPlayer).
 
  - See project page, in 'Issues' tab.
 
- - Create a deb file with server app (checkinstall make it easy if the app
-has an autotools-based buildsystem).
-
- - Forking the server process when receiving a new connection: easy, can be
-not really necessary with heart beat.
-
  - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
 SDP API is documented in BSD) and **if** there are source code examples
 available.
@@ -117,6 +116,13 @@ available.
 X server to control most of its apps.
 
  - Write a J2ME client for other cellphone models (Nokia S40, e.g. 6111).
+
+ - Camera video capture and streaming to PC
+
+
+ - Write a linux kernel module (V4L2) to make cellphone video stream appear
+show up as a bluetooth webcam.
+
 
 
 == Related Projects ==
@@ -131,3 +137,5 @@ X server to control most of its apps.
  - [pys60miniapps xmms http://sourceforge.net/projects/pys60miniapps/]
 
  - [bluetricks http://nacaolivre.org/2007/06/30/python-bluetooth-pys60-e-imaginacao/]
+
+ - [http;//bluepad.sourceforge.net bluepad]
