@@ -1,7 +1,7 @@
 Source: amora-server
 Section: unknown
 Priority: extra
-Maintainer: Adenilson Cavalcanti <cavalcantii@gmail.com>
+Maintainer: Adenilson Cavalcanti <savagobr@yahoo.com>
 Build-Depends: debhelper (>= 5), autotools-dev, libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev
 Standards-Version: 3.7.2
 
