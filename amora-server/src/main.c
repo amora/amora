@@ -493,7 +493,7 @@ static void show_usage(const char *path)
 	       "\n"
 	       "  -h                         show this help message.\n"
 	       "  -l logfile                 set the log file path.\n"
-	       "  -v version                 show version.\n"
+	       "  -v                         show version.\n"
 	       "\n", name);
 
 	free(p);
