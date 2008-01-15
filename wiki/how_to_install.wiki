@@ -33,6 +33,26 @@ Of course you can send the SIS file to cellphone in several different ways too
 (using USB cable, copying to memory card, etc) and later select it using the
 S60 file browser.
 
+http://amora.googlecode.com/svn/wiki/run01.jpg
+
+http://amora.googlecode.com/svn/wiki/run02.jpg
+
+http://amora.googlecode.com/svn/wiki/run03.jpg
+
+*tips*
+
+ * Mouse cursor moving speed can be increased in Configuration screen -> M. delta (mouse delta). A suggested value when running Amora client is to increase it to 5 pixels.
+
+ * Image screenshot rotation (useful for devices with 240x320 resolution) can be activated in Configuration screen -> Image -> Rotate
+
+ * When controlling the desktop (a.k.a. 'started mode') you can reset as also toggle the stopwatch. If you dont want to see the stopwatch, just turn it off in Configuration -> Clock
+
+ * Autoscreen mode will trigger a screenshot for each mouse click (with the cellphone joystick). This allow you to advance to the next slide in a presentation and at the *same* time get a screenshot
+
+ * Autoscreen has a default wait value of 2s (between the mouse click and the screenshot). If you computer cannot advance to the next slide within 2s, you can change the wait time in Configuration -> A. screen (ranging from 1.0s up to 5.0)
+
+
+
 If in early  steps of installing you see this image dialog
 
 http://amora.googlecode.com/svn/wiki/without01.jpg
