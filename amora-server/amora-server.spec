@@ -40,6 +40,9 @@ http://code.google.com/p/amora/
 %install
 %{__rm} -rf %{buildroot}
 %makeinstall
+# XXX: should be upstream
+mkdir -p %{buildroot}/%{_mandir}/man7/
+ln -s ../man8/amorad.8 %{buildroot}/%{_mandir}/man7/amora.7
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -49,4 +52,5 @@ http://code.google.com/p/amora/
 %doc README
 %{_bindir}/amorad
 %{_mandir}/man8/amorad.8.*
+%{_mandir}/man7/amora.7.*
 
