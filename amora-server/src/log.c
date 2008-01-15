@@ -63,7 +63,7 @@ void log_clean_resources(struct log_resource *res)
 }
 
 
-struct log_resource* log_build_resources(char *filename)
+struct log_resource* log_build_resources(const char *filename)
 {
 	struct log_resource *resource;
 	resource = (struct log_resource *) malloc(sizeof(struct log_resource));

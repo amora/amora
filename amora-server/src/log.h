@@ -68,7 +68,7 @@ struct log_resource {
  *
  * @param filename Path and filename for log file.
  */
-struct log_resource* log_build_resources(char *filename);
+struct log_resource* log_build_resources(const char *filename);
 
 
 /** Deallocate log resource structure.
