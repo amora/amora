@@ -22,12 +22,12 @@
 .\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111,
 .\" USA.
 .\"
-.TH AMORA 1 2007-11-11 "amora manpage" "A Remote Mobile Assistant"
+.TH AMORAD 8 2007-11-11 "amorad manpage" "A Remote Mobile Assistant"
 .SH NAME
-amora - A Remote Mobile Assistant
+amorad - Amora (A Remote Mobile Assistant) daemon
 .SH SYNOPSIS
 .PP
-amora
+amorad [options]
 .PP
 .SH DESCRIPTION
 .PP
@@ -38,8 +38,22 @@ movies or any other application. Amora also has a screenshot feature, where
 you can see a thumbnail in the cellphone screen of the currently focused
 window in your desktop.
 .PP
-The server is written in C using Xlib and XTest to send events for X session
-and the POSIX socket API for I/O.
+The server (amorad) is written in C using Xlib and XTest to send events for
+X session and the POSIX socket API for I/O. It must be started by the user,
+inside a valid X session.
+.SH OPTIONS
+.TP
+\fB-h\fR
+Help (usage) message
+.br
+.TP
+\fB-l\fR
+Set a specific path for the log file
+.br
+.TP
+\fB-v\fR
+Show program version and exit
+.br
 .PP
 .SH AMORA CLIENT
 .PP

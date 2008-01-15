@@ -24,8 +24,8 @@ amorad_SOURCES = $(csourcedir)/main.c \
 amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
 amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
 
-amoramandir = $(mandir)/man1
-amoraman_DATA = amora.1
+amoramandir = $(mandir)/man8
+amoraman_DATA = amorad.8
 
 EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/m4/check.m4 \
@@ -36,8 +36,8 @@ EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/README \
              $(srcdir)/COPYING \
              Doxyfile.in \
-             amora.spec \
-			 amora.1
+             amora-server.spec \
+             amorad.8
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-efence --enable-debug \

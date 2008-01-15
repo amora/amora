@@ -1,13 +1,11 @@
-Name: amora
-Version: 0.9svn
+Name: amora-server
+Version: 1.0svn
 Release: 1
-Summary: A mobile remote assistant
+Summary: A mobile remote assistant (server)
 License: GPLv2
 Group: System/X11
 URL: http://code.google.com/p/amora/
-# svn contains some important fixes since 0.9
-# (2007-11-12)
-Source: http://amora.googlecode.com/files/amora_server-%{version}.tar.gz
+Source: http://amora.googlecode.com/files/amora-server-%{version}.tar.gz
 Packager: Ademar de Souza Reis Jr. <ademar@ademar.org>
 
 # build-requirements for Mandriva Linux, please
@@ -33,7 +31,7 @@ for S60 (Nokia cellphones) and is available at
 http://code.google.com/p/amora/
 
 %prep
-%setup -q -n amora_server-%{version}
+%setup -q
 
 %build
 %configure
@@ -49,6 +47,6 @@ http://code.google.com/p/amora/
 %files
 %defattr(-,root,root)
 %doc README
-%{_bindir}/amora
-%{_mandir}/man1/amora.1.*
+%{_bindir}/amorad
+%{_mandir}/man8/amorad.8.*
 
