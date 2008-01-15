@@ -49,7 +49,7 @@ http://amora.googlecode.com/svn/wiki/run03.jpg
 
  * Autoscreen mode will trigger a screenshot for each mouse click (with the cellphone joystick). This allow you to advance to the next slide in a presentation and at the *same* time get a screenshot
 
- * Autoscreen has a default wait value of 2s (between the mouse click and the screenshot). If you computer cannot advance to the next slide within 2s, you can change the wait time in Configuration -> A. screen (ranging from 1.0s up to 5.0)
+ * Autoscreen has a default wait value of 2s (between the mouse click and the screenshot). If your computer cannot advance to the next slide within 2s, you can change the wait time in Configuration -> A. screen (ranging from 1.0s up to 5.0)
 
 
 
