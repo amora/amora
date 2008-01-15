@@ -1,10 +1,12 @@
 #labels Featured
 = Software installing instructions: Amora 1.0 =
 
-== Cellphone client ==
+== Cellphone S60 3ed ==
 === If you have Python installed ===
 
-Simply download and install amora-version.sis to your cellphone. Assuming that
+*ATTENTION*: the installing SIS package is *only* for S60 3ed, if you have a S60 2ed., please use client [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz source] version and check further instructions at [http://code.google.com/p/amora/wiki/how_to_hacker hacker] page.
+
+Simply download and install [http://amora.googlecode.com/files/amora-1.0.sis amora-version.sis] to your cellphone. Assuming that
 you had sent the file to your cellphone using bluetooth as a message:
 
 http://amora.googlecode.com/svn/wiki/install01.jpg
@@ -39,9 +41,7 @@ where you can find instructions.
 
 === If you DONT have Python installed ===
 
-Download the file amora-version-deps.sis to you cellphone. It has Python
-(required dependency) and Python Scriptshell (optional) bundled together with
-Amora client for Nokia S60 smartphones.
+Download the file [http://amora.googlecode.com/files/amora-1.0-deps.sis amora-version-deps.sis] to your cellphone. It has Python (required dependency) and Python Scriptshell (optional) bundled together with Amora client for Nokia S60 smartphones.
 
 Just follow through the screens selecting *continue*, as bellow:
 
@@ -60,7 +60,7 @@ http://amora.googlecode.com/svn/wiki/without08.jpg
 
 === Debian/Ubuntu users ===
 
-Just download and install the debian package. To install, run in a terminal:
+Just download and install the  [http://amora.googlecode.com/files/amora-server_1.0-0_i386.deb debian] package. To install, run in a terminal:
 
 $sudo dpkg -i amora-server-version.deb
 
@@ -92,7 +92,7 @@ $sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-de
 
 After installing the dependencies, extract server app tarball with:
 
-$ tar -zxvf amora_server-0.x.tar.gz
+$ tar -zxvf amora-server-0.x.tar.gz
 
 where _x_ is the *current* download version.
 
