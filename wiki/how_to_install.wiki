@@ -92,6 +92,11 @@ terminal:
 $amorad
 
 
+=== Mandriva Users ===
+
+You can download Mandriva 2008 [http://amora.googlecode.com/files/amora-server-1.0svn-1.i586.rpm package].
+
+
 === Installing from source ===
 
 ==== Software dependencies ====
