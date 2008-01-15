@@ -88,6 +88,9 @@ in Ubuntu simply run in your terminal:
 $sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
 
 
+*remark*: you might need 'pkg-config' if you don't have it installed already.
+
+
 ==== Installing ====
 
 After installing the dependencies, extract server app tarball with:
