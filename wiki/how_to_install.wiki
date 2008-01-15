@@ -1,4 +1,5 @@
-= Software installing instructions: Amora 1.0 =
+#labels Featured
+F= Software installing instructions: Amora 1.0 =
 
 == Cellphone S60 3ed ==
 === If you have Python installed ===
