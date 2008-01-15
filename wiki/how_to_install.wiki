@@ -59,7 +59,7 @@ http://amora.googlecode.com/svn/wiki/without08.jpg
 
 == PC server ==
 
-=== Debian/Ubuntu users ===
+=== Ubuntu users ===
 
 Just download and install the  [http://amora.googlecode.com/files/amora-server_1.0-0_i386.deb debian] package. To install, run in a terminal:
 
