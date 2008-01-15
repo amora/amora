@@ -17,14 +17,18 @@ file distribution to this folder.
 
 You must use python script shell (there is one icon for it in
 'installed applications') to launch amora client (the file named
-'presenter.py'). In python script shell, select 'Options->Run script'
-and select 'presenter.py' in the list of available scripts.
+'amora.py'). In python script shell, select 'Options->Run script'
+and select 'amora.py' in the list of available scripts.
 
 Amora client should execute them, if you had followed all instructions.
 
 
 == PC server ==
 === Software dependencies ==
+
+You can download the server source file [http://amora.googlecode.com/files/amora-server-1.0svn.tar.gz here].
+
+
 For server side, to compile the source code, you will need:
 
   * gcc compiler
