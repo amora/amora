@@ -1,0 +1,452 @@
+2008-01-04 17:19  cavalcantii
+
+	* amora-server/debian/changelog:
+	  Updating Debian package version.
+
+2008-01-04 17:10  cavalcantii
+
+	* amora-server/configure.ac:
+	  Updating Amora server version number.
+
+2008-01-04 01:35  cavalcantii
+
+	* amora_descr.t2t:
+	  Updating feature list and project ideas.
+
+2008-01-03 21:14  cavalcantii
+
+	* amora-client/libs/helpwindow.py:
+	  Setting help text color to fit with 'Amora' theme.
+
+2008-01-03 20:59  cavalcantii
+
+	* amora-client/data/keymap_help.txt, amora-client/data/start_help.txt:
+	  Moving help contents of connected state to a new file (currently, not
+	  used).
+	  
+	  The graphical keymaping already supplies the information of function x
+	  key.
+
+2008-01-03 17:06  cavalcantii
+
+	* amora-client/libs/application.py, amora-client/libs/configure.py:
+	  Adding a configuration option to change mouse pointer moving delta.
+
+2008-01-03 16:32  cavalcantii
+
+	* amora-client/amora.py, amora-client/libs/application.py:
+	  Adding credit where its due.
+
+2008-01-03 16:28  cavalcantii
+
+	* amora-client/libs/application.py:
+	  I decided to decrease the mouse pointer moving delta as a workaround
+	  for
+	  added speed in Amora client when it runs as a standalone application
+	  (installed with a SIS file).
+	  
+	  I think it would be nice to add an option in configuration screen to
+	  control the delta value.
+
+2008-01-03 01:27  cavalcantii
+
+	* amora-client/amora.py, amora-client/libs/application.py:
+	  Adding code to support time based continuous keypress, contribution
+	  from Makoto Sugano.
+
+2008-01-02 22:38  cavalcantii
+
+	* amora-client/amora.py:
+	  Library loading path function now scans for a new directory
+	  (Drive:\Private\UID\) as also for a new main app file ('default.py').
+	  
+	  Those changes were required to generate a SIS file with Amora client.
+	  
+	  This commit closes issue 10: SIS packaging of cellphone client.
+
+2007-12-31 00:22  cavalcantii
+
+	* amora-client/libs/application.py:
+	  Adding code to change menu options when in 'started' mode to control
+	  the
+	  stopwatch. Now the user can reset and toggle the stopwatch.
+	  
+	  I think that this nails the issue number 6:
+	  "Integrate stopwatch in display"
+
+2007-12-30 20:04  cavalcantii
+
+	* amora-client/libs/stopwatch.py:
+	  Adding a new function to create a submenu list with callbacks to
+	  control
+	  stopwatch behaviour.
+
+2007-12-30 06:08  cavalcantii
+
+	* amora-client/libs/application.py, amora-client/libs/configure.py:
+	  Adding a option list in 'configure' class to enable user definition of
+	  sleep time when in 'autoscreen' mode (i.e. the time to wait to ask for
+	  a
+	  screenshot after a mouse click).
+	  
+	  This commit closes the issue 27:
+	  "Add a timeout to wait to take screenshot when in autoscreen mode"
+	  
+	  This make usage of 'autoscreen' mode more flexible.
+
+2007-12-30 04:58  cavalcantii
+
+	* amora-client/libs/application.py, amora-client/libs/configure.py:
+	  Adding a widget to control displaying (or not...) of stopwatch as also
+	  the logic in main application.
+	  Now the user can select if he/she wishes to display the stopwatch.
+
+2007-12-30 04:10  cavalcantii
+
+	* amora-client/libs/stopwatch.py:
+	  A pack of changes... I started working to spruce up the code and when
+	  I
+	  finished, I had already made the following changes:
+	  
+	  - changed stopwatch.update function interface: it only receives the
+	  Canvas parameter now;
+	  - moved clock positioning control variables as internal member class
+	  variables
+	  - added new member functions to reset the stopwatch counter, blanking
+	  area
+	  when redrawing the clock numbers and finally the position of clock
+	  
+	  Those changes were required for me to test the stopwatch in 3
+	  different device
+	  models probing the better parameter values for positioning and
+	  blanking area
+	  (for redrawing the numbers).
+	  
+	  Advantages of the changes: with the clock 'alive', you can change:
+	  - positioning
+	  - blanking area
+	  - toggle (pause/continue)
+	  - reset the counter.
+	  
+	  TODO: add client GUI menu options to control the stopwatch.
+
+2007-12-29 03:46  cavalcantii
+
+	* amora-client/libs/application.py, amora-client/libs/stopwatch.py:
+	  Changing the stopwatch class to work with external resources (i.e.
+	  Canvas object) and integrating it to main application class.
+	  
+	  It still have some issues to be worked out (e.g. user should be
+	  capable
+	  of stopping/starting the stopwatch) but the whole thing turned out to
+	  be
+	  much easier than I first predicted.
+
+2007-12-28 23:00  cavalcantii
+
+	* amora-client/libs/application.py:
+	  I decided to move the code that loads the keymap background image to a
+	  distinct function, since this screen is displayed in different
+	  contexts.
+	  
+	  This commit closes issue number 29 (Display keyboard mapping on
+	  connected).
+
+2007-12-28 22:37  cavalcantii
+
+	* amora-client/libs/application.py:
+	  Cleaning up function calls for application.presentationdisplay()
+	  function member.
+	  
+	  I'm planing to center application background image displaying around
+	  the aforementioned method (when its possible).
+
+2007-12-27 22:31  cavalcantii
+
+	* amora-client/libs/application.py:
+	  To handle multiple cellphone correctly (where each client can use a
+	  different
+	  screenshot orientation), Amora client needs to inform the server
+	  *each* time it
+	  asks for a screenshot.
+	  
+	  This commit fixes issue number 35.
+
+2007-12-27 22:28  cavalcantii
+
+	* amora-client/amora.py:
+	  In my last commits (related with changing naming convention) I forgot
+	  to change the code that scans for main application file trying to
+	  locate
+	  where is the libraries used by Amora client.
+	  
+	  This commit fixes the client (everything seems to work fine now).
+
+2007-12-27 21:15  cavalcantii
+
+	* amora-server/debian, amora-server/debian/changelog,
+	  amora-server/debian/compat, amora-server/debian/control,
+	  amora-server/debian/dirs, amora-server/debian/rules:
+	  Adding patch to generate Debian package (tested in Ubuntu 7.10),
+	  contribution from Tomaz Noleto.
+	  
+	  This closes issue number 11 from amora bug tracking.
+
+2007-12-21 12:56  cavalcantii
+
+	* amora-client, amora-server, cell-client, pc-server:
+	  Last naming commit (I hope this nails the whole issue).
+
+2007-12-21 12:30  cavalcantii
+
+	* pc-server/Makefile.am, pc-server/configure.ac:
+	  I think this is the last naming convention related commit (uffs!).
+
+2007-12-21 12:28  cavalcantii
+
+	* cell-client/amora.py, cell-client/presenter.py:
+	  Renaming client application file (following a better naming
+	  convention).
+
+2007-12-21 12:24  cavalcantii
+
+	* cell-client, cell_client, pc-server, pc_server:
+	  Renaming directory structure to a more standard naming convention
+	  (it seems that it will make the packaging easier).
+
+2007-12-19 00:36  tmpsantos
+
+	* pc_server/src/bluecode.h, pc_server/src/loop.c, pc_server/src/loop.h,
+	  pc_server/src/main.c, pc_server/src/x11_event.h:
+	  Typo.
+
+2007-12-18 18:39  tmpsantos
+
+	* pc_server/Makefile.am, pc_server/src/loop.c, pc_server/src/loop.h,
+	  pc_server/src/main.c:
+	  Merged branch:
+	  
+	  https://amora.googlecode.com/svn/branches/pc_server-hal -r 280:305
+	  
+	  
+	  Note:
+	  
+	  This merging was manually (argh!) edited to merge only new main loop
+	  code. All changes regarding HAL were discarded because HAL bluetooth
+	  dongle detection isn't portable enough. The dongle wasn't detected
+	  if you aren't using Debian Etch or upgrade your kernel.
+	  
+	  I will try another approach using the same idea of Gnome Bluetooth
+	  Applet: DBUS + bluetooth daemon notifications. In this way, seens to
+	  work in every environment.
+
+2007-12-12 13:47  cavalcantii
+
+	* cell_client/libs/application.py, pc_server/src/x11_event.c:
+	  Making mouse move with current relative cursor position (this fix
+	  issue 15: Mouse pointer current position is ignored).
+	  Contribution from Tomaz Noleto (welcome aboard, friend!).
+
+2007-12-10 12:47  cavalcantii
+
+	* pc_server/src/bluecode.h, pc_server/src/imscreen.h,
+	  pc_server/src/log.h, pc_server/src/protocol.h,
+	  pc_server/src/x11_event.h:
+	  Updating the todos (comments must change together with the code).
+	  I'm putting the remark for creation of unit tests because in near
+	  future changes in the server architecture will require a track (the
+	  tests)
+	  to keep development under control.
+
+2007-12-07 14:21  cavalcantii
+
+	* pc_server/Makefile.am, pc_server/src/bluecode.c,
+	  pc_server/src/bluecode.h, pc_server/src/linux.c:
+	  Moving POSIX/C code to 'bluecode.c' file and keeping Linux only
+	  code in linux.c
+	  
+	  This will help port of amora server to other *nix as also prevent
+	  code duplication.
+
+2007-12-06 17:57  cavalcantii
+
+	* pc_server/src/linux.c:
+	  Moving sendfile header include to conditional macro test (because
+	  amora server is not using it anyway, and its blocking BSD port).
+
+2007-12-05 16:11  tmpsantos
+
+	* pc_server/src/main.c:
+	  Now the user can see the version and build date of Amora Server as the
+	  most of standard *nix applications.
+
+2007-12-03 19:08  cavalcantii
+
+	* pc_server/src/linux.c:
+	  Fixing a missing variable initialization (thanks Thiago for
+	  remembering it).
+
+2007-12-03 17:43  cavalcantii
+
+	* pc_server/src/bluecode.h, pc_server/src/linux.c, pc_server/src/main.c:
+	  Adding checking for validity of *the default* bluetooth dongle
+	  descriptor returned
+	  by BlueZ (this narrows a race condition for dongle disconnection).
+	  
+	  I save the device number (i.e. hci0) in use by current bluetooth
+	  socket (it will be
+	  useful when HAL disconnection is implemented).
+
+2007-12-02 23:57  tmpsantos
+
+	* pc_server/src/main.c:
+	  Added command line parameters support. By now only the logfile path
+	  option is configurable. We aren't using getopt_long() because is a GNU
+	  function and may difficult the porting for others architectures.
+
+2007-11-20 02:46  cavalcantii
+
+	* pc_server/src/x11_event.c:
+	  Removing 'ftime' (which by the way is obsolete!) and using the more
+	  standard compliant 'gettimeofday'.
+	  Thanks Alan a.k.a Jumpi for the tip.
+
+2007-11-14 01:04  ademar.reis
+
+	* pc_server/src/main.c:
+	  - minor cosmetics
+
+2007-11-14 01:04  ademar.reis
+
+	* pc_server/src/linux.c, pc_server/src/x11_event.c:
+	  - remove include of log.h since we're not using it here
+
+2007-11-14 01:03  ademar.reis
+
+	* pc_server/src/log.c, pc_server/src/log.h:
+	  - remove bogus fd variable from log_message()
+	  - minor cleanups
+
+2007-11-12 17:06  ademar.reis
+
+	* pc_server/Makefile.am, pc_server/amora.spec:
+	  - add amora.spec (should work in other distributions
+	  besides Mandriva Linux - with minor build-requirement
+	  changes)
+
+2007-11-12 16:32  ademar.reis
+
+	* pc_server/README:
+	  - add a small note about the client
+
+2007-11-12 16:31  ademar.reis
+
+	* pc_server/src/main.c:
+	  - Do not use a hardcoded filename on /tmp (it's a security vuln).
+	  Instead,
+	  use the current working dir (added a TODO note about mkdtemp(3)).
+
+2007-11-12 13:33  ademar.reis
+
+	* pc_server/amora.1:
+	  - remove Vanderson's name from credits, the code he
+	  contributed was not authored by him.
+
+2007-11-11 23:29  cavalcantii
+
+	* pc_server/src/log.c, pc_server/src/log.h:
+	  Giving credit where its is due, deleting lammer.
+
+2007-11-11 17:52  ademar.reis
+
+	* pc_server/m4/auxdevel.m4:
+	  - duu, -Wall and -W should also be enabled when --enable-warnings is
+	  set :)
+	  (bug introduced in one of my previous commits)
+
+2007-11-11 17:42  ademar.reis
+
+	* pc_server/src/main.c:
+	  - set internal functions as static
+
+2007-11-11 14:02  ademar.reis
+
+	* cell_client/data/conn_help.txt:
+	  - remove exec bits from .txt file, as I believe it was added
+	  by mistake (please revert if this is some sort of bizarre
+	  need on the mobile side) :-)
+
+2007-11-11 13:56  ademar.reis
+
+	* pc_server/src/log.c:
+	  - log_build_resource() doesn't accept NULL as filename anymore. It
+	  will now
+	  return an error in such case (a log module should not decide where to
+	  write a log, not to mention it was using a hardcoded /tmp/ file, which
+	  is
+	  a security vulnerability);
+	  - fix return code of log_message()
+	  - minor refactoring on some var names (some apparently were
+	  wrong by accident)
+	  - minor cosmetics
+	  
+	  (disclaimer: only the compilation was tested)
+
+2007-11-11 13:51  ademar.reis
+
+	* pc_server/src/main.c:
+	  - set log filename inside main(), using just "amora.log", on the
+	  current directory (log.c sets it to /tmp/amora.log if a name is
+	  not set, which is dangerous)
+
+2007-11-11 13:16  ademar.reis
+
+	* pc_server/Makefile.am, pc_server/amora.1:
+	  - add a manpage
+
+2007-11-11 12:47  ademar.reis
+
+	* pc_server/Makefile.am:
+	  - fix vim modeline
+
+2007-11-11 12:46  ademar.reis
+
+	* pc_server/m4/auxdevel.m4:
+	  - importing new auxdevel.m4 from upstream build-system template.
+	  Changes from previous version:
+	  o enable -W and -Wall by default
+	  o minor doc changes about --enable-warnings
+
+2007-11-11 12:36  ademar.reis
+
+	* pc_server/configure.ac:
+	  - fix configure.ac project version (it was set as 0.8). Using 0.9svn
+	  until a new version is released, so that we don't get confused
+	  with the already releases 0.9 version.
+
+2007-11-11 12:33  ademar.reis
+
+	* pc_server/Makefile.am:
+	  - fix make distcheck:
+	  o s/Doxyfile/Doxyfile.in/
+	  o remove BUILD-FAQ which was deleted in a previous commit
+	  - disable check in distcheck configure flags, since it's
+	  not used in this project anyway
+
+2007-11-11 12:29  ademar.reis
+
+	* pc_server/BUILD-FAQ:
+	  - remove BUILD-FAQ, since it's from the build-system template and is
+	  intended for developers when trying to adapt it to their projects.
+
+2007-11-11 12:27  ademar.reis
+
+	* pc_server/README:
+	  - fix README content (it was about the build-system template, not
+	  amora). It's still far from complete, but better than before anyway.
+
+2007-11-11 12:25  ademar.reis
+
+	* cell_client/COPYING, pc_server/COPYING:
+	  - fix bogus line (lots of spaces at beginning)
+
