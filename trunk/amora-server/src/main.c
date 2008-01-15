@@ -48,6 +48,7 @@
 #include "loop.h"
 #include "imscreen.h"
 
+const char *amora_default_logfile = "amora.log";
 
 /** Amora global struct that holds the main resources */
 struct amora_s {
@@ -142,7 +143,8 @@ int main(int argc, char **argv)
 	int server_socket, client_socket, channel = 10, res;
 	int clean_up = 0;
 	struct service_description *sd = NULL;
-	char arg, *logfile = NULL;
+	char arg;
+	const char *logfile = NULL;
 
 	if (argc > 4) {
 		show_usage(argv[0]);
@@ -167,8 +169,7 @@ int main(int argc, char **argv)
 	}
 
 	if (!logfile)
-		logfile = "amora.log";
-
+		logfile = amora_default_logfile;
 
 	amora.log = log_build_resources(logfile);
 
@@ -491,10 +492,10 @@ static void show_usage(const char *path)
 
 	printf("Usage: %s [-l logfile] [-h] [-v]\n"
 	       "\n"
-	       "  -h                         show this help message.\n"
-	       "  -l logfile                 set the log file path.\n"
-	       "  -v                         show version.\n"
-	       "\n", name);
+	       "  -h             show this help message and exit;\n"
+	       "  -l logfile     set the log file path (default is %s);\n"
+	       "  -v             show version and exit.\n"
+	       "\n", name, amora_default_logfile);
 
 	free(p);
 }
