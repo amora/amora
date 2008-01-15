@@ -1,4 +1,3 @@
-#labels Featured
 = Software installing instructions: Amora 1.0 =
 
 == Cellphone S60 3ed ==
