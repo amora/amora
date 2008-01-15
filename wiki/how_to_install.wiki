@@ -3,9 +3,11 @@
 == Cellphone S60 3ed ==
 === If you have Python installed ===
 
-*ATTENTION*: the installing SIS package is *only* for S60 3ed, if you have a S60 2ed., please use client [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz source] version and check further instructions at [http://code.google.com/p/amora/wiki/how_to_hacker hacker] page.
+*ATTENTION*: the installing SIS package is *only* for S60 3ed, if you have a S60 2ed., please use client [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz source] version and check further instructions at [http://code.google.com/p/amora/wiki/how_to_install_source hacker] page.
 
-Simply download and install [http://amora.googlecode.com/files/amora-1.0.sis amora-version.sis] to your cellphone. Assuming that
+*ATTENTION*: Amora client needs to be installed in the *same* drive where you installed Python for S60, i.e. you must install it in drive 'E' if you had installed Python in drive 'E'.
+
+Simply download and install [http://amora.googlecode.com/files/amora-1.0-1.sis amora-version.sis] to your cellphone. Assuming that
 you had sent the file to your cellphone using bluetooth as a message:
 
 http://amora.googlecode.com/svn/wiki/install01.jpg
@@ -40,7 +42,7 @@ where you can find instructions.
 
 === If you DONT have Python installed ===
 
-Download the file [http://amora.googlecode.com/files/amora-1.0-deps.sis amora-version-deps.sis] to your cellphone. It has Python (required dependency) and Python Scriptshell (optional) bundled together with Amora client for Nokia S60 smartphones.
+Download the file [http://amora.googlecode.com/files/amora-1.0-1-deps.sis amora-version-deps.sis] to your cellphone. It has Python (required dependency) and Python Scriptshell (optional) bundled together with Amora client for Nokia S60 smartphones.
 
 Just follow through the screens selecting *continue*, as bellow:
 
