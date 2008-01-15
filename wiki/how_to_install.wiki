@@ -1,4 +1,4 @@
-#labels Phase-Deploy
+#labels Featured
 = Software installing instructions: Amora 1.0 =
 
 == Cellphone client ==
