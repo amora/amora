@@ -1,4 +1,4 @@
-Amora (A mobile remote Assistant) is an application that enables you
+Amora (a mobile remote assistant) is an application that enables you
 to control the linux desktop using your cellphone. It uses bluetooth
 to send mouse and keyboard events to the graphical session. With it,
 you can control your slides in OpenOffice, movies or any other
@@ -6,9 +6,12 @@ application. Amora also has a screenshot feature, where you can see
 the thumbnail in the cellphone screen of currently in focus window in
 the desktop.
 
-In order to use amora, you need a mobile phone with amora-client
-installed and running. The current client is implemented in Python
-for S60 (Nokia cellphones).
+Amora is composed of amora-server (amorad, a daemon which runs on
+the user's desktop) and amora-client (the current client is
+implemented in Python for S60 - Nokia cellphones).
+
+You can find usage details and tutorials on the project website
+and on the amorad(8) manpage.
 
 http://code.google.com/p/amora/
 
