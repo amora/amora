@@ -12,7 +12,7 @@ of cellphone. Alternatively, you can see other ways to install
 
 === Installing ===
 Create a folder in your cellphone memory card (E:\Python) or main
-cellphone memory (C:\Python) and copy the contents of amora [http://amora.googlecode.com/files/amora_client-0.8.tar.bz2 client]
+cellphone memory (C:\Python) and copy the contents of amora [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz client]
 file distribution to this folder.
 
 You must use python script shell (there is one icon for it in
