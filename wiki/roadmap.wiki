@@ -7,7 +7,7 @@ What is next for amora
 
  * webpage portuguese version
 
-= Version 1.0 (last week January) =
+= Version 1.0 (January - done!) =
 
  * server: multiple clients support, clean up, debian package, bug fixes
 
