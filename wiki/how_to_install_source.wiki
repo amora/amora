@@ -74,12 +74,12 @@ $ ../configure
 $ make
 }}}
 
-It will generate an executable file named 'amora', you must
+It will generate an executable file named 'amorad', you must
 start the application (and make sure that the bluetooth dongle is
 connected to the computer):
 
 {{{
-$ ./amora
+$ ./amorad
 }}}
 
 == Repository version ==
