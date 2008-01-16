@@ -15,6 +15,11 @@ Create a folder in your cellphone memory card (E:\Python) or main
 cellphone memory (C:\Python) and copy the contents of amora [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz client]
 file distribution to this folder.
 
+*IMPORTANT*: You must copy the contents of amora client to \Python directory not including amora-client folder itself. It must be *C|E:\Python\{client subdirs and files}* instead of *C|E:\Python\amora-client\{client subdirs folders and files}*. 
+
+When you copy the contents of amora client to your cellphone do not include the main amora-client directory. The amora-client/[files and subdirectories] must be directly in \Python directory.
+
+
 You must use python script shell (there is one icon for it in
 'installed applications') to launch amora client (the file named
 'amora.py'). In python script shell, select 'Options->Run script'
