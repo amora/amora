@@ -27,6 +27,11 @@ amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAG
 amoramandir = $(mandir)/man8
 amoraman_DATA = amorad.8
 
+# by now, amora manpage points to the amorad one
+install-data-hook:
+	mkdir -p $(DESTDIR)$(mandir)/man7/
+	ln -s ../man8/amorad.8 $(DESTDIR)$(mandir)/man7/amora.7
+
 EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/m4/check.m4 \
              $(srcdir)/m4/acx_pthread.m4 \
