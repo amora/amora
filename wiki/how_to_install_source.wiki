@@ -17,9 +17,7 @@ file distribution to this folder.
 
 *IMPORTANT*: You must copy the contents of amora client to \Python directory not including amora-client folder itself. It must be *C|E:\Python\{client subdirs and files}* instead of *C|E:\Python\amora-client\{client subdirs folders and files}*. 
 
-When you copy the contents of amora client to your cellphone do not include the main amora-client directory. The amora-client/[files and subdirectories] must be directly in \Python directory.
-
-
+=== Running ===
 You must use python script shell (there is one icon for it in
 'installed applications') to launch amora client (the file named
 'amora.py'). In python script shell, select 'Options->Run script'
@@ -51,40 +49,48 @@ For server side, to compile the source code, you will need:
 And also XTest extension enabled in you X server (default on Ubuntu). So,
 in Ubuntu simply run in your terminal:
 
-$sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
-
+{{{
+$ sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
+}}}
 
 === Installing ===
 After installing the dependencies, extract server app tarball with:
 
-$ tar -zxvf amora_server-0.x.tar.gz
+{{{
+$ tar -zxvf amora-server-x.y.tar.gz
+}}}
 
-where _x_ is the *current* download version.
+where _x.y_ is the *current* download version.
 
 Change to the extracted directory and execute the following commands:
 
-$mkdir build
+{{{
+$ mkdir build
 
-$cd build
+$ cd build
 
-$../configure
+$ ../configure
 
-$make
+$ make
+}}}
 
 It will generate an executable file named 'amora', you must
 start the application (and make sure that the bluetooth dongle is
 connected to the computer):
 
-$./amora
-
+{{{
+$ ./amora
+}}}
 
 == Repository version ==
 
 If you checked out the code from repository, you need first to generate the build system scripts. This one requires autotools packages (automake, etc).
 
-You first run in the directory pc_server:
+You first run in the directory amora-server:
 
+{{{
 $ autoreconf -i --force
+}}}
 
 and then just follow previous instructions for tarball version.
 
