@@ -80,7 +80,7 @@ http://amora.googlecode.com/svn/wiki/without08.jpg
 
 == PC server ==
 
-=== Ubuntu/Debian users ===
+=== Ubuntu users ===
 
 Just download and install the  [http://amora.googlecode.com/files/amora-server_1.0-0_i386.deb debian] package. To install, run in a terminal:
 
@@ -99,6 +99,11 @@ $ amorad
 
 You can download Mandriva 2008 [http://amora.googlecode.com/files/amora-server-1.0svn-1.i586.rpm package].
 
+
+=== Debian Etch Users ===
+
+You can download
+[http://amora.googlecode.com/files/amora-server_1.0-0_debian_i386.deb Etch] package.
 
 === Installing from source ===
 
