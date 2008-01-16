@@ -15,7 +15,7 @@ Create a folder in your cellphone memory card (E:\Python) or main
 cellphone memory (C:\Python) and copy the contents of amora [http://amora.googlecode.com/files/amora-client-1.0svn.tar.gz client]
 file distribution to this folder.
 
-*IMPORTANT*: You must copy the contents of amora client to \Python directory not including amora-client folder itself. It must be *C|E:\Python\{client subdirs and files}* instead of *C|E:\Python\amora-client\{client subdirs folders and files}*. 
+*Important*: You must copy the contents of amora client to \Python directory not including amora-client folder itself. It must be *C|E:\Python\{client subdirs and files}* instead of *C|E:\Python\amora-client\{client subdirs folders and files}*. 
 
 === Running ===
 You must use python script shell (there is one icon for it in
@@ -26,7 +26,7 @@ and select 'amora.py' in the list of available scripts.
 Amora client should execute them, if you had followed all instructions.
 
 
-*tips*
+*Tips*
 
  * Mouse cursor moving speed can be increased in Configuration screen -> M. delta (mouse delta). A suggested value when running Amora client inside Python Script Shell is 8
 
