@@ -102,8 +102,8 @@ You can download Mandriva 2008 [http://amora.googlecode.com/files/amora-server-1
 
 === Debian Etch Users ===
 
-You can download
-[http://amora.googlecode.com/files/amora-server_1.0-0_debian_i386.deb Etch] package.
+You can download Etch
+[http://amora.googlecode.com/files/amora-server_1.0-0_debian_i386.deb package].
 
 === Installing from source ===
 
