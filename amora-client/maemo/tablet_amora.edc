@@ -1,0 +1,245 @@
+images {
+   image: "background2.png" LOSSY 100;
+   image: "connect.png" COMP;
+   image: "penguin.png" COMP;
+   image: "penguin_sleep.png" COMP;
+   image: "package_settings.png" COMP;
+   image: "exit.png" COMP;
+   image: "zzz.png" COMP;
+   image: "disconnected.png" COMP;
+}
+
+collections {
+   group {
+      name, "main";
+      min, 320 240;
+      max, 800 480;
+
+      parts {
+         part {
+            /* It does accept this sintax, but I don't like this style */
+            /* name, "background"; */
+            name: "background";
+            type: IMAGE;
+            /* Dont accept mouse events */
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+
+               rel1 { relative: 0.0 0.0; offset: 0 0; }
+               rel2 { relative: 1.0 1.0; offset: -1 -1; }
+
+               image { normal: "background2.png"; }
+
+            }
+
+         }
+
+	 part {
+	    name: "title";
+	    type: TEXT;
+	    mouse_events: 0;
+
+	    description {
+		state: "default" 0.0;
+	        //color: 0 0 0 255;
+
+		rel1 { relative: 0.0 0.0; offset: 0 0; } 
+		rel2 { relative: 1.0 1.0; offset: -400 -400; }
+		
+		text {
+		    text: "Tablet Amora | ";
+		    font: "verdana";
+		    size: 44;
+		    
+		    //align: 0.5 0.5;
+		}
+	    }
+	 }
+
+         part {
+            name: "subtitle";
+            type: TEXT;
+            mouse_events: 0;
+
+            description {
+                state: "default" 0.0;
+                //color: 0 0 0 255;
+
+                rel1 { relative: 0.0 0.0; offset: 150 0; }
+                rel2 { relative: 1.0 1.0; offset: 0 -390; }
+
+                text {
+                    text: "A Remote Assistant";
+                    font: "verdana";
+                    size: 20;
+
+                    //align: 0.5 0.5;
+                }
+            }
+         }
+
+
+	 part {
+            name: "penguin_off";
+	    type: IMAGE;
+	    mouse_events: 0;
+
+	    description {
+	       state: "default" 0.0;
+	       min: 160 120;
+	       max: 160 120;
+
+	       rel1 { relative: 0.0 0.0; offset: 0 280; }
+	       rel2 { relative: 1.0 1.0; offset: -500 0; }
+
+	       image { normal: "penguin_sleep.png"; }
+	    }
+	 }
+
+         part {
+            name: "zzz";
+            type: IMAGE;
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               min: 36 50;
+               max: 36 50;
+
+               rel1 { relative: 0.0 0.0; offset: 0 180; }
+               rel2 { relative: 1.0 1.0; offset: -400 0; }
+
+               image { normal: "zzz.png"; }
+            }
+         }
+
+         part {
+            name: "amora_off";
+            type: IMAGE;
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               min: 70 70;
+               max: 70 70;
+
+               rel1 { relative: 0.0 0.0; offset: 0 130; }
+               rel2 { relative: 1.0 1.0; offset: -200 0; }
+
+               image { normal: "disconnected.png"; }
+            }
+         }
+
+
+         part {
+            name: "connect_button";
+            type: IMAGE;
+            mouse_events: 1;
+            
+	    description {
+               state: "default" 0.0;
+               min: 80 80;
+               max: 80 80;
+
+               rel1 { relative: 0.0 0.0; offset: 600 0; }
+               rel2 { relative: 1.0 1.0; offset: 0 -200; }
+
+	       image { normal: "connect.png"; }
+            }
+
+            description {
+               state: "clicked" 0.0;
+               min: 80 80;
+               max: 80 80;
+
+	       color: 0 0 0 50;
+
+               rel1 { relative: 0.0 0.0; offset: 600 0; }
+               rel2 { relative: 1.0 1.0; offset: 0 -200; }
+            }
+         }
+
+         part {
+            name: "options_button";
+            type: IMAGE;
+            mouse_events: 1;
+            
+            description {
+               state: "default" 0.0;
+               min: 80 80;
+               max: 80 80;
+
+               rel1 { relative: 0.0 0.0; offset: 600 0; }
+               rel2 { relative: 1.0 1.0; offset: 0 50; }
+
+               image { normal: "package_settings.png"; }
+            }
+         }
+
+         part {
+            name: "exit_button";
+            type: IMAGE;
+            mouse_events: 1;
+
+            description {
+               state: "default" 0.0;
+               min: 80 80;
+               max: 80 80;
+
+               rel1 { relative: 0.0 0.0; offset: 600 0; }
+               rel2 { relative: 1.0 1.0; offset: 0 300; }
+
+               image { normal: "exit.png"; }
+            }
+         }
+      }
+
+      programs {
+         program {
+            /* Required: name, source, signal, action */
+            name: "button_click";
+            signal: "mouse,down,1";
+            source: "connect_button";
+            /* What each field means? */
+            action: STATE_SET "clicked" 0.0;
+            target: "connect_button";
+            after: "do_me";
+         }
+
+         program {
+            name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "connect_button";
+            action: STATE_SET "default" 0.0;
+            target: "connect_button";
+            after: "stop_doing_me";
+         }
+
+         program {
+            /* This program hasn't a 'target' */
+            name: "do_me";
+            /* Any signal accepted by the app trigger this one */
+            signal: "*";
+            /* The source can be another program */
+            source: "button_click";
+            action: SIGNAL_EMIT "PANTS ON" "connect_button";
+            /* To to wait to run (low and upper limits) */
+            in: 1.0 0.0;
+            after: "do_me";
+         }
+
+         program {
+            name: "stop_doing_me";
+            signal: "*";
+            source: "button_unclick";
+            action: ACTION_STOP;
+            target: "do_me";
+         }
+
+      }
+
+   } /* group */
+
+} /* collection */
