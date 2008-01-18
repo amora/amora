@@ -32,6 +32,9 @@ install-data-hook:
 	mkdir -p $(DESTDIR)$(mandir)/man7/
 	ln -s ../man8/amorad.8 $(DESTDIR)$(mandir)/man7/amora.7
 
+uninstall-hook:
+	rm $(DESTDIR)$(mandir)/man7/amora.7
+
 EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/m4/check.m4 \
              $(srcdir)/m4/acx_pthread.m4 \
