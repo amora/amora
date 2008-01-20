@@ -47,7 +47,7 @@ fi
 
 dnl Checks for libraries.
 
-# if the library supports pkg-config, it's nice and easy
+dnl If the library supports pkg-config, it's nice and easy
 PKG_CHECK_MODULES(LIBBLUEZ, bluez,, \
 	  AC_MSG_ERROR("*** BlueZ development files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBBLUEZ_CFLAGS)
@@ -63,14 +63,13 @@ PKG_CHECK_MODULES(LIBXTST, xtst,, \
 AC_SUBST(LIBXTST_CFLAGS)
 AC_SUBST(LIBXTST_LIBS)
 
-
 PKG_CHECK_MODULES(LIBIMLIB2, imlib2,, \
 	  AC_MSG_ERROR("*** Imlib2 developement files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBIMLIB2_CFLAGS)
 AC_SUBST(LIBIMLIB2_LIBS)
 
-# enable configure options and automake conditionals useful for developers
-# look at m4/auxdevel.m4 for detailed documentation
+dnl Enable configure options and automake conditionals useful for developers
+dnl Look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)
 AC_SUBST(headerdir, "")
 AC_DEVEL_MACROS
