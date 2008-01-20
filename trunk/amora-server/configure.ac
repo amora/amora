@@ -39,6 +39,12 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([strchr printf])
 AC_CHECK_FUNCS([select socket bind accept])
 
+dnl Check if pkg-config is installed
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test $PKGCONFIG = "no"; then
+	AC_MSG_ERROR("*** pkg-config not found! ***")
+fi
+
 dnl Checks for libraries.
 
 # if the library supports pkg-config, it's nice and easy
