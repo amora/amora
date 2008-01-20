@@ -17,6 +17,10 @@ file distribution to this folder.
 
 *Important*: You must copy the contents of amora client to \Python directory not including amora-client folder itself. It must be *C|E:\Python\{client subdirs and files}* instead of *C|E:\Python\amora-client\{client subdirs folders and files}*. 
 
+
+*Attention*: there is a report of Amora client freezing when running in a N70 (S60 2ed) for a extended period. If you have this problem, a workaround is to turn off the stopwatch.
+
+
 === Running ===
 You must use python script shell (there is one icon for it in
 'installed applications') to launch amora client (the file named
