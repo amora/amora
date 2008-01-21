@@ -8,41 +8,90 @@ import evas
 import sys
 import os
 
+# constants
 WIDTH_DFL = 800
 HEIGHT_DFL = 480
-FRAMERATE_DFL = 20
-FULLSCREEN_DFL = False
+FPS_DFL = 50
+
 APP_TITLE = "Amora Tablet Client"
 APP_WM_INFO = ("Amora Tablet Client", "amora-tablet-client")
 
-class AmoraTabletClient(edje.Edje):
-    #Default constructor
-    def  __init__(self, canvas, width = WIDTH_DFL, height = HEIGHT_DFL,
-                 fullscreen = FULLSCREEN_DFL, framerate = FRAMERATE_DFL):
-        edje.Edje.__init__(self, canvas)
-        self.text = []
-        edje_file = os.path.splitext(sys.argv[0])[0] + ".edj"
-        self.file_set(edje_file, "main")
+class AmoraView():
+	def __init__(self, ecanvas):
+		self.ee = ecanvas.ee
+
+		try:
+			edje_file = os.path.splitext(sys.argv[0])[0] + ".edj"
+			self.main_group = edje.Edje(self.ee.evas, file=edje_file, group="main")
+		except edje.EdjeLoadError, e:
+			raise SystemExit("Error loading %s (%s)" % (edje_file, e))
+
+		self.main_group.size = self.ee.evas.size
+		self.ee.data["main"] = self.main_group
+
+		self.main_group.show()
+		self.main_group.focus = True		
 
 
+class AmoraCanvas():
+	def  __init__(self, size):
 
-if ecore.evas.engine_type_supported_get("software_x11_16") and \
-   '-x11' not in sys.argv:
-    ee = ecore.evas.SoftwareX11_16(w=WIDTH_DFL, h=HEIGHT_DFL)
-else:
-    ee = ecore.evas.SoftwareX11(w=WIDTH_DFL, h=HEIGHT_DFL)
+		# checks if 16bits support on X11 is enabled
+		if ecore.evas.engine_type_supported_get("software_x11_16") and \
+			'-x11' not in sys.argv:
+ 			engine = ecore.evas.SoftwareX11_16
+		else:
+			engine = ecore.evas.SoftwareX11
 
-canvas = ee.evas
+		self.ee = engine(w=size[0], h=size[1])
+		self.ee.callback_delete_request = self.on_delete_request
+		self.ee.callback_resize = self.on_resize
+		self.ee.fullscreen = False
+		self.ee.size = size;
+		self.ee.title = APP_TITLE
+		self.ee.name_class = APP_WM_INFO
 
-obj = AmoraTabletClient(canvas)
-obj.size = canvas.size
-obj.focus = True
-obj.show()
+		self.ee.show()			
 
-ee.data["main"] = obj
-ee.title = APP_TITLE
-ee.name_class = APP_WM_INFO
-ee.fullscreen = FULLSCREEN_DFL
-ee.show()
+	def on_resize(self, ee):
+		x, y, w, h = ee.evas.viewport
+		size = (w, h)
+		for key in ee.data.keys():
+			ee.data[key].size = size
 
-ecore.main_loop_begin();
+	def on_delete_request(self, ee):
+		ecore.main_loop_quit()
+
+
+if  __name__  == "__main__":
+	from optparse import OptionParser
+
+	def parse_size(option, opt, value, parser):
+		try:
+			w, h = value.split("x")
+			w = int(w)
+			h = int(h)
+		except Exception, e:
+			raise optparse.OptionValueError("Invalid option: %s" % option)
+		parser.values.size = (w, h)
+
+	opt = OptionParser(usage="usage: %prog [options]")
+	opt.add_option("-s", "--size", type="string", metavar="WxH | fs",
+					action="callback", callback=parse_size,
+					default=(WIDTH_DFL, HEIGHT_DFL),
+					help="Show application in window size WxH or fullscreen, default=%default")
+
+	opt.add_option("-f", "--fps", type="int", default=FPS_DFL,
+					help="Frames per second, default=%default") 
+
+
+	options, args = opt.parse_args()
+	
+	edje.frametime_set(1.0/options.fps)
+
+	canvas = AmoraCanvas(size=options.size)
+
+	view = AmoraView(canvas)
+
+	ecore.main_loop_begin();	
+
