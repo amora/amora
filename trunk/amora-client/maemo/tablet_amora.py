@@ -16,7 +16,12 @@ FPS_DFL = 50
 APP_TITLE = "Amora Tablet Client"
 APP_WM_INFO = ("Amora Tablet Client", "amora-tablet-client")
 
-class AmoraView():
+class AmoraDeviceList(evas.SmartObject):
+	def __init__(self, ecanvas):
+		evas.smartObject.__init__(self, ecanvas)
+		self.items = ["Device 0", "Device 1", "Device 2"]
+
+class AmoraView(object):
 	def __init__(self, ecanvas):
 		self.ee = ecanvas.ee
 
@@ -30,16 +35,26 @@ class AmoraView():
 		self.ee.data["main"] = self.main_group
 
 		self.main_group.show()
-		self.main_group.focus = True		
+		self.main_group.focus = True
+
+		self.main_group.signal_callback_add("mouse,down,*", "*", self.on_mouse_down)
+		self.main_group.signal_callback_add("mouse,up,*", "*", self.on_mouse_up)
 
 
-class AmoraCanvas():
+	def on_mouse_down(self, edje_obj, emission, source, data=None):
+		print "> Mouse Down: " + source
+
+
+	def on_mouse_up(self, edje_obj, emission, source, data=None):
+		print "< Mouse Up:   " + source
+
+class AmoraCanvas(object):
 	def  __init__(self, size):
 
 		# checks if 16bits support on X11 is enabled
 		if ecore.evas.engine_type_supported_get("software_x11_16") and \
 			'-x11' not in sys.argv:
- 			engine = ecore.evas.SoftwareX11_16
+			engine = ecore.evas.SoftwareX11_16
 		else:
 			engine = ecore.evas.SoftwareX11
 
@@ -51,7 +66,7 @@ class AmoraCanvas():
 		self.ee.title = APP_TITLE
 		self.ee.name_class = APP_WM_INFO
 
-		self.ee.show()			
+		self.ee.show()
 
 	def on_resize(self, ee):
 		x, y, w, h = ee.evas.viewport
@@ -82,16 +97,16 @@ if  __name__  == "__main__":
 					help="Show application in window size WxH or fullscreen, default=%default")
 
 	opt.add_option("-f", "--fps", type="int", default=FPS_DFL,
-					help="Frames per second, default=%default") 
+					help="Frames per second, default=%default")
 
 
 	options, args = opt.parse_args()
-	
+
 	edje.frametime_set(1.0/options.fps)
 
 	canvas = AmoraCanvas(size=options.size)
 
 	view = AmoraView(canvas)
 
-	ecore.main_loop_begin();	
+	ecore.main_loop_begin();
 
