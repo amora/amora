@@ -9,7 +9,6 @@
  * - this implementation of loop can prove itself useful for
  * other projects and it can be a good idea to move it to an
  * independent library (uloop library).
- * - add utests using 'check' library
  *
  */
 
