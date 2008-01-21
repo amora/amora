@@ -24,7 +24,6 @@
  *
  */
 
-#include <assert.h>
 #include <stdlib.h>
 #include <sys/select.h>
 
@@ -51,7 +50,8 @@ static struct loop_set_s {
  */
 static int dispatch(int fd)
 {
-	assert(fd >= 0 && fd < FD_SETSIZE);
+	if (fd < 0 || fd >= FD_SETSIZE)
+		return -1;
 
 	return loop_set.callback[fd](fd);
 }
@@ -68,7 +68,8 @@ static int is_empty(fd_set *fds)
 {
 	int i, ret = 1;
 
-	assert(fds);
+	if (!fds)
+		goto out;
 
 	for (i = 0; i < FD_SETSIZE; i++) {
 		if (FD_ISSET(i, fds)) {
@@ -86,7 +87,8 @@ int loop_add(const int fd, int (*callback) (int fd))
 {
 	int ret = -1;
 
-	assert(fd >= 0 && fd < FD_SETSIZE && callback);
+	if(fd < 0 || fd >= FD_SETSIZE || !callback)
+		goto out;
 
 	if (FD_ISSET(fd, &loop_set.readfds))
 		goto out;
@@ -108,7 +110,8 @@ int loop_remove(const int fd)
 {
 	int i, ret = -1;
 
-	assert(fd >= 0 && fd < FD_SETSIZE);
+	if (fd < 0 || fd >= FD_SETSIZE)
+		goto out;
 
 	if (FD_ISSET(fd, &loop_set.readfds)) {
 		FD_CLR(fd, &loop_set.readfds);
@@ -122,6 +125,7 @@ int loop_remove(const int fd)
 		if (FD_ISSET(i, &loop_set.readfds))
 			loop_set.nfds = i;
 
+out:
 	return ret;
 }
 
