@@ -27,6 +27,18 @@ amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAG
 amoramandir = $(mandir)/man8
 amoraman_DATA = amorad.8
 
+# unit tests
+if CHECK
+TESTS = utest
+noinst_PROGRAMS = utest
+utest_SOURCES = $(utestdir)/utest.c \
+		$(utestdir)/utest_loop.c \
+		$(utestdir)/utest_loop.h
+
+utest_CPPFLAGS = $(CHECK_FLAGS) $(AM_CPPFLAGS) -I$(csourcedir)
+utest_LDADD = $(CHECK_LIBS) $(LDADD)
+endif
+
 # by now, amora manpage points to the amorad one
 install-data-hook:
 	mkdir -p $(DESTDIR)$(mandir)/man7/

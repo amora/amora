@@ -71,6 +71,7 @@ AC_SUBST(LIBIMLIB2_LIBS)
 dnl Enable configure options and automake conditionals useful for developers
 dnl Look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)
+AC_SUBST(utestdir, $srcdir/utests)
 AC_SUBST(headerdir, "")
 AC_DEVEL_MACROS
 AC_DEVEL_ABSDIRS
