@@ -160,7 +160,7 @@ START_TEST (test_loop_remove)
 }
 END_TEST
 
-START_TEST (test_loop_loop)
+START_TEST (test_loop)
 {
 	loop_add(zero_fd, zero_read);
 	loop_add(random_fd, random_read);
@@ -180,7 +180,7 @@ TCase *loop_tcase_create(void)
 	tcase_add_test(tc, test_is_empty);
 	tcase_add_test(tc, test_loop_add);
 	tcase_add_test(tc, test_loop_remove);
-	tcase_add_test(tc, test_loop_loop);
+	tcase_add_test(tc, test_loop);
 
 	return tc;
 }
