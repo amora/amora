@@ -61,15 +61,17 @@ static int dispatch(int fd)
  *
  * @param fds the fd_set conforming select.h
  *
- * @return 1 if the set is empty, 0 otherwise
+ * @return 1 if the set is empty, 0 otherwise, -1 on error
  *
  */
 static int is_empty(fd_set *fds)
 {
 	int i, ret = 1;
 
-	if (!fds)
+	if (!fds) {
+		ret = -1;
 		goto out;
+	}
 
 	for (i = 0; i < FD_SETSIZE; i++) {
 		if (FD_ISSET(i, fds)) {
