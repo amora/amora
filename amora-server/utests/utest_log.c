@@ -131,7 +131,7 @@ START_TEST (test_get_timestamp)
 
 	memset(buffer, 0, sizeof(buffer));
 
-	/* We can predict the timestamp: see utest_fake.c for more details */
+	/* We can predict the timestamp: see utest_libfake.c for more details */
 	get_timestamp(buffer, sizeof(buffer));
 	fail_unless(strcmp("Jan 00 00:00:00", buffer) == 0, "Wrong timestamp!");
 }
