@@ -4,7 +4,7 @@ images {
 	image: "connect.png" COMP;
 	image: "penguin.png" COMP;
 	image: "penguin_sleep.png" COMP;
-	image: "package_settings.png" COMP;
+	image: "options.png" COMP;
 	image: "exit.png" COMP;
 	image: "zzz.png" COMP;
 	image: "disconnected.png" COMP;
@@ -39,10 +39,10 @@ collections {
 				mouse_events: 0;
 
 				description {
-                    rel1 { relative: 0.0 0.0; offset: 10 10; }
-                    rel2 { relative: 1.0 1.0; offset: -10 -10; }
+                    rel1 { relative: 0.0 0.0; offset: 10 80; }
+                    rel2 { relative: 1.0 1.0; offset: -125 -40; }
 
-                    image { normal: "background_bottom_pink_black.png"; }
+                    image { normal: "background_top_white_black.png"; }
 				}
 			}
 
@@ -76,8 +76,8 @@ collections {
 					min: 160 120;
 					max: 160 120;
 
-					rel1 { relative: 0.0 0.0; offset: 0 280; }
-					rel2 { relative: 1.0 1.0; offset: -500 0; }
+					rel1 { relative: 0.0 1.0; offset: 100 0; }
+					rel2 { relative: 0.0 1.0; offset: 200 -195; }
 
 					image { normal: "penguin_sleep.png"; }
 				}
@@ -93,8 +93,8 @@ collections {
 					min: 36 50;
 					max: 36 50;
 
-					rel1 { relative: 0.0 0.0; offset: 0 180; }
-					rel2 { relative: 1.0 1.0; offset: -400 0; }
+					rel1 { relative: 0.0 0.0; offset: 125 -125; to: "penguin_off"; }
+					rel2 { relative: 1.0 1.0; offset: 0 0; to: "penguin_off"; }
 
 					image { normal: "zzz.png"; }
 				}
@@ -110,8 +110,8 @@ collections {
 					min: 70 70;
 					max: 70 70;
 
-					rel1 { relative: 0.0 0.0; offset: 0 130; }
-					rel2 { relative: 1.0 1.0; offset: -200 0; }
+					rel1 { relative: 0.0 0.0; offset: 0 0; to: "background_top"; }
+					rel2 { relative: 1.0 1.0; offset: 0 0; to: "background_top"; }
 
 					image { normal: "disconnected.png"; }
 				}
@@ -127,22 +127,11 @@ collections {
 					min: 80 80;
 					max: 80 80;
 
-					rel1 { relative: 0.0 0.0; offset: 600 0; }
-					rel2 { relative: 1.0 1.0; offset: 0 -200; }
+					rel1 { relative: 1.0 0.0; offset: -125 0; }
+					rel2 { relative: 1.0 0.0; offset: 0 250; }
 
 					image { normal: "connect.png"; }
 			    }
-
-				description {
-				    state: "clicked" 0.0;
-					min: 80 80;
-					max: 80 80;
-
-					color: 0 0 0 100;
-
-					rel1 { relative: 0.0 0.0; offset: 600 0; }
-					rel2 { relative: 1.0 1.0; offset: 0 -200; }
-				}
 		    }
 
 			part {
@@ -155,10 +144,10 @@ collections {
 					min: 80 80;
 					max: 80 80;
 
-					rel1 { relative: 0.0 0.0; offset: 600 0; }
-					rel2 { relative: 1.0 1.0; offset: 0 50; }
+					rel1 { relative: 0.0 0.0; offset: 0 75; to: "connect_button"; }
+					rel2 { relative: 1.0 1.0; offset: 0 175; to: "connect_button"; }
 
-					image { normal: "package_settings.png"; }
+					image { normal: "options.png"; }
 				}
 			}
 
@@ -172,8 +161,8 @@ collections {
 					min: 80 80;
 					max: 80 80;
 
-					rel1 { relative: 0.0 0.0; offset: 600 0; }
-					rel2 { relative: 1.0 1.0; offset: 0 300; }
+					rel1 { relative: 0.0 0.0; offset: 0 75; to: "options_button"; }
+					rel2 { relative: 1.0 1.0; offset: 0 175 ; to: "options_button"; }
 
 					image { normal: "exit.png"; }
 				}
