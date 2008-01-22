@@ -32,6 +32,9 @@ if CHECK
 TESTS = utest
 noinst_PROGRAMS = utest
 utest_SOURCES = $(utestdir)/utest.c \
+		$(utestdir)/utest_libfake.c \
+		$(utestdir)/utest_log.c \
+		$(utestdir)/utest_log.h \
 		$(utestdir)/utest_loop.c \
 		$(utestdir)/utest_loop.h
 
