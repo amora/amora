@@ -48,7 +48,7 @@
 /** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
 
-static void get_timestamp(char *timestamp, int length);
+static int get_timestamp(char *timestamp, int length);
 
 void log_clean_resources(struct log_resource *res)
 {
@@ -127,16 +127,25 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 		const char *format, ...)
 {
 	va_list ap;
+	int ret = -1;
 
 	if (!resource)
-		return -1;
+		goto out;
+
+	if (ldest != FIL && ldest != OUT)
+		goto out;
+
+	if (!format)
+		goto out;
 
 	va_start(ap, format);
 	vsnprintf(resource->buffer, resource->length, format, ap);
 
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
-		get_timestamp(resource->timestamp, resource->ts_length);
+		if (get_timestamp(resource->timestamp, resource->ts_length) == -1)
+			goto out_va;
+
 		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
 			 resource->timestamp, resource->buffer);
 		write(resource->fd, resource->message,
@@ -151,20 +160,28 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 		      strlen(resource->message));
 	}
 
-	va_end(ap);
+	ret = 0;
 
-	return 0;
+out_va:
+	va_end(ap);
+out:
+	return ret;
 }
 
 
-static void get_timestamp(char *timestamp, int length)
+static int get_timestamp(char *timestamp, int length)
 {
 	struct tm *loctime;
 	time_t curtime;
 
+	if (!timestamp || length < 16)
+		return -1;
+
 	curtime = time(NULL);
 	loctime = localtime(&curtime);
 	strftime(timestamp, length - 1, "%b %d %T", loctime);
+
+	return 0;
 }
 
 
