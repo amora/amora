@@ -1,13 +1,15 @@
+#define AMORA_TITLE "Tablet Amora"
+
 images {
-	image: "background_bottom_pink_black.png" LOSSY 100;
-	image: "background_top_white_black.png" LOSSY 100;
-	image: "connect.png" COMP;
-	image: "penguin.png" COMP;
-	image: "penguin_sleep.png" COMP;
-	image: "options.png" COMP;
-	image: "exit.png" COMP;
-	image: "zzz.png" COMP;
-	image: "disconnected.png" COMP;
+	image: "images/background_bottom_pink_black.png" LOSSY 100;
+	image: "images/background_top_white_black.png" LOSSY 100;
+	image: "images/connect.png" COMP;
+	image: "images/penguin.png" COMP;
+	image: "images/penguin_sleep.png" COMP;
+	image: "images/options.png" COMP;
+	image: "images/exit.png" COMP;
+	image: "images/zzz.png" COMP;
+	image: "images/disconnected.png" COMP;
 }
 
 collections {
@@ -28,7 +30,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 0; }
 					rel2 { relative: 1.0 1.0; offset: -1 -1; }
 
-					image { normal: "background_bottom_pink_black.png"; }
+					image { normal: "images/background_bottom_pink_black.png"; }
 
 			    }
 	        }
@@ -42,7 +44,7 @@ collections {
                     rel1 { relative: 0.0 0.0; offset: 10 80; }
                     rel2 { relative: 1.0 1.0; offset: -125 -40; }
 
-                    image { normal: "background_top_white_black.png"; }
+                    image { normal: "images/background_top_white_black.png"; }
 				}
 			}
 
@@ -59,7 +61,7 @@ collections {
 					rel2 { relative: 0.0 0.0; offset: 400 75; }
 
 					text {
-					    text: "Tablet Amora";
+					    text: AMORA_TITLE"";
 						font: "sans";
 						size: 44;
 					}
@@ -79,7 +81,7 @@ collections {
 					rel1 { relative: 0.0 1.0; offset: 100 0; }
 					rel2 { relative: 0.0 1.0; offset: 200 -195; }
 
-					image { normal: "penguin_sleep.png"; }
+					image { normal: "images/penguin_sleep.png"; }
 				}
 			}
 
@@ -96,7 +98,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 125 -125; to: "penguin_off"; }
 					rel2 { relative: 1.0 1.0; offset: 0 0; to: "penguin_off"; }
 
-					image { normal: "zzz.png"; }
+					image { normal: "images/zzz.png"; }
 				}
 			}
 
@@ -113,7 +115,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 0; to: "background_top"; }
 					rel2 { relative: 1.0 1.0; offset: 0 0; to: "background_top"; }
 
-					image { normal: "disconnected.png"; }
+					image { normal: "images/disconnected.png"; }
 				}
 			}
 
@@ -130,7 +132,7 @@ collections {
 					rel1 { relative: 1.0 0.0; offset: -125 0; }
 					rel2 { relative: 1.0 0.0; offset: 0 250; }
 
-					image { normal: "connect.png"; }
+					image { normal: "images/connect.png"; }
 			    }
 		    }
 
@@ -147,7 +149,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 75; to: "connect_button"; }
 					rel2 { relative: 1.0 1.0; offset: 0 175; to: "connect_button"; }
 
-					image { normal: "options.png"; }
+					image { normal: "images/options.png"; }
 				}
 			}
 
@@ -164,28 +166,9 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 75; to: "options_button"; }
 					rel2 { relative: 1.0 1.0; offset: 0 175 ; to: "options_button"; }
 
-					image { normal: "exit.png"; }
+					image { normal: "images/exit.png"; }
 				}
 			}
 	    }
 	} /* group main */
-
-/*
-	group {
-		name: "devices_list";
-
-		parts {
-			part {
-				name: "device_name";
-				type: TEXT;
-
-				description {
-					state: "default" 0.0;
-
-					rel1 { relative: 0.0 0.0; offset: 400 300; }
-					rel2 { relative: 1.0 1.0; offset: 0 0; }
-				}
-			}
-		}
-	}*/ /* group devices_list */
 } /* collection */

@@ -13,8 +13,8 @@ WIDTH_DFL = 800
 HEIGHT_DFL = 480
 FPS_DFL = 50
 
-APP_TITLE = "Amora Tablet Client"
-APP_WM_INFO = ("Amora Tablet Client", "amora-tablet-client")
+APP_TITLE = "Amora Client"
+APP_WM_INFO = ("Amora Client", "amora-client")
 
 class AmoraDeviceList(evas.SmartObject):
 	def __init__(self, ecanvas):
@@ -25,8 +25,13 @@ class AmoraView(object):
 	def __init__(self, ecanvas):
 		self.ee = ecanvas.ee
 
+		if len(sys.argv) > 1:
+			edje_file = sys.argv[1]
+		else:
+			# do not hardcode edje file path
+			edje_file = "/usr/share/amora/" + os.path.basename(sys.argv[0]) + ".edj"
+
 		try:
-			edje_file = os.path.splitext(sys.argv[0])[0] + ".edj"
 			self.main_group = edje.Edje(self.ee.evas, file=edje_file, group="main")
 		except edje.EdjeLoadError, e:
 			raise SystemExit("Error loading %s (%s)" % (edje_file, e))
@@ -40,16 +45,24 @@ class AmoraView(object):
 		self.main_group.signal_callback_add("mouse,down,*", "*", self.on_mouse_down)
 		self.main_group.signal_callback_add("mouse,up,*", "*", self.on_mouse_up)
 
+		self.main_group.on_key_down_add(self.on_key_down)
+
+	def on_key_down(self, obj, event):
+		if event.keyname == "Escape":
+			ecore.main_loop_quit()
+		elif event.keyname == "F6":
+			self.ee.fullscreen = not self.ee.fullscreen
 
 	def on_mouse_down(self, edje_obj, emission, source, data=None):
 		print "> Mouse Down: " + source
-
+		if source == "exit_button":
+			ecore.main_loop_quit()
 
 	def on_mouse_up(self, edje_obj, emission, source, data=None):
 		print "< Mouse Up:   " + source
 
 class AmoraCanvas(object):
-	def  __init__(self, size):
+	def  __init__(self, size, fullscreen):
 
 		# checks if 16bits support on X11 is enabled
 		if ecore.evas.engine_type_supported_get("software_x11_16") and \
@@ -59,12 +72,17 @@ class AmoraCanvas(object):
 			engine = ecore.evas.SoftwareX11
 
 		self.ee = engine(w=size[0], h=size[1])
-		self.ee.callback_delete_request = self.on_delete_request
+
+		if (fullscreen):
+			self.ee.fullscreen = True
+
 		self.ee.callback_resize = self.on_resize
-		self.ee.fullscreen = False
 		self.ee.size = size;
 		self.ee.title = APP_TITLE
 		self.ee.name_class = APP_WM_INFO
+
+		self.ee.callback_delete_request = self.on_delete_request
+		self.ee.callback_resize = self.on_resize
 
 		self.ee.show()
 
@@ -91,20 +109,22 @@ if  __name__  == "__main__":
 		parser.values.size = (w, h)
 
 	opt = OptionParser(usage="usage: %prog [options]")
-	opt.add_option("-s", "--size", type="string", metavar="WxH | fs",
+	opt.add_option("-s", "--size", type="string", metavar="WxH",
 					action="callback", callback=parse_size,
 					default=(WIDTH_DFL, HEIGHT_DFL),
-					help="Show application in window size WxH or fullscreen, default=%default")
+					help="Show application in window WidthxHeight, default=%default")
 
 	opt.add_option("-f", "--fps", type="int", default=FPS_DFL,
 					help="Frames per second, default=%default")
 
+	opt.add_option("-n", "--no-fullscreen", action="store_true", 
+					help="Show application in fullscreen")
 
 	options, args = opt.parse_args()
 
 	edje.frametime_set(1.0/options.fps)
 
-	canvas = AmoraCanvas(size=options.size)
+	canvas = AmoraCanvas(size=options.size, fullscreen=not options.no_fullscreen)
 
 	view = AmoraView(canvas)
 
