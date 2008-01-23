@@ -1,9 +1,15 @@
-
-all: tablet_amora.py tablet_amora.edj
-	./tablet_amora.py
-
-tablet_amora.edj: tablet_amora.edc
-	edje_cc tablet_amora.edc
+all: amora.edj
+	python setup.py build
 
 clean:
-	rm -rf *.edj
+	python setup.py clean --all
+	rm -f amora.edj
+
+install:
+	python setup.py install --root $(DESTDIR)
+
+amora.edj:
+	edje_cc amora.edc
+
+run: all
+	./amora amora.edj

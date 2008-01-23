@@ -1,0 +1,12 @@
+Source: amora-client
+Section: user/utils
+Priority: extra
+Maintainer: Tomaz Noleto <tnoleto@gmail.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: amora-client
+Architecture: all
+Depends: python2.5, python2.5-evas, python2.5-edje, python2.5-ecore
+Description: Amora client for Maemo platform
+ <insert long desdcription, indented with spaces>
