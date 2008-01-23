@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=0.1
+Encoding=UTF-8
+Name=Amora Client
+Exec=/usr/bin/amora
+Icon=amora_icon_26x26
+Type=Application
