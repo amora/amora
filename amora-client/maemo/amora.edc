@@ -1,15 +1,26 @@
-#define AMORA_TITLE "Tablet Amora"
+#define AMORA_TITLE			"Tablet Amora"
+
+#define AMORA_BG1			"images/background_bottom_pink_black.png"
+#define AMORA_BG2			"images/background_top_white_black.png"
+#define AMORA_CONNECT		"images/connect.png"
+#define AMORA_OPTIONS		"images/options.png"
+#define AMORA_EXIT			"images/exit.png"
+#define AMORA_ZZZ			"images/zzz.png"
+#define AMORA_ON			"images/amora_bluetooth.png"
+#define AMORA_OFF			"images/disconnected.png"
+#define AMORA_PENGUIN		"images/penguin.png"
+#define AMORA_PENGUIN_OFF	"images/penguin_sleep.png"
 
 images {
-	image: "images/background_bottom_pink_black.png" LOSSY 100;
-	image: "images/background_top_white_black.png" LOSSY 100;
-	image: "images/connect.png" COMP;
-	image: "images/penguin.png" COMP;
-	image: "images/penguin_sleep.png" COMP;
-	image: "images/options.png" COMP;
-	image: "images/exit.png" COMP;
-	image: "images/zzz.png" COMP;
-	image: "images/disconnected.png" COMP;
+	image: AMORA_BG1 LOSSY 100;
+	image: AMORA_BG2 LOSSY 100;
+	image: AMORA_CONNECT COMP;
+	image: AMORA_PENGUIN COMP;
+	image: AMORA_PENGUIN_OFF COMP;
+	image: AMORA_OPTIONS COMP;
+	image: AMORA_EXIT COMP;
+	image: AMORA_ZZZ COMP;
+	image: AMORA_OFF COMP;
 }
 
 collections {
@@ -30,7 +41,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 0; }
 					rel2 { relative: 1.0 1.0; offset: -1 -1; }
 
-					image { normal: "images/background_bottom_pink_black.png"; }
+					image { normal: AMORA_BG1; }
 
 			    }
 	        }
@@ -44,7 +55,7 @@ collections {
                     rel1 { relative: 0.0 0.0; offset: 10 80; }
                     rel2 { relative: 1.0 1.0; offset: -125 -40; }
 
-                    image { normal: "images/background_top_white_black.png"; }
+                    image { normal: AMORA_BG2; }
 				}
 			}
 
@@ -61,7 +72,7 @@ collections {
 					rel2 { relative: 0.0 0.0; offset: 400 75; }
 
 					text {
-					    text: AMORA_TITLE"";
+					    text: AMORA_TITLE;
 						font: "sans";
 						size: 44;
 					}
@@ -81,7 +92,7 @@ collections {
 					rel1 { relative: 0.0 1.0; offset: 100 0; }
 					rel2 { relative: 0.0 1.0; offset: 200 -195; }
 
-					image { normal: "images/penguin_sleep.png"; }
+					image { normal: AMORA_PENGUIN_OFF; }
 				}
 			}
 
@@ -98,7 +109,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 125 -125; to: "penguin_off"; }
 					rel2 { relative: 1.0 1.0; offset: 0 0; to: "penguin_off"; }
 
-					image { normal: "images/zzz.png"; }
+					image { normal: AMORA_ZZZ; }
 				}
 			}
 
@@ -115,7 +126,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 0; to: "background_top"; }
 					rel2 { relative: 1.0 1.0; offset: 0 0; to: "background_top"; }
 
-					image { normal: "images/disconnected.png"; }
+					image { normal: AMORA_OFF; }
 				}
 			}
 
@@ -132,7 +143,7 @@ collections {
 					rel1 { relative: 1.0 0.0; offset: -125 0; }
 					rel2 { relative: 1.0 0.0; offset: 0 250; }
 
-					image { normal: "images/connect.png"; }
+					image { normal: AMORA_CONNECT; }
 			    }
 		    }
 
@@ -149,7 +160,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 75; to: "connect_button"; }
 					rel2 { relative: 1.0 1.0; offset: 0 175; to: "connect_button"; }
 
-					image { normal: "images/options.png"; }
+					image { normal: AMORA_OPTIONS; }
 				}
 			}
 
@@ -166,7 +177,7 @@ collections {
 					rel1 { relative: 0.0 0.0; offset: 0 75; to: "options_button"; }
 					rel2 { relative: 1.0 1.0; offset: 0 175 ; to: "options_button"; }
 
-					image { normal: "images/exit.png"; }
+					image { normal: AMORA_EXIT; }
 				}
 			}
 	    }
