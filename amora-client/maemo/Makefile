@@ -12,4 +12,4 @@ amora.edj:
 	edje_cc amora.edc
 
 run: all
-	./amora amora.edj
+	./amora amora.edj -n
