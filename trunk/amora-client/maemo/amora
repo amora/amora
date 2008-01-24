@@ -8,7 +8,6 @@ import evas
 import sys
 import os
 
-# constants
 WIDTH_DFL = 800
 HEIGHT_DFL = 480
 FPS_DFL = 50
@@ -17,24 +16,39 @@ APP_TITLE = "Amora Client"
 APP_WM_INFO = ("Amora Client", "amora-client")
 
 class AmoraDeviceList(evas.SmartObject):
-	def __init__(self, ecanvas):
-		evas.smartObject.__init__(self, ecanvas)
+	def __init__(self, ecanvas, edje_file):
+		self.ecanvas = ecanvas
+		self.edje_file = edje_file
+		print "AmoraDeviceList"
+		
+		evas.SmartObject.__init__(self, ecanvas)
 		self.items = ["Device 0", "Device 1", "Device 2"]
+
+		size1 = 20
+
+		for item in self.items:
+			device_obj = edje.Edje(self.ecanvas)
+			device_obj.file_set(self.edje_file, "device_item");
+			print "Device: " + item
+			device_obj.part_text_set("device_name", item)
+			size1 += 20
+			device_obj.move(0, size1)
+			device_obj.show()
 
 class AmoraView(object):
 	def __init__(self, ecanvas):
 		self.ee = ecanvas.ee
 
 		if len(sys.argv) > 1:
-			edje_file = sys.argv[1]
+			self.edje_file = sys.argv[1]
 		else:
 			# do not hardcode edje file path
-			edje_file = "/usr/share/amora/" + os.path.basename(sys.argv[0]) + ".edj"
+			self.edje_file = "/usr/share/amora/" + os.path.basename(sys.argv[0]) + ".edj"
 
 		try:
-			self.main_group = edje.Edje(self.ee.evas, file=edje_file, group="main")
+			self.main_group = edje.Edje(self.ee.evas, file=self.edje_file, group="main")
 		except edje.EdjeLoadError, e:
-			raise SystemExit("Error loading %s (%s)" % (edje_file, e))
+			raise SystemExit("Error loading %s (%s)" % (self.edje_file, e))
 
 		self.main_group.size = self.ee.evas.size
 		self.ee.data["main"] = self.main_group
@@ -57,6 +71,10 @@ class AmoraView(object):
 		print "> Mouse Down: " + source
 		if source == "exit_button":
 			ecore.main_loop_quit()
+		elif source == "connect_button":
+			self.device_list = AmoraDeviceList(self.ee.evas, self.edje_file)
+			self.main_group.part_swallow("list", self.device_list);
+			
 
 	def on_mouse_up(self, edje_obj, emission, source, data=None):
 		print "< Mouse Up:   " + source
@@ -90,6 +108,7 @@ class AmoraCanvas(object):
 		x, y, w, h = ee.evas.viewport
 		size = (w, h)
 		for key in ee.data.keys():
+			print "key: " + key
 			ee.data[key].size = size
 
 	def on_delete_request(self, ee):
