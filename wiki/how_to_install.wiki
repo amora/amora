@@ -82,7 +82,7 @@ http://amora.googlecode.com/svn/wiki/without08.jpg
 
 === Ubuntu users ===
 
-Just download and install the  [http://amora.googlecode.com/files/amora-server_1.0-0_i386.deb debian] package. To install, run in a terminal:
+Just download and install the  [http://amora.googlecode.com/files/amora-server_1.0-0_i386.deb Ubuntu deb] package. To install, run in a terminal:
 
 {{{
 $ sudo dpkg -i amora-server-version.deb
@@ -99,6 +99,11 @@ $ amorad
 
 You can download Mandriva 2008 [http://amora.googlecode.com/files/amora-server-1.0svn-1.i586.rpm package].
 
+Amora server was included in Mandriva Cooker official repository.
+
+=== Fedora Users ===
+
+Amora server was included in Fedora 7, 8 and 9 official repository.
 
 === Debian Etch Users ===
 
