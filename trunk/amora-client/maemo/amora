@@ -20,7 +20,7 @@ class AmoraDeviceList(evas.SmartObject):
 		self.ecanvas = ecanvas
 		self.edje_file = edje_file
 		self.coord = coord
-		
+
 		evas.SmartObject.__init__(self, ecanvas)
 		self.items = ["Device 0", "Device 1", "Device 2", "Device 3"]
 
@@ -32,9 +32,9 @@ class AmoraDeviceList(evas.SmartObject):
 			device_group.file_set(self.edje_file, "device_item")
 			device_group.part_text_set("device_name", item)
 			device_group.move(self.coord[0], self.coord[1])
-			
+
 			self.coord = (self.coord[0], self.coord[1] + 20)
-			
+
 			device_group.show()
 
 class AmoraView(object):
@@ -71,7 +71,7 @@ class AmoraView(object):
 
 	def on_mouse_down(self, edje_obj, emission, source, data=None):
 		print "> Mouse Down: " + source
-		
+
 		if source == "exit_button":
 			ecore.main_loop_quit()
 
@@ -81,7 +81,7 @@ class AmoraView(object):
 			coord = (x, y)
 			self.device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
 			self.main_group.part_swallow("list", self.device_list);
-			
+
 
 	def on_mouse_up(self, edje_obj, emission, source, data=None):
 		print "< Mouse Up:   " + source
@@ -142,7 +142,7 @@ if  __name__  == "__main__":
 	opt.add_option("-f", "--fps", type="int", default=FPS_DFL,
 					help="Frames per second, default=%default")
 
-	opt.add_option("-n", "--no-fullscreen", action="store_true", 
+	opt.add_option("-n", "--no-fullscreen", action="store_true",
 					help="Show application in fullscreen")
 
 	options, args = opt.parse_args()
