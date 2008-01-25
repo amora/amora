@@ -1,15 +1,20 @@
-#define AMORA_TITLE			"Tablet Amora"
+#define AMORA_TITLE       "Tablet Amora"
 
-#define AMORA_BG1			"images/background_bottom_pink_black.png"
-#define AMORA_BG2			"images/background_top_white_black.png"
-#define AMORA_CONNECT		"images/connect.png"
-#define AMORA_OPTIONS		"images/options.png"
-#define AMORA_EXIT			"images/exit.png"
-#define AMORA_ZZZ			"images/zzz.png"
-#define AMORA_ON			"images/amora_bluetooth.png"
-#define AMORA_OFF			"images/disconnected.png"
-#define AMORA_PENGUIN		"images/penguin.png"
-#define AMORA_PENGUIN_OFF	"images/penguin_sleep.png"
+#define AMORA_BG1         "images/background_bottom_pink_black.png"
+#define AMORA_BG2         "images/background_top_white_black2.png"
+#define AMORA_CONNECT     "images/connect.png"
+#define AMORA_OPTIONS     "images/options.png"
+#define AMORA_EXIT        "images/exit.png"
+#define AMORA_ZZZ         "images/zzz.png"
+#define AMORA_ON          "images/amora_bluetooth.png"
+#define AMORA_OFF         "images/disconnected.png"
+#define AMORA_PENGUIN     "images/penguin.png"
+#define AMORA_PENGUIN_OFF "images/penguin_sleep.png"
+
+fonts {
+	font: "nosnr.ttf" "NokiaSansRegular";
+	font: "nosnb.ttf" "NokiaSansBold";
+}
 
 images {
 	image: AMORA_BG1 LOSSY 100;
@@ -52,8 +57,8 @@ collections {
 				mouse_events: 0;
 
 				description {
-                    rel1 { relative: 0.0 0.0; offset: 10 80; }
-                    rel2 { relative: 1.0 1.0; offset: -125 -40; }
+                    rel1 { relative: 0.0 0.0; offset: 30 80; }
+                    rel2 { relative: 1.0 1.0; offset: -125 -30; }
 
                     image { normal: AMORA_BG2; }
 				}
@@ -63,7 +68,7 @@ collections {
 				name: "title";
 				type: TEXT;
 				mouse_events: 0;
-                effect: SHADOW;
+                effect: OUTLINE_SOFT_SHADOW;
 
 			    description {
 				    state: "default" 0.0;
@@ -73,7 +78,7 @@ collections {
 
 					text {
 					    text: AMORA_TITLE;
-						font: "sans";
+						font: "NokiaSansBold";
 						size: 44;
 					}
 				}
@@ -89,8 +94,8 @@ collections {
 					min: 160 120;
 					max: 160 120;
 
-					rel1 { relative: 0.0 1.0; offset: 100 0; }
-					rel2 { relative: 0.0 1.0; offset: 200 -195; }
+					rel1 { relative: 0.0 1.0; offset: 100 -150; }
+					rel2 { relative: 0.0 1.0; offset: 200 -25; }
 
 					image { normal: AMORA_PENGUIN_OFF; }
 				}
@@ -147,6 +152,26 @@ collections {
 			    }
 		    }
 
+            part {
+                name: "connect_text";
+                type: TEXT;
+                mouse_events: 1;
+                effect: SOFT_SHADOW;
+
+                description {
+                    state: "default" 0.0;
+
+                    rel1 { relative: 0.0 0.0; offset: 0 100; to: "connect_button"; }
+                    rel2 { relative: 1.0 1.0; offset: 0 0; to: "connect_button"; }
+
+                    text {
+                        text: "Connect";
+                        font: "NokiaSansBold";
+                        size: 20;
+                    }
+                }
+            }
+
 			part {
 			    name: "options_button";
 				type: IMAGE;
@@ -163,6 +188,27 @@ collections {
 					image { normal: AMORA_OPTIONS; }
 				}
 			}
+
+            part {
+                name: "options_text";
+                type: TEXT;
+                mouse_events: 1;
+                effect: SOFT_SHADOW;
+
+                description {
+                    state: "default" 0.0;
+
+                    rel1 { relative: 0.0 0.0; offset: 0 100; to: "options_button"; }
+                    rel2 { relative: 1.0 1.0; offset: 0 0; to: "options_button"; }
+
+                    text { 
+                        text: "Options";
+                        font: "NokiaSansBold";
+                        size: 20;
+                    }
+                }
+            }
+
 
 			part {
 				name: "exit_button";
@@ -181,10 +227,30 @@ collections {
 				}
 			}
 
+            part {
+                name: "exit_text";
+                type: TEXT;
+                mouse_events: 1;
+                effect: SOFT_SHADOW;
+
+                description {
+                    state: "default" 0.0;
+
+                    rel1 { relative: 0.0 0.0; offset: 0 100; to: "exit_button"; }
+                    rel2 { relative: 1.0 1.0; offset: 0 0; to: "exit_button"; }
+
+                    text { 
+                        text: "Exit";
+                        font: "NokiaSansBold";
+                        size: 20;
+                    }
+                }
+            }
+
+
 			part {
 				name: "device_list";
 				type: SWALLOW;
-				mouse_events: 1;
 
 				description {
 					state: "default" 0.0;
@@ -192,7 +258,7 @@ collections {
 					max: 300 300;
 
 					rel1 { relative: 0.0 0.0; offset: 0 0; to: "background_top"; }
-					rel2 { relative: 1.0 1.0; offset: 1 1; to: "background_top"; }
+					rel2 { relative: 1.0 1.0; offset: 0 0; to: "background_top"; }
 				}
 			}
 	    }
@@ -205,21 +271,22 @@ collections {
 			part {
 				name: "device_name";
 				type: TEXT;
+				mouse_events: 1;
 
 				description {
 					state: "default" 0.0;
 
-					rel1 { relative: 0.0 0.0; offset: 100 100; }
-					rel2 { relative: 1.0 1.0; offset: 100 100; }
+					rel1 { relative: 0.0 0.0; offset: 0 0; }
+					rel2 { relative: 1.0 1.0; offset: 0 0; }
 
-					align: 0 0.5;
+					align: 0 0;
 					color: 0 0 0 255;
 					color2: 225 225 225 128;
 
 					text {
-						font: "Sans";
-						size: 20;
-						text: "device1";
+						font: "NokiaSansBold";
+						size: 14;
+						text: "device";
 						min: 1 1;
 					}
 				}
