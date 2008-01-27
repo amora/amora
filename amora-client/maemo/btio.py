@@ -85,6 +85,13 @@ class bt:
 
         return 0
 
+    def close(self):
+        try:
+            print u'bt.close: trying to close socket...'
+            self.socket.close()
+            print u'bt.close: done.'
+        except:
+            print u'bt.close: Failed closing socket!'
 
 
 #Usage of class
@@ -95,4 +102,5 @@ class bt:
 #     print temp
 #     if temp == 'zv64-0':
 #         temp = obj.connect(i)
+#         obj.close()
 
