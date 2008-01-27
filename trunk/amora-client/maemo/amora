@@ -93,8 +93,10 @@ class AmoraCanvas(object):
 		if ecore.evas.engine_type_supported_get("software_x11_16") and \
 			'-x11' not in sys.argv:
 			engine = ecore.evas.SoftwareX11_16
+			print u'Evas engine: x11-16'
 		else:
 			engine = ecore.evas.SoftwareX11
+			print u'Evas engine: x11'
 
 		self.ee = engine(w=size[0], h=size[1])
 
