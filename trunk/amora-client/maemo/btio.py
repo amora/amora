@@ -27,6 +27,9 @@
 import bluetooth
 
 class bt:
+    def __init__(self):
+        self.socket = bluetooth.BluetoothSocket()
+
     def device_named_list(self):
         '''
         Return a list of tuples (device_name, BT 'mac' address).
@@ -62,11 +65,34 @@ class bt:
         return name
 
 
+    def connect(self, device_mac = '00:0C:41:E2:33:06', service_name = 'Amora: assistant'):
+        '''
+        Use this to connect to a given host.
+        '''
+        service_description = bluetooth.find_service(name = service_name,
+                                                     address = device_mac)
+        if service_description == []:
+            print u'bt.connect: service not available'
+            return -1
+
+        port = service_description[0]['port']
+        try:
+            print u'bt.connect: trying to connect...'
+            self.socket.connect((device_mac, port))
+            print u'bt.connect: connected.'
+        except:
+            print u'bt.connect: Failed to connect!'
+
+        return 0
+
 
 
 #Usage of class
 # obj = bt()
 # obj.device_list()
 # for i in obj.devices:
-#     print obj.get_device_name(i)
+#     temp = obj.get_device_name(i)
+#     print temp
+#     if temp == 'zv64-0':
+#         temp = obj.connect(i)
 
