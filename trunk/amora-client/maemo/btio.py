@@ -47,13 +47,18 @@ class bt:
         self.devices = bluetooth.discover_devices()
         return self.devices
 
-    def get_device_name(self, device_mac):
+    def get_device_name(self, device_mac, timeout = 20):
         '''
         Given the BT 'mac' address, returns device name.
         Combine this function with 'device_list' to interactively display
         device names
         '''
         name = bluetooth.lookup_name(device_mac)
+        if name == None:
+            print u'bt.get_device_name: Trying again...'
+            name = bluetooth.lookup_name(device_mac, timeout)
+            if name == None:
+                print u'bt.get_device_name: Cannot get device name, giving up...'
         return name
 
 
