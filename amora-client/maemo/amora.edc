@@ -266,7 +266,7 @@ collections {
 				description {
 					state: "on" 0.0;
 					color: 0 0 0 175;
-					
+
 					rel1 { relative: 0.0 0.0; offset: 0 60; to: "background_top"; }
 					rel2 { relative: 1.0 1.0; offset: -450 -60; to: "background_top"; }
 
@@ -320,7 +320,7 @@ collections {
 				in: 0.0 0.0;
 			}
 		}
-	
+
 	} /* group main */
 
 	group {
