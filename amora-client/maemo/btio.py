@@ -36,10 +36,7 @@ class bt:
         It does all in just 1 pass, but takes a while...
         '''
         result = []
-        devices = bluetooth.discover_devices()
-        for i in devices:
-            result.append((bluetooth.lookup_name(i), i))
-        self.all_devices = result
+        result = bluetooth.discover_devices(lookup_names = True)
         return result
 
     def device_list(self):
