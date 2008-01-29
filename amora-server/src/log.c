@@ -71,15 +71,15 @@ static int get_timestamp(char *timestamp, int length)
 }
 
 
-void log_clean_resources(struct log_resource *res)
+void log_clean_resources(struct log_resource *resource)
 {
-	if (res) {
-		close(res->fd);
-		free(res->message);
-		free(res->timestamp);
-		free(res->log_filename);
-		free(res);
-		res = NULL;
+	if (resource) {
+		close(resource->fd);
+		free(resource->message);
+		free(resource->timestamp);
+		free(resource->log_filename);
+		free(resource);
+		resource = NULL;
 	}
 }
 
@@ -150,8 +150,10 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 	va_list ap;
 	int ret = -1;
 
-	if (!resource)
+	if (!resource) {
+		ret = 0;
 		goto out;
+	}
 
 	if (ldest != FIL && ldest != OUT)
 		goto out;
