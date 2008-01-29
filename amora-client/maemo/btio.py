@@ -62,12 +62,17 @@ class bt:
         return name
 
 
-    def connect(self, device_mac = '00:0C:41:E2:33:06', service_name = 'Amora: assistant'):
+    def connect(self, device_mac = None, service_name = 'Amora: assistant'):
         '''
         Use this to connect to a given host.
         '''
-        service_description = bluetooth.find_service(name = service_name,
-                                                     address = device_mac)
+        service_description = []
+        if device_mac == None:
+            service_description = bluetooth.find_service(name = service_name)
+            device_mac = service_description[0]['host']
+        else:
+            service_description = bluetooth.find_service(name = service_name,
+                                                         address = device_mac)
         if service_description == []:
             print u'bt.connect: service not available'
             return -1
@@ -101,3 +106,7 @@ class bt:
 #         temp = obj.connect(i)
 #         obj.close()
 
+#Or simply
+# obj = bt()
+# obj.connect()
+# obj.close()
