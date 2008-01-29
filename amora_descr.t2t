@@ -106,6 +106,15 @@ MPlayer).
 
  - See project page, in 'Issues' tab.
 
+ - BT device based presence control
+
+ - Export cellphone GPS data for user apps.
+
+ - Camera video capture and streaming to PC
+
+ - Write a linux kernel module (V4L2) to make cellphone video stream appear
+as a bluetooth webcam.
+
  - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
 SDP API is documented in BSD) and **if** there are source code examples
 available.
@@ -116,13 +125,6 @@ available.
 X server to control most of its apps.
 
  - Write a J2ME client for other cellphone models (Nokia S40, e.g. 6111).
-
- - Camera video capture and streaming to PC
-
-
- - Write a linux kernel module (V4L2) to make cellphone video stream appear
-show up as a bluetooth webcam.
-
 
 
 == Related Projects ==
