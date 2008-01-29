@@ -76,7 +76,7 @@ START_TEST (test_log_message)
 	fail_unless(ret == -1, "Logging to unknown output!");
 
 	ret = log_message(OUT, NULL, "%s log message without resource!", foo);
-	fail_unless(ret == -1, "Logging without resources!");
+	fail_unless(ret == 0, "NULL resource must be accepted flawless.");
 
 	ret = log_message(OUT, lres, NULL);
 	fail_unless(ret == -1, "Logging without message!");
