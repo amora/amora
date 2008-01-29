@@ -48,7 +48,6 @@
 #include "loop.h"
 #include "imscreen.h"
 
-const char *amora_default_logfile = "amora.log";
 
 /** Amora global struct that holds the main resources */
 struct amora_s {
@@ -168,10 +167,10 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (!logfile)
-		logfile = amora_default_logfile;
-
-	amora.log = log_build_resources(logfile);
+	if (logfile)
+		amora.log = log_build_resources(logfile);
+	else
+		amora.log = NULL;
 
 	if (check_device() < 0) {
 		log_message(FIL|OUT, amora.log, "No bluetooth device/dongle available."
@@ -493,9 +492,9 @@ static void show_usage(const char *path)
 	printf("Usage: %s [-l logfile] [-h] [-v]\n"
 	       "\n"
 	       "  -h             show this help message and exit;\n"
-	       "  -l logfile     set the log file path (default is %s);\n"
+	       "  -l logfile     set the log file path (default is disabled);\n"
 	       "  -v             show version and exit.\n"
-	       "\n", name, amora_default_logfile);
+	       "\n", name);
 
 	free(p);
 }

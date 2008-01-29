@@ -54,7 +54,7 @@ struct log_resource {
 	int ts_length;
 	/** Maximum line length, equal 3 times 80 columns */
 	int length;
-	/** log file path name */
+	/** Log file path name */
 	char *log_filename;
 };
 
@@ -63,7 +63,9 @@ struct log_resource {
  *
  * Use it to initialize log buffers and open file descriptors.
  *
- * @param filename Path and filename for log file.
+ * @param filename path and filename for log file.
+ *
+ * @return the initialized log resource or NULL on error.
  */
 struct log_resource* log_build_resources(const char *filename);
 
@@ -71,17 +73,23 @@ struct log_resource* log_build_resources(const char *filename);
 /** Deallocate log resource structure.
  *
  * Use it to clean up resouces used by log function.
+ *
+ * @param ptr a log resource structure, see \ref log_resource.
+ *
  */
-void log_clean_resources(struct log_resource *ptr);
+void log_clean_resources(struct log_resource *resource);
 
 
 /** Report log messages.
  *
- * @param ldest log destination(s) (syslog, file, stdout, etc)
- * @param resource A log resource structure, see \ref log_resource.
+ * Note: Logging with NULL resource is considered "not logging" and
+ * this function will just return flawless.
+ *
+ * @param ldest bitmask with log destination(s).
+ * @param resource a log resource structure, see \ref log_resource.
  * @param format message to log.
  *
- * @return 0 on success, -1 otherwise
+ * @return 0 on success, -1 otherwise.
  */
 int log_message(unsigned int ldest, struct log_resource *resource,
 		const char *format, ...);
