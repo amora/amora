@@ -10,9 +10,6 @@
  * This logging system  can be used to log in: syslog, files, stdout and
  * stderr. Based on code from sniffdet: http://sniffdet.sf.net
  *
- *
- * \todo
- * - add utests using 'check' library
  */
 
 /*  Copyright (C) 2002, 2003 Ademar de Souza Reis Jr. <myself@ademar.org>
