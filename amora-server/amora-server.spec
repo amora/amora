@@ -1,12 +1,13 @@
 Name: amora-server
 Version: 1.0svn
-Release: 1
+Release: 2
 Summary: A mobile remote assistant (server)
 License: GPLv2
 Group: System/X11
 URL: http://code.google.com/p/amora/
 Source: http://amora.googlecode.com/files/amora-server-%{version}.tar.gz
 Packager: Ademar de Souza Reis Jr. <ademar@ademar.org>
+Obsoletes: amora-server <= 0.9svn
 
 # build-requirements for Mandriva Linux, please
 # adapt to your favorite distribution
