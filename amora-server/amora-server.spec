@@ -52,3 +52,22 @@ http://code.google.com/p/amora/
 %{_mandir}/man8/amorad.8.*
 %{_mandir}/man7/amora.7.*
 
+
+%changelog
+* Tue Jan 29 2008 Ademar de Souza Reis Jr <ademar@ademar.org>
++ amora-server1.0svn-2
+- Added obsoletes for previous version (s/amora/amora-server/);
+- Added rpm changelogs;
+- Updated tarball to latest svn, so that it's self-contained
+  (no major changes, just project renaming issues,
+  unit-tests and minor cosmetic fixes);
+
+* Tue Jan 15 2008 Ademar de Souza Reis Jr <ademar@ademar.org>
++ amora-server1.0svn-1
+- Renamed from amora to amora-server (fixed filelists, build, etc)
+
+* Mon Nov 12 2007 Ademar de Souza Reis Jr <ademar@ademar.org>
++ amora-0.9svn-1
+- add amora.spec (should work in other distributions
+  besides Mandriva Linux - with minor build-requirement
+  changes)
