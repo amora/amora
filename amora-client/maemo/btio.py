@@ -64,7 +64,9 @@ class bt:
 
     def connect(self, device_mac = None, service_name = 'Amora: assistant'):
         '''
-        Use this to connect to a given host.
+        Use this to connect to a given host. If you dont supply the BT 'mac'
+        address, it will search for nearby 'service_name' servers and
+        connect in the first one.
         '''
         service_description = []
         if device_mac == None:
