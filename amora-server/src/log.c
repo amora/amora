@@ -7,8 +7,7 @@
  *
  * @brief Simple logging system.
  *
- * This logging system  can be used to log in: syslog, files, stdout and
- * stderr.
+ * This logging system can be used to log in: files and stderr.
  *
  */
 
@@ -48,7 +47,29 @@
 /** Length of message buffer */
 #define MSG_BUFFER_LENGTH 240
 
-static int get_timestamp(char *timestamp, int length);
+
+/** Set a timestamp on a given buffer
+ *
+ * @param timestamp pre-allocated buffer that will hold the timestamp.
+ * @param length buffer size.
+ *
+ * @return 0 on success, -1 otherwise
+ */
+static int get_timestamp(char *timestamp, int length)
+{
+	struct tm *loctime;
+	time_t curtime;
+
+	if (!timestamp || length < 16)
+		return -1;
+
+	curtime = time(NULL);
+	loctime = localtime(&curtime);
+	strftime(timestamp, length - 1, "%b %d %T", loctime);
+
+	return 0;
+}
+
 
 void log_clean_resources(struct log_resource *res)
 {
@@ -167,21 +188,4 @@ out_va:
 out:
 	return ret;
 }
-
-
-static int get_timestamp(char *timestamp, int length)
-{
-	struct tm *loctime;
-	time_t curtime;
-
-	if (!timestamp || length < 16)
-		return -1;
-
-	curtime = time(NULL);
-	loctime = localtime(&curtime);
-	strftime(timestamp, length - 1, "%b %d %T", loctime);
-
-	return 0;
-}
-
 
