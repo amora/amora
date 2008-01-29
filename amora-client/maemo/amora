@@ -14,12 +14,13 @@ FPS_DFL = 50
 
 APP_TITLE = "Amora Client"
 APP_WM_INFO = ("Amora Client", "amora-client")
+APP_DATADIR = "/usr/share/amora/"
 
 class AmoraDeviceList(evas.SmartObject):
 	def __init__(self, ecanvas, edje_file, coord):
 		self.ecanvas = ecanvas
 		self.edje_file = edje_file
-		self.coord = (coord[0] + 10, coord[1] + 70)
+		self.coord = (coord[0] + 20, coord[1] + 140)
 
 		evas.SmartObject.__init__(self, ecanvas)
 
@@ -28,7 +29,7 @@ class AmoraDeviceList(evas.SmartObject):
 
 	def fill_device_list(self, items):
 		#for item in self.items:
-		for item in range(0,6):
+		for item in range(1,5):
 			device_group = edje.Edje(self.ecanvas)
 			device_group.file_set(self.edje_file, "device_item")
 			device_group.part_text_set("device_name", "Device name " + str(item))
@@ -36,7 +37,11 @@ class AmoraDeviceList(evas.SmartObject):
 
 			self.coord = (self.coord[0], self.coord[1] + 40)
 
+			device_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
 			device_group.show()
+
+	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
+		print "> on_mouse_clicked: " + source 
 
 class AmoraView(object):
 	def __init__(self, ecanvas):
@@ -46,7 +51,7 @@ class AmoraView(object):
 			self.edje_file = sys.argv[1]
 		else:
 			# do not hardcode edje file path
-			self.edje_file = "/usr/share/amora/" + os.path.basename(sys.argv[0]) + ".edj"
+			self.edje_file = APP_DATADIR + os.path.basename(sys.argv[0]) + ".edj"
 
 		try:
 			self.main_group = edje.Edje(self.ee.evas, file=self.edje_file, group="main")
@@ -62,7 +67,7 @@ class AmoraView(object):
 		self.main_group.signal_callback_add("mouse,down,*", "*", self.on_mouse_down)
 		self.main_group.signal_callback_add("mouse,up,*", "*", self.on_mouse_up)
 		self.main_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
-		self.main_group.signal_callback_add("devices_found", "*", self.on_devices_found)
+		self.main_group.signal_callback_add("scan_devices", "*", self.on_devices_scan)
 
 		self.main_group.on_key_down_add(self.on_key_down)
 
@@ -84,8 +89,8 @@ class AmoraView(object):
 		if source == "exit_button":
 			ecore.main_loop_quit()
 
-	def on_devices_found(self, edje_obj, emission, source, data=None):
-		print "@ on_devices_found";
+	def on_devices_scan(self, edje_obj, emission, source, data=None):
+		print "@ Scanning devices";
 
 		x, y, w, h = self.main_group.part_geometry_get("device_list")
 		coord = (x, y)
