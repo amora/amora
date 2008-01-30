@@ -34,10 +34,10 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-#include <syslog.h>
 #include <string.h>
+#include <syslog.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "log.h"
 
@@ -170,17 +170,17 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 			goto out_va;
 
 		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
-			 resource->timestamp, resource->buffer);
+				resource->timestamp, resource->buffer);
 		write(resource->fd, resource->message,
-		      strlen(resource->message));
+				strlen(resource->message));
 	}
 
 	/* log to stdout */
 	if (ldest & OUT) {
 		snprintf(resource->message, resource->length - 1, "%s\n",
-			 resource->buffer);
+				resource->buffer);
 		write(STDOUT_FILENO, resource->message,
-		      strlen(resource->message));
+				strlen(resource->message));
 	}
 
 	ret = 0;
