@@ -13,13 +13,13 @@ AUTOMAKE_OPTIONS = foreign
 # amora itself
 bin_PROGRAMS = amorad
 amorad_SOURCES = $(csourcedir)/main.c \
-                   $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
-                   $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
-                   $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \
-                   $(csourcedir)/linux.c \
-                   $(csourcedir)/log.h $(csourcedir)/log.c \
-		   $(csourcedir)/loop.h $(csourcedir)/loop.c \
-		   $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
+                 $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
+                 $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
+                 $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \
+                 $(csourcedir)/linux.c \
+                 $(csourcedir)/log.h $(csourcedir)/log.c \
+                 $(csourcedir)/loop.h $(csourcedir)/loop.c \
+                 $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
 amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
 amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
@@ -32,11 +32,11 @@ if CHECK
 TESTS = utest
 noinst_PROGRAMS = utest
 utest_SOURCES = $(utestdir)/utest.c \
-		$(utestdir)/utest_libfake.c \
-		$(utestdir)/utest_log.c \
-		$(utestdir)/utest_log.h \
-		$(utestdir)/utest_loop.c \
-		$(utestdir)/utest_loop.h
+                $(utestdir)/utest_libfake.c \
+                $(utestdir)/utest_log.c \
+                $(utestdir)/utest_log.h \
+                $(utestdir)/utest_loop.c \
+                $(utestdir)/utest_loop.h
 
 utest_CPPFLAGS = $(CHECK_FLAGS) $(AM_CPPFLAGS) -I$(csourcedir)
 utest_LDADD = $(CHECK_LIBS) $(LDADD)

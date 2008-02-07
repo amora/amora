@@ -49,22 +49,22 @@ dnl Checks for libraries.
 
 dnl If the library supports pkg-config, it's nice and easy
 PKG_CHECK_MODULES(LIBBLUEZ, bluez,, \
-	  AC_MSG_ERROR("*** BlueZ development files not found! You need it to build $PACKAGE_NAME. ***"))
+	AC_MSG_ERROR("*** BlueZ development files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBBLUEZ_CFLAGS)
 AC_SUBST(LIBBLUEZ_LIBS)
 
 PKG_CHECK_MODULES(LIBX11, x11,, \
-	  AC_MSG_ERROR("*** X11 development files not found! You need it to build $PACKAGE_NAME. ***"))
+	AC_MSG_ERROR("*** X11 development files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBX11_CFLAGS)
 AC_SUBST(LIBX11_LIBS)
 
 PKG_CHECK_MODULES(LIBXTST, xtst,, \
-	  AC_MSG_ERROR("*** Xtst developement files not found! You need it to build $PACKAGE_NAME. ***"))
+	AC_MSG_ERROR("*** Xtst developement files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBXTST_CFLAGS)
 AC_SUBST(LIBXTST_LIBS)
 
 PKG_CHECK_MODULES(LIBIMLIB2, imlib2,, \
-	  AC_MSG_ERROR("*** Imlib2 developement files not found! You need it to build $PACKAGE_NAME. ***"))
+	AC_MSG_ERROR("*** Imlib2 developement files not found! You need it to build $PACKAGE_NAME. ***"))
 AC_SUBST(LIBIMLIB2_CFLAGS)
 AC_SUBST(LIBIMLIB2_LIBS)
 
