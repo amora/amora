@@ -34,7 +34,7 @@
 static struct loop_set_s {
 	/** The callback for each fd using the fd as index */
 	int (*callback[FD_SETSIZE]) (int fd);
-	/** The fd with max number as required by select(). Don't ask me why. */
+	/** The fd with max number as required by select() */
 	int nfds;
 	/** The fd set, only ready for reading is supported by now */
 	fd_set readfds;
@@ -73,7 +73,7 @@ static int is_empty(fd_set *fds)
 		goto out;
 	}
 
-	for (i = 0; i < FD_SETSIZE; i++) {
+	for (i = 0; i <= loop_set.nfds; i++) {
 		if (FD_ISSET(i, fds)) {
 			ret = 0;
 			goto out;
@@ -110,7 +110,7 @@ out:
 
 int loop_remove(const int fd)
 {
-	int i, ret = -1;
+	int i, nfds, ret = -1;
 
 	if (fd < 0 || fd >= FD_SETSIZE)
 		goto out;
@@ -121,9 +121,10 @@ int loop_remove(const int fd)
 		ret = 0;
 	}
 
+	nfds = loop_set.nfds;
 	loop_set.nfds = 0;
 
-	for (i = 0; i < FD_SETSIZE; i++)
+	for (i = 0; i <= nfds; i++)
 		if (FD_ISSET(i, &loop_set.readfds))
 			loop_set.nfds = i;
 
@@ -140,7 +141,7 @@ int loop(void)
 	readfds = loop_set.readfds;
 
 	while (select(loop_set.nfds + 1, &readfds, NULL, NULL, NULL) > 0) {
-		for (i = 0; i < FD_SETSIZE; i++) {
+		for (i = 0; i <= loop_set.nfds; i++) {
 			if (!FD_ISSET(i, &readfds))
 				continue;
 
