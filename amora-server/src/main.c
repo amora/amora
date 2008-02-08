@@ -174,14 +174,14 @@ int main(int argc, char **argv)
 
 	if (check_device() < 0) {
 		log_message(FIL|OUT, amora.log, "No bluetooth device/dongle available."
-				" Aborting...\n");
+				" Aborting...");
 		return -1;
 	}
 
 	amora.display = construct_display(NULL);
 	if (!amora.display) {
 		log_message(FIL|OUT, amora.log, "Error creating display object!"
-				"Aborting...\n");
+				"Aborting...");
 		return -1;
 	}
 
@@ -189,14 +189,13 @@ int main(int argc, char **argv)
 	sd = build_sd(channel);
 	if (!sd) {
 		log_message(FIL|OUT, amora.log, "Error creating service description"
-			    "object!"
-			    "Aborting...\n");
+				"object! Aborting...");
 		return -1;
 	}
 	res = describe_service(sd);
 	if (res == -1) {
 		log_message(FIL|OUT, amora.log, "Error registering service!"
-			    "Aborting...\n");
+				"Aborting...");
 		destroy_sd(sd);
 		return -1;
 	}
@@ -205,29 +204,29 @@ int main(int argc, char **argv)
 	server_socket = build_bluetooth_socket(channel, sd);
 	if (server_socket == -1) {
 		log_message(FIL|OUT, amora.log, "Failed creating bluetooth conn!"
-			    "Exiting...\n");
+				"Exiting...");
 		return -1;
 	}
 
 	loop_add(server_socket, server_socket_cb);
 
-	log_message(FIL, amora.log, "Bluetooth device code hci = %d\n", sd->hci_id);
-	log_message(FIL|OUT, amora.log, "\nInitialization done, waiting cellphone"
-		    " connection...\n");
+	log_message(FIL, amora.log, "Bluetooth device code hci = %d", sd->hci_id);
+	log_message(FIL|OUT, amora.log, "Initialization done, waiting cellphone"
+			" connection...");
 
 	res = listen(server_socket, 10);
 	if (res) {
-		log_message(FIL|OUT, amora.log, "Failed listening...\n");
+		log_message(FIL|OUT, amora.log, "Failed listening...");
 		return -1;
 	}
 
 
-	log_message(FIL|OUT, amora.log, "Entering main loop...\n");
+	log_message(FIL|OUT, amora.log, "Entering main loop...");
 	loop();
 
 	res = destroy_display(amora.display);
 	amora.display = NULL;
-	log_message(FIL|OUT, amora.log, "Done, we are closing now.\n");
+	log_message(FIL|OUT, amora.log, "Done, we are closing now.");
 	close(server_socket);
 	destroy_sd(sd);
 	res = process_events(client_socket = 0, clean_up = 1);
@@ -268,7 +267,7 @@ static int process_events(int fd, int clean_up)
 		return result;
 	}
 
-	log_message(FIL, amora.log, "Read buffer = %s\n", buffer);
+	log_message(FIL, amora.log, "Read buffer = %s", buffer);
 
 	start = buffer;
 	while ((end = strchr(start, CMD_BREAK))) {
@@ -289,11 +288,11 @@ static int treat_events(char *buffer, int length, int client_socket)
 
 	/* TODO: move this whole code block to a distinct function */
 	result = ecell_button_ewindow(buffer, length);
-	log_message(FIL, amora.log, "ecell_button = %d\n", result);
+	log_message(FIL, amora.log, "ecell_button = %d", result);
 	if (result == NONE) {
 
 		result = ecell_mouse_ewindow(buffer, length);
-		log_message(FIL, amora.log, "ecell_mouse = %d\n", result);
+		log_message(FIL, amora.log, "ecell_mouse = %d", result);
 		switch (result) {
 		case MOUSE_MOVE:
 			mouse_event = 1;
@@ -348,7 +347,7 @@ static int treat_events(char *buffer, int length, int client_socket)
 					goto exit;
 				} else if (result == NONE)
 					log_message(FIL|OUT, amora.log,
-						    "Invalid event!\n");
+						    "Invalid event!");
 			}
 			break;
 		default:
@@ -504,14 +503,14 @@ static int client_socket_cb(int client_socket)
 	int res = process_events(client_socket, 0);
 
 	if (res == CONN_CLOSE) {
-		log_message(FIL|OUT, amora.log,"Client asked to close connection\n");
+		log_message(FIL|OUT, amora.log,"Client asked to close connection.");
 		loop_remove(client_socket);
 		close(client_socket);
 		client_socket = -1;
 	}
 
 	if (res == -1) {
-		log_message(FIL|OUT, amora.log, "Client died or closed connection\n");
+		log_message(FIL|OUT, amora.log, "Client died or closed connection.");
 		loop_remove(client_socket);
 		close(client_socket);
 		client_socket = -1;
@@ -534,11 +533,11 @@ static int server_socket_cb(int server_socket)
 
 	if (client_socket == -1)
 		log_message(FIL|OUT, amora.log, "Failed opening connection,"
-				" exiting...\n");
+				" exiting...");
 	else {
 		client_bluetooth_id(&rem_addr, buffer);
 		log_message(FIL|OUT, amora.log, "Accepted connection. Client"
-				" is %s\n", buffer);
+				" is %s", buffer);
 		loop_add(client_socket, client_socket_cb);
 	}
 
