@@ -89,7 +89,7 @@ int loop_add(const int fd, int (*callback) (int fd))
 {
 	int ret = -1;
 
-	if(fd < 0 || fd >= FD_SETSIZE || !callback)
+	if (fd < 0 || fd >= FD_SETSIZE || !callback)
 		goto out;
 
 	if (FD_ISSET(fd, &loop_set.readfds))
