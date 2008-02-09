@@ -167,10 +167,8 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (logfile)
-		amora.log = log_build_resources(logfile);
-	else
-		amora.log = NULL;
+	if (!(amora.log = log_build_resources(logfile)))
+		perror("Failed log resource creation!");
 
 	if (check_device() < 0) {
 		log_message(FIL|OUT, amora.log, "No bluetooth device/dongle available."

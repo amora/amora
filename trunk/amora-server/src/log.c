@@ -74,7 +74,8 @@ static int get_timestamp(char *timestamp, int length)
 void log_clean_resources(struct log_resource *resource)
 {
 	if (resource) {
-		close(resource->fd);
+		if (resource->fd >= 0)
+			close(resource->fd);
 		free(resource->message);
 		free(resource->timestamp);
 		free(resource->log_filename);
@@ -94,6 +95,7 @@ struct log_resource* log_build_resources(const char *filename)
 	}
 
 	memset(resource, 0, sizeof(struct log_resource));
+	resource->fd = -1;
 	resource->ts_length = TIMESTAMP_LENGTH;
 	resource->length = MSG_BUFFER_LENGTH;
 
@@ -107,22 +109,19 @@ struct log_resource* log_build_resources(const char *filename)
 		goto failed;
 	}
 
-	if (!filename) {
-		perror("Invalid log filename\n");
-		goto failed;
-	}
+	if (filename) {
+		resource->log_filename = strdup(filename);
+		if (!resource->log_filename) {
+			perror("Failed log filename copying!\n");
+			goto failed;
+		}
+		resource->fd = open(resource->log_filename,
+				    O_APPEND|O_WRONLY|O_CREAT, 0644);
+		if (resource->fd < 0) {
+			perror("Error opening log file");
+			goto failed;
+		}
 
-	resource->log_filename = strdup(filename);
-	if (!resource->log_filename) {
-		perror("Failed log filename copying!\n");
-		goto failed;
-	}
-
-	resource->fd = open(resource->log_filename,
-			O_APPEND|O_WRONLY|O_CREAT, 0644);
-	if (resource->fd < 0) {
-		perror("Error opening log file");
-		goto failed;
 	}
 
 	goto exit;
@@ -155,9 +154,6 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 		goto out;
 	}
 
-	if (ldest != FIL && ldest != OUT)
-		goto out;
-
 	if (!format)
 		goto out;
 
@@ -166,13 +162,15 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
-		if (get_timestamp(resource->timestamp, resource->ts_length) == -1)
+		if (get_timestamp(resource->timestamp,
+				  resource->ts_length) == -1)
 			goto out_va;
 
 		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
 				resource->timestamp, resource->buffer);
-		write(resource->fd, resource->message,
-				strlen(resource->message));
+		if (resource->fd >= 0)
+			write(resource->fd, resource->message,
+			      strlen(resource->message));
 	}
 
 	/* log to stdout */
