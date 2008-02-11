@@ -74,7 +74,7 @@ struct log_resource* log_build_resources(const char *filename);
  *
  * Use it to clean up resouces used by log function.
  *
- * @param ptr a log resource structure, see \ref log_resource.
+ * @param resource a log resource structure, see \ref log_resource.
  *
  */
 void log_clean_resources(struct log_resource *resource);
