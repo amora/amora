@@ -96,7 +96,7 @@ int read_socket(int client, char *data, int length)
 	while (!strchr(data, CMD_BREAK) && (res < length)) {
 		tmp = read(client, data, length);
 
-		if ((tmp == -1) && (errno == ECONNRESET))
+		if (tmp == -1)
 			return tmp;
 
 		res += tmp;
