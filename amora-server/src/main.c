@@ -45,6 +45,7 @@
 #include "x11_event.h"
 #include "bluecode.h"
 #include "protocol.h"
+#include "dbus.h"
 #include "log.h"
 #include "loop.h"
 #include "imscreen.h"
@@ -143,7 +144,7 @@ int main(int argc, char **argv)
 	int server_socket, client_socket, channel = 10, res;
 	int clean_up = 0;
 	struct service_description *sd = NULL;
-	char arg;
+	char arg, hci_id[6];
 	const char *logfile = NULL;
 
 	if (argc > 4) {
@@ -208,6 +209,16 @@ int main(int argc, char **argv)
 	}
 
 	loop_add(server_socket, server_socket_cb);
+
+	snprintf(hci_id, sizeof(hci_id), "hci%d", sd->hci_id);
+
+#ifdef HAVE_DBUS
+	if (dbus_init(hci_id)) {
+		log_message(FIL|OUT, amora.log, "Error while initilizing "
+				"D-Bus! Aborting...");
+		return -1;
+	}
+#endif
 
 	log_message(FIL, amora.log, "Bluetooth device code hci = %d", sd->hci_id);
 	log_message(FIL|OUT, amora.log, "Initialization done, waiting cellphone"
