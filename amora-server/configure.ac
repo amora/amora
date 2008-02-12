@@ -68,6 +68,22 @@ PKG_CHECK_MODULES(LIBIMLIB2, imlib2,, \
 AC_SUBST(LIBIMLIB2_CFLAGS)
 AC_SUBST(LIBIMLIB2_LIBS)
 
+dnl Optional D-Bus support for bluetooth dongle detection
+AC_ARG_ENABLE(dbus, AS_HELP_STRING([--disable-dbus],[Disable D-BUS support]),,[enable_dbus=yes])
+if test "x$enable_dbus" = "xyes"; then
+	PKG_CHECK_MODULES(LIBDBUS, dbus-1, [have_dbus=yes], [have_dbus=no])
+	AC_SUBST(LIBDBUS_CFLAGS)
+	AC_SUBST(LIBDBUS_LIBS)
+else
+	have_dbus="no (disabled)"
+fi
+
+if test "x$have_dbus" = "xyes"; then
+	AC_DEFINE(HAVE_DBUS, [], [Define if D-Bus is present])
+fi
+
+AM_CONDITIONAL(HAVE_DBUS, test "x$have_dbus" = "xyes")
+
 dnl Enable configure options and automake conditionals useful for developers
 dnl Look at m4/auxdevel.m4 for detailed documentation
 AC_SUBST(csourcedir, $srcdir/src)
@@ -88,8 +104,9 @@ $PACKAGE_NAME $PACKAGE_VERSION configuration:
   Source code location:       ${srcdir}
   Host System Type:           ${host}
   Compiler:                   ${CC}
-  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${LIBIMLIB2_CFLAGS} ${ac_devel_default_warnings}
-  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS} ${LIBIMLIB2_LIBS}
+  D-Bus support:              ${have_dbus}
+  CFLAGS:                     ${CFLAGS} ${LIBBLUEZ_CFLAGS} ${LIBX11_CFLAGS} ${LIBXTST_CFLAGS} ${LIBIMLIB2_CFLAGS} ${LIBDBUS_CFLAGS} ${ac_devel_default_warnings}
+  Libraries:                  ${LIBBLUEZ_LIBS} ${LIBX11_LIBS} ${LIBXTST_LIBS} ${LIBIMLIB2_LIBS} ${LIBDBUS_LIBS}
   Install path (prefix):      ${prefix}
 
   Now type 'make' to build $PACKAGE_NAME $PACKAGE_VERSION.

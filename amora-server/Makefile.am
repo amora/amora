@@ -21,8 +21,12 @@ amorad_SOURCES = $(csourcedir)/main.c \
                  $(csourcedir)/loop.h $(csourcedir)/loop.c \
                  $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
-amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS)
-amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS)
+if HAVE_DBUS
+amorad_SOURCES +=  $(csourcedir)/dbus.h $(csourcedir)/dbus.c
+endif
+
+amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS) $(LIBDBUS_LIBS)
+amorad_CFLAGS = $(AM_CFLAGS) $(LIBBLUEZ_CFLAGS) $(LIBX11_CFLAGS) $(LIBXTST_CFLAGS) $(LIBIMLIB2_CFLAGS) $(LIBDBUS_CFLAGS)
 
 amoramandir = $(mandir)/man8
 amoraman_DATA = amorad.8
@@ -38,8 +42,12 @@ utest_SOURCES = $(utestdir)/utest.c \
                 $(utestdir)/utest_loop.c \
                 $(utestdir)/utest_loop.h
 
-utest_CPPFLAGS = $(CHECK_FLAGS) $(AM_CPPFLAGS) -I$(csourcedir)
-utest_LDADD = $(CHECK_LIBS) $(LDADD)
+if HAVE_DBUS
+utest_SOURCES += $(utestdir)/utest_dbus.h $(utestdir)/utest_dbus.c
+endif
+
+utest_CPPFLAGS = $(CHECK_FLAGS) $(AM_CPPFLAGS) -I$(csourcedir) $(LIBDBUS_CFLAGS)
+utest_LDADD = $(CHECK_LIBS) $(LDADD) $(LIBDBUS_LIBS)
 endif
 
 # by now, amora manpage points to the amorad one

@@ -1,6 +1,11 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <check.h>
 #include <stdlib.h>
 
+#include "utest_dbus.h"
 #include "utest_log.h"
 #include "utest_loop.h"
 
@@ -9,6 +14,9 @@ static Suite *core_suite(void)
 {
 	Suite *s = suite_create("core");
 
+#ifdef HAVE_DBUS
+	suite_add_tcase(s, dbus_tcase_create());
+#endif
 	suite_add_tcase(s, log_tcase_create());
 	suite_add_tcase(s, loop_tcase_create());
 
