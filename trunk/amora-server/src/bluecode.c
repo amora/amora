@@ -141,7 +141,7 @@ exit:
 
 int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
 {
-	int bytes, res;
+	int bytes, res, readen, tmp1, tmp2;
 	int length = 8192;
 	char buffer[length];
 	int byte_count;
@@ -157,22 +157,33 @@ int hack_send_file(int client_socket, int file_descriptor, struct stat mstat)
 
 	while (bytes < mstat.st_size) {
 
-		res = read(file_descriptor, buffer, length);
-		if (res == -1) {
-			printf("Error reading image file!\n");
-			return -1;
-		}
+		readen = read(file_descriptor, buffer, length);
+		res = write(client_socket, buffer, readen);
 
-		res = write(client_socket, buffer, res);
-		if (res == -1) {
-			printf("Error writing data: %s\n",
-			       strerror(errno));
-			return -1;
-		}
+		if (res == -1)
+			goto error;
 
+		/* Contention required for non blocking socket */
+		tmp1 = res;
+		while (tmp1 < readen) {
+			tmp2 = write(client_socket, (buffer + tmp1), readen - tmp1);
+			if (tmp2 > 0)
+				tmp1 += tmp2;
+			else if (tmp2 == 0)
+				usleep(80000);
+			else if (tmp2 == -1)
+				goto error;
+
+		}
+		res = tmp1;
 		bytes += res;
 
 	}
 
 	return bytes;
+
+error:
+
+	printf("Error reading image file!\n");
+	return -1;
 }
