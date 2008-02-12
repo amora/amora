@@ -79,6 +79,10 @@ fi
 
 if test "x$have_dbus" = "xyes"; then
 	AC_DEFINE(HAVE_DBUS, [], [Define if D-Bus is present])
+
+	dnl dbus_watch_get_unix_fd was introduced in D-Bus 1.1.1 as replacement for dbus_watch_get_fd
+	AC_CHECK_LIB(dbus-1, dbus_watch_get_unix_fd, [], 
+		     AC_DEFINE(DBUS_COMPAT_MODE, [], [Older libdbus-1 version]))
 fi
 
 AM_CONDITIONAL(HAVE_DBUS, test "x$have_dbus" = "xyes")

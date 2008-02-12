@@ -36,6 +36,10 @@
 #include "dbus.h"
 #include "loop.h"
 
+#ifdef DBUS_COMPAT_MODE
+#define dbus_watch_get_unix_fd dbus_watch_get_fd
+#endif
+
 
 /** Connection handler */
 static DBusConnection *conn;
@@ -88,7 +92,7 @@ static dbus_bool_t add_watch(DBusWatch *watch, void *data)
 
 	flags = dbus_watch_get_flags(watch);
 	if (flags & DBUS_WATCH_READABLE)
-		loop_add(dbus_watch_get_fd(watch), dispatch);
+		loop_add(dbus_watch_get_unix_fd(watch), dispatch);
 
 out:
 	return TRUE;
@@ -107,7 +111,7 @@ static void remove_watch(DBusWatch *watch, void *data)
 {
 	(void) data;
 
-	loop_remove(dbus_watch_get_fd(watch));
+	loop_remove(dbus_watch_get_unix_fd(watch));
 }
 
 
