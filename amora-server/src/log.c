@@ -157,6 +157,10 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 	if (!format)
 		goto out;
 
+	/* Check flags sanity */
+	if (ldest >> 2)
+		goto out;
+
 	va_start(ap, format);
 	vsnprintf(resource->buffer, resource->length, format, ap);
 
