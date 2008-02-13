@@ -37,7 +37,7 @@ START_TEST (test_log_build_resources)
 	struct stat buf;
 
 	p = log_build_resources(NULL);
-	fail_unless(p == NULL, "Creating log resource with NULL filename!");
+	fail_if(p == NULL, "Can't create log for stdout only!");
 
 	p = log_build_resources("/non-existent/file.i_hope");
 	fail_unless(p == NULL, "Creating log resource with ghost file!");
