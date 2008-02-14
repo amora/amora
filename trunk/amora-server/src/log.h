@@ -38,6 +38,8 @@
 #define FIL   0x01 << 0
 /** Message destination:  stdout*/
 #define OUT   0x01 << 1
+#define FOO 0x01 << 2
+#define BAR 0x01 << 3
 
 /** Log structure, contains resources used by logging function.
  */
@@ -63,7 +65,8 @@ struct log_resource {
  *
  * Use it to initialize log buffers and open file descriptors.
  *
- * @param filename path and filename for log file.
+ * @param filename path and filename for log file (you can pass NULL if you
+ * wish to log *only* to stdout).
  *
  * @return the initialized log resource or NULL on error.
  */
