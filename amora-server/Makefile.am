@@ -60,7 +60,6 @@ uninstall-hook:
 
 EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/m4/check.m4 \
-             $(srcdir)/m4/acx_pthread.m4 \
              $(srcdir)/m4/define_dirs.m4 \
              $(srcdir)/mk/auxdevel.am \
              $(srcdir)/mk/libtool-fix.am \
