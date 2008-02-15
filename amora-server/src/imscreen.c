@@ -95,8 +95,9 @@ exit:
 
 int save_image(Imlib_Image *image, char *name)
 {
-	int res = 0;
+	int res = -1;
 	char *ptr;
+	Imlib_Load_Error error;
 
 	if (!image)
 		goto exit;
@@ -110,8 +111,9 @@ int save_image(Imlib_Image *image, char *name)
 
 	imlib_context_set_image(*image);
 	imlib_image_set_format(ptr);
-	/* TODO: how to check for success in imlib? */
-	imlib_save_image(name);
+	imlib_save_image_with_error_return(name, &error);
+	if (error == IMLIB_LOAD_ERROR_NONE)
+		res = 0;
 
 exit:
 	return res;
