@@ -7,6 +7,7 @@ import edje.decorators
 import evas
 import sys
 import os
+import dbus_discover
 
 WIDTH_DFL = 800
 HEIGHT_DFL = 480
@@ -16,6 +17,12 @@ APP_TITLE = "Amora Client"
 APP_WM_INFO = ("Amora Client", "amora-client")
 APP_DATADIR = "/usr/share/amora/"
 
+#The device list and the D-Bus callback that fill in it
+devices = []
+def dbus_device_fill_list(address, name):
+	devices.append((address, name))
+
+
 class AmoraDeviceList(evas.SmartObject):
 	def __init__(self, ecanvas, edje_file, coord):
 		self.ecanvas = ecanvas
@@ -23,16 +30,18 @@ class AmoraDeviceList(evas.SmartObject):
 		self.coord = (coord[0] + 20, coord[1] + 140)
 
 		evas.SmartObject.__init__(self, ecanvas)
+		self.dbus_obj = dbus_discover.dbus_bluetooth()
+		self.dbus_obj.set_callback(dbus_device_fill_list)
 
-		self.items = [];
-		self.fill_device_list(self.items)
 
-	def fill_device_list(self, items):
+	def fill_device_list(self):
+		global devices
 		#for item in self.items:
-		for item in range(1,5):
+		for item in devices:
+			#FIXME: cleanup widget before adding new devices
 			device_group = edje.Edje(self.ecanvas)
 			device_group.file_set(self.edje_file, "device_item")
-			device_group.part_text_set("device_name", "Device name " + str(item))
+			device_group.part_text_set("device_name", item[1])
 			device_group.move(self.coord[0], self.coord[1])
 
 			self.coord = (self.coord[0], self.coord[1] + 40)
@@ -95,6 +104,8 @@ class AmoraView(object):
 		x, y, w, h = self.main_group.part_geometry_get("device_list")
 		coord = (x, y)
 		self.device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
+		self.device_list.dbus_obj.discover()
+		self.device_list.fill_device_list()
 		self.main_group.part_swallow("list", self.device_list);
 
 
