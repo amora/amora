@@ -127,9 +127,9 @@ static void toggle_watch(DBusWatch *watch, void *data)
 {
 	/* Doesn't really matter in our scenario */
 	if (dbus_watch_get_enabled(watch))
-		add_watch(watch, data);
-	else
 		remove_watch(watch, data);
+	else
+		add_watch(watch, data);
 }
 
 
