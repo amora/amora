@@ -152,7 +152,6 @@ static DBusHandlerResult signal_handler(DBusConnection *connection,
 	char *basec, *bname;
 
 	(void) connection;
-	(void) data;
 
 	if (dbus_message_is_signal(msg, "org.bluez.Manager", "AdapterRemoved")) {
 		dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING,
