@@ -33,21 +33,21 @@ class AmoraDeviceList(evas.SmartObject):
 		self.dbus_obj = dbus_discover.dbus_bluetooth()
 		self.dbus_obj.set_callback(dbus_device_fill_list)
 
+	def device_item(self, device_data):
+		device_group = edje.Edje(self.ecanvas)
+		device_group.file_set(self.edje_file, "device_item")
+		device_group.part_text_set("device_name", device_data[1])
+		device_group.move(self.coord[0], self.coord[1])
+		self.coord = (self.coord[0], self.coord[1] + 40)
+		device_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
+		device_group.show()
 
 	def fill_device_list(self):
 		global devices
 		#for item in self.items:
 		for item in devices:
-			#FIXME: cleanup widget before adding new devices
-			device_group = edje.Edje(self.ecanvas)
-			device_group.file_set(self.edje_file, "device_item")
-			device_group.part_text_set("device_name", item[1])
-			device_group.move(self.coord[0], self.coord[1])
+			self.device_item(item)
 
-			self.coord = (self.coord[0], self.coord[1] + 40)
-
-			device_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
-			device_group.show()
 
 	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
 		print "> on_mouse_clicked: " + source
