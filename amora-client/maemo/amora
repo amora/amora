@@ -20,11 +20,14 @@ APP_DATADIR = "/usr/share/amora/"
 #The device list and the D-Bus callback that fill in it
 devices = []
 device_list = None
+view = None
 
 def dbus_device_fill_list(address, name):
 	global device_list
+	global view
 	devices.append((address, name))
 	device_list.device_item((address, name))
+	view.swallow_item("list", device_list)
 	print u'Found device: ' + name
 
 
@@ -111,7 +114,11 @@ class AmoraView(object):
 		coord = (x, y)
 		device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
 		device_list.dbus_obj.discover()
-		self.main_group.part_swallow("list", device_list);
+
+
+	def swallow_item(self, name, devices):
+		print u'Swallow the fucker'
+		self.main_group.part_swallow(name, devices);
 
 
 class AmoraCanvas(object):
