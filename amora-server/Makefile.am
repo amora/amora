@@ -53,7 +53,7 @@ endif
 # by now, amora manpage points to the amorad one
 install-data-hook:
 	mkdir -p $(DESTDIR)$(mandir)/man7/
-	ln -s ../man8/amorad.8 $(DESTDIR)$(mandir)/man7/amora.7
+	ln -sf ../man8/amorad.8 $(DESTDIR)$(mandir)/man7/amora.7
 
 uninstall-hook:
 	rm $(DESTDIR)$(mandir)/man7/amora.7
