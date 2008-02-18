@@ -19,8 +19,13 @@ APP_DATADIR = "/usr/share/amora/"
 
 #The device list and the D-Bus callback that fill in it
 devices = []
+device_list = None
+
 def dbus_device_fill_list(address, name):
+	global device_list
 	devices.append((address, name))
+	device_list.device_item((address, name))
+	print u'Found device: ' + name
 
 
 class AmoraDeviceList(evas.SmartObject):
@@ -100,13 +105,13 @@ class AmoraView(object):
 
 	def on_devices_scan(self, edje_obj, emission, source, data=None):
 		print "@ Scanning devices";
+		global device_list
 
 		x, y, w, h = self.main_group.part_geometry_get("device_list")
 		coord = (x, y)
-		self.device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
-		self.device_list.dbus_obj.discover()
-		self.device_list.fill_device_list()
-		self.main_group.part_swallow("list", self.device_list);
+		device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
+		device_list.dbus_obj.discover()
+		self.main_group.part_swallow("list", device_list);
 
 
 class AmoraCanvas(object):
