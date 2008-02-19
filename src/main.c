@@ -63,21 +63,23 @@ struct amora_s {
 /** Client file descriptor callback
  *
  * @param client_socket the file descriptor itself
+ * @param data the userdata
  *
  * @return 0 on success, -1 otherwise
  *
  */
-static int client_socket_cb(int client_socket);
+static int client_socket_cb(int client_socket, void *data);
 
 
 /** Server file descriptor callback
  *
  * @param server_socket the file descriptor itself
+ * @param data the userdata
  *
  * @return 0 on success, -1 otherwise
  *
  */
-static int server_socket_cb(int server_socket);
+static int server_socket_cb(int server_socket, void *data);
 
 
 /** Show program usage
@@ -208,7 +210,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	loop_add(server_socket, server_socket_cb);
+	loop_add(server_socket, server_socket_cb, NULL);
 
 	snprintf(hci_id, sizeof(hci_id), "hci%d", sd->hci_id);
 
@@ -508,8 +510,10 @@ static void show_usage(const char *path)
 	free(p);
 }
 
-static int client_socket_cb(int client_socket)
+static int client_socket_cb(int client_socket, void *data)
 {
+	(void) data;
+
 	int res = process_events(client_socket, 0);
 
 	if (res == CONN_CLOSE) {
@@ -529,12 +533,14 @@ static int client_socket_cb(int client_socket)
 	return 0;
 }
 
-static int server_socket_cb(int server_socket)
+static int server_socket_cb(int server_socket, void *data)
 {
 	char buffer[20];
 	struct sockaddr rem_addr;
 	unsigned int opt = sizeof(struct sockaddr);
 	int client_socket, flags;
+
+	(void) data;
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
@@ -552,7 +558,7 @@ static int server_socket_cb(int server_socket)
 		client_bluetooth_id(&rem_addr, buffer);
 		log_message(FIL|OUT, amora.log, "Accepted connection. Client"
 				" is %s", buffer);
-		loop_add(client_socket, client_socket_cb);
+		loop_add(client_socket, client_socket_cb, NULL);
 	}
 
 	return client_socket < 0 ? -1 : 0;

@@ -47,14 +47,16 @@ int loop_remove(const int fd);
 
 /** Add a file descriptor to the loop fd_set
  *
- * @param fd the file descriptor itself
- * @param callback the callback that will be called when fd is ready.
  * Note: the callback must return 0 on success and -1 on fail.
+ *
+ * @param fd the file descriptor itself
+ * @param callback the callback that will be called when fd is ready
+ * @param data the userdata passed as parameter to the callback
  *
  * @return 0 on success, -1 otherwise
  *
  */
-int loop_add(const int fd, int (*callback) (int fd));
+int loop_add(const int fd, int (*callback) (int fd, void *data), void *data);
 
 
 /** Loop pooling the file descriptor set

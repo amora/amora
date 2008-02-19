@@ -51,13 +51,15 @@ static int dongle_removed;
 /** D-Bus file descriptor callback
  *
  * @param fd the file descriptor itself
+ * @param data the userdata
  *
  * @return 0 on success, -1 otherwise
  *
  */
-static int dispatch(int fd)
+static int dispatch(int fd, void *data)
 {
 	(void) fd;
+	(void) data;
 
 	/* Shall never block, I hope */
 	dbus_connection_read_write(conn, -1);
@@ -92,7 +94,7 @@ static dbus_bool_t add_watch(DBusWatch *watch, void *data)
 
 	flags = dbus_watch_get_flags(watch);
 	if (flags & DBUS_WATCH_READABLE)
-		loop_add(dbus_watch_get_unix_fd(watch), dispatch);
+		loop_add(dbus_watch_get_unix_fd(watch), dispatch, data);
 
 out:
 	return TRUE;
