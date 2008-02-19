@@ -52,10 +52,10 @@ class dbus_bluetooth(Thread):
         self.obj = self.bus.get_object('org.bluez', '/org/bluez/hci0')
         self.adapter = dbus.Interface(self.obj, 'org.bluez.Adapter')
     def run(self):
+        self.adapter.DiscoverDevices()
         main_loop.run()
     def discover(self):
         global main_loop
-        self.adapter.DiscoverDevices()
         main_loop = gobject.MainLoop()
         self.start()
 
