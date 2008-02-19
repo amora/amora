@@ -61,6 +61,16 @@ int loop_add(const int fd, int (*callback) (int fd, void *data), void *data);
 
 /** Loop pooling the file descriptor set
  *
+ * Preform a single iteration in the file descriptor pool.
+ *
+ * @return 0 on success, -1 otherwise
+ *
+ */
+int loop_iteration(void);
+
+
+/** Loop pooling the file descriptor set
+ *
  * The loop will return when an error occurs with some file descritor
  * in the set or when the set became empty. Otherwise, the loop will
  * run forever.

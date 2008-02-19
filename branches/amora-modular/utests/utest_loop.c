@@ -183,11 +183,27 @@ START_TEST (test_loop_remove)
 }
 END_TEST
 
+START_TEST (test_loop_iteration)
+{
+	loop_add(zero_fd, zero_read, NULL);
+	loop_add(random_fd, random_read, NULL);
+	fail_if(loop_iteration(), "Internal loop_iteration() error!");
+	fail_if(count < 0 || count > 2, "Max of two iterations for 2 fds!");
+	loop_remove(zero_fd);
+	loop_remove(random_fd);
+
+	loop_add(zero_fd, fail_read, NULL);
+	fail_unless(loop_iteration() == -1, "Not return error on fail!");
+}
+END_TEST
+
 START_TEST (test_loop)
 {
 	loop_add(zero_fd, zero_read, NULL);
 	loop_add(random_fd, random_read, NULL);
 	fail_if(loop(), "Internal loop() error!");
+	loop_remove(zero_fd);
+	loop_remove(random_fd);
 
 	loop_add(zero_fd, fail_read, NULL);
 	fail_unless(loop() == -1, "Not return error on fail!");
@@ -203,6 +219,7 @@ TCase *loop_tcase_create(void)
 	tcase_add_test(tc, test_is_empty);
 	tcase_add_test(tc, test_loop_add);
 	tcase_add_test(tc, test_loop_remove);
+	tcase_add_test(tc, test_loop_iteration);
 	tcase_add_test(tc, test_loop);
 
 	return tc;
