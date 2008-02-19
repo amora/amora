@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bluetooth-bluez-dbus.h"
 #include "dbus.h"
 #include "loop.h"
 
