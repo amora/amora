@@ -1,9 +1,9 @@
 /**
  * @file   dbus.c
  * @author Thiago Marcos P. Santos
- * @date   Tue Feb 12 00:07:16 AMT 2008
+ * @date   $LastChangedDate$
  *
- * @brief  D-Bus related functions.
+ * @brief  D-Bus related functions
  *
  */
 
@@ -29,9 +29,6 @@
 #endif
 
 #include <dbus/dbus.h>
-#include <libgen.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "dbus.h"
 #include "loop.h"
@@ -39,13 +36,6 @@
 #ifdef DBUS_COMPAT_MODE
 #define dbus_watch_get_unix_fd dbus_watch_get_fd
 #endif
-
-
-/** Connection handler */
-static DBusConnection *conn;
-
-/* FIXME: find a better way to do this */
-static int dongle_removed;
 
 
 /** D-Bus file descriptor callback
@@ -58,18 +48,16 @@ static int dongle_removed;
  */
 static int dispatch(int fd, void *data)
 {
+	DBusConnection *conn = (DBusConnection *) data;
+
 	(void) fd;
-	(void) data;
 
 	/* Shall never block, I hope */
 	dbus_connection_read_write(conn, -1);
 
 	while (dbus_connection_dispatch(conn) == DBUS_DISPATCH_DATA_REMAINS);
 
-	if (dongle_removed)
-		return -1;
-	else
-		return 0;
+	return 0;
 }
 
 
@@ -135,48 +123,10 @@ static void toggle_watch(DBusWatch *watch, void *data)
 }
 
 
-/** D-Bus signal handler
- *
- * Function called when a signal that match the pre-defined
- * rules arrives.
- *
- * @param connection D-Bus connection
- * @param msg the arrived message
- * @param data userdata (hci device number, i.e. "hci0")
- *
- * @return DBUS_HANDLER_RESULT_{HANDLED,NOT_YET_HANDLED}
- *
- */
-static DBusHandlerResult signal_handler(DBusConnection *connection,
-		DBusMessage *msg, void *data)
-{
-	const char *path, *hci_id = (char *) data;
-	char *basec, *bname;
-
-	(void) connection;
-
-	if (dbus_message_is_signal(msg, "org.bluez.Manager", "AdapterRemoved")) {
-		dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING,
-				&path, DBUS_TYPE_INVALID);
-
-		/* basename() systax is fscking ugly */
-		basec = strdup(path);
-		bname = basename(basec);
-
-		if (strcmp(bname, hci_id) == 0)
-			dongle_removed = 1;
-
-		free(basec);
-	}
-
-	return DBUS_HANDLER_RESULT_HANDLED;
-}
-
-
-int dbus_init(char *hci_id)
+DBusConnection *dbus_init(void)
 {
 	DBusError error;
-	int ret = 0;
+	DBusConnection *conn;
 
 	dbus_error_init(&error);
 	conn = dbus_bus_get(DBUS_BUS_SYSTEM, &error);
@@ -184,14 +134,8 @@ int dbus_init(char *hci_id)
 	if (conn == NULL)
 		goto out;
 
-	if (!dbus_connection_add_filter(conn, signal_handler, (void *) hci_id, NULL))
-		goto out;
-
-	dbus_bus_add_match(conn, "type='signal',interface='org.bluez.Manager',"
-			"member='AdapterRemoved'", &error);
-
 	dbus_connection_set_watch_functions(conn, add_watch,
-				remove_watch, toggle_watch, NULL, NULL);
+			remove_watch, toggle_watch, (void *) conn, NULL);
 
 	/* Flush outgoing queue */
 	dbus_connection_flush(conn);
@@ -199,9 +143,11 @@ int dbus_init(char *hci_id)
 out:
 	if (dbus_error_is_set(&error)) {
 		dbus_error_free(&error);
-		ret = -1;
+
+		/* FIXME: This is a leak? */
+		conn = NULL;
 	}
 
-	return ret;
+	return conn;
 }
 

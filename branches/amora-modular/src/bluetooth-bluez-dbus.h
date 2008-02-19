@@ -1,13 +1,13 @@
 /**
- * @file   dbus.h
+ * @file   bluetooth-bluez-dbus.h
  * @author Thiago Marcos P. Santos
- * @date   Tue Feb 12 00:07:16 AMT 2008
+ * @date   $LastChangedDate$
  *
- * @brief  D-Bus related functions.
+ * @brief  BlueZ with D-Bus functions
  *
  */
 
-/*  Copyright (C) 2008 <tmpsantos@gmail.com>
+/*  Copyright (C) 2008  Thiago Marcos P. Santos <tmpsantos@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,24 +30,23 @@
 
 #ifdef HAVE_DBUS
 
-#ifndef __DBUS_H__
-#define __DBUS_H__
+#ifndef __BLUETOOTH_BLUEZ_DBUS_H__
+#define __BLUETOOTH_BLUEZ_DBUS_H__
 
 #include <dbus/dbus.h>
 
 
-/** Initialize D-Bus subsystem
+/** Register a watch for dongle removal
  *
- * D-Bus connection will be integrated with amora main loop.
- * All messages will be automatically dispatched.
+ * @param conn the D-Bus active connection handler
+ * @param hci_id the hci device to watch for disconnection
  *
- * @return D-Bus handler on success or NULL otherwise
+ * @return 0 on success, -1 otherwise
  *
  */
-DBusConnection *dbus_init(void);
+int dbus_bt_dongle_removed_watch(DBusConnection *conn, char *hci_id);
 
 
-#endif /* __DBUS_H__ */
+#endif /* __BLUETOOTH_BLUEZ_DBUS_H__ */
 
 #endif /* HAVE_DBUS */
-
