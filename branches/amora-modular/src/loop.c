@@ -33,7 +33,9 @@
 /** The loop resource holder */
 static struct loop_set_s {
 	/** The callback for each fd using the fd as index */
-	int (*callback[FD_SETSIZE]) (int fd);
+	int (*callback[FD_SETSIZE]) (int fd, void *data);
+	/** The userdata passed as parameter to the callback */
+	void *data[FD_SETSIZE];
 	/** The fd with max number as required by select() */
 	int nfds;
 	/** The fd set, only ready for reading is supported by now */
@@ -53,7 +55,7 @@ static int dispatch(int fd)
 	if (fd < 0 || fd >= FD_SETSIZE)
 		return -1;
 
-	return loop_set.callback[fd](fd);
+	return loop_set.callback[fd](fd, loop_set.data[fd]);
 }
 
 
@@ -85,7 +87,7 @@ out:
 }
 
 
-int loop_add(const int fd, int (*callback) (int fd))
+int loop_add(const int fd, int (*callback) (int fd, void *data), void *data)
 {
 	int ret = -1;
 
@@ -97,6 +99,7 @@ int loop_add(const int fd, int (*callback) (int fd))
 
 	FD_SET(fd, &loop_set.readfds);
 	loop_set.callback[fd] = callback;
+	loop_set.data[fd] = data;
 
 	if (fd > loop_set.nfds)
 		loop_set.nfds = fd;
@@ -118,6 +121,7 @@ int loop_remove(const int fd)
 	if (FD_ISSET(fd, &loop_set.readfds)) {
 		FD_CLR(fd, &loop_set.readfds);
 		loop_set.callback[fd] = NULL;
+		loop_set.data[fd] = NULL;
 		ret = 0;
 	}
 
