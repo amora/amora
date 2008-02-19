@@ -31,7 +31,13 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
+
+#ifdef HAVE_DBUS
+#include <dbus/dbus.h>
+#endif
 
 #include <fcntl.h>
 #include <libgen.h>
@@ -44,6 +50,7 @@
 
 #include "x11_event.h"
 #include "bluecode.h"
+#include "bluetooth-bluez-dbus.h"
 #include "protocol.h"
 #include "dbus.h"
 #include "log.h"
@@ -57,6 +64,12 @@ struct amora_s {
 	struct log_resource *log;
 	/** X11 display */
 	Display *display;
+
+#ifdef HAVE_DBUS
+	/** D-Bus Connection */
+	DBusConnection *dbus;
+#endif
+
 } amora;
 
 
@@ -215,9 +228,15 @@ int main(int argc, char **argv)
 	snprintf(hci_id, sizeof(hci_id), "hci%d", sd->hci_id);
 
 #ifdef HAVE_DBUS
-	if (dbus_init(hci_id)) {
+	if ((amora.dbus = dbus_init()) == NULL) {
 		log_message(FIL|OUT, amora.log, "Error while initilizing "
 				"D-Bus! Aborting...");
+		return -1;
+	}
+
+	if (dbus_bt_dongle_removed_watch(amora.dbus, hci_id)) {
+		log_message(FIL|OUT, amora.log, "Error while initilizing "
+				"D-Bus with BlueZ! Aborting...");
 		return -1;
 	}
 #endif

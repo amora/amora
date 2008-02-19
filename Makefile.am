@@ -22,7 +22,8 @@ amorad_SOURCES = $(csourcedir)/main.c \
                  $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
 if HAVE_DBUS
-amorad_SOURCES +=  $(csourcedir)/dbus.h $(csourcedir)/dbus.c
+amorad_SOURCES += $(csourcedir)/dbus.h $(csourcedir)/dbus.c \
+                  $(csourcedir)/bluetooth-bluez-dbus.h $(csourcedir)/bluetooth-bluez-dbus.c
 endif
 
 amorad_LDADD = $(LIBBLUEZ_LIBS) $(LIBX11_LIBS) $(LIBXTST_LIBS) $(LIBIMLIB2_LIBS) $(LIBDBUS_LIBS)
