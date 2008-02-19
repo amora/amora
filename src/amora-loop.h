@@ -1,5 +1,5 @@
 /**
- * @file   loop.h
+ * @file   amora-loop.h
  * @author Thiago Marcos P. Santos
  * @date  Sun Dec  9 20:08:53 AMT 2007
  *
@@ -29,8 +29,8 @@
  *
  */
 
-#ifndef __LOOP_H__
-#define __LOOP_H__
+#ifndef __AMORA_LOOP_H__
+#define __AMORA_LOOP_H__
 
 
 /** Remove a file descriptor from the loop set
@@ -81,5 +81,5 @@ int loop_iteration(void);
 int loop(void);
 
 
-#endif /* __LOOP_H__ */
+#endif /* __AMORA_LOOP_H__ */
 

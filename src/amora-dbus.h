@@ -1,5 +1,5 @@
 /**
- * @file   dbus.h
+ * @file   amora-dbus.h
  * @author Thiago Marcos P. Santos
  * @date   Tue Feb 12 00:07:16 AMT 2008
  *
@@ -30,8 +30,8 @@
 
 #ifdef HAVE_DBUS
 
-#ifndef __DBUS_H__
-#define __DBUS_H__
+#ifndef __AMORA_DBUS_H__
+#define __AMORA_DBUS_H__
 
 #include <dbus/dbus.h>
 
@@ -47,7 +47,7 @@
 DBusConnection *dbus_init(void);
 
 
-#endif /* __DBUS_H__ */
+#endif /* __AMORA_DBUS_H__ */
 
 #endif /* HAVE_DBUS */
 

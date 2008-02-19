@@ -1,5 +1,5 @@
 /**
- * @file   log.h
+ * @file   amora-log.h
  * @author Ademar de Souza Reis Jr.
  * @author Milton Soares Filho
  * @author Adenilson Cavalcanti
@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef __LOG_H__
-#define __LOG_H__
+#ifndef __AMORA_LOG_H__
+#define __AMORA_LOG_H__
 
 /** Message destination: log file */
 #define FIL   0x01 << 0
@@ -97,4 +97,5 @@ void log_clean_resources(struct log_resource *resource);
 int log_message(unsigned int ldest, struct log_resource *resource,
 		const char *format, ...);
 
-#endif
+#endif /* __AMORA_LOG_H__ */
+

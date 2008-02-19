@@ -6,13 +6,14 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "utest_loop.h"
-#include "loop.c"
+#include "utest_amora-loop.h"
+#include "amora-loop.c"
 
 
 #define MAX_BYTES 100
 
 static int zero_fd, random_fd, count;
+
 
 static void setup(void)
 {
@@ -23,11 +24,13 @@ static void setup(void)
 	fail_if(random_fd < 0, "Can't open device for testing.");
 }
 
+
 static void teardown(void)
 {
 	close(zero_fd);
 	close(random_fd);
 }
+
 
 static int fail_read(int fd, void *data)
 {
@@ -37,6 +40,7 @@ static int fail_read(int fd, void *data)
 	return -1;
 }
 
+
 static int return_fd_read(int fd, void *data)
 {
 	(void) data;
@@ -44,12 +48,14 @@ static int return_fd_read(int fd, void *data)
 	return fd;
 }
 
+
 static int check_userdata(int fd, void *data)
 {
 	(void) fd;
 
 	return strcmp("userdata", (char *) data);
 }
+
 
 static int zero_read(int fd, void *data)
 {
@@ -73,6 +79,7 @@ static int zero_read(int fd, void *data)
 	return 0;
 }
 
+
 static int random_read(int fd, void *data)
 {
 	static int i = 0;
@@ -93,6 +100,7 @@ static int random_read(int fd, void *data)
 
 	return 0;
 }
+
 
 START_TEST (test_dispatch)
 {
@@ -116,6 +124,7 @@ START_TEST (test_dispatch)
 }
 END_TEST
 
+
 START_TEST (test_is_empty)
 {
 	fail_unless(is_empty(NULL) == -1, "Not returning error on NULL parameter!");
@@ -134,6 +143,7 @@ START_TEST (test_is_empty)
 	fail_unless(is_empty(&loop_set.readfds), "fdset isn't empty!");
 }
 END_TEST
+
 
 START_TEST (test_loop_add)
 {
@@ -156,6 +166,7 @@ START_TEST (test_loop_add)
 	fail_unless(loop_add(random_fd, random_read, NULL) == -1, "Adding fd twice!");
 }
 END_TEST
+
 
 START_TEST (test_loop_remove)
 {
@@ -183,6 +194,7 @@ START_TEST (test_loop_remove)
 }
 END_TEST
 
+
 START_TEST (test_loop_iteration)
 {
 	loop_add(zero_fd, zero_read, NULL);
@@ -197,6 +209,7 @@ START_TEST (test_loop_iteration)
 }
 END_TEST
 
+
 START_TEST (test_loop)
 {
 	loop_add(zero_fd, zero_read, NULL);
@@ -209,6 +222,7 @@ START_TEST (test_loop)
 	fail_unless(loop() == -1, "Not return error on fail!");
 }
 END_TEST
+
 
 TCase *loop_tcase_create(void)
 {

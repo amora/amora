@@ -1,5 +1,5 @@
 /**
- * @file   bluecode.h
+ * @file   bluetooth-wrapper.h
  * @author Adenilson Cavalcanti
  * @date   Tue May  8 09:12:06 2007
  *

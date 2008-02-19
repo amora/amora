@@ -12,17 +12,17 @@ AUTOMAKE_OPTIONS = foreign
 
 # amora itself
 bin_PROGRAMS = amorad
-amorad_SOURCES = $(csourcedir)/main.c \
+amorad_SOURCES = $(csourcedir)/amora.c \
                  $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                  $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
-                 $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \
-                 $(csourcedir)/linux.c \
-                 $(csourcedir)/log.h $(csourcedir)/log.c \
-                 $(csourcedir)/loop.h $(csourcedir)/loop.c \
+                 $(csourcedir)/bluetooth-frontend.c \
+                 $(csourcedir)/bluetooth-wrapper.h $(csourcedir)/bluetooth-bluez.c \
+                 $(csourcedir)/amora-log.h $(csourcedir)/amora-log.c \
+                 $(csourcedir)/amora-loop.h $(csourcedir)/amora-loop.c \
                  $(csourcedir)/imscreen.h $(csourcedir)/imscreen.c
 
 if HAVE_DBUS
-amorad_SOURCES += $(csourcedir)/dbus.h $(csourcedir)/dbus.c \
+amorad_SOURCES += $(csourcedir)/amora-dbus.h $(csourcedir)/amora-dbus.c \
                   $(csourcedir)/bluetooth-bluez-dbus.h $(csourcedir)/bluetooth-bluez-dbus.c
 endif
 
@@ -38,13 +38,13 @@ TESTS = utest
 noinst_PROGRAMS = utest
 utest_SOURCES = $(utestdir)/utest.c \
                 $(utestdir)/utest_libfake.c \
-                $(utestdir)/utest_log.c \
-                $(utestdir)/utest_log.h \
-                $(utestdir)/utest_loop.c \
-                $(utestdir)/utest_loop.h
+                $(utestdir)/utest_amora-log.c \
+                $(utestdir)/utest_amora-log.h \
+                $(utestdir)/utest_amora-loop.c \
+                $(utestdir)/utest_amora-loop.h
 
 if HAVE_DBUS
-utest_SOURCES += $(utestdir)/utest_dbus.h $(utestdir)/utest_dbus.c
+utest_SOURCES += $(utestdir)/utest_amora-dbus.h $(utestdir)/utest_amora-dbus.c
 endif
 
 utest_CPPFLAGS = $(CHECK_FLAGS) $(AM_CPPFLAGS) -I$(csourcedir) $(LIBDBUS_CFLAGS)

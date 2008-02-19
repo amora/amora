@@ -8,13 +8,15 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "utest_log.h"
-#include "log.c"
+#include "utest_amora-log.h"
+#include "amora-log.c"
 
 
-#define LOG_FILE "utest_logfile.log"
+#define LOG_FILE "utest_amora-log.log"
+
 
 static struct log_resource *lres;
+
 
 static void setup(void)
 {
@@ -25,11 +27,13 @@ static void setup(void)
 	fail_if(lres == NULL, "Can't create log resource!");
 }
 
+
 static void teardown(void)
 {
 	log_clean_resources(lres);
 	fail_if(remove(LOG_FILE), "Can't remove logfile!");
 }
+
 
 START_TEST (test_log_build_resources)
 {
@@ -52,12 +56,14 @@ START_TEST (test_log_build_resources)
 }
 END_TEST
 
+
 START_TEST (test_log_clean_resources)
 {
 	/* No return value, let's see if crashes with NULL parameter */
 	log_clean_resources(NULL);
 }
 END_TEST
+
 
 START_TEST (test_log_message)
 {
@@ -103,6 +109,7 @@ START_TEST (test_log_message)
 }
 END_TEST
 
+
 START_TEST (test_get_timestamp)
 {
 	char buffer[100];
@@ -136,6 +143,7 @@ START_TEST (test_get_timestamp)
 	fail_unless(strcmp("Jan 00 00:00:00", buffer) == 0, "Wrong timestamp!");
 }
 END_TEST
+
 
 TCase *log_tcase_create(void)
 {
