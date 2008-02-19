@@ -1,5 +1,5 @@
 /**
- * @file   main.c
+ * @file   amora.c
  * @author Adenilson Cavalcanti
  * @date   Fri May  4 14:25:09 2007
  *
@@ -48,14 +48,14 @@
 #include <string.h>
 #include <time.h>
 
-#include "x11_event.h"
-#include "bluecode.h"
+#include "amora-dbus.h"
+#include "amora-log.h"
+#include "amora-loop.h"
 #include "bluetooth-bluez-dbus.h"
+#include "bluetooth-wrapper.h"
 #include "protocol.h"
-#include "dbus.h"
-#include "log.h"
-#include "loop.h"
 #include "imscreen.h"
+#include "x11_event.h"
 
 
 /** Amora global struct that holds the main resources */

@@ -5,9 +5,9 @@
 #include <check.h>
 #include <stdlib.h>
 
-#include "utest_dbus.h"
-#include "utest_log.h"
-#include "utest_loop.h"
+#include "utest_amora-dbus.h"
+#include "utest_amora-log.h"
+#include "utest_amora-loop.h"
 
 
 static Suite *core_suite(void)
@@ -36,3 +36,4 @@ int main(void)
 
 	return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+

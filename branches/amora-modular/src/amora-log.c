@@ -1,5 +1,5 @@
 /**
- * @file   log.c
+ * @file   amora-log.c
  * @author Ademar de Souza Reis Jr.
  * @author Milton Soares Filho
  * @author Adenilson Cavalcanti
@@ -39,7 +39,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "log.h"
+#include "amora-log.h"
+
 
 /** Length of timestamp buffer */
 #define TIMESTAMP_LENGTH 20
@@ -116,7 +117,7 @@ struct log_resource* log_build_resources(const char *filename)
 			goto failed;
 		}
 		resource->fd = open(resource->log_filename,
-				    O_APPEND|O_WRONLY|O_CREAT, 0644);
+				O_APPEND|O_WRONLY|O_CREAT, 0644);
 		if (resource->fd < 0) {
 			perror("Error opening log file");
 			goto failed;
@@ -167,14 +168,14 @@ int log_message(unsigned int ldest, struct log_resource *resource,
 	/* Log to file, timestamp  included */
 	if (ldest & FIL) {
 		if (get_timestamp(resource->timestamp,
-				  resource->ts_length) == -1)
+				resource->ts_length) == -1)
 			goto out_va;
 
 		snprintf(resource->message, resource->length - 1, "[%s]: %s\n",
 				resource->timestamp, resource->buffer);
 		if (resource->fd >= 0)
 			write(resource->fd, resource->message,
-			      strlen(resource->message));
+					strlen(resource->message));
 	}
 
 	/* log to stdout */

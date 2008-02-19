@@ -1,7 +1,7 @@
 #include <check.h>
 
-#include "utest_dbus.h"
-#include "dbus.c"
+#include "utest_amora-dbus.h"
+#include "amora-dbus.c"
 
 
 static void setup(void)

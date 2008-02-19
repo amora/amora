@@ -34,9 +34,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "amora-dbus.h"
 #include "bluetooth-bluez-dbus.h"
-#include "dbus.h"
-#include "loop.h"
 
 
 /** D-Bus signal handler

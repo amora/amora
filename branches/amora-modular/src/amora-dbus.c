@@ -1,5 +1,5 @@
 /**
- * @file   dbus.c
+ * @file   amora-dbus.c
  * @author Thiago Marcos P. Santos
  * @date   $LastChangedDate$
  *
@@ -30,8 +30,8 @@
 
 #include <dbus/dbus.h>
 
-#include "dbus.h"
-#include "loop.h"
+#include "amora-dbus.h"
+#include "amora-loop.h"
 
 #ifdef DBUS_COMPAT_MODE
 #define dbus_watch_get_unix_fd dbus_watch_get_fd

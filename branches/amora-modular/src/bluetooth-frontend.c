@@ -1,5 +1,5 @@
 /**
- * @file   bluecode.c
+ * @file   bluetooth-frontend.c
  * @author teste
  * @date   Thu Dec  6 18:14:25 2007
  *
@@ -34,8 +34,6 @@
 /** strnlen is GNU extension, this makes the compiler happy. */
 #define _GNU_SOURCE
 
-#include "bluecode.h"
-#include "protocol.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,6 +48,9 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <errno.h>
+
+#include "bluetooth-wrapper.h"
+#include "protocol.h"
 /** Linux sendfile is failing (probably I'm not using it correctly). */
 #define STRANGE_BUG
 

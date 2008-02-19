@@ -9,7 +9,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(Amora Server, 1.0svn, savagobr@yahoo.com, amora-server)
 AC_PREREQ(2.58)
 
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/amora.c])
 AC_CONFIG_AUX_DIR([scripts])
 AC_CONFIG_MACRO_DIR([m4])
 

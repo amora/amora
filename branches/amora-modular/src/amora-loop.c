@@ -1,5 +1,5 @@
 /**
- * @file   loop.c
+ * @file   amora-loop.c
  * @author Thiago Marcos P. Santos
  * @date   Sun Dec  9 20:08:53 AMT 2007
  *
@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <sys/select.h>
 
-#include "loop.h"
+#include "amora-loop.h"
 
 
 /** The loop resource holder */
