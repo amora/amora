@@ -1,9 +1,0 @@
-Now your cellphone is connected with the PC amora server.
-
-If you wish to send commands:
-  - In menu option, select
-	'Start'
-
-You can also disconnect the cellphone. For this:
-  - In menu option, select
-	'Disconnect'
