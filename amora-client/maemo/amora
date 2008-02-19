@@ -82,11 +82,6 @@ class AmoraDeviceList(evas.SmartObject):
 		device_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
 		device_group.show()
 
-	def fill_device_list(self):
-		global devices
-		for item in devices:
-			self.device_item(item)
-
 
 	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
 		print "> on_mouse_clicked: " + source
