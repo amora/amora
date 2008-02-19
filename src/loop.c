@@ -87,6 +87,44 @@ out:
 }
 
 
+/** Loop pooling the file descriptor set
+ *
+ * The loop will return when an error occurs with some file descritor
+ * in the set or when the set became empty. Otherwise, the loop will
+ * run forever, unless is_iteration is set.
+ *
+ * @param is_iteration When true, the loop will perform only one iteration
+ *
+ * @return 0 on success, -1 otherwise
+ *
+ */
+static int loop_run(const int is_iteration)
+{
+	fd_set readfds;
+	int i , ret = 0;
+
+	readfds = loop_set.readfds;
+
+	while (select(loop_set.nfds + 1, &readfds, NULL, NULL, NULL) > 0) {
+		for (i = 0; i <= loop_set.nfds; i++) {
+			if (!FD_ISSET(i, &readfds))
+				continue;
+
+			if ((ret = dispatch(i)) < 0)
+				goto out;
+		}
+
+		if (is_iteration || is_empty(&loop_set.readfds))
+			goto out;
+
+		readfds = loop_set.readfds;
+	}
+
+out:
+	return ret;
+}
+
+
 int loop_add(const int fd, int (*callback) (int fd, void *data), void *data)
 {
 	int ret = -1;
@@ -137,29 +175,14 @@ out:
 }
 
 
+int loop_iteration(void)
+{
+	return loop_run(1);
+}
+
+
 int loop(void)
 {
-	fd_set readfds;
-	int i , ret = 0;
-
-	readfds = loop_set.readfds;
-
-	while (select(loop_set.nfds + 1, &readfds, NULL, NULL, NULL) > 0) {
-		for (i = 0; i <= loop_set.nfds; i++) {
-			if (!FD_ISSET(i, &readfds))
-				continue;
-
-			if ((ret = dispatch(i)) < 0)
-				goto out;
-		}
-
-		if (is_empty(&loop_set.readfds))
-			goto out;
-
-		readfds = loop_set.readfds;
-	}
-
-out:
-	return ret;
+	return loop_run(0);
 }
 
