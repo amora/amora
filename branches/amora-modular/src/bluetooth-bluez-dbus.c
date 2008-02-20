@@ -43,7 +43,7 @@
  * Function called when a signal that match the pre-defined
  * rules arrives.
  *
- * @param connection D-Bus connection
+ * @param conn D-Bus connection
  * @param msg the arrived message
  * @param data userdata (hci device number, i.e. "hci0")
  *
