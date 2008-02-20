@@ -1,5 +1,13 @@
-/*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
+/**
+ * @file   x11_event.c
+ * @author Adenilson Cavalcanti
+ * @date   $LastChangedDate$
  *
+ * @brief  XEvents module.
+ *
+ */
+
+/*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -1,7 +1,7 @@
 /**
  * @file   amora.c
  * @author Adenilson Cavalcanti
- * @date   Fri May  4 14:25:09 2007
+ * @date   $LastChangedDate$
  *
  * @brief  Main server side presenter app.
  *

@@ -1,5 +1,13 @@
-/*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
+/**
+ * @file   protocol.c
+ * @author Adenilson Cavalcanti
+ * @date   $LastChangedDate$
  *
+ * @brief  Protocol handling functions/codes goes here.
+ *
+ */
+
+/*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

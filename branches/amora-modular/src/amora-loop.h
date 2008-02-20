@@ -1,14 +1,9 @@
 /**
  * @file   amora-loop.h
  * @author Thiago Marcos P. Santos
- * @date  Sun Dec  9 20:08:53 AMT 2007
+ * @date   $LastChangedDate$
  *
  * @brief Main loop handler.
- *
- * \todo
- * - this implementation of loop can prove itself useful for
- * other projects and it can be a good idea to move it to an
- * independent library (uloop library).
  *
  */
 

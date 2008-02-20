@@ -1,13 +1,13 @@
 /**
  * @file   amora-dbus.h
  * @author Thiago Marcos P. Santos
- * @date   Tue Feb 12 00:07:16 AMT 2008
+ * @date   $LastChangedDate$
  *
  * @brief  D-Bus related functions.
  *
  */
 
-/*  Copyright (C) 2008 <tmpsantos@gmail.com>
+/*  Copyright (C) 2008  Thiago Marcos P. Santos <tmpsantos@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
