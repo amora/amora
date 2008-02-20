@@ -1,7 +1,7 @@
 /**
  * @file   x11_event.h
  * @author Adenilson Cavalcanti
- * @date   Fri May  4 14:10:49 2007
+ * @date   $LastChangedDate$
  *
  * @brief  XEvents module.
  *
@@ -13,7 +13,6 @@
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

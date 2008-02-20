@@ -1,7 +1,7 @@
 /**
  * @file   bluetooth-frontend.c
- * @author teste
- * @date   Thu Dec  6 18:14:25 2007
+ * @author Adenilson Cavalcanti
+ * @date   $LastChangedDate$
  *
  * @brief  POSIX/ANSIC code for communication.
  *
@@ -13,7 +13,6 @@
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -1,7 +1,7 @@
 /**
  * @file   amora-loop.c
  * @author Thiago Marcos P. Santos
- * @date   Sun Dec  9 20:08:53 AMT 2007
+ * @date   $LastChangedDate$
  *
  * @brief  Main loop handler
  *

@@ -1,7 +1,7 @@
 /**
  * @file   bluetooth-bluez.c
  * @author Adenilson Cavalcanti
- * @date   Tue May 15 22:54:03 2007
+ * @date   $LastChangedDate$
  *
  * @brief  Linux bluetooth code.
  *
@@ -13,7 +13,6 @@
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

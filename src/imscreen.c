@@ -1,7 +1,7 @@
 /**
  * @file   imscreen.c
  * @author Adenilson Cavalcanti
- * @date   Tue Aug 28 13:27:13 2007
+ * @date   $LastChangedDate$
  *
  * @brief  Screenshot and image handling module.
  *
@@ -10,7 +10,6 @@
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -3,7 +3,7 @@
  * @author Ademar de Souza Reis Jr.
  * @author Milton Soares Filho
  * @author Adenilson Cavalcanti
- * @date  Tue Jul 10 16:09:20 2007
+ * @date   $LastChangedDate$
  *
  * @brief Amora Log system definitions.
  *

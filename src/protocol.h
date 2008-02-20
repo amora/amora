@@ -1,7 +1,7 @@
 /**
  * @file   protocol.h
  * @author Adenilson Cavalcanti
- * @date   Tue May  8 09:08:59 2007
+ * @date   $LastChangedDate$
  *
  * @brief  Protocol handling functions/codes goes here.
  *
@@ -13,7 +13,6 @@
  */
 
 /*  Copyright (C) 2007  Adenilson Cavalcanti <savagobr@yahoo.com>
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
