@@ -157,7 +157,7 @@ static DBusHandlerResult signal_handler(DBusConnection *connection,
 		dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING,
 				&path, DBUS_TYPE_INVALID);
 
-		/* basename() systax is awful ugly */
+		/* basename() syntax is awful ugly */
 		basec = strdup(path);
 		bname = basename(basec);
 
