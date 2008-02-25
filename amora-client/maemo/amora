@@ -36,6 +36,7 @@ import evas
 import sys
 import os
 import dbus_discover
+import btio
 
 WIDTH_DFL = 800
 HEIGHT_DFL = 480
@@ -45,19 +46,20 @@ APP_TITLE = "Amora Client"
 APP_WM_INFO = ("Amora Client", "amora-client")
 APP_DATADIR = "/usr/share/amora/"
 
-#The device list (MAC adddress, Human readable name)
-devices = []
+#The device dictionary (Human readable name, MAC adddress)
+devices = {}
 
 #Application objects
 device_list = None
 view = None
 canvas = None
+bt_socket = btio.bt()
 
 #D-Bus callback used in discover process
 def dbus_device_fill_list(address, name):
 	global device_list
 	global view
-	devices.append((address, name))
+	devices[name] = address
 	device_list.device_item((address, name))
 	view.swallow_item("list", device_list)
 	print u'Found device: ' + name
@@ -85,6 +87,11 @@ class AmoraDeviceList(evas.SmartObject):
 
 	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
 		print "> on_mouse_clicked: " + source
+		device_name = edje_obj.part_text_get("device_name")
+		print 'name = ' + device_name + '\taddress = ' + devices[device_name]
+		bt_socket.close()
+		bt_socket.connect(devices[device_name])
+
 
 class AmoraView(object):
 	def __init__(self, ecanvas):
