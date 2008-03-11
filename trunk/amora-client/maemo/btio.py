@@ -78,11 +78,12 @@ class bt:
 
         port = service_description[0]['port']
         try:
-            print u'bt.connect: trying to connect...'
+            print u'bt.connect: trying to connect in port ' + str(port)
             self.socket.connect((device_mac, port))
             print u'bt.connect: connected.'
-        except:
+        except ValueError:
             print u'bt.connect: Failed to connect!'
+            print str(ValueError)
 
         return 0
 
