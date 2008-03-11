@@ -29,6 +29,7 @@ import bluetooth
 class bt:
     def __init__(self):
         self.socket = bluetooth.BluetoothSocket()
+        self.connected = False
 
     def device_named_list(self):
         '''
@@ -78,9 +79,10 @@ class bt:
 
         port = service_description[0]['port']
         try:
-            print u'bt.connect: trying to connect in port ' + str(port)
+            print u'bt.connect: port = ' + str(port) + '\tmac = ' + device_mac
             self.socket.connect((device_mac, port))
             print u'bt.connect: connected.'
+            self.connected = True
         except ValueError:
             print u'bt.connect: Failed to connect!'
             print str(ValueError)
@@ -90,7 +92,10 @@ class bt:
     def close(self):
         try:
             print u'bt.close: trying to close socket...'
-            self.socket.close()
+            if self.connected:
+                self.socket.close()
+            else:
+                print u'The socket is not open.'
             print u'bt.close: done.'
         except:
             print u'bt.close: Failed closing socket!'
