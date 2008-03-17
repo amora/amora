@@ -2,7 +2,7 @@
 
 #define AMORA_BG1         "images/background_bottom_pink_black.png"
 #define AMORA_BG2         "images/background_top_white_black2.png"
-#define AMORA_CONNECT     "images/connect.png"
+#define AMORA_SCAN     "images/scan_device.png"
 #define AMORA_OPTIONS     "images/options.png"
 #define AMORA_EXIT        "images/exit.png"
 #define AMORA_ZZZ         "images/zzz.png"
@@ -20,7 +20,7 @@ fonts {
 images {
    image: AMORA_BG1 LOSSY 100;
    image: AMORA_BG2 LOSSY 100;
-   image: AMORA_CONNECT COMP;
+   image: AMORA_SCAN COMP;
    image: AMORA_PENGUIN COMP;
    image: AMORA_PENGUIN_OFF COMP;
    image: AMORA_OPTIONS COMP;
@@ -138,7 +138,7 @@ collections {
          }
 
          part {
-            name: "connect_button";
+            name: "scan_button";
             type: IMAGE;
             mouse_events: 1;
 
@@ -150,12 +150,12 @@ collections {
                rel1 { relative: 1.0 0.0; offset: -125 0; }
                rel2 { relative: 1.0 0.0; offset: 0 250; }
 
-               image { normal: AMORA_CONNECT; }
+               image { normal: AMORA_SCAN; }
             }
          }
 
          part {
-            name: "connect_text";
+            name: "scan_text";
             type: TEXT;
             mouse_events: 1;
             effect: SOFT_SHADOW;
@@ -163,11 +163,11 @@ collections {
             description {
                state: "default" 0.0;
 
-               rel1 { relative: 0.0 0.0; offset: 0 100; to: "connect_button"; }
-               rel2 { relative: 1.0 1.0; offset: 0 0; to: "connect_button"; }
+               rel1 { relative: 0.0 0.0; offset: 0 100; to: "scan_button"; }
+               rel2 { relative: 1.0 1.0; offset: 0 0; to: "scan_button"; }
 
                text {
-                  text: "Connect";
+                  text: "Scan";
                   font: "NokiaSansBold";
                   size: 20;
                }
@@ -184,8 +184,8 @@ collections {
                min: 80 80;
                max: 80 80;
 
-               rel1 { relative: 0.0 0.0; offset: 0 75; to: "connect_button"; }
-               rel2 { relative: 1.0 1.0; offset: 0 175; to: "connect_button"; }
+               rel1 { relative: 0.0 0.0; offset: 0 75; to: "scan_button"; }
+               rel2 { relative: 1.0 1.0; offset: 0 175; to: "scan_button"; }
 
                image { normal: AMORA_OPTIONS; }
             }
@@ -291,7 +291,7 @@ collections {
          program {
             name: "scan_devices";
             signal: "mouse,clicked,*";
-            source: "connect_button";
+            source: "scan_button";
             action: STATE_SET "on" 0.0;
             transition: SINUSOIDAL 0.5;
             target: "device_list_bg";
@@ -300,7 +300,7 @@ collections {
 
          program {
             name: "build_device_list";
-            action: SIGNAL_EMIT "scan_devices" "connect_button";
+            action: SIGNAL_EMIT "scan_devices" "scan_button";
             in: 1.0 0.0;
          }
 
