@@ -90,14 +90,19 @@ class bt:
         return 0
 
 
-    #Write a command line, adding a newline at end of string
     def write_line(self, command):
+        '''
+        Write a command line, adding a newline at end of string.
+        '''
         if self.socket != None:
             if self.connected == True:
                 self.socket.send(command + '\n')
 
 
     def close(self):
+        '''
+        Send protocol close command to amora server and close socket.
+        '''
         try:
             print u'bt.close: trying to close socket...'
             if self.connected:
