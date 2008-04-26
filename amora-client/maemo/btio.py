@@ -89,10 +89,19 @@ class bt:
 
         return 0
 
+
+    #Write a command line, adding a newline at end of string
+    def write_line(self, command):
+        if self.socket != None:
+            if self.connected == True:
+                self.socket.send(command + '\n')
+
+
     def close(self):
         try:
             print u'bt.close: trying to close socket...'
             if self.connected:
+                self.write_line(u'CONN_CLOSE')
                 self.socket.close()
             else:
                 print u'The socket is not open.'
