@@ -81,7 +81,8 @@ int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
 	int s, res;
 	s = res = -1;
 
-	sd->hci_id = check_device();
+	if (sd->hci_id == -1)
+		sd->hci_id = check_device();
 
 	if (sd->hci_id == -1)
 		goto error;
