@@ -67,6 +67,7 @@ struct service_description *build_sd(int channel)
 	if (!sd)
 		goto mem_error;
 
+	sd->hci_id = -1;
 	sd->channel = channel;
 	sd->uuid = 0xAFFF;
 	sd->service_name = strdup("Amora: assistant");
