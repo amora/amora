@@ -137,6 +137,7 @@ class AmoraView(object):
 		print "! Mouse Clicked: " + source
 
 		if source == "exit_button":
+			bt_socket.close()
 			ecore.main_loop_quit()
 
 	def on_devices_scan(self, edje_obj, emission, source, data=None):
