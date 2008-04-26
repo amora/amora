@@ -141,18 +141,18 @@ static int process_events(int fd, int clean_up);
  */
 int main(int argc, char **argv)
 {
-	int server_socket, client_socket, channel = 10, res;
+	int server_socket, client_socket, channel = 10, res, hci = -1;
 	int clean_up = 0;
 	struct service_description *sd = NULL;
 	char arg, hci_id[6];
 	const char *logfile = NULL;
 
-	if (argc > 4) {
+	if (argc > 5) {
 		show_usage(argv[0]);
 		return -1;
 	}
 
-	while ((arg = getopt(argc, argv, "l:hv")) != -1) {
+	while ((arg = getopt(argc, argv, "l:i:hv")) != -1) {
 		switch (arg) {
 			case 'l':
 				logfile = optarg;
@@ -164,6 +164,9 @@ int main(int argc, char **argv)
 				printf("%s (build %s)\n", PACKAGE_STRING,
 						BUILDVERSION);
 				return 0;
+			case 'i':
+			        hci = atoi(optarg);
+				break;
 			default:
 				return -1;
 		}
@@ -201,6 +204,7 @@ int main(int argc, char **argv)
 	}
 
 	/* Socket creation */
+	sd->hci_id = hci;
 	server_socket = build_bluetooth_socket(channel, sd);
 	if (server_socket == -1) {
 		log_message(FIL|OUT, amora.log, "Failed creating bluetooth conn!"
@@ -498,11 +502,12 @@ static void show_usage(const char *path)
 
 	name = basename(p);
 
-	printf("Usage: %s [-l logfile] [-h] [-v]\n"
+	printf("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
 	       "\n"
 	       "  -h             show this help message and exit;\n"
 	       "  -l logfile     set the log file path (default is disabled);\n"
 	       "  -v             show version and exit.\n"
+	       "  -i hci_number  set the bluetooth dongle device to use\n"
 	       "\n", name);
 
 	free(p);
