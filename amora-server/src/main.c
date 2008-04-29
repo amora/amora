@@ -539,7 +539,7 @@ static int server_socket_cb(int server_socket)
 	char buffer[20];
 	struct sockaddr rem_addr;
 	unsigned int opt = sizeof(struct sockaddr);
-	int client_socket, flags;
+	int client_socket;
 
 	memset(&rem_addr, 0, sizeof(struct sockaddr));
 
@@ -550,10 +550,6 @@ static int server_socket_cb(int server_socket)
 		log_message(FIL|OUT, amora.log, "Failed opening connection,"
 				" exiting...");
 	else {
-		flags = fcntl(client_socket, F_GETFL);
-		flags |= O_NONBLOCK;
-		fcntl(client_socket, F_SETFL, flags);
-
 		client_bluetooth_id(&rem_addr, buffer);
 		log_message(FIL|OUT, amora.log, "Accepted connection. Client"
 				" is %s", buffer);
