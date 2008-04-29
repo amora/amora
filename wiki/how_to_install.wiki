@@ -78,6 +78,19 @@ http://amora.googlecode.com/svn/wiki/without07.jpg
 http://amora.googlecode.com/svn/wiki/without08.jpg
 
 
+=== Symbian certificate control ===
+
+It might happen Amora installation fail in silence thanks to Symbian certificate test (currently the SIS is signed with a fake certicate). As a workaround, you can turn certificate check acessing 'Application Manager' app and changing the setting as bellow:
+
+
+http://amora.googlecode.com/svn/wiki/sec01.jpg
+
+http://amora.googlecode.com/svn/wiki/sec02.jpg
+
+http://amora.googlecode.com/svn/wiki/sec03.jpg
+
+
+
 == PC server ==
 
 === Ubuntu users ===
