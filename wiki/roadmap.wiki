@@ -13,7 +13,7 @@ What is next for amora
 
  * client: SIS package, stopwatch, configuration screen (screenshot timeout, mouse cursor delta), time based continuous keypressing support (left/right arrow keys)
 
-= Version 1.1 (April ending) =
+= Version 1.1 (May ending) =
 
  * server: detect bluetooth dongle connection/disconnection, utests
 
