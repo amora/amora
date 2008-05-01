@@ -37,6 +37,7 @@ class protocol:
         self.width = width
         self.height = height
 
+
     def comm_channel(self, socket_obj):
         '''
         Use this to set a communication channel object (someone that provides
