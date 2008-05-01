@@ -28,18 +28,31 @@ import btio
 
 class protocol:
     def __init__(self, width = 800, height = 480):
+        '''
+        Default constructor, accepts as arguments the client window
+        width and height.
+        '''
         self.socket_obj = None
         #TODO: provide a way to programatically get the screen resolution
         self.width = width
         self.height = height
 
     def comm_channel(self, socket_obj):
+        '''
+        Use this to set a communication channel object (someone that provides
+        a 'write_line' method and has *already* an open socket with server).
+        '''
         if self.socket_obj != None:
             self.socket_obj.close()
         self.socket_obj = socket_obj
 
 
     def connect(self):
+        '''
+        Assuming a communication object with an open socket with Amora server,
+        this method will send connection protocol commands to server (like
+        screen resolution, etc).
+        '''
         if self.socket_obj == None:
             print u'protocol: It needs a socket object!'
             return
