@@ -65,7 +65,7 @@ class protocol:
 
     def send_key(self, keycode = None):
         '''
-        Sends to Amora server command string
+        Sends to Amora server command string.
         '''
         if keycode == None:
             print u'protocol.send_key: missing keycode parameter'
@@ -73,4 +73,14 @@ class protocol:
 
         self.socket_obj.write_line(keycode)
 
+
+#Usage of class
+# comm = btio.bt()
+# comm.connect()
+
+# obj = protocol()
+# obj.comm_channel(comm)
+# obj.send_key('ENTER')
+
+# comm.close()
 
