@@ -65,7 +65,10 @@ class protocol:
 
     def send_key(self, keycode = None):
         '''
-        Sends to Amora server command string.
+        Sends to Amora server command string. Im not completely happy
+        with this design, since the user of this class will still need to
+        known amora protocol, but it still is better than have 1 method
+        for each key.
         '''
         if keycode == None:
             print u'protocol.send_key: missing keycode parameter'
@@ -75,6 +78,10 @@ class protocol:
 
 
     def mouse_button(self, key = None, hold = False):
+        '''
+        Sends a mouse button event to server (at least mouse hold pressing
+        logic can be abstracted here).
+        '''
         if key == None:
             print u'protocol.mouse_button: missing key parameter'
             return
