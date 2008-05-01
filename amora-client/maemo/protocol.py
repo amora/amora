@@ -96,13 +96,22 @@ class protocol:
             self.socket_obj.write_line(u'MOUSE_BUTTON_PRESS')
 
 
-#Usage of class
+# ## Usage of class ##
+# import time
+
+# #Initialization
 # comm = btio.bt()
 # comm.connect()
-
 # obj = protocol()
 # obj.comm_channel(comm)
+
+# #Key event
 # obj.send_key(u'ENTER')
+# time.sleep(8)
+
+# #Mouse hold event
+# obj.mouse_button(u'MOUSE_BUTTON_LEFT', True)
+# time.sleep(8)
 # obj.mouse_button(u'MOUSE_BUTTON_LEFT')
 
 # comm.close()
