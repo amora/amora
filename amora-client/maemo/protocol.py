@@ -74,13 +74,28 @@ class protocol:
         self.socket_obj.write_line(keycode)
 
 
+    def mouse_button(self, key = None, hold = False):
+        if key == None:
+            print u'protocol.mouse_button: missing key parameter'
+            return
+
+        if hold == False:
+            self.socket_obj.write_line(key)
+            self.socket_obj.write_line(u'MOUSE_BUTTON_PRESS')
+            self.socket_obj.write_line(u'MOUSE_BUTTON_RELEASE')
+        elif hold == True:
+            self.socket_obj.write_line(key)
+            self.socket_obj.write_line(u'MOUSE_BUTTON_PRESS')
+
+
 #Usage of class
 # comm = btio.bt()
 # comm.connect()
 
 # obj = protocol()
 # obj.comm_channel(comm)
-# obj.send_key('ENTER')
+# obj.send_key(u'ENTER')
+# obj.mouse_button(u'MOUSE_BUTTON_LEFT')
 
 # comm.close()
 
