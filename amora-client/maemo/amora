@@ -55,7 +55,7 @@ device_list = None
 view = None
 canvas = None
 bt_socket = btio.bt()
-prot_obj = protocol.protocol(WIDTH_DFL, HEIGHT_DFL)
+prot_obj = None
 
 #D-Bus callback used in discover process
 def dbus_device_fill_list(address, name):
@@ -77,24 +77,33 @@ class AmoraDeviceList(evas.SmartObject):
 		self.dbus_obj = dbus_discover.dbus_bluetooth()
 		self.dbus_obj.set_callback(dbus_device_fill_list)
 
+
 	def device_item(self, device_data):
 		device_group = edje.Edje(self.ecanvas)
 		device_group.file_set(self.edje_file, "device_item")
 		device_group.part_text_set("device_name", device_data[1])
 		device_group.move(self.coord[0], self.coord[1])
 		self.coord = (self.coord[0], self.coord[1] + 40)
-		device_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
+		device_group.signal_callback_add("mouse,clicked,*", "*",
+						 self.on_mouse_clicked)
 		device_group.show()
 
 
 	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
+		global prot_obj
 		print "> on_mouse_clicked: " + source
 		device_name = edje_obj.part_text_get("device_name")
 		print 'name = ' + device_name + '\taddress = ' + devices[device_name]
+
 		bt_socket.close()
 		bt_socket.connect(devices[device_name])
+
+		if prot_obj == None:
+			prot_obj = protocol.protocol(WIDTH_DFL, HEIGHT_DFL)
+
 		prot_obj.comm_channel(bt_socket)
 		prot_obj.connect()
+
 
 
 class AmoraView(object):
@@ -105,12 +114,16 @@ class AmoraView(object):
 			self.edje_file = sys.argv[1]
 		else:
 			# do not hardcode edje file path
-			self.edje_file = APP_DATADIR + os.path.basename(sys.argv[0]) + ".edj"
+			self.edje_file = APP_DATADIR
+			+ os.path.basename(sys.argv[0]) + ".edj"
 
 		try:
-			self.main_group = edje.Edje(self.ee.evas, file=self.edje_file, group="main")
+			self.main_group = edje.Edje(self.ee.evas,
+						    file=self.edje_file,
+						    group="main")
 		except edje.EdjeLoadError, e:
-			raise SystemExit("Error loading %s (%s)" % (self.edje_file, e))
+			raise SystemExit("Error loading %s (%s)" %
+					 (self.edje_file, e))
 
 		self.main_group.size = self.ee.evas.size
 		self.ee.data["main"] = self.main_group
@@ -118,12 +131,17 @@ class AmoraView(object):
 		self.main_group.show()
 		self.main_group.focus = True
 
-		self.main_group.signal_callback_add("mouse,down,*", "*", self.on_mouse_down)
-		self.main_group.signal_callback_add("mouse,up,*", "*", self.on_mouse_up)
-		self.main_group.signal_callback_add("mouse,clicked,*", "*", self.on_mouse_clicked)
-		self.main_group.signal_callback_add("scan_devices", "*", self.on_devices_scan)
+		self.main_group.signal_callback_add("mouse,down,*", "*",
+						    self.on_mouse_down)
+		self.main_group.signal_callback_add("mouse,up,*", "*",
+						    self.on_mouse_up)
+		self.main_group.signal_callback_add("mouse,clicked,*", "*",
+						    self.on_mouse_clicked)
+		self.main_group.signal_callback_add("scan_devices", "*",
+						    self.on_devices_scan)
 
 		self.main_group.on_key_down_add(self.on_key_down)
+
 
 	def on_key_down(self, obj, event):
 		if event.keyname == "Escape":
@@ -131,11 +149,14 @@ class AmoraView(object):
 		elif event.keyname == "F6":
 			self.ee.fullscreen = not self.ee.fullscreen
 
+
 	def on_mouse_down(self, edje_obj, emission, source, data=None):
 		print "> Mouse Down: " + source
 
+
 	def on_mouse_up(self, edje_obj, emission, source, data=None):
 		print "< Mouse Up:   " + source
+
 
 	def on_mouse_clicked(self, edje_obj, emission, source, data=None):
 		print "! Mouse Clicked: " + source
@@ -144,19 +165,22 @@ class AmoraView(object):
 			bt_socket.close()
 			ecore.main_loop_quit()
 
+
 	def on_devices_scan(self, edje_obj, emission, source, data=None):
 		print "@ Scanning devices";
 		global device_list
 
 		x, y, w, h = self.main_group.part_geometry_get("device_list")
 		coord = (x, y)
-		device_list = AmoraDeviceList(self.ee.evas, self.edje_file, coord)
+		device_list = AmoraDeviceList(self.ee.evas, self.edje_file,
+					      coord)
 		device_list.dbus_obj.discover()
 
 
 	def swallow_item(self, name, devices):
 		print u'Swallow the fucker'
 		self.main_group.part_swallow(name, devices);
+
 
 
 class AmoraCanvas(object):
@@ -186,11 +210,13 @@ class AmoraCanvas(object):
 
 		self.ee.show()
 
+
 	def on_resize(self, ee):
 		x, y, w, h = ee.evas.viewport
 		size = (w, h)
 		for key in ee.data.keys():
 			ee.data[key].size = size
+
 
 	def on_delete_request(self, ee):
 		ecore.main_loop_quit()
@@ -200,22 +226,31 @@ if  __name__  == "__main__":
 	from optparse import OptionParser
 
 	def parse_size(option, opt, value, parser):
+		global WIDTH_DFL, HEIGHT_DFL
 		try:
 			w, h = value.split("x")
 			w = int(w)
 			h = int(h)
+			print 'w = ' + str(w) + '\th= ' + str(h)
+			print str(WIDTH_DFL) + '\t' + str(HEIGHT_DFL)
+			WIDTH_DFL = w
+			HEIGHT_DFL = h
+			print str(WIDTH_DFL) + '\t' + str(HEIGHT_DFL)
 		except Exception, e:
-			raise optparse.OptionValueError("Invalid option: %s" % option)
+			raise optparse.OptionValueError("Invalid option: %s" %
+							option)
 		parser.values.size = (w, h)
 
 	opt = OptionParser(usage="usage: %prog [options]")
 	opt.add_option("-s", "--size", type="string", metavar="WxH",
 					action="callback", callback=parse_size,
 					default=(WIDTH_DFL, HEIGHT_DFL),
-					help="Show application in window WxH, default=%default")
+					help="Show application in window WxH,\
+					default=%default")
 
 	opt.add_option("-f", "--fps", type="int", default=FPS_DFL,
-					help="Frames per second, default=%default")
+					help="Frames per second, \
+					default=%default")
 
 	opt.add_option("-n", "--no-fullscreen", action="store_true",
 					help="Show application in fullscreen")
@@ -224,7 +259,8 @@ if  __name__  == "__main__":
 
 	edje.frametime_set(1.0/options.fps)
 
-	canvas = AmoraCanvas(size=options.size, fullscreen=not options.no_fullscreen)
+	canvas = AmoraCanvas(size=options.size, fullscreen=not
+			     options.no_fullscreen)
 
 	view = AmoraView(canvas)
 
