@@ -62,3 +62,15 @@ class protocol:
         self.socket_obj.write_line(str(self.width))
         self.socket_obj.write_line(str(self.height))
 
+
+    def send_key(self, keycode = None):
+        '''
+        Sends to Amora server command string
+        '''
+        if keycode == None:
+            print u'protocol.send_key: missing keycode parameter'
+            return
+
+        self.socket_obj.write_line(keycode)
+
+
