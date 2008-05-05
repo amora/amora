@@ -134,12 +134,13 @@ For server side, to compile the source code, you will need:
   * XTest libs
   * BlueZ libs
   * Imlib2 libs
+  * D-BUS libs
 
 And also XTest extension enabled in you X server (default on Ubuntu). So,
 in Ubuntu simply run in your terminal:
 
 {{{
-$ sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev
+$ sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev libdbus-1-dev
 }}}
 
 *remark*: you might need 'pkg-config' if you don't have it installed already.
