@@ -69,7 +69,13 @@ void destroy_sd(struct service_description *sd)
 		free(sd->service_name);
 		free(sd->service_dsc);
 		free(sd->service_prov);
+		sdp_record_unregister((sdp_session_t *)sd->session,
+				      (sdp_record_t *)sd->record);
 		sdp_close((sdp_session_t *)sd->session);
+		/* XXX:FIXME: If I call this fscking function, it
+		 * SEGFAULTS.
+		 */
+		/* sdp_record_free((sdp_record_t *)sd->record); */
 		free(sd);
 		sd = NULL;
 	}
@@ -220,6 +226,7 @@ exit:
 	sdp_list_free(svclass_id, 0);
 	sdp_list_free(profiles, 0);
 	sd->session = (void*) session;
+	sd->record = (void*) record;
 
 	return err;
 }
