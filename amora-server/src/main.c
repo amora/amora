@@ -141,7 +141,7 @@ static int process_events(int fd, int clean_up);
  */
 int main(int argc, char **argv)
 {
-	int server_socket, client_socket, channel = 10, res, hci = -1;
+	int server_socket, client_socket, channel = 16, res, hci = -1;
 	int clean_up = 0;
 	struct service_description *sd = NULL;
 	char arg, hci_id[6];
