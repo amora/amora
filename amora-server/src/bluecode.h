@@ -62,6 +62,10 @@ struct service_description {
 	 * to represent daemon bluetooth session.
 	 */
 	void *session;
+	/** To purge the service, its required to keep record information
+	 * (at least for BlueZ).
+	 */
+	void *record;
 	/** Bluetooth dongle descriptor ID. */
 	int hci_id;
 };
