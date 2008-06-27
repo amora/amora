@@ -40,7 +40,6 @@ AMORA_PATH3 = "\\Private\\ef0b4099\\"
 # contribution by Makoto Sugano
 def pressablekeys_followup():
     escancode_isdown = app.pressablekeys_isdown()
-
     if (escancode_isdown):
         timer.cancel()
         app.pressablekeys_process(escancode_isdown)
@@ -61,6 +60,7 @@ def get_path(app_name):
             return os.path.join(drive, AMORA_PATH2)
         elif os.path.isfile(os.path.join(drive, AMORA_PATH3, app_name)):
             return os.path.join(drive, AMORA_PATH3)
+    return None
 
 
 full_path = get_path('default.py')
