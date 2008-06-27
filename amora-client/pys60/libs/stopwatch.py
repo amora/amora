@@ -44,24 +44,49 @@ class stopwatch:
     x = 0
     y = 20
     blank_width = 85
+    sleep_time = 0.2
+    hsec_prec = True
     #Updates the clock in Canvas
     def update(self, canvas = None):
         if canvas != None:
             self.acanvas = canvas
         if self.running:
             self.elap = time.clock() - self.time_start
-            e32.ao_sleep(0.2, self.update)
+            e32.ao_sleep(self.sleep_time, self.update)
         t = self.elap
         min = int(t / 60)
         sec =  int(t - min*60)
         hsec = int((t - min*60 - sec)*100)
         if self.acanvas != None:
-            self.acanvas.rectangle((self.x, 0, (self.x + self.blank_width),
-                                    (self.y + 1)), fill = 0xFFFFFF)
-            self.acanvas.text((self.x, self.y),
-                              u"%02d:%02d:%02d" % (min,sec,hsec),
-                              font='title',
-                              fill = 0x0000FF)
+            if self.hsec_prec:
+                self.acanvas.rectangle((self.x, 0,
+                                        (self.x + self.blank_width),
+                                        (self.y + 1)), fill = 0xFFFFFF)
+                self.acanvas.text((self.x, self.y),
+                                  u"%02d:%02d:%02d" % (min,sec,hsec),
+                                  font='title',
+                                  fill = 0x0000FF)
+            else:
+                self.acanvas.rectangle((self.x + 25, 0,
+                                        (self.x + self.blank_width),
+                                        (self.y + 1)), fill = 0xFFFFFF)
+                self.acanvas.text((self.x + 25, self.y),
+                                  u"%02d:%02d" % (min,sec),
+                                  font='title',
+                                  fill = 0x0000FF)
+    #Turn off milisecond precision
+    def set_msec(self, flag):
+        if flag:
+            self.sleep_time = 0.25
+            self.hsec_prec = True
+            self.blank_width = 85
+        else:
+            self.sleep_time = 1.0
+            self.hsec_prec = False
+            self.blank_width = 78
+        if self.running:
+            if self.acanvas != None:
+                self.acanvas.clear()
     #Set/unset timer
     def toggle(self):
         if self.running:
