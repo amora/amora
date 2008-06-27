@@ -46,6 +46,7 @@ class stopwatch:
     blank_width = 85
     sleep_time = 0.2
     hsec_prec = True
+    magic_delta = 25
     #Updates the clock in Canvas
     def update(self, canvas = None):
         if canvas != None:
@@ -67,10 +68,10 @@ class stopwatch:
                                   font='title',
                                   fill = 0x0000FF)
             else:
-                self.acanvas.rectangle((self.x + 25, 0,
+                self.acanvas.rectangle((self.x + self.magic_delta, 0,
                                         (self.x + self.blank_width),
                                         (self.y + 1)), fill = 0xFFFFFF)
-                self.acanvas.text((self.x + 25, self.y),
+                self.acanvas.text((self.x + self.magic_delta, self.y),
                                   u"%02d:%02d" % (min,sec),
                                   font='title',
                                   fill = 0x0000FF)
