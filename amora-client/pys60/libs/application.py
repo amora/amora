@@ -70,6 +70,9 @@ class application:
         appuifw.app.exit_key_handler = self.quit
         self.configuration = configure()
         self.clock = stopwatch()
+        self.clock.set_msec(False)
+        #Amora puts the stopwatch at top left of the screen
+        self.clock.magic_delta = 0
         self.reset()
     #Reset application to its initial state
     def reset(self):
@@ -112,6 +115,7 @@ class application:
     def __configuration(self):
         self.configuration.display()
         self.delta = self.configuration.mouse_delta
+        self.clock.set_msec(self.configuration.stop_msec)
         self.__window_title()
     #Load and display keymap
     def __display_keymap(self):
