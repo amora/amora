@@ -34,50 +34,62 @@ class configure:
     screenshot = True
     rotate = False
     stopwatch = True
+    stop_msec = False
     screenshot_wait = 2.0
     mouse_delta = 2
-    option_list = 0
-    bkp_list = None
+    option_list = None
     #Constructor
     def __init__(self):
         self.states = [u'On', u'Off']
         self.modes = [u'Normal', u'Rotate']
         self.clock = [u'On', u'Off']
+        self.msec_clock = [u'Off', u'On']
         self.screenshot_lst = [u'1.0', u'1.5', u'2.0', u'3.0', u'5.0']
         self.widget = [(u'Preview', 'combo', (self.states, 0)),
                        (u'Image', 'combo', (self.modes, 0)),
                        (u'Clock', 'combo', (self.clock, 0)),
+                       (u'Clock msec', 'combo', (self.msec_clock, 0)),
                        (u'A.screen', 'combo', (self.screenshot_lst, 0)),
                        (u'M.delta', 'number', 2)]
     #Callback to get user defined options
     def save_state(self, current_list):
         self.option_list = current_list
+        #preview
         if current_list[0][2][1] == 0L:
             self.screenshot = True
             print u'use preview'
         else:
             self.screenshot = False
             print u'dont use preview'
+        #rotation
         if current_list[1][2][1] == 1L:
             self.rotate = True
             print u'rotate_image'
         else:
             self.rotate = False
             print u'dont rotate image'
+        #stopwatch
         if current_list[2][2][1] == 0L:
             self.stopwatch = True
             print u'use stopwatch'
         else:
             self.stopwatch = False
             print u'dont use stopwatch'
+        #stopwatch
+        if current_list[3][2][1] == 0L:
+            self.stop_msec = False
+            print u'dont use msec precision'
+        else:
+            self.stop_msec = True
+            print u'use msec precision'
         #Autoscreen delay time
         self.screenshot_wait = float(self.screenshot_lst[current_list[3][2][1]])
         print u'use ' + str(self.screenshot_wait) + "s delay in autoscreen"
-        self.bkp_list = current_list
         #Mouse delta value
-        self.mouse_delta = current_list[4][2]
+        self.mouse_delta = current_list[5][2]
+        print u'exiting...'
     def debug(self):
-        return self.bkp_list
+        return self.option_list
     #Creates the form and display it
     def display(self):
         appuifw.app.title = u'Amora: Configuration'
