@@ -84,7 +84,7 @@ class stopwatch:
         else:
             self.sleep_time = 1.0
             self.hsec_prec = False
-            self.blank_width = 78
+            self.blank_width = 54
         if self.running:
             if self.acanvas != None:
                 self.acanvas.clear()
