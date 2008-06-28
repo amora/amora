@@ -5,6 +5,6 @@ Steps:
   2- Choose your computer
 
   3- Select service
-	'10: Amora assistant'
+	'16: Amora assistant'
 
 After that, you are ready to select 'Start' menu option and send commands to your computer.
