@@ -1,20 +1,27 @@
 Source: amora-server
-Section: unknown
+Section: x11
 Priority: extra
-Maintainer: Adenilson Cavalcanti <savagobr@yahoo.com>
-Build-Depends: debhelper (>= 5), autotools-dev, libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev
-Standards-Version: 3.7.2
+Maintainer: Axel Beckert <abe@deuxchevaux.org>
+Build-Depends: debhelper (>= 5), autotools-dev, libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, autoconf, automake, pkg-config
+Standards-Version: 3.8.0
 
 Package: amora-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libimlib2, libx11-6, libxtst6, libbluetooth2
 Description: Amora (A mobile remote assistant) server
- Amora (A mobile remote assistant) is an application that enables you to
- control the linux desktop using your cellphone. It uses bluetooth to send
- mouse and keyboard events to the graphical session. With it, you can control
- your slides in OpenOffice, movies or any other application. Amora also has a
- screenshot feature, where you can see the thumbnail in the cellphone screen
- of currently in focus window in the desktop.
- For more information, visit: http://code.google.com/p/amora/
-
-
+ Amora (A mobile remote assistant) is an application that enables you
+ to control your desktop using your mobile phone. It uses bluetooth to
+ send mouse and keyboard events to the X session. With it, you can
+ control your presentations, movies or any other application which
+ mainly uses mouse and cursor keys.
+ .
+ Amora also has a screenshot feature, where you can see a thumbnail of
+ the currently focused window on the mobile phone.
+ .
+ Currently only Symbian Series 60 mobile phones are supported. A Java
+ client implementation is under development.
+ .
+ This package contains the daemon running on the to be remote
+ controlled computer. The client has to be installed on the mobile
+ phone and is not contained in the package. It can be downloaded from
+ the home page of the project.
