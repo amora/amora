@@ -1,0 +1,37 @@
+This package was initially debianized by Tomaz Noleto in Dec 2007.
+
+It was downloaded from http://amora.googlecode.com/
+
+Upstream Author: 
+
+    Adenilson Cavalcanti da Silva <savagobr@yahoo.com>
+
+Copyright: 
+
+    Copyright (C) 2007-2008  Adenilson Cavalcanti da Silva <savagobr@yahoo.com>
+    Copyright (C) 2007-2008  Thiago Marcos P. Santos <tmpsantos@gmail.com>
+    Copyright (C) 2002-2003  Ademar de Souza Reis Jr. <myself@ademar.org>
+    Copyright (C) 2002-2003  Milton Soares Filho <eu_mil@yahoo.com>
+    Copyright (C) 2002       Erich Kitzmüller  <erich.kitzmueller@itek.at>
+    Copyright (C) 2005       Albert Huang
+
+The software contains code derived from software (e.g. bluez-utils)
+which is copyright by:
+
+    Copyright (C) 2001-2002  Nokia Corporation
+    Copyright (C) 2002-2003  Maxim Krasnyansky <maxk@qualcomm.com>
+    Copyright (C) 2002-2003  Stephen Crane <steve.crane@rococosoft.com>
+    Copyright (C) 2002-2003  Jean Tourrilhes <jt@hpl.hp.com>
+    Copyright (C) 2002-2007  Marcel Holtmann <marcel@holtmann.org>
+
+License:
+
+    Amora is licensed under GPL 2 (see
+    `/usr/share/common-licenses/GPL-2'),
+
+The man page is Copyright (C) 2007 by Ademar de Souza Reis Jr.
+<ademar@ademar.org>
+
+The Debian packaging is (C) 2007 by Tomaz Noleto, (C) 2008 by Axel Beckert
+<abe@deuxchevaux.org> and is licensed under the same terms as amora
+itself.
