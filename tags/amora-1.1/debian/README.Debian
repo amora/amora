@@ -1,0 +1,9 @@
+amora-server for Debian
+-----------------------
+
+This Debian package only contains the Amora daemon which runs on the
+computer to be controlled. To use it, you need to install the Amora
+client on your mobile phone. It can be dowloaded from the Amora
+homepage at http://amora.googlecode.com/.
+
+ -- Axel Beckert <abe@deuxchevaux.org>, Sat,  5 Jul 2008 21:36:23 +0200
