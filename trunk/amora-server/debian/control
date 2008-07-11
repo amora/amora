@@ -10,7 +10,7 @@ Vcs-Browser: http://code.google.com/p/amora/source/browse
 
 Package: amora-server
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libimlib2, libx11-6, libxtst6, libbluetooth2
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Amora (A mobile remote assistant) server
  Amora (A mobile remote assistant) is an application that enables you
  to control your desktop using your mobile phone. It uses bluetooth to
