@@ -5,7 +5,7 @@ Maintainer: Axel Beckert <abe@deuxchevaux.org>
 Build-Depends: debhelper (>= 5), libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, autoconf, automake, pkg-config
 Standards-Version: 3.8.0
 Homepage: http://amora.googlecode.com/
-Vcs-Svn: http://amora.googlecode.com/svn/trunk/
+Vcs-Svn: http://amora.googlecode.com/svn/trunk/amora-server/
 Vcs-Browser: http://code.google.com/p/amora/source/browse
 
 Package: amora-server
