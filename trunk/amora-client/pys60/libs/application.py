@@ -180,9 +180,10 @@ class application:
     #without clicking in submenu option
     def __start_control(self):
         conn_options = [u'now!', u'later...']
-        index = appuifw.popup_menu(conn_options, u'Start control')
-        if index == 0:
-            self.start()
+        if self.running != 1:
+            index = appuifw.popup_menu(conn_options, u'Start control')
+            if index == 0:
+                self.start()
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
