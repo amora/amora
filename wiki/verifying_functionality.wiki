@@ -1,0 +1,32 @@
+#summary How to check amora isn't broken after changes
+#labels Phase-QA,Phase-Implementation
+
+= Introduction =
+
+This is thought as testing procedure to make sure that amora is working
+correctly after changes to the code have been made.
+
+See also [http://code.google.com/p/amora/issues/detail?id=53 issue 53]
+
+= Basic usage =
+== Bluetooth not found ==
+  * Make sure the Bluetooth dongle is not plugged in. (If it's internal try to go into aircraft mode. If that's not available, go to _Starting the server_.)
+  * Start amorad. It should say
+{{{
+No bluetooth device/dongle available. Aborting...
+}}}
+  and exit with return code 255. You can check that by typing
+{{{
+echo $?
+}}}
+  immediately afterwards.
+== Starting the server ==
+  * Plug in the Bluetooth dongle if not already plugged in. Make sure that the appropriate drivers are loaded, e.g. by calling
+{{{
+lsmod
+}}}
+  * Start amorad again. It should say
+{{{
+Initialization done, waiting cellphone connection...
+Entering main loop...
+}}}
