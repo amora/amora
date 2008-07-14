@@ -231,8 +231,13 @@ class application:
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
         if self.bt != None:
-            self.bt.write_line(u'CONN_CLOSE')
-            self.bt.close()
+            try:
+                self.bt.write_line(u'CONN_CLOSE')
+                self.bt.close()
+            except:
+                appuifw.note(u'Connection is over, server down!')
+                self.bt.close()
+                self.bt = None
         self.reset()
     #Ugly hack to print screenshot
     def presentationdisplay(self, a_img = None):
