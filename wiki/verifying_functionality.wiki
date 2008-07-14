@@ -20,7 +20,7 @@ No bluetooth device/dongle available. Aborting...
 echo $?
 }}}
   immediately afterwards.
-== Starting the server ==
+== Starting the server and connecting ==
   * Plug in the Bluetooth dongle if not already plugged in. Make sure that the appropriate drivers are loaded, e.g. by calling
 {{{
 lsmod
@@ -46,3 +46,12 @@ Entering main loop...
 {{{
 Accepted connection. Client is 00:11:22:33:44:55
 }}}
+== Using Amora ==
+  * Press the *Options* soft-key again.
+  * Select *Start*. You now should see two things:
+    * The help page on the mobile phone.
+    * A clock running in the top left of your mobile phone display.
+  * Use the navigation keys on the mobile phone. The cursor on your computer should move.
+  * Press the main button of the phone. A left mouse click should have happened on the computer.
+  * Press *1* on the phone. Use the navigation keys on the phone. The computer should do a drag (or mark text).
+  * Press *1* again. The computer should do a drop (as in _drag and drop_) or stop marking text.
