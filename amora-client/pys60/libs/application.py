@@ -405,8 +405,11 @@ class application:
             elif self.keyboard.pressed(EScancodeHash):
                 print u'Fullscreen - F'
                 self.bt.write_line(u'FULLSCREEN')
-            if self.configuration.screenshot and self.keyboard.pressed(EScancode2):
+            elif self.configuration.screenshot and self.keyboard.pressed(EScancode2):
                 self.__take_screenshot()
+            #dont let screensaver activate
+            elif e32.inactivity() > 4.0:
+                e32.reset_inactivity()
         except:
             appuifw.note(u'Connection is over, server down!')
             self.bt.close()
