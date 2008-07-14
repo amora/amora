@@ -88,6 +88,9 @@ while flag:
             timer.after(1.5, pressablekeys_followup)
         else:
             app.otherkeys_process()
+        #dont let screensaver activate
+        if e32.inactivity() > 4.0:
+            e32.reset_inactivity()
     elif app.running == -1:
         flag = 0
     e32.ao_yield()
