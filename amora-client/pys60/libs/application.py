@@ -176,6 +176,13 @@ class application:
             self.wallpaper.display()
         except:
                 appuifw.note(u'Cannot find about box image!')
+    #Time based callback, offer the option to start controlling the desktop
+    #without clicking in submenu option
+    def __start_control(self):
+        conn_options = [u'now!', u'later...']
+        index = appuifw.popup_menu(conn_options, u'Start control')
+        if index == 0:
+            self.start()
     #Private function, will try to connect with a server PC
     #using bluetooth
     def __connect(self):
@@ -219,6 +226,8 @@ class application:
         appuifw.app.body = self.wallpaper.canvas
         self.wallpaper.display()
         self.running = 2
+        #Wait 2s and ask if user want to start sending commands
+        e32.ao_sleep(2, self.__start_control)
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
         if self.bt != None:
