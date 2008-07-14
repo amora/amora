@@ -424,6 +424,7 @@ class application:
                 appuifw.app.menu = [ self.clock.create_submenu_lst(),
                                      (u'Disconnect', self.__reset),
                                      (u'Auto screen', self.__click_screen),
+                                     (u'Configuration', self.__configuration),
                                      (u'Help', self.__help),
                                      (u'Exit', self.quit)]
                 self.clock.toggle()
