@@ -30,3 +30,19 @@ lsmod
 Initialization done, waiting cellphone connection...
 Entering main loop...
 }}}
+  * Now start amora on your mobile phone.
+  * It should show the sleeping penguin.
+  * Press the *Options* soft-key.
+  * Choose *Search devices*. (If the phone ask if it should enable bluetooth, answer _yes_.)
+  * If your computer is in the list, it should have a small bluetooth icon right of the name.
+  * If it's not in the list, choose "More devices" and wait until you see your computer.
+  * Select you computer. A list of ports should show up, containing at least one item saying
+{{{
+16: Amora: assistant
+}}}
+  * Select it. Several things should now happen:
+    * The penguin should awake. The amora logo is in full color and has a small bluetooth logo besides.
+    * amorad should have given some output including the bluetooth MAC address of your mobile phone:
+{{{
+Accepted connection. Client is 00:11:22:33:44:55
+}}}
