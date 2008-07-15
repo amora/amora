@@ -286,6 +286,10 @@ static int process_events(int fd, int clean_up)
 	start = buffer;
 	while ((end = strchr(start, CMD_BREAK))) {
 		result = treat_events(start, (end - start), fd);
+		if (result == -1) {
+			memset(buffer, 0, BUF_SIZE);
+			break;
+		}
 		start = ++end;
 	}
 
@@ -472,7 +476,7 @@ static int treat_command(char *buffer, int length, int client_socket)
 		tmp = send_file(client_socket, "amora-screenshot.png");
 		if (tmp) {
 			perror("failed screen transfer!\n");
-			result = NONE;
+			result = CONN_CLOSE;
 			break;
 		}
 		break;
