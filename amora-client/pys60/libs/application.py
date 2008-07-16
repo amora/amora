@@ -228,7 +228,7 @@ class application:
         self.wallpaper.display()
         self.running = 2
         #Wait 2s and ask if user want to start sending commands
-        e32.ao_sleep(2, self.__start_control)
+        e32.ao_sleep(0.8, self.__start_control)
     #Reset connection, restore initial GUI menu elements
     def __reset(self):
         if self.bt != None:
