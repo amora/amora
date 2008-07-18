@@ -1,0 +1,25 @@
+Packaging of amora-server for Debian
+------------------------------------
+
+Packaging of amora-server and Amora itself reside in the same
+subversion repository but since the Debian package is not the primary
+target (the rpm packaging also resides in the same repository) and
+changes in the Debian packaging will not result in a new Amora
+release, it is package as non-native package.
+
+The package is built out of the tarball you get with "make dist".
+
+To build the package from a repository checkout of amora-server, make
+sure the packages automake and autoconf (former build-deps) are
+installed and then do the following:
+
+$ autoreconf -i
+$ ./configure
+$ make dist
+$ mv amora-server-1.1.tar.gz ../amora-server_1.1.orig.tar.gz
+$ cd ..
+$ tar xvzf amora-server_1.1.orig.tar.gz
+$ cd amora-server-1.1
+$ dpkg-buildpackage
+
+ -- Axel Beckert <abe@deuxchevaux.org>, Sat, 19 Jul 2008 01:25:17 +0200
