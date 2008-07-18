@@ -37,7 +37,6 @@ endif
 
 configure: configure-stamp
 configure-stamp:
-	autoreconf -i
 	dh_testdir
 
 	touch configure-stamp
@@ -59,9 +58,7 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
-	rm -f config.sub config.guess configure-stamp \
-	      configure Makefile.in aclocal.m4 config.h.in
-	rm -rf scripts
+	rm -f config.sub config.guess config.log config.cache configure-stamp
 
 	dh_clean 
 
