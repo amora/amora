@@ -60,6 +60,9 @@ clean:
 	[ ! -f Makefile ] || $(MAKE) distclean
 	rm -f config.sub config.guess config.log config.cache configure-stamp
 
+	# Remove any amora-screenshot.png which usually result from testing the package
+	rm -f amora-screenshot.png debian/amora-screenshot.png
+
 	dh_clean 
 
 install: build
