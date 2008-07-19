@@ -49,8 +49,12 @@ class dbus_bluetooth():
         self.obj = self.bus.get_object('org.bluez', '/org/bluez/hci0')
         self.adapter = dbus.Interface(self.obj, 'org.bluez.Adapter')
     def discover(self):
-        self.adapter.DiscoverDevices()
-        ecore.main_loop_begin()
+        try:
+            self.adapter.DiscoverDevices()
+            ecore.main_loop_begin()
+        except:
+            print u'Cannot find devices: check bluetooth dongle!'
+            return
 
 # def test(address, name):
 #         print 'Got a device: (%s, %s)' % (address, name)
