@@ -20,6 +20,24 @@ No bluetooth device/dongle available. Aborting...
 echo $?
 }}}
   immediately afterwards.
+
+== Bluetooth dongle removal ==
+
+  * Plug in the Bluetooth dongle if not already plugged in. Make sure that the appropriate drivers are loaded, e.g. by calling
+{{{
+lsmod
+}}}
+  * Start amorad again. It should say
+{{{
+Initialization done, waiting cellphone connection...
+Entering main loop...
+}}}
+  * Now remove the dongle, amora server should say
+{{{
+Done, we are closing now.
+}}}
+
+
 == Starting the server and connecting ==
   * Plug in the Bluetooth dongle if not already plugged in. Make sure that the appropriate drivers are loaded, e.g. by calling
 {{{
