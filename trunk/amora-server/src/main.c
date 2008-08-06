@@ -440,7 +440,7 @@ static int treat_command(char *buffer, int length, int client_socket)
 	case SCREEN_TAKE:
 		tmp = screen_capture(amora.display, &image);
 		if (tmp) {
-			perror("failed screen capture!\n");
+			perror("failed screen capture: cap!\n");
 			result = NONE;
 			break;
 		}
@@ -448,7 +448,7 @@ static int treat_command(char *buffer, int length, int client_socket)
 		tmp = rescale_image(&image, width, height, &rescaled);
 		imlib_free_image();
 		if (tmp) {
-			perror("failed screen capture!\n");
+			perror("failed screen capture: rescale!\n");
 			result = NONE;
 			break;
 		}
@@ -457,7 +457,7 @@ static int treat_command(char *buffer, int length, int client_socket)
 			tmp = rotate_image(&rescaled);
 			if (tmp) {
 				imlib_free_image();
-				perror("failed screen capture!\n");
+				perror("failed screen capture: rotate!\n");
 				result = NONE;
 				break;
 			}
@@ -468,7 +468,7 @@ static int treat_command(char *buffer, int length, int client_socket)
 		tmp = save_image(&rescaled, "amora-screenshot.png");
 		imlib_free_image();
 		if (tmp) {
-			perror("failed screen capture!\n");
+			perror("failed screen capture: freeing!\n");
 			result = NONE;
 			break;
 		}
