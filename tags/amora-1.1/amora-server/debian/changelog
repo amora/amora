@@ -1,0 +1,19 @@
+amora-server (1.1-1) unstable; urgency=low
+
+  * Initial release for Debian (Closes: #488587)
+  * New upstream release
+  * New maintainer for the Debian package
+  * Made the package confirming to Debian standards.
+  * Based on content of "make dist" tar ball, does not build-depend on
+    autoconf and friends anymore, removed appropriate build-deps.
+  * Added a README.source
+  * Bumped standards version to 3.8.0.
+
+ -- Axel Beckert <abe@deuxchevaux.org>  Fri, 11 Jul 2008 16:29:23 +0200
+
+amora-server (1.0-0) unstable; urgency=low
+
+  * Initial Debian package release.
+
+ -- Adenilson Cavalcanti <cavalcantii@gmail.com>  Tue, 11 Dec 2007 22:30:47 -0400
+

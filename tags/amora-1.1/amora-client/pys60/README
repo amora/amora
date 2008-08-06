@@ -1,0 +1,20 @@
+How to create a .sis file for installation in S60-3rd phones:
+(from http://code.google.com/p/amora/issues/detail?id=10)
+
+1. Rename amora.py to default.py
+
+2. In the project root directory, run ensymble* to create the
+   .sis file:
+
+    ensymble.py py2sis -n Amora -r 1.0 -l EN \
+    --icon=artwork/logo_amora_v01.svg -s Amora -c "Amora: assistant" \
+    --caps=LocalServices+ReadUserData+WriteUserData+UserEnvironment \
+    amora-client/pys60/ amora
+
+   (change parameters such as version if necessary)
+
+* http://wiki.forum.nokia.com/index.php/How_to_make_py_to_sis_for_3rd_Editon_devices
+
+
+For general information about amora, visit the project website:
+http://code.google.com/p/amora/
