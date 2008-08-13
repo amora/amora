@@ -51,6 +51,13 @@
 #include "loop.h"
 #include "imscreen.h"
 
+/** Show program usage
+ *
+ * @param path the program binary path
+ *
+ */
+static void show_usage(const char *path);
+
 
 /** Main app function.
  *
@@ -61,11 +68,9 @@
  */
 int main(int argc, char **argv)
 {
-	int server_socket, client_socket, channel = 16, res, hci = -1;
-	int clean_up = 0;
-	struct service_description *sd = NULL;
+	int res, hci = -1;
 	struct amora_s amora;
-	char arg, hci_id[6];
+	char arg, hci_str[6];
 	const char *logfile = NULL;
 
 	if (argc > 5) {
@@ -102,6 +107,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+	amora.channel = 16;
 	amora.display = construct_display(NULL);
 	if (!amora.display) {
 		log_message(FIL|OUT, amora.log, "Error creating display object!"
@@ -110,46 +116,46 @@ int main(int argc, char **argv)
 	}
 
 	/* Service description registering */
-	sd = build_sd(channel);
-	if (!sd) {
+	amora.sd = build_sd(amora.channel);
+	if (!amora.sd) {
 		log_message(FIL|OUT, amora.log, "Error creating service description"
 				"object! Aborting...");
 		return -1;
 	}
-	res = describe_service(sd);
+	res = describe_service(amora.sd);
 	if (res == -1) {
 		log_message(FIL|OUT, amora.log, "Error registering service!"
 				"Aborting...");
-		destroy_sd(sd);
+		destroy_sd(amora.sd);
 		return -1;
 	}
 
 	/* Socket creation */
-	sd->hci_id = hci;
-	server_socket = build_bluetooth_socket(channel, sd);
-	if (server_socket == -1) {
+	amora.sd->hci_id = hci;
+	amora.server_socket = build_bluetooth_socket(amora.channel, amora.sd);
+	if (amora.server_socket == -1) {
 		log_message(FIL|OUT, amora.log, "Failed creating bluetooth conn!"
 				"Exiting...");
 		return -1;
 	}
 
 #ifdef HAVE_DBUS
-	if (dbus_init(hci_id)) {
+	if (dbus_init(hci_str)) {
 		log_message(FIL|OUT, amora.log, "Error while initilizing "
 				"D-Bus! Aborting...");
 		return -1;
 	}
 #endif
 
-	loop_add(server_socket, &amora, server_socket_cb);
+	loop_add(amora.server_socket, &amora, server_socket_cb);
 
-	snprintf(hci_id, sizeof(hci_id), "hci%d", sd->hci_id);
+	snprintf(hci_str, sizeof(hci_str), "hci%d", amora.sd->hci_id);
 
-	log_message(FIL, amora.log, "Bluetooth device code hci = %d", sd->hci_id);
+	log_message(FIL, amora.log, "Bluetooth device code hci = %d", amora.sd->hci_id);
 	log_message(FIL|OUT, amora.log, "Initialization done, waiting cellphone"
 			" connection...");
 
-	res = listen(server_socket, 10);
+	res = listen(amora.server_socket, 10);
 	if (res) {
 		log_message(FIL|OUT, amora.log, "Failed listening...");
 		return -1;
@@ -162,10 +168,28 @@ int main(int argc, char **argv)
 	res = destroy_display(amora.display);
 	amora.display = NULL;
 	log_message(FIL|OUT, amora.log, "Done, we are closing now.");
-	close(server_socket);
-	destroy_sd(sd);
-	res = process_events(&amora, client_socket = 0, clean_up = 1);
+	close(amora.server_socket);
+	destroy_sd(amora.sd);
+	res = process_events(&amora, amora.client_socket = 0, 1);
 	log_clean_resources(amora.log);
 
 	return 0;
 }
+
+static void show_usage(const char *path)
+{
+	char *name, *p = strdup(path);
+
+	name = basename(p);
+
+	printf("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
+	       "\n"
+	       "  -h             show this help message and exit;\n"
+	       "  -l logfile     set the log file path (default is disabled);\n"
+	       "  -v             show version and exit.\n"
+	       "  -i hci_number  set the bluetooth dongle device to use\n"
+	       "\n", name);
+
+	free(p);
+}
+
