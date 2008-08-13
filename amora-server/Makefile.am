@@ -13,6 +13,7 @@ AUTOMAKE_OPTIONS = foreign
 # amora itself
 bin_PROGRAMS = amorad
 amorad_SOURCES = $(csourcedir)/main.c \
+                 $(csourcedir)/amora.h $(csourcedir)/amora.c \
                  $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                  $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
                  $(csourcedir)/bluecode.h $(csourcedir)/bluecode.c \

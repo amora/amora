@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <sys/select.h>
+#include <stdio.h>
 
 #include "loop.h"
 
@@ -33,11 +34,13 @@
 /** The loop resource holder */
 static struct loop_set_s {
 	/** The callback for each fd using the fd as index */
-	int (*callback[FD_SETSIZE]) (int fd);
+	int (*callback[FD_SETSIZE]) (void *context, int fd);
 	/** The fd with max number as required by select() */
 	int nfds;
 	/** The fd set, only ready for reading is supported by now */
 	fd_set readfds;
+	/** Context argument */
+	void *context;
 } loop_set;
 
 
@@ -48,12 +51,12 @@ static struct loop_set_s {
  * @return 0 on success, -1 otherwise
  *
  */
-static int dispatch(int fd)
+static int dispatch(int fd, void *context)
 {
 	if (fd < 0 || fd >= FD_SETSIZE)
 		return -1;
 
-	return loop_set.callback[fd](fd);
+	return loop_set.callback[fd](context, fd);
 }
 
 
@@ -85,7 +88,8 @@ out:
 }
 
 
-int loop_add(const int fd, int (*callback) (int fd))
+int loop_add(const int fd, void *context,
+	     int (*callback) (void *context, int fd))
 {
 	int ret = -1;
 
@@ -95,6 +99,7 @@ int loop_add(const int fd, int (*callback) (int fd))
 	if (FD_ISSET(fd, &loop_set.readfds))
 		goto out;
 
+	loop_set.context = context;
 	FD_SET(fd, &loop_set.readfds);
 	loop_set.callback[fd] = callback;
 
@@ -145,7 +150,7 @@ int loop(void)
 			if (!FD_ISSET(i, &readfds))
 				continue;
 
-			if ((ret = dispatch(i)) < 0)
+			if ((ret = dispatch(i, loop_set.context)) < 0)
 				goto out;
 		}
 

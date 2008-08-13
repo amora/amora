@@ -54,7 +54,8 @@ int loop_remove(const int fd);
  * @return 0 on success, -1 otherwise
  *
  */
-int loop_add(const int fd, int (*callback) (int fd));
+int loop_add(const int fd, void *context,
+	     int (*callback) (void *context, int fd));
 
 
 /** Loop pooling the file descriptor set
