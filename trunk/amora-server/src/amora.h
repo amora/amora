@@ -12,12 +12,24 @@
 #define __AMORA_LIB__
 
 #include <X11/Xlib.h>
+
+/* Foward declaration */
+struct service_description;
+
 /** Amora global struct that holds the main resources */
 struct amora_s {
 	/** Log resource */
 	struct log_resource *log;
 	/** X11 display */
 	Display *display;
+	/** Service description structure */
+	struct service_description *sd;
+	/** Server socket */
+	int server_socket;
+	/** Client socket */
+	int client_socket;
+	/** Default channel used by amora */
+	int channel;
 };
 
 
@@ -39,14 +51,6 @@ int client_socket_cb(void *context, int client_socket);
  *
  */
 int server_socket_cb(void *context, int server_socket);
-
-
-/** Show program usage
- *
- * @param path the program binary path
- *
- */
-void show_usage(const char *path);
 
 
 /** Check for protocol commands in buffer, used by \ref process_events

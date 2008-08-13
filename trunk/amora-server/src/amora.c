@@ -263,23 +263,6 @@ int treat_command(struct amora_s *amora, char *buffer, int length, int client_so
 	return result;
 }
 
-void show_usage(const char *path)
-{
-	char *name, *p = strdup(path);
-
-	name = basename(p);
-
-	printf("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
-	       "\n"
-	       "  -h             show this help message and exit;\n"
-	       "  -l logfile     set the log file path (default is disabled);\n"
-	       "  -v             show version and exit.\n"
-	       "  -i hci_number  set the bluetooth dongle device to use\n"
-	       "\n", name);
-
-	free(p);
-}
-
 int client_socket_cb(void *context, int client_socket)
 {
 	int res;
@@ -292,14 +275,12 @@ int client_socket_cb(void *context, int client_socket)
 		log_message(FIL|OUT, amora->log,"Client asked to close connection.");
 		loop_remove(client_socket);
 		close(client_socket);
-		client_socket = -1;
 	}
 
 	if (res == -1) {
 		log_message(FIL|OUT, amora->log, "Client died or closed connection.");
 		loop_remove(client_socket);
 		close(client_socket);
-		client_socket = -1;
 	}
 
 	return 0;
