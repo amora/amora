@@ -55,8 +55,9 @@ static int dongle_removed;
  * @return 0 on success, -1 otherwise
  *
  */
-static int dispatch(int fd)
+static int dispatch(void *context, int fd)
 {
+	(void) context;
 	(void) fd;
 
 	/* Shall never block, I hope */
@@ -92,7 +93,7 @@ static dbus_bool_t add_watch(DBusWatch *watch, void *data)
 
 	flags = dbus_watch_get_flags(watch);
 	if (flags & DBUS_WATCH_READABLE)
-		loop_add(dbus_watch_get_unix_fd(watch), dispatch);
+		loop_add(dbus_watch_get_unix_fd(watch), NULL, dispatch);
 
 out:
 	return TRUE;

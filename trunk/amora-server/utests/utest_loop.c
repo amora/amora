@@ -35,7 +35,7 @@ static int fail_read(int fd)
 	return -1;
 }
 
-static int return_fd_read(int fd)
+static int return_fd_read(void *context, int fd)
 {
 	return fd;
 }
@@ -81,17 +81,17 @@ static int random_read(int fd)
 
 START_TEST (test_dispatch)
 {
-	loop_add(0, return_fd_read);
-	fail_unless(dispatch(0) == 0, "Wrong callback!");
+	loop_add(0, NULL, return_fd_read);
+	fail_unless(dispatch(0, NULL) == 0, "Wrong callback!");
 
-	loop_add(666, return_fd_read);
-	fail_unless(dispatch(666) == 666, "Wrong callback!");
+	loop_add(666, NULL, return_fd_read);
+	fail_unless(dispatch(666, NULL) == 666, "Wrong callback!");
 
-	loop_add(FD_SETSIZE - 1, return_fd_read);
-	fail_unless(dispatch(FD_SETSIZE - 1) == FD_SETSIZE - 1, "Wrong callback!");
+	loop_add(FD_SETSIZE - 1, NULL, return_fd_read);
+	fail_unless(dispatch(FD_SETSIZE - 1, NULL) == FD_SETSIZE - 1, "Wrong callback!");
 
-	fail_unless(dispatch(FD_SETSIZE) == -1, "Dispatching fd out of the range!");
-	fail_unless(dispatch(-1) == -1, "Dispatching fd out of the range!");
+	fail_unless(dispatch(FD_SETSIZE, NULL) == -1, "Dispatching fd out of the range!");
+	fail_unless(dispatch(-1, NULL) == -1, "Dispatching fd out of the range!");
 }
 END_TEST
 
@@ -102,8 +102,8 @@ START_TEST (test_is_empty)
 	fail_unless(is_empty(&loop_set.readfds), "fdset must be empty"
 			" in the first call!");
 
-	loop_add(zero_fd, zero_read);
-	loop_add(random_fd, random_read);
+	loop_add(zero_fd, NULL, zero_read);
+	loop_add(random_fd, NULL, random_read);
 	fail_if(is_empty(&loop_set.readfds), "fdset is empty!");
 
 	loop_remove(zero_fd);
@@ -118,21 +118,21 @@ START_TEST (test_loop_add)
 {
 	int ret;
 
-	fail_unless(loop_add(FD_SETSIZE, fail_read) == -1, "Adding fd out of the range!");
-	fail_unless(loop_add(-1, fail_read) == -1, "Adding fd out of the range!");
-	fail_unless(loop_add(1, NULL) == -1, "Adding fd with NULL callback!");
+	fail_unless(loop_add(FD_SETSIZE, NULL, fail_read) == -1, "Adding fd out of the range!");
+	fail_unless(loop_add(-1, NULL, fail_read) == -1, "Adding fd out of the range!");
+	fail_unless(loop_add(1, NULL, NULL) == -1, "Adding fd with NULL callback!");
 
 	fail_if(FD_ISSET(zero_fd, &loop_set.readfds), "fd already set!");
-	ret = loop_add(zero_fd, zero_read);
+	ret = loop_add(zero_fd, NULL, zero_read);
 	fail_unless(FD_ISSET(zero_fd, &loop_set.readfds), "loop_add() not working!");
 	fail_unless(ret == 0, "Wrong return value!");
 
 	fail_if(FD_ISSET(random_fd, &loop_set.readfds), "fd already set!");
-	ret = loop_add(random_fd, random_read);
+	ret = loop_add(random_fd, NULL, random_read);
 	fail_unless(FD_ISSET(random_fd, &loop_set.readfds), "loop_add() not working!");
 	fail_unless(ret == 0, "Wrong return value!");
 
-	fail_unless(loop_add(random_fd, random_read) == -1, "Adding fd twice!");
+	fail_unless(loop_add(random_fd, NULL, random_read) == -1, "Adding fd twice!");
 }
 END_TEST
 
@@ -140,8 +140,8 @@ START_TEST (test_loop_remove)
 {
 	int ret;
 
-	loop_add(zero_fd, zero_read);
-	loop_add(random_fd, random_read);
+	loop_add(zero_fd, NULL, zero_read);
+	loop_add(random_fd, NULL, random_read);
 
 	fail_unless(loop_remove(FD_SETSIZE) == -1, "Removing fd out of the range!");
 	fail_unless(loop_remove(-1) == -1, "Removing fd out of the range!");
@@ -162,11 +162,11 @@ END_TEST
 
 START_TEST (test_loop)
 {
-	loop_add(zero_fd, zero_read);
-	loop_add(random_fd, random_read);
+	loop_add(zero_fd, NULL, zero_read);
+	loop_add(random_fd, NULL, random_read);
 	fail_if(loop(), "Internal loop() error!");
 
-	loop_add(zero_fd, fail_read);
+	loop_add(zero_fd, NULL, fail_read);
 	fail_unless(loop() == -1, "Not return error on fail!");
 }
 END_TEST
