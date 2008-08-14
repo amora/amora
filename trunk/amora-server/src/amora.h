@@ -99,5 +99,37 @@ int treat_events(struct amora_s *amora, char *buffer, int length,
 int process_events(struct amora_s *amora, int fd, int clean_up);
 
 
+/** Creates a new amora context.
+ *
+ * It creates the resources (service description, server socket, etc) for
+ * running amora server.
+ *
+ * @param logfile Log file file name + path (pass NULL if you dont need logging).
+ *
+ * @param channel Channel number to be used (suggests 16).
+ *
+ * @return The newly created structure or NULL in error case.
+ */
+struct amora_s *amora_context_new(char *logfile, int channel, int hci_device);
+
+
+/** Starts amora server listing for connections. Pay attention that this
+ * function will not return (will block, so it must be forked or run in
+ * another thread if used in a UI app).
+ *
+ * TODO: add a way to ask loop to exit.
+ *
+ * @param context An server amora context, created with \ref amora_context_new.
+ *
+ */
+void amora_start(struct amora_s *context);
+
+/** Deletes amora context resources (should be called when app is exiting).
+ *
+ *
+ * @param context A context created with \ref amora_context_new.
+ */
+void amora_context_delete(struct amora_s *context);
+
 
 #endif

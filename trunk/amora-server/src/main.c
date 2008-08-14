@@ -68,10 +68,11 @@ static void show_usage(const char *path);
  */
 int main(int argc, char **argv)
 {
-	int res, hci = -1;
-	struct amora_s amora;
-	char arg, hci_str[6];
-	const char *logfile = NULL;
+	int hci = -1;
+	struct amora_s *amora;
+	char arg;
+	char *logfile = NULL;
+	int channel = 16;
 
 	if (argc > 5) {
 		show_usage(argv[0]);
@@ -98,80 +99,12 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (!(amora.log = log_build_resources(logfile)))
-		perror("Failed log resource creation!");
-
-	if (check_device() < 0) {
-		log_message(FIL|OUT, amora.log, "No bluetooth device/dongle available."
-				" Aborting...");
+	amora = amora_context_new(logfile, channel, hci);
+	if (!amora)
 		return -1;
-	}
 
-	amora.channel = 16;
-	amora.display = construct_display(NULL);
-	if (!amora.display) {
-		log_message(FIL|OUT, amora.log, "Error creating display object!"
-				"Aborting...");
-		return -1;
-	}
-
-	/* Service description registering */
-	amora.sd = build_sd(amora.channel);
-	if (!amora.sd) {
-		log_message(FIL|OUT, amora.log, "Error creating service description"
-				"object! Aborting...");
-		return -1;
-	}
-	res = describe_service(amora.sd);
-	if (res == -1) {
-		log_message(FIL|OUT, amora.log, "Error registering service!"
-				"Aborting...");
-		destroy_sd(amora.sd);
-		return -1;
-	}
-
-	/* Socket creation */
-	amora.sd->hci_id = hci;
-	amora.server_socket = build_bluetooth_socket(amora.channel, amora.sd);
-	if (amora.server_socket == -1) {
-		log_message(FIL|OUT, amora.log, "Failed creating bluetooth conn!"
-				"Exiting...");
-		return -1;
-	}
-
-#ifdef HAVE_DBUS
-	if (dbus_init(hci_str)) {
-		log_message(FIL|OUT, amora.log, "Error while initilizing "
-				"D-Bus! Aborting...");
-		return -1;
-	}
-#endif
-
-	loop_add(amora.server_socket, &amora, server_socket_cb);
-
-	snprintf(hci_str, sizeof(hci_str), "hci%d", amora.sd->hci_id);
-
-	log_message(FIL, amora.log, "Bluetooth device code hci = %d", amora.sd->hci_id);
-	log_message(FIL|OUT, amora.log, "Initialization done, waiting cellphone"
-			" connection...");
-
-	res = listen(amora.server_socket, 10);
-	if (res) {
-		log_message(FIL|OUT, amora.log, "Failed listening...");
-		return -1;
-	}
-
-
-	log_message(FIL|OUT, amora.log, "Entering main loop...");
-	loop();
-
-	res = destroy_display(amora.display);
-	amora.display = NULL;
-	log_message(FIL|OUT, amora.log, "Done, we are closing now.");
-	close(amora.server_socket);
-	destroy_sd(amora.sd);
-	res = process_events(&amora, amora.client_socket = 0, 1);
-	log_clean_resources(amora.log);
+	amora_start(amora);
+	amora_context_delete(amora);
 
 	return 0;
 }
