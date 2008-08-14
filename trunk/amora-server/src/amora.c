@@ -353,8 +353,8 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 	/* Service description registering */
 	result->sd = build_sd(result->channel);
 	if (!result->sd) {
-		log_message(FIL|OUT, result->log, "Error creating service description"
-				"object! Aborting...");
+		log_message(FIL|OUT, result->log, "Error creating service "
+			    "description object! Aborting...");
 		goto destroy;
 	}
 
@@ -371,8 +371,8 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 	result->server_socket = build_bluetooth_socket(result->channel,
 						       result->sd);
 	if (result->server_socket == -1) {
-		log_message(FIL|OUT, result->log, "Failed creating bluetooth conn!"
-				"Exiting...");
+		log_message(FIL|OUT, result->log, "Failed creating bluetooth "
+			    "conn! Exiting...");
 		goto destroy;
 	}
 
@@ -436,12 +436,11 @@ void amora_start(struct amora_s *context)
 
 void amora_context_delete(struct amora_s *context)
 {
-	int result;
 
 	if (!context)
 		return;
 
-
+	/* FIXME: this call is required to cleanup static buffers */
 	/* result = process_events(context, context->client_socket = 0, 1); */
 
 	if (context->display)
