@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <libgen.h>
+#include "config.h"
 #include "amora.h"
 #include "x11_event.h"
 #include "bluecode.h"
@@ -311,4 +312,148 @@ int server_socket_cb(void *context, int server_socket)
 	}
 
 	return client_socket < 0 ? -1 : 0;
+}
+
+struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
+{
+	struct amora_s *result = NULL;
+	int res;
+	char hci_str[6];
+
+	result = (struct amora_s *) malloc(sizeof(struct amora_s));
+	if (!result)
+		goto exit;
+
+	if (logfile) {
+		if (!(result->log = log_build_resources(logfile))) {
+			perror("Failed log resource creation!");
+			goto cleanup;
+		}
+	} else
+		result->log = NULL;
+
+
+	if (check_device() < 0) {
+		log_message(FIL|OUT, result->log, "No bluetooth device/dongle "
+			    "available. Aborting...");
+		goto cleanup;
+	}
+
+	if ((0 < channel) && (channel < 20))
+		result->channel = channel;
+	else
+		result->channel = 16;
+
+	result->display = construct_display(NULL);
+	if (!result->display) {
+		log_message(FIL|OUT, result->log, "Error creating display "
+			    "object! Aborting...");
+		goto cleanup;
+	}
+
+	/* Service description registering */
+	result->sd = build_sd(result->channel);
+	if (!result->sd) {
+		log_message(FIL|OUT, result->log, "Error creating service description"
+				"object! Aborting...");
+		goto destroy;
+	}
+
+	res = describe_service(result->sd);
+	if (res == -1) {
+		log_message(FIL|OUT, result->log, "Error registering service!"
+				"Aborting...");
+		goto destroy;
+
+	}
+
+	/* Socket creation */
+	result->sd->hci_id = hci_device;
+	result->server_socket = build_bluetooth_socket(result->channel,
+						       result->sd);
+	if (result->server_socket == -1) {
+		log_message(FIL|OUT, result->log, "Failed creating bluetooth conn!"
+				"Exiting...");
+		goto destroy;
+	}
+
+#ifdef HAVE_DBUS
+	if (dbus_init(hci_str)) {
+		log_message(FIL|OUT, result->log, "Error while initilizing "
+				"D-Bus! Aborting...");
+		goto destroy;
+	}
+#endif
+	snprintf(hci_str, sizeof(hci_str), "hci%d", result->sd->hci_id);
+	log_message(FIL, result->log, "Bluetooth device code hci = %d",
+		    result->sd->hci_id);
+
+
+	loop_add(result->server_socket, result, server_socket_cb);
+	log_message(FIL|OUT, result->log, "Initialization done.");
+	goto exit;
+
+destroy:
+
+	if (result->display)
+		destroy_display(result->display);
+	if (result->sd)
+		destroy_sd(result->sd);
+	if (result->log)
+		log_clean_resources(result->log);
+
+cleanup:
+
+	if (result) {
+		free(result);
+		result = NULL;
+	}
+
+exit:
+
+	return result;
+}
+
+
+void amora_start(struct amora_s *context)
+{
+	int result;
+	if (!context)
+		return;
+
+	log_message(FIL|OUT, context->log, "Waiting cellphone connection...");
+	result = listen(context->server_socket, 10);
+	if (result) {
+		log_message(FIL|OUT, context->log, "Failed listening...");
+		return;
+	}
+
+	log_message(FIL|OUT, context->log, "Entering main loop...");
+	loop();
+	log_message(FIL|OUT, context->log, "Done, we are exiting now.");
+}
+
+
+void amora_context_delete(struct amora_s *context)
+{
+	int result;
+
+	if (!context)
+		return;
+
+	/* Cleanup internal static variable */
+	result = process_events(context, context->client_socket = 0, 1);
+
+	if (context->display)
+		destroy_display(context->display);
+	if (context->sd)
+		destroy_sd(context->sd);
+
+	if (context->server_socket != -1)
+		close(context->server_socket);
+
+	log_message(FIL|OUT, context->log, "Done, we are closing now.");
+	if (context->log)
+		log_clean_resources(context->log);
+
 }
