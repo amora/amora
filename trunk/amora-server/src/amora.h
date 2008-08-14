@@ -18,6 +18,8 @@ struct service_description;
 
 /** Amora global struct that holds the main resources */
 struct amora_s {
+	/* Bluetooth dongle used (its required for dbus disconnection code) */
+	char hci_str[6];
 	/** Log resource */
 	struct log_resource *log;
 	/** X11 display */
