@@ -24,6 +24,7 @@ dnl Checks for programs.
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_PROG_CC
+AC_PROG_LIBTOOL
 
 dnl Checks for header files.
 AC_CHECK_HEADERS([stdlib.h stdio.h string.h sys/socket.h sys/timeb.h])
