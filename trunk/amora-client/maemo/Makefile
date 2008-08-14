@@ -3,7 +3,7 @@ all: amora.edj
 
 clean:
 	python setup.py clean --all
-	rm -f amora.edj
+	rm -f amora.edj *.cache *.pyc *~
 
 install:
 	python setup.py install --root $(DESTDIR)
