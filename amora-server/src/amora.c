@@ -318,7 +318,6 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 {
 	struct amora_s *result = NULL;
 	int res;
-	char hci_str[6];
 
 	result = (struct amora_s *) malloc(sizeof(struct amora_s));
 	if (!result)
@@ -377,17 +376,18 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 		goto destroy;
 	}
 
+	snprintf(result->hci_str, sizeof(result->hci_str), "hci%d",
+		 result->sd->hci_id);
+	log_message(FIL, result->log, "Bluetooth device code hci = %d",
+		    result->sd->hci_id);
+
 #ifdef HAVE_DBUS
-	if (dbus_init(hci_str)) {
+	if (dbus_init(result->hci_str)) {
 		log_message(FIL|OUT, result->log, "Error while initilizing "
 				"D-Bus! Aborting...");
 		goto destroy;
 	}
 #endif
-	snprintf(hci_str, sizeof(hci_str), "hci%d", result->sd->hci_id);
-	log_message(FIL, result->log, "Bluetooth device code hci = %d",
-		    result->sd->hci_id);
-
 
 	loop_add(result->server_socket, result, server_socket_cb);
 	log_message(FIL|OUT, result->log, "Initialization done.");
@@ -441,8 +441,8 @@ void amora_context_delete(struct amora_s *context)
 	if (!context)
 		return;
 
-	/* Cleanup internal static variable */
-	result = process_events(context, context->client_socket = 0, 1);
+
+	/* result = process_events(context, context->client_socket = 0, 1); */
 
 	if (context->display)
 		destroy_display(context->display);
