@@ -20,6 +20,9 @@ AC_CONFIG_HEADERS([config.h])
 AC_CANONICAL_HOST
 AM_MAINTAINER_MODE
 
+# dnl disable shared libraries, since libamora's API is not stable yet
+AC_DISABLE_SHARED
+
 dnl Checks for programs.
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
