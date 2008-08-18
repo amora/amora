@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libamora
+Description: library for the server part of amora
+Version: @VERSION@
+Libs: -L${libdir}
+Cflags: -I${includedir}
+
+Requires: dbus-1 bluez x11 imlib2 xtst

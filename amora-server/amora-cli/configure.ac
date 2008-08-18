@@ -101,6 +101,8 @@ AC_DEVEL_ABSDIRS
 AC_DEVEL_DEFINE_INSTALL_DIRS
 
 AC_CONFIG_FILES([Makefile
+                 libamora.pc
+                 libamora-uninstalled.pc
                  Doxyfile])
 
 AC_OUTPUT

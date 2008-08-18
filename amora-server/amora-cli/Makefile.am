@@ -12,6 +12,9 @@ AUTOMAKE_OPTIONS = foreign
 
 #libamora
 lib_LTLIBRARIES = libamora.la
+include_HEADERS = $(csourcedir)/amora.h
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libamora.pc
 libamora_la_SOURCES = $(csourcedir)/amora.h $(csourcedir)/amora.c \
                  $(csourcedir)/protocol.h $(csourcedir)/protocol.c \
                  $(csourcedir)/x11_event.h $(csourcedir)/x11_event.c \
@@ -71,6 +74,7 @@ EXTRA_DIST = $(srcdir)/m4/auxdevel.m4 \
              $(srcdir)/COPYING \
              Doxyfile.in \
              amora-server.spec \
+             libamora-uninstalled.pc \
              amorad.8
 
 
