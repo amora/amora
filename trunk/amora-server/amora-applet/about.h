@@ -21,20 +21,15 @@
 
 #include <QWidget>
 #include <QDialog>
+#include "ui_about.h"
 
-namespace Ui {
-	class About;
-}
-
-class About : public QDialog
+class About : public QDialog, Ui::About
 {
 	Q_OBJECT
 
 public:
-		About(QWidget *parentW = 0);
-		~About();
-private:
-		Ui::About *ui;
+	About(QWidget *parentW = 0);
+
 };
 
 #endif
