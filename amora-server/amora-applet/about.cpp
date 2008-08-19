@@ -18,8 +18,10 @@
 
 
 #include "about.h"
+#include <QtGui>
 
 About::About(QWidget *parentW) : QDialog(parentW)
 {
 	setupUi(this);
+	layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
