@@ -13,23 +13,23 @@ What is next for amora
 
  * client: SIS package, stopwatch, configuration screen (screenshot timeout, mouse cursor delta), time based continuous keypressing support (left/right arrow keys)
 
-= Version 1.1 (July ending) =
+= Version 1.1 (September) =
 
- * server: detect bluetooth dongle connection/disconnection, utests
+ * server: detect bluetooth dongle connection/disconnection, bug fixing
 
  * cellphone client: bug fixing
 
- * Internet tablet client for N800/N810 PoC (Proof of Concept)
-
 = Version 1.2 =
 
- * server: pluggable architecture
+ * server: pluggable architecture, applet with UI
  
- * cellphone client: keymap layout plugins, menu navigation changes
+ * j2me client
 
- * Internet tablet client more features
+ * Internet tablet client for N800/N810 PoC (Proof of Concept)
 
 
 = Version 1.3 =
 
  * handle internationalization (Portuguese at least)
+
+ * cellphone client: keymap layout plugins, menu navigation changes
