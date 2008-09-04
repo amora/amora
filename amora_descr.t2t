@@ -45,8 +45,7 @@ that can be potentially useful for slide presentations:
 == Hardware required ==
 
 A Nokia cellphone S60 (3rd and 2rd editions are tested), Linux
-(tested on Ubuntu 6.06 and 6.10) and a bluetooth dongle.
-
+(Ubuntu 8.04) and a bluetooth dongle.
 
 
 == Software dependencies ==
@@ -68,24 +67,30 @@ For server side, to compile the source code, you will need:
 
 And also XTest extension enabled in you X server (default on Ubuntu). So,
 in Ubuntu simply run in your terminal:
-$sudo apt-get install  gcc libxext-dev libbluetooth2-dev
+$sudo apt-get install gcc libxext-dev libbluetooth2-dev libimlib2-dev libxtst-dev libdbus-1-dev
 
-After installing the dependencies, change to directory 'pc_server'
-and execute the following command:
+After installing the dependencies, change to directory 'amora_server/amora-cli'
+and run:
+$mkdir build
+$cd build
+$./configure
 $make
 
 It will generate an executable file named 'test_presenter', you must
 start the application (and make sure that the bluetooth dongle is
 connected to the computer):
-$./test_presenter
+$./amorad
 
+
+If there is not a 'configure' script in the directory, first run:
+$autoreconf -i -f
 
 
 = Project status =
 
 
 What works: mouse moving, left button clicking, mouse scroll wheel,
-keyboard shortcuts (ENTER, ESC, SPACE, Arrow keys).
+keyboard shortcuts (ENTER, ESC, SPACE, Arrow keys), screenshot.
 
 You can ask for screenshots of active window as also use a mode where for each mouse click the screenshot of active window is taken (very handy when driving slides).
 
@@ -106,10 +111,6 @@ MPlayer).
 
  - See project page, in 'Issues' tab.
 
- - BT device based presence control
-
- - Export cellphone GPS data for user apps.
-
  - Camera video capture and streaming to PC
 
  - Write a linux kernel module (V4L2) to make cellphone video stream appear
@@ -118,8 +119,6 @@ as a bluetooth webcam.
  - FreeBSD server port: no idea of difficulty (it depends **if** bluetooth
 SDP API is documented in BSD) and **if** there are source code examples
 available.
-
- - Solaris port: no idea too, same case as FreeBSD.
 
  - Mac OSX: well, it has 1 more factor of difficulty since Mac doesn't use
 X server to control most of its apps.
