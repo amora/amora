@@ -13,13 +13,13 @@ What is next for amora
 
  * client: SIS package, stopwatch, configuration screen (screenshot timeout, mouse cursor delta), time based continuous keypressing support (left/right arrow keys)
 
-= Version 1.1 (September) =
+= Version 1.1 (September - done!) =
 
  * server: detect bluetooth dongle connection/disconnection, bug fixing
 
  * cellphone client: bug fixing
 
-= Version 1.2 =
+= Version 1.2 (December) =
 
  * server: pluggable architecture, applet with UI
  
