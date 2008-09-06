@@ -1,7 +1,7 @@
 #labels Featured,Phase-Requirements,Phase-Deploy
 ''Amora: a mobile remote assistant'''
 
-''Adenilson Cavalcanti (savagobr@yahoo.com)''
+''Adenilson Cavalcanti (savagobr-at-no-spam-yahoo.com)''
 
 = Project history and design =
 
