@@ -1,0 +1,35 @@
+#summary One-sentence summary of this page.
+
+== Credits ==
+
+*Coding*:
+
+ * Adenilson Cavalcanti da Silva (cellphone client, design, BlueZ, Xlib, Imlib, testing, webpage, even the kitchensink)
+
+ * Ademar de Souza Reis Jr. (logging functions, buildsystem, Mandriva package)
+
+ * Thiago Marcos Santos (buildsystem, server pluggable main loop)
+
+ * Tomaz Noleto (server patches, tablet poc)
+
+
+Amora server benefited directly or indirectly from code of following projects: BlueZ (sdptool), Erich Kitzmuller a.k.a. ammoQ ([http://download.ammoq.com/ xjoypad]), Albert Huang (author of [http://people.csail.mit.edu/albert/bluez-intro/ An introduction to Bluetooth Programming]). Makoto Sugano contributed a patch to enable continuous keypressing.
+
+Amora client was only possible thanks to the great tutorials written by Jurgen Scheible, the better place to start learning Python for S60. [http://www.mobilenin.com/pys60/menu.htm link]
+
+*Graphic design*
+
+ * Wilson Prata (Wallpaper, GUI menu structure, overall interface tips)
+
+ * Alexis Younes a.k.a. Ayo73 (Frozen-Bubble cool penguin) [http://www.73lab.com link]
+
+ * Carlos Rosas (GUI menu structure, overall interface tips)
+
+ * Adenilson Cavalcanti (horrible copying and pasting...)
+
+* Packaging *
+
+ * Allisson Azevedo (Fedora package maintainer)
+
+ * Axel Beckert (Debian package maintainer)
+
