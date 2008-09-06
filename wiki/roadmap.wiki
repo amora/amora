@@ -17,7 +17,7 @@ What is next for amora
 
  * server: detect bluetooth dongle connection/disconnection, bug fixing
 
- * cellphone client: bug fixing
+ * cellphone client: bug fixing, configuration screen available when controlling slides
 
 = Version 1.2 (December) =
 
