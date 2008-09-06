@@ -8,6 +8,9 @@
 
 *ATTENTION*: Amora client needs to be installed in the *same* drive where you installed Python for S60, i.e. you must install it in drive 'E' if you had installed Python in drive 'E'.
 
+*ATTENTION*: Ubuntu Hardy (8.04) has a faulty bluez-utils package that breaks several bluetooth client apps (including Amora). You can see more information [http://groups.google.com/group/amora-user/t/d075c2aa2a1915b here] and [https://bugs.launchpad.net/ubuntu/+source/bluez-utils/+bug/227429 here].
+
+
 Simply download and install [http://amora.googlecode.com/files/amora-client-1.1.0.sis amora-version.sis] to your cellphone. Assuming that
 you had sent the file to your cellphone using bluetooth as a message:
 
