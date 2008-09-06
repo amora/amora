@@ -114,7 +114,7 @@ Amora server was included in Mandriva Cooker official repository.
 
 === Fedora Users ===
 
-Amora server was included in Fedora 7, 8 and 9 official [https://admin.fedoraproject.org/pkgdb/packages/name/amora packaged].
+Fedora has Amora server [https://admin.fedoraproject.org/pkgdb/packages/name/amora packaged].
 
 === Debian Sid Users ===
 
