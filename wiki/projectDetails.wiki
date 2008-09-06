@@ -55,6 +55,10 @@ MPlayer).
 
 Development is on going, for new planned features check project tickets page ('Issues') and project description (in repository trunk).
 
+== Project history and desing ==
+
+Here there are some slides with some information about this project development history and software design. [http://amora.googlecode.com/files/amora15.pdf link]
+
 == Related Projects ==
   * [http://code.google.com/p/controlblue/ controlblue]
 
