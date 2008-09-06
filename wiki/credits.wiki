@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#Hall of fame
 
 == Credits ==
 
@@ -32,4 +32,3 @@ Amora client was only possible thanks to the great tutorials written by Jurgen S
  * Allisson Azevedo (Fedora package maintainer)
 
  * Axel Beckert (Debian package maintainer)
-
