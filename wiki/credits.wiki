@@ -27,6 +27,6 @@ Amora client was only possible thanks to the great tutorials written by Jurgen S
 
 * Packaging *
 
- * Allisson Azevedo (Fedora package maintainer)
+ * Allisson Azevedo (Fedora package maintainer) [http://blog.allisson.eti.br/ link]
 
- * Axel Beckert (Debian package maintainer)
+ * Axel Beckert (Debian package maintainer) [http://noone.org/abe/ link]
