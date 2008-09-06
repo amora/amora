@@ -4,11 +4,11 @@
 
  * Adenilson Cavalcanti da Silva (cellphone client, design, BlueZ, Xlib, Imlib, testing, webpage, even the kitchensink)
 
- * Ademar de Souza Reis Jr. (logging functions, buildsystem, Mandriva package)
+ * [http://www.ademar.org/ Ademar de Souza Reis Jr] (original log code, build-system, amora-applet PoC, misc hacks)
 
- * Thiago Marcos Santos (buildsystem, server pluggable main loop)
+ * Thiago Marcos Santos (build-system, server pluggable main loop)
 
- * Tomaz Noleto (server patches, tablet poc)
+ * Tomaz Noleto (server patches, tablet PoC)
 
 
 Amora server benefited directly or indirectly from code of following projects: BlueZ (sdptool), Erich Kitzmuller a.k.a. ammoQ ([http://download.ammoq.com/ xjoypad]), Albert Huang (author of [http://people.csail.mit.edu/albert/bluez-intro/ An introduction to Bluetooth Programming]). Makoto Sugano contributed a patch to enable continuous keypressing.
@@ -19,7 +19,7 @@ Amora client was only possible thanks to the great tutorials written by Jurgen S
 
  * Wilson Prata (Wallpaper, GUI menu structure, overall interface tips)
 
- * Alexis Younes a.k.a. Ayo73 (Frozen-Bubble cool penguin) [http://www.73lab.com link]
+ * [http://www.73lab.com Alexis Younes a.k.a. Ayo73] (Frozen-Bubble cool penguin)
 
  * Carlos Rosas (GUI menu structure, overall interface tips)
 
@@ -27,6 +27,6 @@ Amora client was only possible thanks to the great tutorials written by Jurgen S
 
 * Packaging *
 
- * Allisson Azevedo (Fedora package maintainer) [http://blog.allisson.eti.br/ link]
+ * [http://blog.allisson.eti.br/ Allisson Azevedo] (Fedora package maintainer)
 
- * Axel Beckert (Debian package maintainer) [http://noone.org/abe/ link]
+ * [http://noone.org/abe/ Axel Beckert] (Debian package maintainer)
