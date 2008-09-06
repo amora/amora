@@ -69,9 +69,11 @@ void destroy_sd(struct service_description *sd)
 		free(sd->service_name);
 		free(sd->service_dsc);
 		free(sd->service_prov);
-		sdp_record_unregister((sdp_session_t *)sd->session,
-				      (sdp_record_t *)sd->record);
-		sdp_close((sdp_session_t *)sd->session);
+		if (sd->session) {
+			sdp_record_unregister((sdp_session_t *)sd->session,
+					      (sdp_record_t *)sd->record);
+			sdp_close((sdp_session_t *)sd->session);
+		}
 		/* XXX:FIXME: If I call this fscking function, it
 		 * SEGFAULTS.
 		 */
@@ -205,17 +207,16 @@ int describe_service(struct service_description *sd)
 	 */
 	session = sdp_connect(BDADDR_ANY, BDADDR_LOCAL, SDP_RETRY_IF_BUSY);
 	if (!session) {
-		perror("describe_service: cannot connect to"
-			    "bluetooth"
+		perror("describe_service: cannot connect to bluetooth"
 			    " device. Is bluetooth daemon running?\n");
 		goto exit;
 	}
 
 	err = sdp_record_register(session, record, 0);
 	if (err == -1) {
-		perror("describe_service: error registering"
-			    "service!");
+		perror("describe_service: error registering service!");
 	}
+
 exit:
 	/* cleanup */
 	sdp_data_free(channel);
