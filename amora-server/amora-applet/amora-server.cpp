@@ -29,6 +29,14 @@ extern "C" {
 #include <amora.h>
 }
 
+void client_connection(const char *client_name)
+{
+	/* TODO: use some UI element to display this */
+	if (client_name)
+		fprintf(stderr, "client connected: %s\n", client_name);
+
+}
+
 Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
 {
 	logfile = NULL;
@@ -41,6 +49,7 @@ Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
 	if (amora == NULL) {
 		::exit(1);
 	}
+	amora_connection_callback(amora, client_connection);
 }
 
 void Amora::parse_args(int argc, char *argv[])
