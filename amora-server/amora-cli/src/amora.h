@@ -153,4 +153,19 @@ void amora_connection_callback(struct amora_s *context,
 			       void (*conn_cb) (const char *device_name));
 
 
+/** Sets a callback function that will be called each time a new client
+ * disconnects with amora server.
+ *
+ * \todo: return human readable device name.
+ *
+ * @param context The amora server context.
+ *
+ * @param conn_cb A callback function pointer with signature:
+ * void foo(char *). The name of device just connected will be passed as
+ * the string in the callback function.
+ */
+void amora_disconnection_callback(struct amora_s *context,
+			       void (*conn_cb) (const char *device_name));
+
+
 #endif
