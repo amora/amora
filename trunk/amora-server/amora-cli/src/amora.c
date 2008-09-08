@@ -333,6 +333,8 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 	if (!result)
 		goto exit;
 
+	memset(result, 0, sizeof(struct amora_s));
+
 	if (logfile) {
 		if (!(result->log = log_build_resources(logfile))) {
 			perror("Failed log resource creation!");
