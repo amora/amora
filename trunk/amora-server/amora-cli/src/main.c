@@ -58,6 +58,13 @@
  */
 static void show_usage(const char *path);
 
+/** Callback called by main loop, prints the client name
+ * to terminal.
+ *
+ * @param msg It will have the mobile client address.
+ */
+static void client_conn_name(const char *msg);
+
 
 /** Main app function.
  *
@@ -103,6 +110,7 @@ int main(int argc, char **argv)
 	if (!amora)
 		return -1;
 
+	amora_connection_callback(amora, client_conn_name);
 	amora_start(amora);
 	amora_context_delete(amora);
 
@@ -124,5 +132,13 @@ static void show_usage(const char *path)
 	       "\n", name);
 
 	free(p);
+}
+
+
+static void client_conn_name(const char *msg)
+{
+	if (msg)
+		fprintf(stderr, "Client is: %s\n", msg);
+
 }
 

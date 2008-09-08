@@ -306,8 +306,9 @@ int server_socket_cb(void *context, int server_socket)
 				" exiting...");
 	else {
 		client_bluetooth_id(&rem_addr, buffer);
-		log_message(FIL|OUT, amora->log, "Accepted connection. Client"
+		log_message(FIL, amora->log, "Accepted connection. Client"
 				" is %s", buffer);
+		amora->conn_callback(buffer);
 		loop_add(client_socket, context, client_socket_cb);
 	}
 
@@ -455,4 +456,14 @@ void amora_context_delete(struct amora_s *context)
 	if (context->log)
 		log_clean_resources(context->log);
 
+}
+
+
+void amora_connection_callback(struct amora_s *context,
+			       void (*conn_cb) (const char *device_name))
+{
+	if (!context || !conn_cb)
+		return;
+
+	context->conn_callback = conn_cb;
 }
