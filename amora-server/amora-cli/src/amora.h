@@ -32,6 +32,10 @@ struct amora_s {
 	int client_socket;
 	/** Default channel used by amora */
 	int channel;
+	/** Connection function callback */
+	void (*conn_callback) (const char *device_name);
+	/** Disconnectoin function callback */
+	void (*disconn_callback) (const char *device_name);
 };
 
 
@@ -132,6 +136,21 @@ void amora_start(struct amora_s *context);
  * @param context A context created with \ref amora_context_new.
  */
 void amora_context_delete(struct amora_s *context);
+
+
+/** Sets a callback function that will be called each time a new client
+ * connects with amora server.
+ *
+ * \todo: return human readable device name.
+ *
+ * @param context The amora server context.
+ *
+ * @param conn_cb A callback function pointer with signature:
+ * void foo(char *). The name of device just connected will be passed as
+ * the string in the callback function.
+ */
+void amora_connection_callback(struct amora_s *context,
+			       void (*conn_cb) (const char *device_name));
 
 
 #endif
