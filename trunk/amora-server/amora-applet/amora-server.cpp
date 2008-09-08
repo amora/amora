@@ -17,9 +17,6 @@
  */
 
 
-/* XXX^2 The iteration between the applet and the library is quite simple
- * and ugly. In fact, it's nothing more than a hack. */
-
 #include <iostream>
 #include <QApplication>
 #include <QMessageBox>
@@ -29,10 +26,6 @@
 
 extern "C" {
 #include <unistd.h>
-}
-
-
-extern "C" {
 #include <amora.h>
 }
 
