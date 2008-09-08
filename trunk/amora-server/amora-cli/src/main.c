@@ -65,6 +65,12 @@ static void show_usage(const char *path);
  */
 static void client_conn_name(const char *msg);
 
+/** Callback called by main loop when a client disconnects.
+ *
+ * @param msg It will have the mobile client address.
+ */
+static void client_disconn_name(const char *msg);
+
 
 /** Main app function.
  *
@@ -111,6 +117,7 @@ int main(int argc, char **argv)
 		return -1;
 
 	amora_connection_callback(amora, client_conn_name);
+	amora_disconnection_callback(amora, client_disconn_name);
 	amora_start(amora);
 	amora_context_delete(amora);
 
@@ -142,3 +149,11 @@ static void client_conn_name(const char *msg)
 
 }
 
+static void client_disconn_name(const char *msg)
+{
+	if (msg)
+		fprintf(stderr, "Client is: %s\n", msg);
+	else
+		fprintf(stderr, "Client disconnection, but I don't have the"
+			" device name!\n");
+}

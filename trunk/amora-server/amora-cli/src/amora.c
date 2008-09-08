@@ -273,18 +273,25 @@ int client_socket_cb(void *context, int client_socket)
 	res = process_events(amora, client_socket, 0);
 
 	if (res == CONN_CLOSE) {
-		log_message(FIL|OUT, amora->log,"Client asked to close connection.");
-		loop_remove(client_socket);
-		close(client_socket);
+		log_message(FIL, amora->log,"Client asked to close connection.");
+		goto exit_close;
 	}
 
 	if (res == -1) {
-		log_message(FIL|OUT, amora->log, "Client died or closed connection.");
-		loop_remove(client_socket);
-		close(client_socket);
+		log_message(FIL, amora->log, "Client died or closed connection.");
+		goto exit_close;
 	}
 
 	return 0;
+
+exit_close:
+	loop_remove(client_socket);
+	close(client_socket);
+	if (amora->disconn_callback)
+		/* TODO: store device name during the first connection! */
+		amora->disconn_callback(NULL);
+	return 0;
+
 }
 
 int server_socket_cb(void *context, int server_socket)
@@ -308,7 +315,9 @@ int server_socket_cb(void *context, int server_socket)
 		client_bluetooth_id(&rem_addr, buffer);
 		log_message(FIL, amora->log, "Accepted connection. Client"
 				" is %s", buffer);
-		amora->conn_callback(buffer);
+
+		if (amora->conn_callback)
+			amora->conn_callback(buffer);
 		loop_add(client_socket, context, client_socket_cb);
 	}
 
@@ -466,4 +475,13 @@ void amora_connection_callback(struct amora_s *context,
 		return;
 
 	context->conn_callback = conn_cb;
+}
+
+void amora_disconnection_callback(struct amora_s *context,
+			       void (*conn_cb) (const char *device_name))
+{
+	if (!context || !conn_cb)
+		return;
+
+	context->disconn_callback = conn_cb;
 }
