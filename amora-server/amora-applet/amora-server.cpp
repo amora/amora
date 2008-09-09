@@ -33,6 +33,9 @@ extern "C" {
 static Applet *applet = NULL;
 
 
+/* TODO: the safe way is to trigger a SIGNAL from server thread and
+ * have a SLOT in main execution thread to update the icon.
+ */
 void client_connection(const char *client_name)
 {
 	/* TODO: use some UI element to display this */
@@ -41,6 +44,19 @@ void client_connection(const char *client_name)
 	if (applet)
 		applet->setStatus(Applet::On);
 
+}
+
+void client_disconnection(const char *client_name)
+{
+	/* TODO: amora lib should return client name */
+	(void)client_name;
+
+	/* TODO: applet must have an internal counter */
+	if (applet) {
+		applet->setStatus(Applet::Off);
+		sleep(1);
+		applet->setStatus(Applet::Start);
+	}
 }
 
 Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
@@ -55,7 +71,9 @@ Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
 	if (amora == NULL) {
 		::exit(1);
 	}
+
 	amora_connection_callback(amora, client_connection);
+	amora_disconnection_callback(amora, client_disconnection);
 }
 
 void Amora::parse_args(int argc, char *argv[])
