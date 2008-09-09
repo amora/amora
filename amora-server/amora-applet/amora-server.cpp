@@ -29,11 +29,17 @@ extern "C" {
 #include <amora.h>
 }
 
+/* Required to be used by conn/disconnection callbacks */
+static Applet *applet = NULL;
+
+
 void client_connection(const char *client_name)
 {
 	/* TODO: use some UI element to display this */
 	if (client_name)
 		fprintf(stderr, "client connected: %s\n", client_name);
+	if (applet)
+		applet->setStatus(Applet::On);
 
 }
 
@@ -116,6 +122,7 @@ void Amora::run(void)
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
+	int result;
 
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {
 		QMessageBox::critical(0, QObject::tr("Amora Applet"),
@@ -126,8 +133,9 @@ int main(int argc, char *argv[])
 	Amora amora(argc, argv);
 	amora.start();
 
-	Applet applet;
-
+	applet = new Applet();
 	app.setQuitOnLastWindowClosed(false);
-	return app.exec();
+	result = app.exec();
+	delete applet;
+	return result;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
+   <file>amora_start.png</file>
    <file>amora_bluetooth.png</file>
    <file>amora_exclamation.png</file>
 </qresource>

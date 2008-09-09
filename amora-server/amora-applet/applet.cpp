@@ -46,7 +46,7 @@ Applet::Applet()
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 			this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-	setStatus(Applet::On);
+	setStatus(Applet::Start);
 
 	trayIcon->show();
 }
@@ -62,10 +62,16 @@ Applet::~Applet()
 
 void Applet::setStatus(enum Status st)
 {
+  	QIcon iconStart(":/amora_start.png");
 	QIcon iconOn(":/amora_bluetooth.png");
 	QIcon iconOff(":/amora_exclamation.png");
 
 	switch(st) {
+	case Applet::Start:
+		trayIcon->setIcon(iconStart);
+		trayIcon->setToolTip("Amora Server (Started)");
+		status = Applet::Start;
+		break;
 	case Applet::On:
 		trayIcon->setIcon(iconOn);
 		trayIcon->setToolTip("Amora Server (On)");
@@ -89,9 +95,9 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
 			break;
 		case QSystemTrayIcon::MiddleClick:
 			if (status == Applet::Off)
+				setStatus(Applet::Start);
+			else if (status == Applet::Start)
 				setStatus(Applet::On);
-			else
-				setStatus(Applet::Off);
 			break;
 		default:
 			;
