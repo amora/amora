@@ -37,8 +37,9 @@ public:
 	~Applet();
 
 	static enum Status {
-		On = 0,
-		Off = 1
+		Start = 0,
+		On = 1,
+		Off = 2
 	} Status;
 
 	void setStatus(enum Status status);
