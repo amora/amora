@@ -25,25 +25,20 @@
 #include "amora-server.h"
 
 extern "C" {
-#include <unistd.h>
 #include <amora.h>
 }
 
 /* Required to be used by conn/disconnection callbacks */
 static Applet *applet = NULL;
+static Amora *amora_server = NULL;
 
-
-/* TODO: the safe way is to trigger a SIGNAL from server thread and
- * have a SLOT in main execution thread to update the icon.
- */
 void client_connection(const char *client_name)
 {
 	/* TODO: use some UI element to display this */
 	if (client_name)
 		fprintf(stderr, "client connected: %s\n", client_name);
-	if (applet)
-		applet->setStatus(Applet::On);
-
+	if (applet && amora_server)
+		amora_server->emitSignal(On);
 }
 
 void client_disconnection(const char *client_name)
@@ -51,12 +46,20 @@ void client_disconnection(const char *client_name)
 	/* TODO: amora lib should return client name */
 	(void)client_name;
 
-	/* TODO: applet must have an internal counter */
-	if (applet) {
-		applet->setStatus(Applet::Off);
+	/* TODO: applet must have an internal counter and do himself
+	 * the animation to show disconnection. There is no guarantee that
+	 * the signals will be delivered in order.
+	 */
+	if (applet && amora_server) {
+		amora_server->emitSignal(Off);
 		sleep(1);
-		applet->setStatus(Applet::Start);
+		amora_server->emitSignal(Start);
 	}
+}
+
+void Amora::emitSignal(int change)
+{
+	emit changeStatus(change);
 }
 
 Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
@@ -148,12 +151,14 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	Amora amora(argc, argv);
-	amora.start();
-
+	amora_server = new Amora(argc, argv);
 	applet = new Applet();
+	applet->bind(amora_server);
+	amora_server->start();
+
 	app.setQuitOnLastWindowClosed(false);
 	result = app.exec();
 	delete applet;
+	delete amora_server;
 	return result;
 }
