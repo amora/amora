@@ -27,6 +27,13 @@
 
 class QAction;
 class QMenu;
+class Amora;
+
+enum applet_status {
+	Start = 0,
+	On = 1,
+	Off = 2
+};
 
 class Applet : public QWidget
 {
@@ -34,28 +41,26 @@ class Applet : public QWidget
 
 public:
 	Applet();
+
 	~Applet();
 
-	static enum Status {
-		Start = 0,
-		On = 1,
-		Off = 2
-	} Status;
-
-	void setStatus(enum Status status);
 	void showMessage(QString message, QString title="Amora Server");
+	void bind(Amora *amora_server);
 
 private slots:
+	void iconStatus(int change);
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void about();
 
 private:
 	uint status;
+	Amora *amora;
 	QAction *quitAction;
 	QAction *aboutAction;
 
 	QSystemTrayIcon *trayIcon;
 	QMenu *menu;
+	void setStatus(int st);
 };
 
 #endif

@@ -19,14 +19,23 @@
 #ifndef __AMORA_H__
 #define __AMORA_H__
 
-extern "C" {
-#include <amora.h>
-}
-
 #include <QThread>
+
+struct amora_s;
 
 class Amora : public QThread
 {
+	Q_OBJECT
+
+public:
+	Amora(int argc, char **argv);
+	~Amora();
+
+	void emitSignal(int change);
+
+signals:
+	void changeStatus(int change);
+
 private:
 	int _argc;
 	char **_argv;
@@ -39,9 +48,6 @@ private:
 	void parse_args(int argc, char *argv[]);
 	void show_usage(const char *path);
 
-public:
-	Amora(int argc, char **argv);
-	~Amora();
 };
 
 #endif

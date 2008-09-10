@@ -23,6 +23,7 @@
 #include <QtGui>
 #include "applet.h"
 #include "about.h"
+#include "amora-server.h"
 
 #include <unistd.h>
 
@@ -46,8 +47,8 @@ Applet::Applet()
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 			this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-	setStatus(Applet::Start);
 
+	setStatus(Start);
 	trayIcon->show();
 }
 
@@ -60,27 +61,28 @@ Applet::~Applet()
 	delete menu;
 }
 
-void Applet::setStatus(enum Status st)
+void Applet::setStatus(int st)
 {
   	QIcon iconStart(":/amora_start.png");
 	QIcon iconOn(":/amora_bluetooth.png");
 	QIcon iconOff(":/amora_exclamation.png");
 
+	fprintf(stderr, "received status: %d\n", st);
 	switch(st) {
-	case Applet::Start:
+	case Start:
 		trayIcon->setIcon(iconStart);
 		trayIcon->setToolTip("Amora Server (Started)");
-		status = Applet::Start;
+		status = Start;
 		break;
-	case Applet::On:
+	case On:
 		trayIcon->setIcon(iconOn);
 		trayIcon->setToolTip("Amora Server (On)");
-		status = Applet::On;
+		status = On;
 		break;
-	case Applet::Off:
+	case Off:
 		trayIcon->setIcon(iconOff);
 		trayIcon->setToolTip("Amora Server (Off)");
-		status = Applet::Off;
+		status = Off;
 		break;
 	}
 }
@@ -94,10 +96,10 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
 			showMessage("Hello world", "amora");
 			break;
 		case QSystemTrayIcon::MiddleClick:
-			if (status == Applet::Off)
-				setStatus(Applet::Start);
-			else if (status == Applet::Start)
-				setStatus(Applet::On);
+			if (status == Off)
+				setStatus(Start);
+			else if (status == Start)
+				setStatus(On);
 			break;
 		default:
 			;
@@ -114,4 +116,16 @@ void Applet::about()
 {
 	About dialog;
 	dialog.exec();
+}
+
+void Applet::iconStatus(int change)
+{
+	setStatus(change);
+}
+
+void Applet::bind(Amora *amora_server)
+{
+	this->amora = amora_server;
+	connect(amora, SIGNAL(changeStatus(int)),
+		this, SLOT(iconStatus(int)));
 }
