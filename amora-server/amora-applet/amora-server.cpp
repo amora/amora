@@ -29,7 +29,6 @@ extern "C" {
 }
 
 /* Required to be used by conn/disconnection callbacks */
-static Applet *applet = NULL;
 static Amora *amora_server = NULL;
 
 void client_connection(const char *client_name)
@@ -37,7 +36,7 @@ void client_connection(const char *client_name)
 	/* TODO: use some UI element to display this */
 	if (client_name)
 		fprintf(stderr, "client connected: %s\n", client_name);
-	if (applet && amora_server)
+	if (amora_server)
 		amora_server->emitSignal(On);
 }
 
@@ -50,7 +49,7 @@ void client_disconnection(const char *client_name)
 	 * the animation to show disconnection. There is no guarantee that
 	 * the signals will be delivered in order.
 	 */
-	if (applet && amora_server) {
+	if (amora_server) {
 		amora_server->emitSignal(Off);
 		sleep(1);
 		amora_server->emitSignal(Start);
@@ -151,14 +150,14 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	amora_server = new Amora(argc, argv);
-	applet = new Applet();
-	applet->bind(amora_server);
-	amora_server->start();
+	Amora server(argc, argv);
+	amora_server = &server;
+
+	Applet applet;
+	applet.bind(amora_server);
+	server.start();
 
 	app.setQuitOnLastWindowClosed(false);
 	result = app.exec();
-	delete applet;
-	delete amora_server;
 	return result;
 }
