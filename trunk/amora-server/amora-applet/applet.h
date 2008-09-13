@@ -53,6 +53,7 @@ private slots:
 	void about();
 
 private:
+	int cellphone;
 	uint status;
 	Amora *amora;
 	QAction *quitAction;
