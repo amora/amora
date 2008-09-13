@@ -30,6 +30,7 @@
 
 Applet::Applet()
 {
+	this->cellphone = 0;
 	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -67,24 +68,36 @@ void Applet::setStatus(int st)
 	QIcon iconOn(":/amora_bluetooth.png");
 	QIcon iconOff(":/amora_exclamation.png");
 
-	fprintf(stderr, "received status: %d\n", st);
 	switch(st) {
 	case Start:
+		if (this->cellphone) {
+			trayIcon->setIcon(iconOn);
+			trayIcon->setToolTip("Amora Server (On)");
+			status = On;
+			return;
+		}
+		this->cellphone = 0;
 		trayIcon->setIcon(iconStart);
 		trayIcon->setToolTip("Amora Server (Started)");
 		status = Start;
 		break;
+
 	case On:
+		this->cellphone++;
 		trayIcon->setIcon(iconOn);
 		trayIcon->setToolTip("Amora Server (On)");
 		status = On;
 		break;
+
 	case Off:
+		this->cellphone--;
 		trayIcon->setIcon(iconOff);
 		trayIcon->setToolTip("Amora Server (Off)");
 		status = Off;
 		break;
 	}
+
+	fprintf(stderr, "cellphones: %d\n", cellphone);
 }
 
 
