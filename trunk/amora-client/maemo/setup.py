@@ -12,5 +12,6 @@ setup(name='amora',
 					('share/amora',                         ['amora']),
 					('share/amora',                         ['btio.py']),
 					('share/amora',                         ['dbus_discover.py']),
+					('share/amora',                         ['protocol.py']),
                     ]
       )
