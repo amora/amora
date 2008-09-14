@@ -114,8 +114,7 @@ class AmoraView(object):
 			self.edje_file = sys.argv[1]
 		else:
 			# do not hardcode edje file path
-			self.edje_file = APP_DATADIR
-			+ os.path.basename(sys.argv[0]) + ".edj"
+			self.edje_file = APP_DATADIR + os.path.basename(sys.argv[0]) + ".edj"
 
 		try:
 			self.main_group = edje.Edje(self.ee.evas,
