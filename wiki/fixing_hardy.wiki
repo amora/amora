@@ -6,14 +6,14 @@ Ubuntu hardy has a faulty bluez package for months, its a well known [https://bu
 
 This makes several bluetooth client apps break, and so Amora too.
 
-There is a way to workaround it, by installing Intrepid files. But be *warned* that it can bring problems for you system (mainly when upgrading, I guess).
+There is a way to workaround it, by installing Intrepid files. But be *warned* that it can bring problems to your system (mainly when upgrading, I guess).
 
 
 = Details =
 
 Download the [http://amora.googlecode.com/files/hardy_blue_bug.tar.bz2 packages] and extract it in a directory.
 
-Install then in this order:
+Install them in this order:
 
  * lsb-base: its a dependency
 
@@ -21,7 +21,7 @@ Install then in this order:
 
  * libbluetooth: updated bluetooth package
 
- * libbluetooth-dev: has the development packages
+ * libbluetooth-dev: has the development packages (optional)
 
 A faster way is to execute this script:
 
