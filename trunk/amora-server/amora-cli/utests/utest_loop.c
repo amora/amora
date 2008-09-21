@@ -28,22 +28,25 @@ static void teardown(void)
 	close(random_fd);
 }
 
-static int fail_read(int fd)
+static int fail_read(void *context, int fd)
 {
-	(void) fd;
+	(void)context;
+	(void)fd;
 
 	return -1;
 }
 
 static int return_fd_read(void *context, int fd)
 {
+	(void)context;
 	return fd;
 }
 
-static int zero_read(int fd)
+static int zero_read(void *context, int fd)
 {
 	static int i = 0;
 	static char buffer;
+	(void)context;
 
 	i = i + read(fd, &buffer, 1);
 	fail_unless(buffer == 0, "Reading !0 from /dev/zero. Wrong fd?");
@@ -60,10 +63,11 @@ static int zero_read(int fd)
 	return 0;
 }
 
-static int random_read(int fd)
+static int random_read(void *context, int fd)
 {
 	static int i = 0;
 	static char buffer;
+	(void)context;
 
 	i = i + read(fd, &buffer, 1);
 
@@ -165,7 +169,6 @@ START_TEST (test_loop)
 	loop_add(zero_fd, NULL, zero_read);
 	loop_add(random_fd, NULL, random_read);
 	fail_if(loop(), "Internal loop() error!");
-
 	loop_add(zero_fd, NULL, fail_read);
 	fail_unless(loop() == -1, "Not return error on fail!");
 }
