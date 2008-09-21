@@ -1,0 +1,81 @@
+/* Based on example provided with python-edje source code
+ * (python-edje/examples/evas-demo).
+ *
+ */
+
+fonts {
+   font: "nosnb.ttf" "NokiaSansBold";
+}
+
+#define B_RIGHT "images/right.png"
+#define B_LEFT "images/left.png"
+#define B_FULL "images/randr.png"
+#define BACKGROUND "images/background.jpeg"
+
+images {
+   image: BACKGROUND LOSSY 95;
+   image: B_RIGHT COMP;
+   image: B_LEFT COMP;
+   image: B_FULL COMP;
+}
+
+collections {
+   group {
+      name: "main";
+      min: 800 480;
+
+      script {
+         public selected = 0;
+         public pulsing = 0;
+         public stop_pulsing_timer_id = 0;
+         const Float:pulse_timeout = 10.0;
+
+         public unselect() {
+            if (get_int(selected) == 0)
+               return;
+            run_program(get_int(selected));
+            set_int(selected, 0);
+         }
+
+         public stop_pulsing() {
+            if (get_int(pulsing) == 0)
+               return;
+            set_state(get_int(pulsing), "default", 0.0);
+            set_int(pulsing, 0);
+            if (get_int(stop_pulsing_timer_id) != 0) {
+               cancel_timer(get_int(stop_pulsing_timer_id));
+               set_int(stop_pulsing_timer_id, 0);
+            }
+         }
+
+         public stop_pulsing_cb(val) {
+            stop_pulsing();
+            return 0;
+         }
+      }
+
+      parts {
+         part {
+            name: "background";
+            type: IMAGE;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 { relative: 0.0 0.0; }
+               rel2 { relative: 1.0 1.0; offset: -1 -1; }
+               image { normal: BACKGROUND; }
+            }
+         }
+
+         #include "icon_macro.edc"
+         ICON(B_RIGHT, 0.10, 0.15, "")
+         ICON(B_LEFT, 0.10, 0.45, "")
+         ICON(B_FULL, 0.10, 0.75, "")
+      }
+      programs {
+
+         #include "icon_prg.edc"
+         //ICON_PROGRAMS(B_RIGHT)
+      }
+   }
+}

@@ -38,6 +38,7 @@ import os
 import dbus_discover
 import btio
 import protocol
+import controller
 
 WIDTH_DFL = 800
 HEIGHT_DFL = 480
@@ -56,6 +57,7 @@ view = None
 canvas = None
 bt_socket = btio.bt()
 prot_obj = None
+control = None
 
 #D-Bus callback used in discover process
 def dbus_device_fill_list(address, name):
@@ -103,6 +105,7 @@ class AmoraDeviceList(evas.SmartObject):
 
 		prot_obj.comm_channel(bt_socket)
 		prot_obj.connect()
+		control = controller.Controller(canvas)
 
 
 
