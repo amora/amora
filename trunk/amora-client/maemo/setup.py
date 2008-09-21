@@ -9,9 +9,11 @@ setup(name='amora',
                     ('share/icons/hicolor/scalable/hildon', ['icons/scalable/amora.png']),
                     ('share/applications/hildon',           ['amora.desktop']),
                     ('share/amora',                         ['amora.edj']),
+                    ('share/amora',                         ['controller.edj']),
 					('share/amora',                         ['amora']),
 					('share/amora',                         ['btio.py']),
 					('share/amora',                         ['dbus_discover.py']),
 					('share/amora',                         ['protocol.py']),
+					('share/amora',                         ['controller.py']),
                     ]
       )
