@@ -87,24 +87,14 @@ collections {
          }
 
          #include "amora_icon.edc"
-         A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0, 160, 120, 0.0, 1.0, 200, -150, 0.0, 1.0, 200, -25)
+         A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0,
+		160, 120, 0.0, 1.0, 200,
+		-150, 0.0, 1.0, 200, -25)
 
-         part {
-            name: "zzz";
-            type: IMAGE;
-            mouse_events: 0;
-
-            description {
-               state: "default" 0.0;
-               min: 36 50;
-               max: 36 50;
-
-               rel1 { relative: 0.0 0.0; offset: 125 -125; to: "penguin_off"; }
-               rel2 { relative: 1.0 1.0; offset: 0 0; to: "penguin_off"; }
-
-               image { normal: AMORA_ZZZ; }
-            }
-         }
+	 A_ICON_RELATIVE("zzz", AMORA_ZZZ, 0,
+			 "penguin_off",
+			 36, 50, 0.0, 0.0,
+			 125, -125, 1.0, 1.0, 0, 0)
 
          part {
             name: "amora_off";
