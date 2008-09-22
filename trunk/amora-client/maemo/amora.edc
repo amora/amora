@@ -35,36 +35,15 @@ collections {
       name, "main";
       min, 320 240;
       max, 800 480;
-
+     #include "amora_icon.edc"
       parts {
-         part {
-            name: "background_bottom";
-            type: IMAGE;
-            mouse_events: 0;
+      A_ICON_BACKGROUND("background_bottom", AMORA_BG1, 0,
+			0.0, 0.0, 0, 0,
+			1.0, 1.0, -1, -1)
 
-            description {
-               state: "default" 0.0;
-
-               rel1 { relative: 0.0 0.0; offset: 0 0; }
-               rel2 { relative: 1.0 1.0; offset: -1 -1; }
-
-               image { normal: AMORA_BG1; }
-
-            }
-         }
-
-         part {
-            name: "background_top";
-            type: IMAGE;
-            mouse_events: 0;
-
-            description {
-               rel1 { relative: 0.0 0.0; offset: 30 80; }
-               rel2 { relative: 1.0 1.0; offset: -125 -30; }
-
-               image { normal: AMORA_BG2; }
-            }
-         }
+      A_ICON_BACKGROUND("background_top", AMORA_BG2, 0,
+			0.0, 0.0, 30, 80,
+			1.0, 1.0, -125, -30)
 
          part {
             name: "title";
@@ -86,7 +65,6 @@ collections {
             }
          }
 
-         #include "amora_icon.edc"
          A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0,
 		160, 120,
 		0.0, 1.0, 200, -150,
