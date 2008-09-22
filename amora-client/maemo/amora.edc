@@ -79,58 +79,29 @@ collections {
 			      1.0, 1.0, 0, 0)
 
 
-	 A_ICON_RELATIVE("options_button", AMORA_OPTIONS, 1,
-			 "scan_button",
-			 80, 80,
-			 0.0, 0.0, 0, 75,
-			 1.0, 1.0, 0, 175)
+	      A_ICON_RELATIVE("options_button", AMORA_OPTIONS, 1,
+			      "scan_button",
+			      80, 80,
+			      0.0, 0.0, 0, 75,
+			      1.0, 1.0, 0, 175)
 
-         part {
-            name: "options_text";
-            type: TEXT;
-            mouse_events: 1;
-            effect: SOFT_SHADOW;
-
-            description {
-               state: "default" 0.0;
-
-               rel1 { relative: 0.0 0.0; offset: 0 100; to: "options_button"; }
-               rel2 { relative: 1.0 1.0; offset: 0 0; to: "options_button"; }
-
-               text {
-                  text: "Options";
-                  font: "NokiaSansBold";
-                  size: 20;
-               }
-            }
-         }
+	      A_TEXT_RELATIVE("options_text", "Options", 20,
+			      SOFT_SHADOW, "NokiaSansBold", "options_button",
+			      0.0, 0.0, 0, 100,
+			      1.0, 1.0, 0, 0)
 
 
-	 A_ICON_RELATIVE("exit_button", AMORA_EXIT, 1,
-			 "options_button",
-			 80, 80,
-			 0.0, 0.0, 0, 75,
-			 1.0, 1.0, 0, 175)
 
-         part {
-            name: "exit_text";
-            type: TEXT;
-            mouse_events: 1;
-            effect: SOFT_SHADOW;
+	      A_ICON_RELATIVE("exit_button", AMORA_EXIT, 1,
+			      "options_button",
+			      80, 80,
+			      0.0, 0.0, 0, 75,
+			      1.0, 1.0, 0, 175)
 
-            description {
-               state: "default" 0.0;
-
-               rel1 { relative: 0.0 0.0; offset: 0 100; to: "exit_button"; }
-               rel2 { relative: 1.0 1.0; offset: 0 0; to: "exit_button"; }
-
-               text {
-                  text: "Exit";
-                  font: "NokiaSansBold";
-                  size: 20;
-               }
-            }
-         }
+	      A_TEXT_RELATIVE("exit_text", "Exit", 20,
+			      SOFT_SHADOW, "NokiaSansBold", "exit_button",
+			      0.0, 0.0, 0, 100,
+			      1.0, 1.0, 0, 0)
 
          part {
             name: "device_list_bg";
