@@ -86,22 +86,8 @@ collections {
             }
          }
 
-         part {
-            name: "penguin_off";
-            type: IMAGE;
-            mouse_events: 0;
-
-            description {
-               state: "default" 0.0;
-               min: 160 120;
-               max: 160 120;
-
-               rel1 { relative: 0.0 1.0; offset: 200 -150; }
-               rel2 { relative: 0.0 1.0; offset: 200 -25; }
-
-               image { normal: AMORA_PENGUIN_OFF; }
-            }
-         }
+         #include "amora_icon.edc"
+         A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0, 160, 120, 0.0, 1.0, 200, -150, 0.0, 1.0, 200, -25)
 
          part {
             name: "zzz";
