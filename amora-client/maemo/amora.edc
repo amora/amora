@@ -37,75 +37,47 @@ collections {
       max, 800 480;
       #include "amora_icon.edc"
       parts {
-      A_ICON_BACKGROUND("background_bottom", AMORA_BG1, 0,
-			0.0, 0.0, 0, 0,
-			1.0, 1.0, -1, -1)
+	      A_ICON_BACKGROUND("background_bottom", AMORA_BG1, 0,
+				0.0, 0.0, 0, 0,
+				1.0, 1.0, -1, -1)
 
-      A_ICON_BACKGROUND("background_top", AMORA_BG2, 0,
-			0.0, 0.0, 30, 80,
-			1.0, 1.0, -125, -30)
+	      A_ICON_BACKGROUND("background_top", AMORA_BG2, 0,
+				0.0, 0.0, 30, 80,
+				1.0, 1.0, -125, -30)
 
-         part {
-            name: "title";
-            type: TEXT;
-            mouse_events: 0;
-            effect: OUTLINE_SOFT_SHADOW;
+	      A_TEXT("title", AMORA_TITLE, 44,
+		     OUTLINE_SOFT_SHADOW, "NokiaSansBold",
+		     0.0, 0.0, 0, 0,
+		     0.0, 0.0, 400, 75)
 
-            description {
-               state: "default" 0.0;
 
-               rel1 { relative: 0.0 0.0; offset: 0 0; }
-               rel2 { relative: 0.0 0.0; offset: 400 75; }
+	      A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0,
+		     160, 120,
+		     0.0, 1.0, 200, -150,
+		     0.0, 1.0, 200, -25)
 
-               text {
-                  text: AMORA_TITLE;
-                  font: "NokiaSansBold";
-                  size: 44;
-               }
-            }
-         }
+	      A_ICON_RELATIVE("zzz", AMORA_ZZZ, 0,
+			      "penguin_off",
+			      36, 50,
+			      0.0, 0.0, 125, -125,
+			      1.0, 1.0, 0, 0)
 
-         A_ICON("penguin_off", AMORA_PENGUIN_OFF, 0,
-		160, 120,
-		0.0, 1.0, 200, -150,
-		0.0, 1.0, 200, -25)
+	      A_ICON_RELATIVE("amora_off", AMORA_OFF, 0,
+			      "background_top",
+			      70, 70,
+			      0.0, 0.0, 0, 0,
+			      1.0, 1.0, 0, 0)
 
-	 A_ICON_RELATIVE("zzz", AMORA_ZZZ, 0,
-			 "penguin_off",
-			 36, 50,
-			 0.0, 0.0, 125, -125,
-			 1.0, 1.0, 0, 0)
+	      A_ICON("scan_button", AMORA_SCAN, 1,
+		     80, 80,
+		     1.0, 0.0, -125, 0,
+		     1.0, 0.0, 0, 250)
 
-	 A_ICON_RELATIVE("amora_off", AMORA_OFF, 0,
-			 "background_top",
-			 70, 70,
-			 0.0, 0.0, 0, 0,
-			 1.0, 1.0, 0, 0)
+	      A_TEXT_RELATIVE("scan_text", "Scan", 20,
+			      SOFT_SHADOW, "NokiaSansBold", "scan_button",
+			      0.0, 0.0, 0, 100,
+			      1.0, 1.0, 0, 0)
 
-	 A_ICON("scan_button", AMORA_SCAN, 1,
-		80, 80,
-		1.0, 0.0, -125, 0,
-		1.0, 0.0, 0, 250)
-
-         part {
-            name: "scan_text";
-            type: TEXT;
-            mouse_events: 1;
-            effect: SOFT_SHADOW;
-
-            description {
-               state: "default" 0.0;
-
-               rel1 { relative: 0.0 0.0; offset: 0 100; to: "scan_button"; }
-               rel2 { relative: 1.0 1.0; offset: 0 0; to: "scan_button"; }
-
-               text {
-                  text: "Scan";
-                  font: "NokiaSansBold";
-                  size: 20;
-               }
-            }
-         }
 
 	 A_ICON_RELATIVE("options_button", AMORA_OPTIONS, 1,
 			 "scan_button",

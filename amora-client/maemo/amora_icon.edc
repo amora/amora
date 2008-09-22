@@ -40,3 +40,42 @@
          image { normal: img_name; } \
       } \
    }
+
+
+#define A_TEXT(part_name, the_text, size_text, the_effect, the_font, rel1_x, rel1_y, rel1_off1, rel1_off2, rel2_x, rel2_y, rel2_off1, rel2_off2) \
+   part {                                                               \
+      name: part_name;                                                  \
+      type: TEXT;                                                       \
+      effect: the_effect;                                               \
+      mouse_events: 0;                                                  \
+         description {                                                  \
+         state: "default" 0.0;                                          \
+         rel1 { relative: rel1_x rel1_y; offset: rel1_off1 rel1_off2; } \
+         rel2 { relative: rel2_x rel2_y; offset: rel2_off1 rel2_off2; } \
+         text {                                                         \
+            text: the_text;                                             \
+            font: the_font;                                             \
+            size: size_text;                                            \
+         }                                                              \
+      }                                                                 \
+   }
+
+#define A_TEXT_RELATIVE(part_name, the_text, size_text, the_effect, the_font, obj_rel, rel1_x, rel1_y, rel1_off1, rel1_off2, rel2_x, rel2_y, rel2_off1, rel2_off2) \
+   part {                                                               \
+      name: part_name;                                                  \
+      type: TEXT;                                                       \
+      effect: the_effect;                                               \
+      mouse_events: 0;                                                  \
+      description {                                                     \
+         state: "default" 0.0;                                          \
+         rel1 { relative: rel1_x rel1_y; offset: rel1_off1 rel1_off2;   \
+            to: obj_rel; }                                              \
+         rel2 { relative: rel2_x rel2_y; offset: rel2_off1 rel2_off2;   \
+            to: obj_rel; }                                              \
+         text {                                                         \
+            text: the_text;                                             \
+            font: the_font;                                             \
+            size: size_text;                                            \
+         }                                                              \
+      }                                                                 \
+   }
