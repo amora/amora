@@ -55,13 +55,13 @@ class dbus_bluetooth():
                                          '/org/bluez/hci0')
         try:
             self.adapter.DiscoverDevices()
-            ecore.main_loop_begin()
+            #ecore.main_loop_begin()
         except:
             print u'Cannot find devices: check bluetooth dongle!'
             return
     def disc_completed_signal(self):
         print 'Signal: DiscoveryCompleted()'
-        ecore.idler_add(ecore.main_loop_quit)
+        #ecore.idler_add(ecore.main_loop_quit)
         self.flag = 0
         self.bus.remove_signal_receiver(self.notify_callback,
                                         'RemoteNameUpdated',
