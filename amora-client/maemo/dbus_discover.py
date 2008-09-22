@@ -36,7 +36,8 @@ class dbus_bluetooth():
         self.main_loop = e_dbus.DBusEcoreMainLoop()
         self.bus = dbus.SystemBus(mainloop=self.main_loop)
     def set_callback(self, f_callback):
-        self.bus.add_signal_receiver(f_callback, 'RemoteNameUpdated',
+        self.notify_callback = f_callback
+        self.bus.add_signal_receiver(self.notify_callback, 'RemoteNameUpdated',
                                      'org.bluez.Adapter', 'org.bluez',
                                      '/org/bluez/hci0')
         self.bus.add_signal_receiver(self.disc_completed_signal,
@@ -44,7 +45,14 @@ class dbus_bluetooth():
                                      'org.bluez', '/org/bluez/hci0')
         self.obj = self.bus.get_object('org.bluez', '/org/bluez/hci0')
         self.adapter = dbus.Interface(self.obj, 'org.bluez.Adapter')
+        self.flag = 1
     def discover(self):
+        print 'dbus_bluetooth: flag is %s' % self.flag
+        if self.flag == 0:
+            self.bus.add_signal_receiver(self.notify_callback,
+                                         'RemoteNameUpdated',
+                                         'org.bluez.Adapter', 'org.bluez',
+                                         '/org/bluez/hci0')
         try:
             self.adapter.DiscoverDevices()
             ecore.main_loop_begin()
@@ -54,6 +62,11 @@ class dbus_bluetooth():
     def disc_completed_signal(self):
         print 'Signal: DiscoveryCompleted()'
         ecore.idler_add(ecore.main_loop_quit)
+        self.flag = 0
+        self.bus.remove_signal_receiver(self.notify_callback,
+                                        'RemoteNameUpdated',
+                                        'org.bluez.Adapter', 'org.bluez',
+                                        '/org/bluez/hci0')
 
 # def test(address, name):
 #         print 'Got a device: (%s, %s)' % (address, name)
