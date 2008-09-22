@@ -31,10 +31,6 @@ import dbus
 import e_dbus
 import ecore
 
-def disc_completed_signal():
-    print 'Signal: DiscoveryCompleted()'
-    ecore.idler_add(ecore.main_loop_quit)
-
 class dbus_bluetooth():
     def __init__(self):
         self.main_loop = e_dbus.DBusEcoreMainLoop()
@@ -43,7 +39,7 @@ class dbus_bluetooth():
         self.bus.add_signal_receiver(f_callback, 'RemoteNameUpdated',
                                      'org.bluez.Adapter', 'org.bluez',
                                      '/org/bluez/hci0')
-        self.bus.add_signal_receiver(disc_completed_signal,
+        self.bus.add_signal_receiver(self.disc_completed_signal,
                                      'DiscoveryCompleted', 'org.bluez.Adapter',
                                      'org.bluez', '/org/bluez/hci0')
         self.obj = self.bus.get_object('org.bluez', '/org/bluez/hci0')
@@ -55,6 +51,9 @@ class dbus_bluetooth():
         except:
             print u'Cannot find devices: check bluetooth dongle!'
             return
+    def disc_completed_signal(self):
+        print 'Signal: DiscoveryCompleted()'
+        ecore.idler_add(ecore.main_loop_quit)
 
 # def test(address, name):
 #         print 'Got a device: (%s, %s)' % (address, name)
