@@ -20,23 +20,23 @@
             mouse_events: 0;                                            \
             description {                                               \
                state: "default" 0.0;                                    \
-               rel1 { relative: 0.5 0.5; offset: -64 -64; }             \
-               rel2 { relative: 0.5 0.5; offset:  63  63; }             \
+               rel1 { relative: relx rely; offset: -64 -64; }             \
+               rel2 { relative: relx rely; offset:  63  63; }             \
                color: 0 0 0 0;                                          \
                image { normal: part_name; }                       \
             }                                                           \
             description {                                               \
                state: "selected" 0.0;                                   \
                inherit: "default" 0.0;                                  \
-               rel1 { relative: 0.5 0.5; offset: -64 -64; }             \
-               rel2 { relative: 0.5 0.5; offset:  63  63; }             \
+               rel1 { relative: relx rely; offset: -64 -64; }             \
+               rel2 { relative: relx rely; offset:  63  63; }             \
                color: 255 255 255 128;                                  \
             }                                                           \
             description {                                               \
                state: "selected" 1.0;                                   \
                inherit: "default" 0.0;                                  \
-               rel1 { relative: 0.5 0.5; offset: -96 -96; }             \
-               rel2 { relative: 0.5 0.5; offset:  95  95; }             \
+               rel1 { relative: relx rely; offset: -96 -96; }             \
+               rel2 { relative: relx rely; offset:  95  95; }             \
                color: 255 255 255 0;                                    \
             }                                                           \
          }                                                              \
@@ -53,8 +53,8 @@
             description {                                               \
                state: "selected" 0.0;                                   \
                inherit: "default" 0.0;                                  \
-               rel1 { relative: 0.5 0.5; offset: -64 -64; }             \
-               rel2 { relative: 0.5 0.5; offset:  63  63; }             \
+               rel1 { relative: relx rely; offset: -64 -64; }             \
+               rel2 { relative: relx rely; offset:  63  63; }             \
             }                                                           \
          }                                                              \
          part {                                                         \
@@ -66,7 +66,7 @@
                state: "default" 0.0;                                    \
                rel1 { relative: relx rely; offset: -100  33; }          \
                rel2 { relative: relx rely; offset:   99  53; }          \
-               align: 0.5 0.5;                                          \
+               align: relx rely;                                          \
                color: 255 255 255 255;                                  \
                color2: 0 0 0 255;                                       \
                color3: 0 0 0 255;                                       \
@@ -81,7 +81,7 @@
             description {                                               \
                state: "selected" 0.0;                                   \
                inherit: "default" 0.0;                                  \
-               rel1 { relative: 0.5 0.5; offset: -128 -25; }            \
-               rel2 { relative: 0.5 0.5; offset:  127  24; }            \
+               rel1 { relative: relx rely; offset: -128 -25; }            \
+               rel2 { relative: relx rely; offset:  127  24; }            \
             }                                                           \
          }

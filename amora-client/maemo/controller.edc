@@ -28,7 +28,7 @@ collections {
          public selected = 0;
          public pulsing = 0;
          public stop_pulsing_timer_id = 0;
-         const Float:pulse_timeout = 10.0;
+         const Float:pulse_timeout = 2.0;
 
          public unselect() {
             if (get_int(selected) == 0)
@@ -75,7 +75,9 @@ collections {
       programs {
 
          #include "icon_prg.edc"
-         //ICON_PROGRAMS(B_RIGHT)
+         ICON_PROGRAMS(B_RIGHT)
+         ICON_PROGRAMS(B_LEFT)
+         ICON_PROGRAMS(B_FULL)
       }
    }
 }
