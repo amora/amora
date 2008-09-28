@@ -53,7 +53,23 @@ class Controller(object):
 
         self.main_group.size = self.ee.evas.size
         self.ee.data["main"] = self.main_group
-
         self.main_group.show()
         self.main_group.focus = True
+        self.main_group.signal_callback_add("mouse,down,*", "*",
+                                            self.on_mouse_down)
+        self.main_group.signal_callback_add("mouse,up,*", "*",
+                                            self.on_mouse_up)
+        self.main_group.signal_callback_add("mouse,clicked,*", "*",
+                                            self.on_mouse_clicked)
+
+    def on_mouse_down(self, edje_obj, emission, source, data=None):
+        print "> Mouse Down: " + source
+
+
+    def on_mouse_up(self, edje_obj, emission, source, data=None):
+        print "< Mouse Up:   " + source
+
+
+    def on_mouse_clicked(self, edje_obj, emission, source, data=None):
+        print "! Mouse Clicked: " + source
 
