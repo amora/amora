@@ -105,7 +105,7 @@ class AmoraDeviceList(evas.SmartObject):
 
 		prot_obj.comm_channel(bt_socket)
 		prot_obj.connect()
-		control = controller.Controller(canvas)
+		control = controller.Controller(canvas, prot_obj)
 
 
 

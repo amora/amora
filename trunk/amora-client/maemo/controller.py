@@ -30,12 +30,15 @@ import edje
 import edje.decorators
 import evas
 import sys
+import protocol
+
 
 APP_DATADIR = "/usr/share/amora/"
 
 class Controller(object):
-    def __init__(self, ecanvas):
+    def __init__(self, ecanvas, obj_protocol):
         self.ee = ecanvas.ee
+        self.protocol = obj_protocol
 
         if len(sys.argv) > 1:
             self.edje_file = 'controller.edj'
@@ -64,6 +67,12 @@ class Controller(object):
 
     def on_mouse_down(self, edje_obj, emission, source, data=None):
         print "> Mouse Down: " + source
+        if source == "images/right.png_area":
+            self.protocol.send_key(u'RIGHT')
+        if source == "images/left.png_area":
+            self.protocol.send_key(u'LEFT')
+        if source == "images/randr.png_area":
+            self.protocol.send_key(u'SLIDESHOW')
 
 
     def on_mouse_up(self, edje_obj, emission, source, data=None):
