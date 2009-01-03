@@ -106,13 +106,9 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
 	switch (reason) {
 		case QSystemTrayIcon::Trigger:
 		case QSystemTrayIcon::DoubleClick:
-			showMessage("Hello world", "amora");
+			showMessage("Amora is on", "amora");
 			break;
 		case QSystemTrayIcon::MiddleClick:
-			if (status == Off)
-				setStatus(Start);
-			else if (status == Start)
-				setStatus(On);
 			break;
 		default:
 			;
