@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = amora-applet
+TARGET = amorad-gui
 DEPENDPATH += .
 INCLUDEPATH += .
 FORMS = about.ui
