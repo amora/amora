@@ -19,7 +19,7 @@ What is next for amora
 
  * cellphone client: bug fixing, configuration screen available when controlling slides
 
-= Version 1.2 (December) =
+= Version 1.2 (March) =
 
  * server: pluggable architecture, applet with UI
  
