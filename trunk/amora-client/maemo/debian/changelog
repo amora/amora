@@ -1,3 +1,17 @@
+amora-client (0.1-2maemo+openmoko) UNRELEASED; urgency=low
+
+  * Added support for installation on Debian (e.g. on an OpenMoko)
+  * debian/control:
+    - Added myself as co-maintainer
+    - Added alternative dependencies without python version name in
+      package name as used by the Debian FSO and E17 maintainers
+    - Added OpenMoko to the package description
+    - Added libedje-bin to build dependencies.
+  * debian/postinst: Call maemo-select-menu-location only if existent
+    respective in path.
+
+ -- Axel Beckert <abe@deuxchevaux.org>  Wed, 21 Jan 2009 14:07:02 +0100
+
 amora-client (0.1-1maemo) unstable; urgency=low
 
   * Initial release.

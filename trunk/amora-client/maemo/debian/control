@@ -2,14 +2,15 @@ Source: amora-client
 Section: user/utils
 Priority: extra
 Maintainer: Tomaz Noleto <tnoleto@gmail.com>
-Build-Depends: debhelper (>= 5)
+Uploaders: Axel Beckert <abe@deuxchevaux.org>
+Build-Depends: debhelper (>= 5), libedje-bin
 Standards-Version: 3.7.2
 
 Package: amora-client
 Architecture: all
-Depends: python2.5, python2.5-evas, python2.5-edje, python2.5-ecore
+Depends: python2.5, python2.5-evas | python-evas, python2.5-edje | python-edje, python2.5-ecore | python-ecore
 Description: Amora client
- Amora client for Maemo platform
+ Amora client for Maemo and OpenMoko platform
 XB-Maemo-Icon-26:
  iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/
  AP+gvaeTAAAACXBIWXMAAAV6AAAFegHB/0QzAAAAB3RJTUUH2AEXDSAgZCXl
