@@ -19,7 +19,9 @@
 
 case "$1" in
     configure)
-        maemo-select-menu-location amora.desktop tana_fi_extras
+        if which maemo-select-menu-location > /dev/null; then
+	    maemo-select-menu-location amora.desktop tana_fi_extras
+	fi
         ;;
 
         abort-upgrade|abort-remove|abort-deconfigure)
