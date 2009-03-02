@@ -19,7 +19,7 @@ amora-applet/amorad-gui: amora-cli/amorad amora-applet/Makefile
 	cd amora-applet && $(MAKE)
 
 # Fsck. We have to build the amorad-gui, because otherwise not all
-# *files "make dist" in amora-applet expects, are there.
+# files "make dist" in amora-applet expects, are there.
 dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	cd amora-cli; $(MAKE) dist
 	cd amora-applet; $(MAKE) dist
