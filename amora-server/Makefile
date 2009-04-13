@@ -2,6 +2,11 @@
 # in one rush and a single tar.gz containing both of them and
 # necessary for packaging. -- Axel Beckert, 2009-Mar-02
 
+VERSION=1.2
+TMPDIR=.tmp
+BUILDDIR=amora-server-$(VERSION)
+DIR=$(TMPDIR)/$(BUILDDIR)
+
 all: amora-cli/amorad amora-applet/amorad-gui
 
 amora-cli/Makefile:
@@ -23,12 +28,12 @@ amora-applet/amorad-gui: amora-cli/amorad amora-applet/Makefile
 dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	cd amora-cli; $(MAKE) dist
 	cd amora-applet; $(MAKE) dist
-	mkdir -p .tmp/amora-server
-	cp -p Makefile .tmp/amora-server
-	cd .tmp/amora-server && tar xvzf ../../amora-cli/amora-server*.tar.gz 
-	cd .tmp/amora-server && tar xvzf ../../amora-applet/amorad-gui*.tar.gz
-	cd .tmp && tar cvzf ../amora-server.tgz amora-server
-	rm -rf .tmp/
+	mkdir -p .tmp/amora-server-$(VERSION)
+	cp -p Makefile $(DIR)
+	cd $(DIR) && tar xvzf ../../amora-cli/amora-server*.tar.gz 
+	cd $(DIR) && tar xvzf ../../amora-applet/amorad-gui*.tar.gz
+	cd $(TMPDIR) && tar cvzf ../$(BUILDDIR).tgz $(BUILDDIR)
+	rm -rf $(TMPDIR)
 
 clean:
 	cd amora-cli; $(MAKE) clean
