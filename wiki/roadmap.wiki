@@ -19,12 +19,10 @@ What is next for amora
 
  * cellphone client: bug fixing, configuration screen available when controlling slides
 
-= Version 1.2 (March) =
+= Version 1.2 (April) =
 
  * server: pluggable architecture, applet with UI
  
- * j2me client
-
  * Internet tablet client for N800/N810 PoC (Proof of Concept)
 
 
@@ -33,3 +31,5 @@ What is next for amora
  * handle internationalization (Portuguese at least)
 
  * cellphone client: keymap layout plugins, menu navigation changes
+
+ * j2me client
