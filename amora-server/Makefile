@@ -9,8 +9,11 @@ DIR=$(TMPDIR)/$(BUILDDIR)
 
 all: amora-cli/amorad amora-applet/amorad-gui
 
-amora-cli/Makefile:
-	cd amora-cli && autoreconf -i && ./configure
+amora-cli/configure: amora-cli/configure.ac
+	cd amora-cli && autoreconf -i
+
+amora-cli/Makefile: amora-cli/configure
+	cd amora-cli && ./configure
 
 amora-cli/amorad: amora-cli/Makefile
 	cd amora-cli && $(MAKE)
