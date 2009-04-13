@@ -20,8 +20,6 @@ amora-cli/amorad: amora-cli/Makefile
 
 amora-applet/Makefile:
 	cd amora-applet && qmake-qt4
-	sed -e's:^INCPATH *=.*$$:& -I../amora-cli/src/:' -i amora-applet/Makefile
-	sed -e's:^LIBS *=.*$$:& -L../amora-cli/.libs/:' -i amora-applet/Makefile
 
 amora-applet/amorad-gui: amora-cli/amorad amora-applet/Makefile
 	cd amora-applet && $(MAKE)
