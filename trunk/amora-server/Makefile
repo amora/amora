@@ -30,7 +30,7 @@ dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	cd amora-applet; $(MAKE) dist
 	mkdir -p .tmp/amora-server-$(VERSION)
 	cp -p Makefile $(DIR)
-	cd $(DIR) && tar xvzf ../../amora-cli/amora-server*.tar.gz 
+	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
 	cd $(DIR) && tar xvzf ../../amora-applet/amorad-gui*.tar.gz
 	cd $(TMPDIR) && tar cvzf ../$(BUILDDIR).tgz $(BUILDDIR)
 	rm -rf $(TMPDIR)
