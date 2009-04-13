@@ -1,10 +1,10 @@
 TEMPLATE = app
 TARGET = amorad-gui
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += . ../amora-cli/src
 FORMS = about.ui
 CONFIG += warn_on debug
-LIBS = -lamora -lbluetooth -lImlib2 -lX11 -lXtst -ldbus-1
+LIBS = -L../amora-cli/.libs -lamora -lbluetooth -lImlib2 -lX11 -lXtst -ldbus-1
 QMAKE_CXXFLAGS += -Wshadow
 RESOURCES = amora-applet.qrc
 
