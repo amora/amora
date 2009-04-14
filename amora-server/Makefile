@@ -43,3 +43,7 @@ clean:
 distclean:
 	cd amora-cli; $(MAKE) distclean
 	cd amora-applet; $(MAKE) distclean
+
+install: all
+	cd amora-cli; $(MAKE) install
+	cd amora-applet; $(MAKE) install
