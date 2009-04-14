@@ -7,6 +7,7 @@ CONFIG += warn_on debug
 LIBS = -L../amora-cli/.libs -lamora -lbluetooth -lImlib2 -lX11 -lXtst -ldbus-1
 QMAKE_CXXFLAGS += -Wshadow
 RESOURCES = amora-applet.qrc
+DISTFILES = *.png
 INSTALLS += target
 target.path = /usr/local/bin
 
