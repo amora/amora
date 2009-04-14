@@ -41,8 +41,9 @@ clean:
 	cd amora-applet; $(MAKE) clean
 
 distclean:
-	cd amora-cli; $(MAKE) distclean
-	cd amora-applet; $(MAKE) distclean
+	cd amora-cli; [ ! -f Makefile ] || $(MAKE) distclean
+	cd amora-applet; [ ! -f Makefile ] || $(MAKE) distclean
+	rm -vf amora-*/*tgz $(BUILDDIR).tgz
 
 install: all
 	cd amora-cli; $(MAKE) install
