@@ -33,6 +33,8 @@ dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	cp -p Makefile $(DIR)
 	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
 	cd $(DIR) && tar xvzf ../../amora-applet/amorad-gui*.tar.gz
+	mv -i $(DIR)/amorad-gui* $(DIR)/amora-applet
+	mv -i $(DIR)/amora-cli-* $(DIR)/amora-cli
 	cd $(TMPDIR) && tar cvzf ../$(BUILDDIR).tgz $(BUILDDIR)
 	rm -rf $(TMPDIR)
 
