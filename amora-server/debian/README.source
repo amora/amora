@@ -13,13 +13,7 @@ To build the package from a repository checkout of amora-server, make
 sure the packages automake and autoconf (former build-deps) are
 installed and then do the following:
 
-$ make dist
-$ mv amora-server-1.2.tar.gz ../amora-server_1.2.orig.tar.gz
-$ cd ..
-$ tar xvzf amora-server_1.2.orig.tar.gz
-$ cd amora-server-1.2
-$ cp -pr ../../amora-server/debian .
-$ rm -rf debian/.svn
+$ make debdist
 $ dpkg-buildpackage
 
  -- Axel Beckert <abe@deuxchevaux.org>  Tue, 14 Apr 2009 00:37:42 +0200
