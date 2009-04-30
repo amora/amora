@@ -1,3 +1,12 @@
+amora-server (1.2-1) UNRELEASED; urgency=low
+
+  * New upstream release; provides two binaries, a command-line and a Qt4
+    based system tray interface. Adapted packaging and README.source
+    appropriately.
+  * Bumped standards version to 3.8.1, no changes necessary.
+
+ -- Axel Beckert <abe@deuxchevaux.org>  Tue, 14 Apr 2009 00:37:42 +0200
+
 amora-server (1.1-1) unstable; urgency=low
 
   * Initial release for Debian (Closes: #488587)

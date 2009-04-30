@@ -1,2 +1,0 @@
-?package(amora-server):needs="X11" section="Applications/Mobile Devices"\
-  title="Amora Daemon" command="/usr/bin/amorad"
