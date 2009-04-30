@@ -5,6 +5,7 @@
 VERSION=1.2
 TMPDIR=.tmp
 BUILDDIR=amora-server-$(VERSION)
+ORIGDIR=amora-server_$(VERSION)
 DIR=$(TMPDIR)/$(BUILDDIR)
 
 all: amora-cli/amorad amora-applet/amorad-gui
@@ -37,6 +38,27 @@ dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	mv -i $(DIR)/amora-cli-* $(DIR)/amora-cli
 	cd $(TMPDIR) && tar cvzf ../$(BUILDDIR).tgz $(BUILDDIR)
 	rm -rf $(TMPDIR)
+
+# qmake includes way to many files into the tarball for easy and svn
+# repository compatible use for at least building a deb, so we build a
+# separate tar ball suitable for distribution and already (and for
+# distinction) properly named.
+debdist: amora-cli/Makefile
+	cd amora-cli; $(MAKE) dist
+	# Shouldn't we use "$(VERSION)" instead of "1.0.0"?
+	tar cvzf amora-applet/amorad-gui-1.0.0.orig.tar.gz \
+		amora-applet/*.cpp amora-applet/*.h amora-applet/*.ui \
+		amora-applet/*.pro amora-applet/*.qrc amora-applet/*.png \
+		amora-applet/README
+	mkdir -p $(DIR)
+	cp -p Makefile $(DIR)
+	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
+	cd $(DIR) && tar xvzf ../../amora-applet/amorad-gui*.orig.tar.gz
+	mv -i $(DIR)/amora-cli-* $(DIR)/amora-cli
+	cd $(TMPDIR) && tar cvzf ../../$(ORIGDIR).orig.tar.gz $(BUILDDIR)
+	rm -rf $(TMPDIR)
+	rm -v amora-applet/amorad-gui*.tar.gz
+	rm -v amora-cli/amora-cli*.tar.gz
 
 clean:
 	cd amora-cli; $(MAKE) clean
