@@ -13,6 +13,8 @@ To build the package from a repository checkout of amora-server, make
 sure the packages automake and autoconf (former build-deps) are
 installed and then do the following:
 
+$ svn checkout http://amora.googlecode.com/svn/trunk/amora-server amora-server
+$ cd amora-server
 $ make debdist
 $ dpkg-buildpackage
 
