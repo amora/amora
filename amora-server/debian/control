@@ -12,6 +12,8 @@ Package: amora-cli
 Provides: amora-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Replaces: amora-server (< 1.2~)
+Conflicts: amora-server (< 1.2~)
 Description: use a bluetooth device as X remote control (commandline tool)
  Amora (A mobile remote assistant) is an application that enables you
  to control your desktop using your mobile phone. It uses bluetooth to
@@ -27,10 +29,11 @@ Description: use a bluetooth device as X remote control (commandline tool)
  for Linux based mobile device like the Nokia Internet Tablets and the
  OpenMoko FreeRunner is available.
  .
- This package contains the commandline version of the daemon running
- on the to be remote controlled computer. The client has to be
- installed on the mobile phone and is not contained in the package. It
- can be downloaded from the home page of the project.
+ This package contains the commandline version of the daemon (formerly
+ called amora-server) running on the to be remote controlled computer.
+ The client has to be installed on the mobile phone and is not
+ contained in the package. It can be downloaded from the home page of
+ the project.
 
 Package: amora-applet
 Provides: amora-server
