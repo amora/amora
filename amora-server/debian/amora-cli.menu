@@ -1,0 +1,2 @@
+?package(amora-cli):needs="X11" section="Applications/Mobile Devices"\
+  title="Amora Daemon (commandline version)" command="/usr/bin/amorad"

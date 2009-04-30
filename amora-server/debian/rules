@@ -24,26 +24,26 @@ else
 	CFLAGS += -O2
 endif
 
-config.status: configure
-	dh_testdir
-	# Add here commands to configure the package.
-ifneq "$(wildcard /usr/share/misc/config.sub)" ""
-	cp -f /usr/share/misc/config.sub config.sub
-endif
-ifneq "$(wildcard /usr/share/misc/config.guess)" ""
-	cp -f /usr/share/misc/config.guess config.guess
-endif
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
-
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
+	# Add here commands to configure the package.
+
+ifneq "$(wildcard /usr/share/misc/config.sub)" ""
+	cp -f /usr/share/misc/config.sub amora-cli/config.sub
+endif
+ifneq "$(wildcard /usr/share/misc/config.guess)" ""
+	cp -f /usr/share/misc/config.guess amora-cli/config.guess
+endif
+	cd amora-cli; ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
+	# Does qmake-qt4 support cross-compiling?
+	$(MAKE) amora-applet/Makefile
 
 	touch configure-stamp
 
 build: build-stamp
 
-build-stamp:  config.status
+build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
@@ -58,10 +58,15 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
-	rm -f config.sub config.guess config.log config.cache configure-stamp
+	rm -f configure-stamp
+	# Should be remove by "make distclean", but we remove it anyway
+	cd amora-cli; rm -f config.sub config.guess config.log config.cache Makefile
+	cd amora-applet; rm -f Makefile
 
-	# Remove any amora-screenshot.png which usually result from testing the package
-	rm -f amora-screenshot.png debian/amora-screenshot.png
+	# Remove any amora-screenshot.png which usually result from testing
+	# the package
+	rm -f amora-screenshot.png debian/amora-screenshot.png \
+	      amora-*/amora-screenshot.png
 
 	dh_clean 
 
@@ -72,7 +77,11 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/amora-server.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/amora-server install
+	cd amora-cli; $(MAKE) DESTDIR=$(CURDIR)/debian/amora-cli install
+
+	# qmake-qt4's generated install target has the path hardwired. So we 
+	# do it manually.
+	install amora-applet/amorad-gui $(CURDIR)/debian/amora-applet/usr/bin
 
 
 # Build architecture-independent files here.

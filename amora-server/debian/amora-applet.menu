@@ -1,0 +1,2 @@
+?package(amora-applet):needs="X11" section="Applications/Mobile Devices"\
+  title="Amora Daemon (systray applet)" command="/usr/bin/amorad-gui"
