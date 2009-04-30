@@ -7,7 +7,7 @@ target (the rpm packaging also resides in the same repository) and
 changes in the Debian packaging will not result in a new Amora
 release, it is package as non-native package.
 
-The package is built out of the tarball you get with "make dist".
+The package is built out of the tarball you get with "make debdist".
 
 To build the package from a repository checkout of amora-server, make
 sure the packages automake and autoconf (former build-deps) are
