@@ -1,11 +1,14 @@
 amora-server (1.2-1) UNRELEASED; urgency=low
 
   * New upstream release; provides two binaries, a command-line and a Qt4
-    based system tray interface. Adapted packaging and README.source
-    appropriately.
+    based system tray interface.
+    - Adapted packaging and README.source appropriately
+    - Made amora-server a transitional package depending on one of the new
+      packages amora-cli and amora-applet.
   * Bumped standards version to 3.8.1, no changes necessary.
+  * Changed (C) into appropriate UTF-8 character to fix lintian warnings
 
- -- Axel Beckert <abe@deuxchevaux.org>  Tue, 14 Apr 2009 00:37:42 +0200
+ -- Axel Beckert <abe@deuxchevaux.org>  Mon, 04 May 2009 13:34:54 +0200
 
 amora-server (1.1-1) unstable; urgency=low
 
