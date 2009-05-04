@@ -58,3 +58,13 @@ Description: use a bluetooth device as X remote control (systray applet)
  daemon running on the to be remote controlled computer. The client
  has to be installed on the mobile phone and is not contained in the
  package. It can be downloaded from the home page of the project.
+
+Package: amora-server
+Architecture: all
+Depends: amora-cli | amora-applet
+Description: use a bluetooth device as X remote control (transitional package)
+ amora-server has been split up into two packages: amora-cli with a
+ sole commandline interface and only few dependencies and amora-applet
+ which uses a Qt based system tray interface.
+ .
+ This transitional package can be removed safely.
