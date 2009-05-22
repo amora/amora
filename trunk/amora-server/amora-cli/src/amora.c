@@ -149,6 +149,7 @@ int treat_events(struct amora_s *amora, char *buffer, int length,
 
 	if (result != NONE) {
 		send_event(KeyPress, x_key_code[result], amora->display);
+		send_event(KeyRelease, x_key_code[result], amora->display);
 		goto exit;
 	}
 
