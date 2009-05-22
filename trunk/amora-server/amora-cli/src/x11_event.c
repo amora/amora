@@ -41,7 +41,7 @@
  * ps: first element is -1, since enumerations should
  * not have value zero. See \ref codes.
  */
-int x_key_code[] = { -1, 98, 104, 100, 102, 36, 9, 65, 107, 64, 23, 71, 41 };
+int x_key_code[] = { -1, 98, 104, 113, 114, 36, 9, 65, 119, 64, 23, 71, 41 };
 
 Display* construct_display(char *display_name)
 {
