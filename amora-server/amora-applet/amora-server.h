@@ -47,7 +47,6 @@ private:
 	void run(void);
 	void parse_args(int argc, char *argv[]);
 	void show_usage(const char *path);
-
 };
 
 #endif

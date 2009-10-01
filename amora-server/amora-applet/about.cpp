@@ -16,11 +16,15 @@
  * $Id: about.cpp 344 2008-08-18 23:01:06Z ademar $
  */
 
-
 #include "about.h"
-#include <QtGui>
 
-About::About(QWidget *parentW) : QDialog(parentW)
+#include <QWidget>
+#include <QDialog>
+#include <QLayout>
+
+
+About::About(QWidget *parentW)
+	: QDialog(parentW)
 {
 	setupUi(this);
 	layout()->setSizeConstraint(QLayout::SetFixedSize);
