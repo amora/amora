@@ -98,10 +98,10 @@ void Amora::parse_args(int argc, char *argv[])
 			case 'v':
 				/* XXX libamora should provide the version */
 				printf("experimental amora-applet, "
-					"undefined version\n");
+				       "undefined version\n");
 				::exit(0);
 			case 'i':
-			        bt_hci = atoi(optarg);
+				bt_hci = atoi(optarg);
 				break;
 			default:
 				show_usage(argv[0]);
@@ -134,19 +134,17 @@ Amora::~Amora()
 
 void Amora::run(void)
 {
-	int status;
 	amora_start(amora);
-	exit(status);
+	exit(0);
 }
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
-	int result;
 
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) {
 		QMessageBox::critical(0, QObject::tr("Amora Applet"),
-				QObject::tr("No system tray available, exiting"));
+		                      QObject::tr("No system tray available, exiting"));
 		return 1;
 	}
 
@@ -158,6 +156,5 @@ int main(int argc, char *argv[])
 	server.start();
 
 	app.setQuitOnLastWindowClosed(false);
-	result = app.exec();
-	return result;
+	return app.exec();
 }

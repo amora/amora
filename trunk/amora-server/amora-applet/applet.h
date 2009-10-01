@@ -41,7 +41,6 @@ class Applet : public QWidget
 
 public:
 	Applet();
-
 	~Applet();
 
 	void showMessage(QString message, QString title="Amora Server");

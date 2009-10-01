@@ -20,22 +20,27 @@
  */
 
 
-#include <QtGui>
 #include "applet.h"
 #include "about.h"
 #include "amora-server.h"
+
+#include <QAction>
+#include <QMenu>
+#include <QSystemTrayIcon>
+#include <QIcon>
+#include <QString>
 
 #include <unistd.h>
 
 
 Applet::Applet()
+	: cellphone(0)
 {
-	this->cellphone = 0;
 	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
 	aboutAction = new QAction(tr("&About"), this);
-	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+	connect(aboutAction, SIGNAL(triggered()), SLOT(about()));
 
 	menu = new QMenu(this);
 	menu->addAction(aboutAction);
@@ -47,7 +52,6 @@ Applet::Applet()
 
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 			this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
 
 	setStatus(Start);
 	trayIcon->show();
@@ -64,33 +68,33 @@ Applet::~Applet()
 
 void Applet::setStatus(int st)
 {
-  	QIcon iconStart(":/amora_start.png");
+	QIcon iconStart(":/amora_start.png");
 	QIcon iconOn(":/amora_bluetooth.png");
 	QIcon iconOff(":/amora_exclamation.png");
 
 	switch(st) {
 	case Start:
-		if (this->cellphone) {
+		if (cellphone) {
 			trayIcon->setIcon(iconOn);
 			trayIcon->setToolTip("Amora Server (On)");
 			status = On;
 			return;
 		}
-		this->cellphone = 0;
+		cellphone = 0;
 		trayIcon->setIcon(iconStart);
 		trayIcon->setToolTip("Amora Server (Started)");
 		status = Start;
 		break;
 
 	case On:
-		this->cellphone++;
+		cellphone++;
 		trayIcon->setIcon(iconOn);
 		trayIcon->setToolTip("Amora Server (On)");
 		status = On;
 		break;
 
 	case Off:
-		this->cellphone--;
+		cellphone--;
 		trayIcon->setIcon(iconOff);
 		trayIcon->setToolTip("Amora Server (Off)");
 		status = Off;
@@ -118,7 +122,7 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void Applet::showMessage(QString message, QString title)
 {
 	trayIcon->showMessage(title, message,
-			QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information));
+	                      QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information));
 }
 
 void Applet::about()
@@ -134,7 +138,7 @@ void Applet::iconStatus(int change)
 
 void Applet::bind(Amora *amora_server)
 {
-	this->amora = amora_server;
+	amora = amora_server;
 	connect(amora, SIGNAL(changeStatus(int)),
-		this, SLOT(iconStatus(int)));
+	        SLOT(iconStatus(int)));
 }
