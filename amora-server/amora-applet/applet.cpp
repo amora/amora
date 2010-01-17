@@ -31,6 +31,7 @@
 #include <QString>
 
 #include <unistd.h>
+#include <stdio.h>
 
 
 Applet::Applet()
