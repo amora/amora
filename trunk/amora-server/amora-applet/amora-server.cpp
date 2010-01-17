@@ -20,6 +20,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QMessageBox>
+#include <stdio.h>
 
 #include "applet.h"
 #include "amora-server.h"
