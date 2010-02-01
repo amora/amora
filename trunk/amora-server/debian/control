@@ -1,7 +1,7 @@
 Source: amora-server
 Section: x11
 Priority: extra
-Maintainer: Axel Beckert <abe@deuxchevaux.org>
+Maintainer: Axel Beckert <abe@debian.org>
 Build-Depends: debhelper (>= 5), libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, pkg-config, qt4-qmake, libqt4-dev, libdbus-1-dev
 Standards-Version: 3.8.1
 Homepage: http://amora.googlecode.com/
