@@ -82,6 +82,7 @@ install: build
 	# qmake-qt4's generated install target has the path hardwired. So we 
 	# do it manually.
 	install amora-applet/amorad-gui $(CURDIR)/debian/amora-applet/usr/bin
+	install debian/amorad-gui.desktop $(CURDIR)/debian/amora-applet/usr/share/applications
 
 
 # Build architecture-independent files here.
