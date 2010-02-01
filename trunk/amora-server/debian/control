@@ -61,7 +61,7 @@ Description: use a bluetooth device as X remote control (systray applet)
 
 Package: amora-server
 Architecture: all
-Depends: amora-cli | amora-applet
+Depends: amora-cli | amora-applet, ${misc:Depends}
 Description: use a bluetooth device as X remote control (transitional package)
  amora-server has been split up into two packages: amora-cli with a
  sole commandline interface and only few dependencies and amora-applet
