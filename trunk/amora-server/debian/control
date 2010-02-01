@@ -12,8 +12,8 @@ Package: amora-cli
 Provides: amora-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Replaces: amora-server (< 1.2~)
-Conflicts: amora-server (< 1.2~)
+Replaces: amora-server (<< 1.2~)
+Conflicts: amora-server (<< 1.2~)
 Description: use a bluetooth device as X remote control (commandline tool)
  Amora (A mobile remote assistant) is an application that enables you
  to control your desktop using your mobile phone. It uses bluetooth to
