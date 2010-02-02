@@ -20,7 +20,7 @@ amora-cli/amorad: amora-cli/Makefile
 	cd amora-cli && $(MAKE)
 
 amora-applet/Makefile:
-	cd amora-applet && qmake-qt4
+	cd amora-applet && PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(PWD)/amora-cli qmake-qt4
 
 amora-applet/amorad-gui: amora-cli/amorad amora-applet/Makefile
 	cd amora-applet && $(MAKE)
