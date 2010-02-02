@@ -4,7 +4,7 @@ includedir=@ac_devel_abs_srcdir@/src/lib/
 Name: libamora
 Description: library for the server part of amora
 Version: @VERSION@
-Libs: -L${libdir}
+Libs: -L${libdir} -lamora
 Cflags: -I${includedir}
 
 Requires: dbus-1 bluez x11 imlib2 xtst
