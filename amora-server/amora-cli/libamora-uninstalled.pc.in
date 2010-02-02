@@ -1,5 +1,5 @@
 libdir=@ac_devel_abs_builddir@
-includedir=@ac_devel_abs_srcdir@/src/lib/
+includedir=@ac_devel_abs_srcdir@/src/
 
 Name: libamora
 Description: library for the server part of amora
