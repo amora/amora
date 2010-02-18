@@ -20,8 +20,8 @@
        <property name="text" >
         <string/>
        </property>
-       <property name="pixmap" >
-        <pixmap>amora_bluetooth.png</pixmap>
+       <property name="pixmap">
+        <pixmap resource="amora-applet.qrc">:/images/amora_bluetooth.png</pixmap>
        </property>
       </widget>
      </item>
