@@ -24,10 +24,10 @@
 
 class About : public QDialog, Ui::About
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	About(QWidget *parentW = 0);
+    About(QWidget *parentW = 0);
 
 };
 

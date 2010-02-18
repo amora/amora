@@ -25,28 +25,28 @@ struct amora_s;
 
 class Amora : public QThread
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Amora(int argc, char **argv);
-	~Amora();
+    Amora(int argc, char **argv);
+    ~Amora();
 
-	void emitSignal(int change);
+    void emitSignal(int change);
 
 signals:
-	void changeStatus(int change);
+    void changeStatus(int change);
 
 private:
-	int _argc;
-	char **_argv;
-	struct amora_s *amora;
-	char *logfile;
-	int bt_channel;
-	int bt_hci;
+    int _argc;
+    char **_argv;
+    struct amora_s *amora;
+    char *logfile;
+    int bt_channel;
+    int bt_hci;
 
-	void run(void);
-	void parse_args(int argc, char *argv[]);
-	void show_usage(const char *path);
+    void run(void);
+    void parse_args(int argc, char *argv[]);
+    void show_usage(const char *path);
 };
 
 #endif
