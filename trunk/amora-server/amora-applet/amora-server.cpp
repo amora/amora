@@ -62,12 +62,9 @@ void Amora::emitSignal(int change)
     emit changeStatus(change);
 }
 
-Amora::Amora(int argc, char *argv[]): _argc(argc), _argv(argv)
+Amora::Amora(int argc, char *argv[])
+    : _argc(argc), _argv(argv), logfile(0), bt_hci(-1), bt_channel(16)
 {
-    logfile = NULL;
-    bt_hci = -1;
-    bt_channel = 16;
-
     parse_args(argc, argv);
 
     amora = amora_context_new(logfile, bt_channel, bt_hci);
