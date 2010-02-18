@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008
+ * Copyright (C) 2008-2010
  * Ademar de Souza Reis Jr. <ademar@ademar.org>
  * GPLv2+
  *
@@ -13,10 +13,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See file COPYING for details.
  *
- * It used as a reference the example found on the QT4 documentation:
+ * The systray example found on the Qt4 documentation was used
+ * as a reference for this implementation:
  * http://doc.trolltech.com/4.3/desktop-systray-window-h.html
  *
- * $Id: applet.h 344 2008-08-18 23:01:06Z ademar $
  */
 
 #ifndef __APPLET_H__

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008
+ * Copyright (C) 2008-2010
  * Ademar de Souza Reis Jr. <ademar@ademar.org>
  * GPLv2+
  *
@@ -13,7 +13,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See file COPYING for details.
  *
- * $Id: amora-server.h 346 2008-08-19 16:34:50Z ademar $
  */
 
 #ifndef __AMORA_H__
