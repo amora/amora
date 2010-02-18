@@ -24,8 +24,8 @@
 
 
 About::About(QWidget *parentW)
-	: QDialog(parentW)
+    : QDialog(parentW)
 {
-	setupUi(this);
-	layout()->setSizeConstraint(QLayout::SetFixedSize);
+    setupUi(this);
+    layout()->setSizeConstraint(QLayout::SetFixedSize);
 }

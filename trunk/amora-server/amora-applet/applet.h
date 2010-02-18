@@ -30,37 +30,37 @@ class QMenu;
 class Amora;
 
 enum applet_status {
-	Start = 0,
-	On = 1,
-	Off = 2
+    Start = 0,
+    On = 1,
+    Off = 2
 };
 
 class Applet : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Applet();
-	~Applet();
+    Applet();
+    ~Applet();
 
-	void showMessage(QString message, QString title="Amora Server");
-	void bind(Amora *amora_server);
+    void showMessage(QString message, QString title="Amora Server");
+    void bind(Amora *amora_server);
 
 private slots:
-	void iconStatus(int change);
-	void iconActivated(QSystemTrayIcon::ActivationReason reason);
-	void about();
+    void iconStatus(int change);
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+    void about();
 
 private:
-	int cellphone;
-	uint status;
-	Amora *amora;
-	QAction *quitAction;
-	QAction *aboutAction;
+    int cellphone;
+    uint status;
+    Amora *amora;
+    QAction *quitAction;
+    QAction *aboutAction;
 
-	QSystemTrayIcon *trayIcon;
-	QMenu *menu;
-	void setStatus(int st);
+    QSystemTrayIcon *trayIcon;
+    QMenu *menu;
+    void setStatus(int st);
 };
 
 #endif
