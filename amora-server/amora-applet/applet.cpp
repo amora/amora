@@ -31,7 +31,6 @@
 #include <QString>
 
 #include <unistd.h>
-#include <stdio.h>
 
 
 Applet::Applet()
@@ -102,7 +101,7 @@ void Applet::setStatus(int st)
         break;
     }
 
-    fprintf(stderr, "cellphones: %d\n", cellphone);
+    qWarning("cellphones: %d", cellphone);
 }
 
 

@@ -17,13 +17,12 @@
  */
 
 
-#include <iostream>
-#include <QApplication>
-#include <QMessageBox>
-#include <stdio.h>
-
 #include "applet.h"
 #include "amora-server.h"
+
+#include <QApplication>
+#include <QMessageBox>
+#include <QTimer>
 
 extern "C" {
 #include <amora.h>
@@ -36,7 +35,8 @@ void client_connection(const char *client_name)
 {
     /* TODO: use some UI element to display this */
     if (client_name)
-        fprintf(stderr, "client connected: %s\n", client_name);
+        qWarning("client connected: %s", client_name);
+
     if (amora_server)
         amora_server->emitSignal(On);
 }
@@ -97,9 +97,8 @@ void Amora::parse_args(int argc, char *argv[])
                 show_usage(argv[0]);
                 ::exit(0);
             case 'v':
-                /* XXX libamora should provide the version */
-                printf("experimental amora-applet, "
-                       "undefined version\n");
+                /* XXX libamora should provide the current version */
+                qWarning("amora-applet (experimental)");
                 ::exit(0);
             case 'i':
                 bt_hci = atoi(optarg);
@@ -113,19 +112,13 @@ void Amora::parse_args(int argc, char *argv[])
 
 void Amora::show_usage(const char *path)
 {
-    char *name, *p = strdup(path);
-
-    name = basename(p);
-
-    printf("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
+    qCritical("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
            "\n"
            "  -h             show this help message and exit;\n"
            "  -l logfile     set the log file path (default is disabled);\n"
            "  -v             show version and exit.\n"
            "  -i hci_number  set the bluetooth dongle device to use\n"
-           "\n", name);
-
-    free(p);
+           "\n", basename(path));
 }
 
 Amora::~Amora()

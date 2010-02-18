@@ -22,9 +22,10 @@
 #ifndef __APPLET_H__
 #define __APPLET_H__
 
-#include <QSystemTrayIcon>
 #include <QWidget>
+#include <QSystemTrayIcon>
 
+class QString;
 class QAction;
 class QMenu;
 class Amora;
