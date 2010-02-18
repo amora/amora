@@ -13,7 +13,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See file COPYING for details.
  *
- * $Id: about.cpp 344 2008-08-18 23:01:06Z ademar $
  */
 
 #include "about.h"

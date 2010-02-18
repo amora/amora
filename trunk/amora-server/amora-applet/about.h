@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008
+ * Copyright (C) 2008-2010
  * Ademar de Souza Reis Jr. <ademar@ademar.org>
  * GPLv2+
  *
@@ -13,7 +13,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See file COPYING for details.
  *
- * $Id: about.h 344 2008-08-18 23:01:06Z ademar $
  */
 
 #ifndef __ABOUT_H__
