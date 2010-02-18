@@ -29,7 +29,7 @@ class Amora : public QThread
 
 public:
     Amora(int argc, char **argv);
-    ~Amora();
+    virtual ~Amora();
 
     void emitSignal(int change);
 
@@ -41,12 +41,14 @@ private:
     char **_argv;
     struct amora_s *amora;
     char *logfile;
-    int bt_channel;
     int bt_hci;
+    int bt_channel;
 
     void run(void);
     void parse_args(int argc, char *argv[]);
     void show_usage(const char *path);
+
+    Q_DISABLE_COPY(Amora);
 };
 
 #endif
