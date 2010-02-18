@@ -15,7 +15,6 @@ FORMS = about.ui
 HEADERS += amora-server.h applet.h about.h
 SOURCES += amora-server.cpp applet.cpp about.cpp
 RESOURCES = amora-applet.qrc
-DISTFILES = *.png
 
 target.path = $$PREFIX/bin
 

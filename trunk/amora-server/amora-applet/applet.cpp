@@ -69,9 +69,9 @@ Applet::~Applet()
 
 void Applet::setStatus(int st)
 {
-	QIcon iconStart(":/amora_start.png");
-	QIcon iconOn(":/amora_bluetooth.png");
-	QIcon iconOff(":/amora_exclamation.png");
+	QIcon iconStart(":/images/amora_start.png");
+	QIcon iconOn(":/images/amora_bluetooth.png");
+	QIcon iconOff(":/images/amora_exclamation.png");
 
 	switch(st) {
 	case Start:
