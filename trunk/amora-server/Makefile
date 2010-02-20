@@ -48,8 +48,8 @@ debdist: amora-cli/Makefile
 	# Shouldn't we use "$(VERSION)" instead of "1.0.0"?
 	tar cvzf amora-applet/amorad-gui-1.0.0.orig.tar.gz \
 		amora-applet/*.cpp amora-applet/*.h amora-applet/*.ui \
-		amora-applet/*.pro amora-applet/*.qrc amora-applet/*.png \
-		amora-applet/README
+		amora-applet/*.pro amora-applet/*.qrc amora-applet/README \
+		amora-applet/images/*.png
 	mkdir -p $(DIR)
 	cp -p Makefile $(DIR)
 	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
