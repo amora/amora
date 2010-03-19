@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008
+ * Copyright (C) 2008-2010
  * Ademar de Souza Reis Jr. <ademar@ademar.org>
  * GPLv2+
  *
