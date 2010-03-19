@@ -117,11 +117,12 @@ int read_socket(int client, char *data, int length);
  *
  * @param channel Number of channel to be used to export the server service.
  * @param sd Service description structure pointer.
+ * @param device_socket Bluetooth Device socket
  *
  * @return Socket in success, -1 otherwise.
  */
 int build_bluetooth_socket(unsigned int channel,
-			   struct service_description *sd);
+			   struct service_description *sd, int *device_socket);
 
 
 /** This functions talks with bluetooth daemon and registers the service
@@ -144,6 +145,15 @@ int describe_service(struct service_description *sd);
  * @param buffer A string buffer to hold translated address.
  */
 void client_bluetooth_id(struct sockaddr *client_address, char *buffer);
+
+
+/** Remote client name (human readable)
+ *
+ * @param sock Device Socket
+ * @param client_address Socket address peer socket pointer.
+ * @param buffer A string buffer to hold the device name (up to 256 chars)
+ */
+void client_bluetooth_name(int sock, struct sockaddr *client_address, char *name);
 
 
 /** Copy a file content over other (use it to copy a file to a remote client
