@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <libgen.h>
+#include <sys/param.h>
+#include <errno.h>
 #include "config.h"
 #include "amora.h"
 #include "x11_event.h"
@@ -165,6 +167,7 @@ int treat_command(struct amora_s *amora, char *buffer, int length, int client_so
 	static int do_capture = 0, screen_rotate = 0,
 		width = 176, height = 208, flag = 0, times = 0;
 	int result, tmp;
+	char *tmpname, *tmpdir;
 	Imlib_Image image, rescaled;
 
 	result = protocol_command(buffer, length);
@@ -228,21 +231,47 @@ int treat_command(struct amora_s *amora, char *buffer, int length, int client_so
 			}
 		}
 
-		/* XXX, TODO: we should have a tmp or working dir for
-		 * amora-server created with mkdtemp(3) */
-		tmp = save_image(&rescaled, "amora-screenshot.png");
-		imlib_free_image();
-		if (tmp) {
-			perror("failed screen capture: freeing!\n");
+		tmpdir = malloc(MAXPATHLEN);
+		strncpy(tmpdir, "/tmp/amora-XXXXXX", MAXPATHLEN);
+		tmp = mkdtemp(tmpdir);
+		if (tmp == NULL) {
+			perror(sprintf("Error: Cannot create directory %s: %s\n",
+				       tmpdir, strerror(errno)));
 			result = NONE;
 			break;
-		}
+		} else {
+			tmpname = malloc(MAXPATHLEN);
+			strncpy(tmpname, tmpdir, MAXPATHLEN);
+			strncat(tmpname, "/screenshot.png", MAXPATHLEN);
 
-		tmp = send_file(client_socket, "amora-screenshot.png");
-		if (tmp) {
-			perror("failed screen transfer!\n");
-			result = CONN_CLOSE;
-			break;
+			tmp = save_image(&rescaled, tmpname);
+			imlib_free_image();
+
+			if (tmp) {
+				perror("Error: Failed screen capture: freeing!\n");
+				result = NONE;
+				unlink(tmpname);
+				rmdir(tmpdir);
+				break;
+			}
+
+			tmp = send_file(client_socket, tmpname);
+
+
+			if (unlink(tmpname)) {
+				perror(sprintf("Error: Cannot remove file %s: %s\n",
+					       tmpname, strerror(errno)));
+			}
+			if (rmdir(tmpdir)) {
+				perror(sprintf("Error: Cannot remove directory %s: %s\n",
+					       tmpdir, strerror(errno)));
+			}
+
+			if (tmp) {
+				perror("failed screen transfer!\n");
+				result = CONN_CLOSE;
+				break;
+			}
 		}
 		break;
 	case NONE:
