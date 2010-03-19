@@ -30,8 +30,12 @@ struct amora_s {
 	int server_socket;
 	/** Client socket */
 	int client_socket;
+	/** Client name */
+	char client_name[256];
 	/** Default channel used by amora */
 	int channel;
+	/** Bluetooth device socket */
+	int device_socket;
 	/** Connection function callback */
 	void (*conn_callback) (const char *device_name);
 	/** Disconnectoin function callback */
@@ -166,6 +170,5 @@ void amora_connection_callback(struct amora_s *context,
  */
 void amora_disconnection_callback(struct amora_s *context,
 			       void (*conn_cb) (const char *device_name));
-
 
 #endif

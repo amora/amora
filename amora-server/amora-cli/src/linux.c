@@ -50,7 +50,6 @@
 #include <fcntl.h>
 #include <errno.h>
 
-
 /** Linux sendfile is failing (probably I'm not using it correctly). */
 #define STRANGE_BUG
 
@@ -83,7 +82,9 @@ void destroy_sd(struct service_description *sd)
 	}
 }
 
-int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
+int build_bluetooth_socket(unsigned int channel,
+                           struct service_description *sd,
+                           int *device_socket)
 {
 	struct sockaddr_rc loc_addr;
 	int s, res;
@@ -94,7 +95,7 @@ int build_bluetooth_socket(unsigned int channel, struct service_description *sd)
 
 	if (sd->hci_id == -1)
 		goto error;
-	if (hci_open_dev(sd->hci_id) < 0)
+	if ((*device_socket = hci_open_dev(sd->hci_id)) < 0)
 		goto error;
 	else
 		hci_close_dev(sd->hci_id);
@@ -239,5 +240,15 @@ void client_bluetooth_id(struct sockaddr *client_address, char *buffer)
 
 	if (buffer)
 		ba2str(&(ptr->rc_bdaddr), buffer);
+}
 
+void client_bluetooth_name(int sock, struct sockaddr *client_address,
+                           char *buffer)
+{
+	struct sockaddr_rc *ptr;
+	ptr = (struct sockaddr_rc*) client_address;
+
+	if (hci_read_remote_name(sock, &(ptr->rc_bdaddr), 256, buffer, 0) < 0) {
+		strcpy(buffer, "[unknown]");
+	}
 }

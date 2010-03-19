@@ -289,8 +289,7 @@ exit_close:
 	loop_remove(client_socket);
 	close(client_socket);
 	if (amora->disconn_callback)
-		/* TODO: store device name during the first connection! */
-		amora->disconn_callback(NULL);
+		amora->disconn_callback(amora->client_name);
 	return 0;
 
 }
@@ -314,11 +313,13 @@ int server_socket_cb(void *context, int server_socket)
 				" exiting...");
 	else {
 		client_bluetooth_id(&rem_addr, buffer);
+		client_bluetooth_name(amora->device_socket, &rem_addr,
+						      amora->client_name);
 		log_message(FIL, amora->log, "Accepted connection. Client"
-				" is %s", buffer);
+				" is %s [%s]", amora->client_name, buffer);
 
 		if (amora->conn_callback)
-			amora->conn_callback(buffer);
+			amora->conn_callback(amora->client_name);
 		loop_add(client_socket, context, client_socket_cb);
 	}
 
@@ -382,7 +383,7 @@ struct amora_s *amora_context_new(char *logfile, int channel, int hci_device)
 	/* Socket creation */
 	result->sd->hci_id = hci_device;
 	result->server_socket = build_bluetooth_socket(result->channel,
-						       result->sd);
+						       result->sd, &(result->device_socket));
 	if (result->server_socket == -1) {
 		log_message(FIL|OUT, result->log, "Failed creating bluetooth "
 			    "conn! Exiting...");
