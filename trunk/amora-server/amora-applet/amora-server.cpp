@@ -21,53 +21,45 @@
 
 #include <QApplication>
 #include <QMessageBox>
-#include <QTimer>
 
 extern "C" {
 #include <amora.h>
 }
 
-/* Required to be used by conn/disconnection callbacks */
-static Amora *amora_server = NULL;
+/* Required to be used by {dis,}connection callbacks */
+static AmoraServer *server = NULL;
 
 void client_connection(const char *client_name)
 {
-    /* TODO: use some UI element to display this */
-    if (client_name)
-        qWarning("client connected: %s", client_name);
+    if (!server)
+        return;
 
-    if (amora_server)
-        amora_server->emitSignal(On);
+    server->onConnection(client_name);
 }
 
 void client_disconnection(const char *client_name)
 {
-    /* TODO: amora lib should return client name */
-    (void)client_name;
+    if (!server)
+        return;
 
-    /* TODO: applet must have an internal counter and do himself
-     * the animation to show disconnection. There is no guarantee that
-     * the signals will be delivered in order.
-     */
-    if (amora_server) {
-        amora_server->emitSignal(Off);
-        sleep(1);
-        amora_server->emitSignal(Start);
-    }
+    server->onDisconnection(client_name);
 }
 
-void Amora::emitSignal(int change)
-{
-    emit changeStatus(change);
-}
-
-Amora::Amora(int argc, char *argv[])
+AmoraServer::AmoraServer(int argc, char *argv[])
     : _argc(argc), _argv(argv), logfile(0), bt_hci(-1), bt_channel(16)
 {
     parse_args(argc, argv);
 
     amora = amora_context_new(logfile, bt_channel, bt_hci);
-    if (amora == NULL) {
+
+    if (!amora) {
+        QString msg = "Error initializing the amora library.";
+        if (logfile)
+            msg += QString("\nCheck the log file for details (%1).").arg(logfile);
+        else
+            msg += QString("\nEnable logging (-l option) to see what's happening.");
+
+        QMessageBox::critical(0, "Amora Applet", msg);
         ::exit(1);
     }
 
@@ -75,7 +67,7 @@ Amora::Amora(int argc, char *argv[])
     amora_disconnection_callback(amora, client_disconnection);
 }
 
-void Amora::parse_args(int argc, char *argv[])
+void AmoraServer::parse_args(int argc, char *argv[])
 {
     int arg;
 
@@ -93,8 +85,8 @@ void Amora::parse_args(int argc, char *argv[])
                 show_usage(argv[0]);
                 ::exit(0);
             case 'v':
-                /* XXX libamora should provide the current version */
-                qWarning("amora-applet (experimental)");
+                /* XXX libamora doesn't provide the current version */
+                qWarning("amora-applet (unspecified version)");
                 ::exit(0);
             case 'i':
                 bt_hci = atoi(optarg);
@@ -106,7 +98,7 @@ void Amora::parse_args(int argc, char *argv[])
     }
 }
 
-void Amora::show_usage(const char *path)
+void AmoraServer::show_usage(const char *path)
 {
     qCritical("Usage: %s [-l logfile] [-h] [-v] [-i hci_number]\n"
            "\n"
@@ -117,12 +109,23 @@ void Amora::show_usage(const char *path)
            "\n", basename(path));
 }
 
-Amora::~Amora()
+AmoraServer::~AmoraServer()
 {
+    // XXX: there's no amora_stop() yet :-(
     amora_context_delete(amora);
 }
 
-void Amora::run(void)
+void AmoraServer::onConnection(const QString clientName)
+{
+    emit clientConnected(clientName);
+}
+
+void AmoraServer::onDisconnection(const QString clientName)
+{
+    emit clientDisconnected(clientName);
+}
+
+void AmoraServer::run(void)
 {
     amora_start(amora);
     exit(0);
@@ -133,17 +136,17 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(0, QObject::tr("Amora Applet"),
-                              QObject::tr("No system tray available, exiting"));
+        QMessageBox::critical(0, "Amora Applet",
+                              "No system tray available, exiting");
         return 1;
     }
 
-    Amora server(argc, argv);
-    amora_server = &server;
+    AmoraServer s(argc, argv);
+    server = &s;
 
     Applet applet;
-    applet.bind(amora_server);
-    server.start();
+    applet.bind(server);
+    s.start();
 
     app.setQuitOnLastWindowClosed(false);
     return app.exec();

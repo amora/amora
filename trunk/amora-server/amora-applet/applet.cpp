@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "applet.h"
 #include "about.h"
 #include "amora-server.h"
@@ -29,17 +28,15 @@
 #include <QSystemTrayIcon>
 #include <QIcon>
 #include <QString>
-
-#include <unistd.h>
+#include <QStringList>
 
 
 Applet::Applet()
-    : cellphone(0)
 {
-    quitAction = new QAction(tr("&Quit"), this);
+    quitAction = new QAction("&Quit", this);
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
-    aboutAction = new QAction(tr("&About"), this);
+    aboutAction = new QAction("&About", this);
     connect(aboutAction, SIGNAL(triggered()), SLOT(about()));
 
     menu = new QMenu(this);
@@ -50,58 +47,24 @@ Applet::Applet()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(menu);
 
+    iconNormal = new QIcon(":/images/amora.png");
+    iconConnected = new QIcon(":/images/amora_connected.png");
+
+    phones = new QStringList();
+
+    setStatus();
+
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-    setStatus(Start);
     trayIcon->show();
 }
 
-
 Applet::~Applet()
 {
-    delete quitAction;
-    delete aboutAction;
-    delete trayIcon;
-    delete menu;
-}
-
-void Applet::setStatus(int st)
-{
-    QIcon iconStart(":/images/amora_start.png");
-    QIcon iconOn(":/images/amora_bluetooth.png");
-    QIcon iconOff(":/images/amora_exclamation.png");
-
-    switch(st) {
-    case Start:
-        if (cellphone) {
-            trayIcon->setIcon(iconOn);
-            trayIcon->setToolTip("Amora Server (On)");
-            status = On;
-            return;
-        }
-        cellphone = 0;
-        trayIcon->setIcon(iconStart);
-        trayIcon->setToolTip("Amora Server (Started)");
-        status = Start;
-        break;
-
-    case On:
-        cellphone++;
-        trayIcon->setIcon(iconOn);
-        trayIcon->setToolTip("Amora Server (On)");
-        status = On;
-        break;
-
-    case Off:
-        cellphone--;
-        trayIcon->setIcon(iconOff);
-        trayIcon->setToolTip("Amora Server (Off)");
-        status = Off;
-        break;
-    }
-
-    qWarning("cellphones: %d", cellphone);
+    delete phones;
+    delete iconNormal;
+    delete iconConnected;
 }
 
 
@@ -110,19 +73,47 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
     switch (reason) {
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::DoubleClick:
-            showMessage("Amora is on", "amora");
-            break;
-        case QSystemTrayIcon::MiddleClick:
+            Applet::showStatusDetails();
             break;
         default:
             ;
     }
 }
 
-void Applet::showMessage(QString message, QString title)
+void Applet::setStatus()
 {
-    trayIcon->showMessage(title, message,
-                          QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information));
+    if (phones->empty()) {
+        trayIcon->setIcon(*iconNormal);
+        trayIcon->setToolTip("Amora server (waiting)");
+    }
+    else {
+        trayIcon->setIcon(*iconConnected);
+        trayIcon->setToolTip("Amora Server (connected)");
+    }
+}
+
+void Applet::showStatusDetails()
+{
+    if (!phones->empty())
+        trayIcon->showMessage("Amora", QString("The following device(s) are connected:\n * %1").arg(phones->join("\n * ")));
+    else
+        trayIcon->showMessage("Amora", "Waiting for connections");
+}
+
+void Applet::handleConnection(const QString client_name)
+{
+    trayIcon->showMessage("Amora", QString("New connection from %1").arg(client_name),
+                          QSystemTrayIcon::Information, 1500);
+    phones->append(client_name);
+    setStatus();
+}
+
+void Applet::handleDisconnection(const QString client_name)
+{
+    trayIcon->showMessage("Amora", QString("%1 has been disconnected").arg(client_name),
+                          QSystemTrayIcon::Information, 1500);
+    phones->removeOne(client_name);
+    setStatus();
 }
 
 void Applet::about()
@@ -131,14 +122,11 @@ void Applet::about()
     dialog.exec();
 }
 
-void Applet::iconStatus(int change)
-{
-    setStatus(change);
-}
-
-void Applet::bind(Amora *amora_server)
+void Applet::bind(AmoraServer *amora_server)
 {
     amora = amora_server;
-    connect(amora, SIGNAL(changeStatus(int)),
-            SLOT(iconStatus(int)));
+    connect(amora, SIGNAL(clientDisconnected(const QString)),
+            SLOT(handleDisconnection(const QString)));
+    connect(amora, SIGNAL(clientConnected(const QString)),
+            SLOT(handleConnection(const QString)));
 }

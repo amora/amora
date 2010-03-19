@@ -25,16 +25,12 @@
 #include <QWidget>
 #include <QSystemTrayIcon>
 
+class QStringList;
+
 class QString;
 class QAction;
 class QMenu;
-class Amora;
-
-enum applet_status {
-    Start = 0,
-    On = 1,
-    Off = 2
-};
+class AmoraServer;
 
 class Applet : public QWidget
 {
@@ -42,26 +38,30 @@ class Applet : public QWidget
 
 public:
     Applet();
-    ~Applet();
+    virtual ~Applet();
 
-    void showMessage(QString message, QString title="Amora Server");
-    void bind(Amora *amora_server);
+    void bind(AmoraServer *amora_server);
+    void setStatus();
+    void showStatusDetails();
 
 private slots:
-    void iconStatus(int change);
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void about();
 
+    void handleDisconnection(const QString client_name);
+    void handleConnection(const QString client_name);
+
 private:
-    int cellphone;
-    uint status;
-    Amora *amora;
+    QStringList *phones;
+    AmoraServer *amora;
     QAction *quitAction;
     QAction *aboutAction;
 
+    QIcon *iconNormal;
+    QIcon *iconConnected;
+
     QSystemTrayIcon *trayIcon;
     QMenu *menu;
-    void setStatus(int st);
 };
 
 #endif

@@ -15,30 +15,33 @@
  *
  */
 
-#ifndef __AMORA_H__
-#define __AMORA_H__
+#ifndef __AMORA_SERVER_H__
+#define __AMORA_SERVER_H__
 
 #include <QThread>
 
 struct amora_s;
 
-class Amora : public QThread
+class AmoraServer : public QThread
 {
     Q_OBJECT
 
 public:
-    Amora(int argc, char **argv);
-    virtual ~Amora();
-
-    void emitSignal(int change);
+    AmoraServer(int argc, char **argv);
+    virtual ~AmoraServer();
+    struct amora_s *amora;
 
 signals:
-    void changeStatus(int change);
+    void clientDisconnected(const QString name);
+    void clientConnected(const QString name);
+
+public slots:
+    void onConnection(const QString clientName);
+    void onDisconnection(const QString clientName);
 
 private:
     int _argc;
     char **_argv;
-    struct amora_s *amora;
     char *logfile;
     int bt_hci;
     int bt_channel;
@@ -47,7 +50,7 @@ private:
     void parse_args(int argc, char *argv[]);
     void show_usage(const char *path);
 
-    Q_DISABLE_COPY(Amora);
+    Q_DISABLE_COPY(AmoraServer);
 };
 
 #endif
