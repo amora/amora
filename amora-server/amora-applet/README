@@ -1,46 +1,32 @@
-$Id: README 346 2008-08-19 16:34:50Z ademar $
-
-Amora Systray Applet is a systray applet (duh) written in QT4 that runs the
+Amora-applet is a systray applet (duh) written in Qt4 that runs the
 server part of Amora, a program which allows a mobile phone to be used as a
 kind of remote controller via bluetooth.
 
 For more information about amora, visit the project website at
-http://code.google.com/p/amora/
+http://amora.googlecode.com/
 
 
 Project status:
 
-   The current design is quite simple. As it requires libamora features
-   which are not implemented yet, it just starts the amora-server code and
-   does nothing with it. :P
+   The current implementation is simple yet fully functional: it implements
+   all features exported by libamora, that is, it allows new connections and
+   reports the server status (notifications of connections/disconnections).
 
-   There are some stubs for features like notification and interaction with
-   the user, but everything depends on the library.
+   Future work should be done on libamora to be more flexible and provide
+   detailed information to client applications.
 
-   I like to follow the "release early, release often" rule, so the code is
-   already public for other developers who may be interested. There's a lot
-   of work to be done to "make it right" before a release is made for users:
-
-   TODO:
-     - do something more useful than just starting the server, such as event
-       handlings:
-        - new device connection (show a message)
-        - device disconnection (show a message)
-        - dongle removal (change the icon)
-        - dongle connection (change the icon)
-     - a proper build-system (cmake based is preferred)
-     - a better (more beautiful) about screen
 
 How to build it:
 
-  You need qt4 (I used qt4.4), libamora and all its dependencies
+  You need qt4 (tested with qt4.6), libamora and all its dependencies
   installed.
 
-  Just run 'qmake-qt4' and then 'make'.
+  Just run 'qmake' (or 'qmake-qt4' depending on your linux distribution)
+  and then 'make'.
 
 
 About:
 
-   amora-applet was originally written by Ademar de Souza Reis Jr.
-   <ademar@ademar.org> and is licensed under GPLv2+ (GPL version 2 or any
-   later version published by the FSF).
+   Amora-applet was originally written by Ademar de Souza Reis Jr.
+   (http://www.ademar.org) and is licensed under GPLv2+ (GPL version 2
+   or any later version published by the FSF).
