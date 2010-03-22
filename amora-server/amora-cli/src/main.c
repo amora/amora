@@ -144,15 +144,19 @@ static void show_usage(const char *path)
 
 static void client_conn_name(const char *msg)
 {
-	if (msg)
+	if (msg) {
+		fprintf(stderr, "Connection stablished");
 		fprintf(stderr, "Client is: %s\n", msg);
+	}
 
 }
 
 static void client_disconn_name(const char *msg)
 {
-	if (msg)
-		fprintf(stderr, "Client is: %s\n", msg);
+	if (msg) {
+		fprintf(stderr, "Connection closed");
+		fprintf(stderr, "Client was: %s\n", msg);
+	}
 	else
 		fprintf(stderr, "Client disconnection, but I don't have the"
 			" device name!\n");
