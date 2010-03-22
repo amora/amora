@@ -145,7 +145,7 @@ static void show_usage(const char *path)
 static void client_conn_name(const char *msg)
 {
 	if (msg) {
-		fprintf(stderr, "Connection stablished");
+		fprintf(stderr, "Connection stablished\n");
 		fprintf(stderr, "Client is: %s\n", msg);
 	}
 
@@ -154,7 +154,7 @@ static void client_conn_name(const char *msg)
 static void client_disconn_name(const char *msg)
 {
 	if (msg) {
-		fprintf(stderr, "Connection closed");
+		fprintf(stderr, "Connection closed\n");
 		fprintf(stderr, "Client was: %s\n", msg);
 	}
 	else
