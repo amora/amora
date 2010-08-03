@@ -3,7 +3,7 @@ Section: x11
 Priority: extra
 Maintainer: Axel Beckert <abe@debian.org>
 Build-Depends: debhelper (>= 5), libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, pkg-config, qt4-qmake, libqt4-dev, libdbus-1-dev
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Homepage: http://amora.googlecode.com/
 Vcs-Svn: http://amora.googlecode.com/svn/trunk/amora-server/
 Vcs-Browser: http://code.google.com/p/amora/source/browse
@@ -13,7 +13,7 @@ Provides: amora-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Replaces: amora-server (<< 1.2~)
-Conflicts: amora-server (<< 1.2~)
+Breaks: amora-server (<< 1.2~)
 Description: use a bluetooth device as X remote control (commandline tool)
  Amora (A mobile remote assistant) is an application that enables you
  to control your desktop using your mobile phone. It uses bluetooth to
