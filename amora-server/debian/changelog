@@ -6,6 +6,7 @@ amora-server (1.2~svn684-1) UNRELEASED; urgency=low
     - Made amora-server a transitional package depending on one of the new
       packages amora-cli and amora-applet.
   * Bumped standards version to 3.9.1, no changes necessary.
+  * Move to Debian source package format "3.0 (quilt)"
   * Changed (C) into appropriate UTF-8 character to fix lintian warnings
   * Changed the maintainer e-mail address to my debian.org address.
 
