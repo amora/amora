@@ -64,11 +64,12 @@ debdist: amora-cli/Makefile
 clean:
 	cd amora-cli; $(MAKE) clean
 	cd amora-applet; $(MAKE) clean
+	rm -f core */core
 
 distclean:
 	cd amora-cli; [ ! -f Makefile ] || $(MAKE) distclean
 	cd amora-applet; [ ! -f Makefile ] || $(MAKE) distclean
-	rm -vf amora-*/*tgz $(BUILDDIR).tgz
+	rm -vf amora-*/*tgz $(BUILDDIR).tgz core */core
 
 install: all
 	cd amora-cli; $(MAKE) install
