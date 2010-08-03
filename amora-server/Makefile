@@ -24,7 +24,7 @@ amora-applet/Makefile:
 	cd amora-applet && PKG_CONFIG_PATH=$(WORKDIR)/amora-cli qmake-qt4
 
 amora-applet/amorad-gui: amora-cli/amorad amora-applet/Makefile
-	cd amora-applet && $(MAKE)
+	cd amora-applet && $(MAKE) SUBLIBS="-L../amora-cli/.libs"
 
 # Fsck. We have to build the amorad-gui, because otherwise not all
 # files "make dist" in amora-applet expects, are there.
