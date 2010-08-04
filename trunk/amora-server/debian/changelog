@@ -1,4 +1,4 @@
-amora-server (1.2~svn693-1) unstable; urgency=low
+amora-server (1.2~svn694-1) unstable; urgency=low
 
   * New upstream pre-release; provides two binaries, a command-line and a
     Qt4 based system tray interface.
@@ -11,8 +11,9 @@ amora-server (1.2~svn693-1) unstable; urgency=low
     redirector.
   * Changed (C) into appropriate UTF-8 character to fix lintian warnings
   * Changed the maintainer e-mail address to my debian.org address.
+  * Fixed typo in debian/README.source
 
- -- Axel Beckert <abe@debian.org>  Wed, 04 Aug 2010 02:30:33 +0200
+ -- Axel Beckert <abe@debian.org>  Wed, 04 Aug 2010 02:34:09 +0200
 
 amora-server (1.1-1) unstable; urgency=low
 
