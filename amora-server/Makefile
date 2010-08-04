@@ -56,7 +56,7 @@ debdist: amora-cli/Makefile
 	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
 	cd $(DIR) && tar xvzf ../../amora-applet/amorad-gui*.orig.tar.gz
 	mv -i $(DIR)/amora-cli-* $(DIR)/amora-cli
-	cd $(TMPDIR) && tar cvzf ../../$(shell dpkg-parsechangelog | grep '^Source:' | awk '{print $$2}')_$(shell dpkg-parsechangelog | grep '^Version:' | awk '{print $$2}').orig.tar.gz $(BUILDDIR)
+	cd $(TMPDIR) && tar cvzf ../../$(shell dpkg-parsechangelog | grep '^Source:' | awk '{print $$2}')_$(shell dpkg-parsechangelog | grep '^Version:' | awk '{print $$2}' | sed -e 's/-[^-]*$$//').orig.tar.gz $(BUILDDIR)
 	rm -rf $(TMPDIR)
 	rm -v amora-applet/amorad-gui*.tar.gz
 	rm -v amora-cli/amora-cli*.tar.gz
