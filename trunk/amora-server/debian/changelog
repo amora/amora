@@ -1,3 +1,9 @@
+amora-server (1.2~svn695-2) unstable; urgency=low
+
+  * No more include .la files in the binary packages. (Closes: #621143)
+
+ -- Axel Beckert <abe@debian.org>  Thu, 07 Apr 2011 20:17:46 +0200
+
 amora-server (1.2~svn695-1) unstable; urgency=low
 
   * New upstream pre-release; provides two binaries, a command-line and a
