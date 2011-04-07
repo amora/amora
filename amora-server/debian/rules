@@ -79,6 +79,9 @@ install: build
 	# Add here commands to install the package into debian/amora-server.
 	cd amora-cli; $(MAKE) DESTDIR=$(CURDIR)/debian/amora-cli install
 
+	# Remove installed .la file
+	rm -v $(CURDIR)/debian/amora-cli/usr/lib/libamora.la
+
 	# qmake-qt4's generated install target has the path hardwired. So we 
 	# do it manually.
 	install amora-applet/amorad-gui $(CURDIR)/debian/amora-applet/usr/bin
