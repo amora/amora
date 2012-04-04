@@ -24,6 +24,7 @@
 
 extern "C" {
 #include <amora.h>
+#include <unistd.h>
 }
 
 /* Required to be used by {dis,}connection callbacks */
