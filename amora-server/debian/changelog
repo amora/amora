@@ -1,3 +1,13 @@
+amora-server (1.2~svn697-1) unstable; urgency=low
+
+  * New upstream snapshot
+    - Fixes FTBFS with GCC 4.7 (Closes: #667097)
+  * Remove transitional package amora-server
+  * Bump Standard-Version to 3.9.3 (no changes)
+  * Fix Lintian warning debian-rules-missing-recommended-target
+
+ -- Axel Beckert <abe@debian.org>  Sat, 07 Apr 2012 19:44:05 +0200
+
 amora-server (1.2~svn695-2) unstable; urgency=low
 
   * No more include .la files in the binary packages. (Closes: #621143)
