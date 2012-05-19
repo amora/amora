@@ -3,6 +3,8 @@ amora-server (1.2~svn699-1) unstable; urgency=low
   * New upstream snapshot
     - Fixes FTBFS (Closes: #672072)
   * Enabled hardening buildflags
+  * Use autotools-dev's dh_autotools-dev_*config for config.{guess,sub}
+    handling.
 
  -- Axel Beckert <abe@debian.org>  Sun, 20 May 2012 00:42:44 +0200
 
