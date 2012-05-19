@@ -40,17 +40,22 @@ dist: amora-cli/Makefile amora-applet/Makefile amora-applet/amorad-gui
 	cd $(TMPDIR) && tar cvzf ../$(BUILDDIR).tgz $(BUILDDIR)
 	rm -rf $(TMPDIR)
 
+# There seem to be a few cases where these files are missing
+amora-cli/m4/%.m4:
+	cp -pv /usr/share/aclocal/$*.m4 amora-cli/m4/
+
 # qmake includes way to many files into the tarball for easy and svn
 # repository compatible use for at least building a deb, so we build a
 # separate tar ball suitable for distribution and already (and for
 # distinction) properly named.
-debdist: amora-cli/Makefile
+debdist: amora-cli/Makefile amora-cli/m4/ltoptions.m4 amora-cli/m4/ltsugar.m4 amora-cli/m4/ltversion.m4 amora-cli/m4/lt\~obsolete.m4 amora-cli/m4/libtool.m4
 	cd amora-cli; $(MAKE) dist
 	# Shouldn't we use "$(VERSION)" instead of "1.0.0"?
 	tar cvzf amora-applet/amorad-gui-1.0.0.orig.tar.gz \
-		amora-applet/*.cpp amora-applet/*.h amora-applet/*.ui \
-		amora-applet/*.pro amora-applet/*.qrc amora-applet/README \
-		amora-applet/images/*.png
+		amora-applet/about.cpp amora-applet/applet.cpp \
+		amora-applet/amora-server.cpp amora-applet/*.h \
+		amora-applet/*.ui amora-applet/*.pro amora-applet/*.qrc \
+		amora-applet/README amora-applet/images/*.png
 	mkdir -p $(DIR)
 	cp -p Makefile $(DIR)
 	cd $(DIR) && tar xvzf ../../amora-cli/amora-cli*.tar.gz 
@@ -62,14 +67,21 @@ debdist: amora-cli/Makefile
 	rm -v amora-cli/amora-cli*.tar.gz
 
 clean:
+	rm -f core */core
 	cd amora-cli; $(MAKE) clean
 	cd amora-applet; $(MAKE) clean
-	rm -f core */core
 
 distclean:
 	cd amora-cli; [ ! -f Makefile ] || $(MAKE) distclean
 	cd amora-applet; [ ! -f Makefile ] || $(MAKE) distclean
-	rm -vf amora-*/*tgz $(BUILDDIR).tgz core */core
+	rm -vf amora-*/*.tgz amora-*/*.tar.gz $(BUILDDIR).tgz \
+		core */core \
+		amora-cli/m4/ltoptions.m4 \
+		amora-cli/m4/ltsugar.m4 \
+		amora-cli/m4/ltversion.m4 \
+		amora-cli/m4/lt\~obsolete.m4 \
+		amora-cli/m4/libtool.m4
+	rm -vrf amora-*/.tmp/
 
 install: all
 	cd amora-cli; $(MAKE) install
