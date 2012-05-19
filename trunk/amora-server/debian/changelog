@@ -1,3 +1,10 @@
+amora-server (1.2~svn698-1) unstable; urgency=low
+
+  * New upstream snapshot
+    - Fixes FTBFS (Closes: #672072)
+
+ -- Axel Beckert <abe@debian.org>  Sun, 20 May 2012 00:35:02 +0200
+
 amora-server (1.2~svn697-1) unstable; urgency=low
 
   * New upstream snapshot
