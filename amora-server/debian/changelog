@@ -6,6 +6,7 @@ amora-server (1.2~svn699-1) unstable; urgency=low
   * Use autotools-dev's dh_autotools-dev_*config for config.{guess,sub}
     handling.
   * Bump debhelper compatibility to 9
+    - Use "dh_prep" instead of "dh_clean -k"
 
  -- Axel Beckert <abe@debian.org>  Sun, 20 May 2012 00:42:44 +0200
 
