@@ -45,11 +45,8 @@ build-stamp: configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
-
 	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
-	rm -f configure-stamp
 	dh_autotools-dev_restoreconfig
 	# Should be remove by "make distclean", but we remove it anyway
 	cd amora-cli; rm -f config.sub config.guess config.log config.cache Makefile
