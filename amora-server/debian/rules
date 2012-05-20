@@ -21,8 +21,6 @@ include /usr/share/dpkg/buildflags.mk
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Add here commands to configure the package.
-
 	dh_autotools-dev_updateconfig
 
 	cd amora-cli; ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
@@ -37,7 +35,6 @@ build-indep: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 
-	# Add here commands to compile the package.
 	$(MAKE)
 
 	touch $@
@@ -45,17 +42,15 @@ build-stamp: configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
 	dh_autotools-dev_restoreconfig
-	# Should be remove by "make distclean", but we remove it anyway
+	# Should be removed by "make distclean", but we remove it anyway
 	cd amora-cli; rm -f config.sub config.guess config.log config.cache Makefile
 	cd amora-applet; rm -f Makefile
 
 	# Remove any amora-screenshot.png which usually result from testing
 	# the package
-	rm -f amora-screenshot.png debian/amora-screenshot.png \
-	      amora-*/amora-screenshot.png
+	find . -name amora-screenshot.png -delete
 
 	dh_clean 
 
@@ -65,7 +60,6 @@ install: build
 	dh_prep 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/amora-server.
 	cd amora-cli; $(MAKE) DESTDIR=$(CURDIR)/debian/amora-cli install
 
 	# Remove installed .la file
@@ -77,29 +71,21 @@ install: build
 	install debian/amorad-gui.desktop $(CURDIR)/debian/amora-applet/usr/share/applications
 
 
-# Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
 
-# Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
-#	dh_installexamples
 	dh_install
 	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installinit
-#	dh_installinfo
 	dh_installman
 	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
-#	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
