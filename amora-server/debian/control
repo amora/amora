@@ -2,7 +2,17 @@ Source: amora-server
 Section: x11
 Priority: extra
 Maintainer: Axel Beckert <abe@debian.org>
-Build-Depends: debhelper (>= 9~), libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, pkg-config, qt4-qmake, libqt4-dev, libdbus-1-dev, dpkg-dev (>= 1.16.1~), autotools-dev
+Build-Depends: autotools-dev,
+               debhelper (>= 9~),
+               dpkg-dev (>= 1.16.1~),
+               libbluetooth-dev,
+               libdbus-1-dev,
+               libimlib2-dev,
+               libqt4-dev,
+               libx11-dev,
+               libxtst-dev,
+               pkg-config,
+               qt4-qmake
 Standards-Version: 3.9.3
 Homepage: https://github.com/xtaran/amora#readme
 Vcs-Git: git://github.com/xtaran/amora.git
@@ -11,7 +21,8 @@ Vcs-Browser: https://github.com/xtaran/amora/tree/master/amora-server
 Package: amora-cli
 Provides: amora-server
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
 Replaces: amora-server (<< 1.2~)
 Breaks: amora-server (<< 1.2~)
 Description: use a bluetooth device as X remote control (commandline tool)
@@ -38,7 +49,8 @@ Description: use a bluetooth device as X remote control (commandline tool)
 Package: amora-applet
 Provides: amora-server
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
 Description: use a bluetooth device as X remote control (systray applet)
  Amora (A mobile remote assistant) is an application that enables you
  to control your desktop using your mobile phone. It uses bluetooth to

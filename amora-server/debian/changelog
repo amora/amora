@@ -3,6 +3,7 @@ amora-server (1.2~svn+git2015.03.15-1) UNRELEASED; urgency=medium
   * New upstream snapshot taken from now to git converted repository.
   * Upstream and repositories moved from closing Google Code to Github.
     + Update Homepage and Vcs-* headers
+  * Apply wrap-and-sort.
 
  -- Axel Beckert <abe@debian.org>  Sun, 15 Mar 2015 01:53:33 +0100
 
