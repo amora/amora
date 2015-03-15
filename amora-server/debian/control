@@ -13,7 +13,7 @@ Build-Depends: autotools-dev,
                libxtst-dev,
                pkg-config,
                qt4-qmake
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 Homepage: https://github.com/xtaran/amora#readme
 Vcs-Git: git://github.com/xtaran/amora.git
 Vcs-Browser: https://github.com/xtaran/amora/tree/master/amora-server
