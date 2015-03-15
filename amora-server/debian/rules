@@ -25,10 +25,6 @@ override_dh_auto_build:
 	$(MAKE)
 
 override_dh_clean:
-	# Should be removed by "make distclean", but we remove it anyway
-	cd amora-cli; rm -f config.sub config.guess config.log config.cache Makefile
-	cd amora-applet; rm -f Makefile
-
 	# Remove any amora-screenshot.png which usually result from testing
 	# the package
 	find . -name amora-screenshot.png -delete
