@@ -3,6 +3,7 @@ amora-server (1.2~svn+git2015.03.15-1) UNRELEASED; urgency=medium
   * New upstream snapshot taken from now to git converted repository.
   * Upstream and repositories moved from closing Google Code to Github.
     + Update Homepage and Vcs-* headers
+    + Update debian/{README.{Debian,source},watch,copyright}
   * Apply wrap-and-sort.
   * Declare compliance with Debian Policy 3.9.6 (no other changes needed)
   * Switch debian/rules to dh v7 minimal style

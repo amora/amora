@@ -2,20 +2,20 @@ Packaging of amora-server for Debian
 ------------------------------------
 
 Packaging of amora-server and Amora itself reside in the same
-subversion repository but since the Debian package is not the primary
+git repository but since the Debian package is not the primary
 target (the rpm packaging also resides in the same repository) and
 changes in the Debian packaging will not result in a new Amora
 release, it is packaged as non-native package.
 
 The package is built out of the tarball you get with "make debdist".
 
-To build the package from a repository checkout of amora-server, make
-sure the packages automake, autoconf, and libtool are installed and
-then do the following:
+To build the package from a git checkout of amora, make sure the
+packages automake, autoconf, and libtool are installed and then do the
+following:
 
-$ svn checkout http://amora.googlecode.com/svn/trunk/amora-server amora-server
-$ cd amora-server
+$ git checkout git://github.com/xtaran/amora.git
+$ cd amora/amora-server
 $ make debdist
 $ dpkg-buildpackage
 
- -- Axel Beckert <abe@debian.org>, Wed,  4 Aug 2010 02:34:27 +0200
+ -- Axel Beckert <abe@debian.org>, Sun, 15 Mar 2015 03:32:32 +0100
