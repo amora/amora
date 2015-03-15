@@ -40,8 +40,3 @@ override_dh_auto_install:
 
 	# Remove installed .la file
 	rm -v $(CURDIR)/debian/amora-cli/usr/lib/libamora.la
-
-	# qmake-qt4's generated install target has the path hardwired. So we 
-	# do it manually.
-	install amora-applet/amorad-gui $(CURDIR)/debian/amora-applet/usr/bin
-	install debian/amorad-gui.desktop $(CURDIR)/debian/amora-applet/usr/share/applications

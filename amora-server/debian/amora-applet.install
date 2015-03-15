@@ -1,0 +1,4 @@
+# qmake-qt4's generated install target has the path hardwired. So we
+# do it manually.
+amora-applet/amorad-gui usr/bin
+debian/amorad-gui.desktop usr/share/applications
