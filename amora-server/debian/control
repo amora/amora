@@ -4,9 +4,9 @@ Priority: extra
 Maintainer: Axel Beckert <abe@debian.org>
 Build-Depends: debhelper (>= 9~), libx11-dev, libbluetooth-dev, libxtst-dev, libimlib2-dev, pkg-config, qt4-qmake, libqt4-dev, libdbus-1-dev, dpkg-dev (>= 1.16.1~), autotools-dev
 Standards-Version: 3.9.3
-Homepage: http://amora.googlecode.com/
-Vcs-Svn: http://amora.googlecode.com/svn/trunk/amora-server/
-Vcs-Browser: http://code.google.com/p/amora/source/browse
+Homepage: https://github.com/xtaran/amora#readme
+Vcs-Git: git://github.com/xtaran/amora.git
+Vcs-Browser: https://github.com/xtaran/amora/tree/master/amora-server
 
 Package: amora-cli
 Provides: amora-server
