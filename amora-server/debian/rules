@@ -1,10 +1,5 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
@@ -18,32 +13,18 @@ DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	dh_autotools-dev_updateconfig
+%:
+	dh $@ --with autotools-dev
 
+override_dh_auto_configure:
 	cd amora-cli; ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
 	# Does qmake-qt4 support cross-compiling?
 	$(MAKE) amora-applet/Makefile
 
-	touch configure-stamp
-
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-build-stamp: configure-stamp
-	dh_testdir
-
+override_dh_auto_build:
 	$(MAKE)
 
-	touch $@
-
-clean:
-	dh_testdir
-	dh_testroot
-	[ ! -f Makefile ] || $(MAKE) distclean
-	dh_autotools-dev_restoreconfig
+override_dh_clean:
 	# Should be removed by "make distclean", but we remove it anyway
 	cd amora-cli; rm -f config.sub config.guess config.log config.cache Makefile
 	cd amora-applet; rm -f Makefile
@@ -54,12 +35,7 @@ clean:
 
 	dh_clean 
 
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep 
-	dh_installdirs
-
+override_dh_auto_install:
 	cd amora-cli; $(MAKE) DESTDIR=$(CURDIR)/debian/amora-cli install
 
 	# Remove installed .la file
@@ -69,28 +45,3 @@ install: build
 	# do it manually.
 	install amora-applet/amorad-gui $(CURDIR)/debian/amora-applet/usr/bin
 	install debian/amorad-gui.desktop $(CURDIR)/debian/amora-applet/usr/share/applications
-
-
-binary-indep: build install
-# We have nothing to do by default.
-
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs 
-	dh_installdocs
-	dh_install
-	dh_installmenu
-	dh_installman
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
