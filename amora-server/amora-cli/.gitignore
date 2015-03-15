@@ -1,0 +1,6 @@
+# Ignore autoconf generated files
+/Makefile.in
+/aclocal.m4
+/config.h.in
+/configure
+/scripts/
