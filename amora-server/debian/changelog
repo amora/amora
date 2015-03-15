@@ -7,6 +7,8 @@ amora-server (1.2~svn+git2015.03.15-1) UNRELEASED; urgency=medium
   * Declare compliance with Debian Policy 3.9.6 (no other changes needed)
   * Switch debian/rules to dh v7 minimal style
     + Move amora-applet file installations to debian/amora-applet.install
+  * Use autoreconf to regenerate potentially missing files for amora-cli.
+    + Add build-dependency on autoconf.
 
  -- Axel Beckert <abe@debian.org>  Sun, 15 Mar 2015 01:53:33 +0100
 
