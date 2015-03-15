@@ -1,0 +1,6 @@
+# Ignore files typically generated during Debian package build
+/amora-*_*.deb
+/amora-server_*.dsc
+/amora-server_*.build
+/amora-server_*.changes
+/amora-server_*.*.tar.*

@@ -1,0 +1,6 @@
+/*.debhelper
+/*.debhelper.log
+/*.substvars
+/amora-applet/
+/amora-cli/
+/files
