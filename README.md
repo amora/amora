@@ -22,7 +22,7 @@ Check downloads section and wiki articles explaining how to install.
 Credits
 -------
 
-Several people contributed in a way or another to make amora even better, have a look [here](wiki/credits)
+Several people contributed in a way or another to make amora even better, have a look [here](https://github.com/xtaran/amora/wiki/credits)
 
 
 **Sponsor**
