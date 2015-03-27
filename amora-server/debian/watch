@@ -1,2 +1,2 @@
 version=3
-https://github.com/xtaran/amora/releases .*/archive/amora-(.*).tar.gz
+https://github.com/amora/amora/releases .*/archive/amora-(.*).tar.gz

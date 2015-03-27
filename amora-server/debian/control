@@ -15,9 +15,9 @@ Build-Depends: autoconf,
                pkg-config,
                qt4-qmake
 Standards-Version: 3.9.6
-Homepage: https://github.com/xtaran/amora#readme
-Vcs-Git: git://github.com/xtaran/amora.git
-Vcs-Browser: https://github.com/xtaran/amora/tree/master/amora-server
+Homepage: https://github.com/amora/amora#readme
+Vcs-Git: git://github.com/amora/amora.git
+Vcs-Browser: https://github.com/amora/amora/tree/master/amora-server
 
 Package: amora-cli
 Provides: amora-server

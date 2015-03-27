@@ -13,9 +13,9 @@ To build the package from a git checkout of amora, make sure the
 packages automake, autoconf, and libtool are installed and then do the
 following:
 
-$ git checkout git://github.com/xtaran/amora.git
+$ git checkout git://github.com/amora/amora.git
 $ cd amora/amora-server
 $ make debdist
 $ dpkg-buildpackage
 
- -- Axel Beckert <abe@debian.org>, Sun, 15 Mar 2015 03:32:32 +0100
+ -- Axel Beckert <abe@debian.org>, Fri, 27 Mar 2015 02:15:17 +0100
