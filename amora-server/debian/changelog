@@ -10,7 +10,7 @@ amora-server (1.2~svn+git2015.04.25-1) UNRELEASED; urgency=medium
     + Move file installations to debian/amora-*.install
     + Use dh_auto_{configure,build,install} instead of configure and make.
   * Use autoreconf to regenerate potentially missing files for amora-cli.
-    + Add build-dependency on autoconf.
+    + Add build-dependencies on autoconf, automake and libtool-bin.
 
  -- Axel Beckert <abe@debian.org>  Sat, 25 Apr 2015 23:58:38 +0200
 

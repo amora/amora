@@ -3,6 +3,7 @@ Section: x11
 Priority: extra
 Maintainer: Axel Beckert <abe@debian.org>
 Build-Depends: autoconf,
+               automake,
                autotools-dev,
                debhelper (>= 9~),
                dpkg-dev (>= 1.16.1~),
@@ -10,6 +11,7 @@ Build-Depends: autoconf,
                libdbus-1-dev,
                libimlib2-dev,
                libqt4-dev,
+               libtool-bin,
                libx11-dev,
                libxtst-dev,
                pkg-config,
