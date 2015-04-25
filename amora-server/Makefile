@@ -75,13 +75,14 @@ distclean:
 	cd amora-cli; [ ! -f Makefile ] || $(MAKE) distclean
 	cd amora-applet; [ ! -f Makefile ] || $(MAKE) distclean
 	rm -vf amora-*/*.tgz amora-*/*.tar.gz $(BUILDDIR).tgz \
+		amora-*/config.log \
 		core */core \
 		amora-cli/m4/ltoptions.m4 \
 		amora-cli/m4/ltsugar.m4 \
 		amora-cli/m4/ltversion.m4 \
 		amora-cli/m4/lt\~obsolete.m4 \
 		amora-cli/m4/libtool.m4
-	rm -vrf amora-*/.tmp/
+	rm -vrf amora-*/.tmp/ amora-*/autom4te.cache/
 
 install: all
 	cd amora-cli; $(MAKE) install
