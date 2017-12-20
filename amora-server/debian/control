@@ -18,7 +18,7 @@ Build-Depends: autoconf,
                qt4-qmake
 Standards-Version: 3.9.6
 Homepage: https://github.com/amora/amora#readme
-Vcs-Git: git://github.com/amora/amora.git
+Vcs-Git: https://github.com/amora/amora.git
 Vcs-Browser: https://github.com/amora/amora/tree/master/amora-server
 
 Package: amora-cli
