@@ -2,5 +2,6 @@
 /amora-*_*.deb
 /amora-server_*.dsc
 /amora-server_*.build
+/amora-server_*.buildinfo
 /amora-server_*.changes
 /amora-server_*.*.tar.*
