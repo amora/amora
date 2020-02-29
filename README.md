@@ -1,7 +1,7 @@
 Introduction
 ============
 
-** Deprecated**: the project is kept online for historic reasons, as the server no longer work on current Linux Bluetooth stack and the devices that could run the client are long gone.
+**Deprecated**: the project is kept online for historic reasons, as the server no longer work on current Linux Bluetooth stack and the devices that could run the client are long gone.
 
 You got a cellphone with bluetooth and still need to manually control slides when making a presentation?
 
